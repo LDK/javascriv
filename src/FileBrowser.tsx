@@ -1,32 +1,27 @@
 // FileBrowser.tsx
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Box, Collapse, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import FolderIcon from '@mui/icons-material/Folder';
 import DescriptionIcon from '@mui/icons-material/Description';
 import ImageIcon from '@mui/icons-material/Image';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import { BrowserItem, selectFiles, selectOpenFilePath, setOpenFilePath } from './filesSlice';
-import { EditorState, ContentState } from 'draft-js';
-import htmlToDraft from 'html-to-draftjs';
 import { useDispatch, useSelector } from 'react-redux';
-import { insertImage } from './MyEditor';
+import Sticky from 'react-stickynode';
 
 interface FileBrowserProps {
-  onDocumentClick: (editorState: EditorState, documentContent: string | null, changed: boolean) => void;
-  editorState: EditorState;
+  onDocumentClick: (documentContent: string | null, changed: boolean) => void;
 }
 
 type FileBrowserItemProps = {
   item: BrowserItem;
   level?: number;
-  editorState: EditorState;
   path?: string[];
-  onDocumentClick: (editorState: EditorState, documentContent: string | null, changed: boolean) => void;
+  onDocumentClick: (documentContent: string | null, changed: boolean) => void;
 };
 
 const FileBrowserItem: React.FC<FileBrowserItemProps> = ({
   item,
-  editorState,
   level = 0,
   path = [],
   onDocumentClick,
@@ -48,18 +43,14 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({
       if (fullPath !== openFilePath) {
         dispatch(setOpenFilePath(fullPath));
   
-        if (item.content && onDocumentClick) {
-          const contentBlock = htmlToDraft(item.content);
-          const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
-          const newEditorState = EditorState.createWithContent(contentState);
-          onDocumentClick(newEditorState, item.content || null, item.changed || false);
+        if (item.content && onDocumentClick)  {
+          onDocumentClick(item.content || null, item.changed || false);
         }
       }
     } else if (item.subType === 'image') {
       console.log('Image clicked:', fullPath, item);
       if (item.content) {
-        const newEditorState = insertImage(editorState, item.content);
-        onDocumentClick(newEditorState, null, true);
+        onDocumentClick(null, true);
       }
     }
   };  
@@ -87,7 +78,7 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({
         <Collapse in={open} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             {item.children?.map((child: BrowserItem, index: number) => (
-              <FileBrowserItem editorState={editorState} key={index} item={child} level={level + 1} path={[...path, item.name]} onDocumentClick={onDocumentClick} />
+              <FileBrowserItem key={index} item={child} level={level + 1} path={[...path, item.name]} onDocumentClick={onDocumentClick} />
             ))}
           </List>
         </Collapse>
@@ -96,27 +87,29 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({
   );
 };
 
-const FileBrowser: React.FC<FileBrowserProps> = ({ onDocumentClick, editorState }) => {
+const FileBrowser: React.FC<FileBrowserProps> = ({ onDocumentClick }) => {
   const items = useSelector(selectFiles);
 
-  const handleDocumentClick = (editorState: EditorState, documentContent: string | null, changed: boolean) => {
-    onDocumentClick(editorState, documentContent, changed);
+  const handleDocumentClick = (documentContent: string | null, changed: boolean) => {
+    onDocumentClick(documentContent, changed);
   };
 
   const renderItem = (item: BrowserItem, path: string[] = []) => {
     return (
       <FileBrowserItem
         key={item.name}
-        onDocumentClick={(editorState, documentContent, changed) => handleDocumentClick(editorState, documentContent, changed)}
-        {...{ item, path, editorState }}
+        onDocumentClick={(documentContent, changed) => handleDocumentClick(documentContent, changed)}
+        {...{ item, path }}
       />
     );
   };
 
   return (
-    <Box>
-      {items.map((item) => renderItem(item))}
-    </Box>
+    <Sticky top={64} innerZ={1}>
+      <Box>
+        {items.map((item) => renderItem(item))}
+      </Box>
+    </Sticky>
   );
 };
 
