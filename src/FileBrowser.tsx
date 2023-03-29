@@ -1,9 +1,11 @@
 // FileBrowser.tsx
 import React, { useState } from 'react';
-import { Box, Collapse, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
+import { Box, Collapse, List, ListItem, ListItemIcon, ListItemText, SxProps } from '@mui/material';
 import FolderIcon from '@mui/icons-material/Folder';
 import DescriptionIcon from '@mui/icons-material/Description';
 import ImageIcon from '@mui/icons-material/Image';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import { BrowserItem, selectFiles, selectOpenFilePath, setOpenFilePath } from './filesSlice';
 import { useDispatch, useSelector } from 'react-redux';
@@ -26,15 +28,28 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({
   path = [],
   onDocumentClick,
 }) => {
-  const [open, setOpen] = useState(false);
-
   const openFilePath = useSelector(selectOpenFilePath);
-
-  const dispatch = useDispatch();
-
+  
   const isFolder = item.type === 'folder';
 
   const fullPath = [...path, item.name].join('/');
+
+  const [open, setOpen] = useState<boolean>(Boolean(isFolder && openFilePath && openFilePath.startsWith(fullPath)));
+
+  const dispatch = useDispatch();
+
+  const getOpenCloseIcon = () => {
+    if (isFolder) {
+      const elProps:({ width: string; sx: SxProps; }) = { width: "100%", sx: { maxWidth: '100%'} };
+      const el =  open ? <ExpandLessIcon {...elProps} /> : <ExpandMoreIcon {...elProps} />;
+      return (
+        <Box width="1.25rem" top={'7px'} position="relative" display="inline-block" color="rgba(127, 127, 127, .6)">
+          { el }
+        </Box>
+      );
+    }
+    return null;
+  };
 
   const handleItemClick = () => {
     if (isFolder) {
@@ -59,17 +74,31 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({
     if (isFolder) return <FolderIcon />;
     if (item.subType === 'document') return <DescriptionIcon />;
     if (item.subType === 'image') return <ImageIcon />;
-    return <InsertDriveFileIcon />;
+    return <InsertDriveFileIcon color="inherit" />;
   };
 
   return (
     <>
-      <ListItem button onClick={handleItemClick} style={{ paddingLeft: level * 16 }}>
-        <ListItemIcon>{getIcon()}</ListItemIcon>
+      <ListItem
+        button
+        onClick={handleItemClick}
+        style={{
+          paddingLeft: level * 16,
+          backgroundColor: fullPath === openFilePath ? 'rgba(33, 150, 243, 0.3)' : 'inherit',
+        }}
+      >
+
+        <ListItemIcon sx={{ color: 'inherit', pl: 3 }}>{getIcon()}</ListItemIcon>
+
         <ListItemText
-          primary={item.name}
+          primary={
+            <>
+              {item.name}
+              {getOpenCloseIcon()}
+            </>
+          }
           primaryTypographyProps={{
-            style: { color: item.changed ? 'red' : 'inherit' },
+            style: { color: item.changed ? 'rgba(220,125,20)' : 'inherit' },
           }}
         />
       </ListItem>
@@ -106,7 +135,7 @@ const FileBrowser: React.FC<FileBrowserProps> = ({ onDocumentClick }) => {
 
   return (
     <Sticky top={64} innerZ={1}>
-      <Box>
+      <Box sx={{ color: 'rgba(232, 232, 232, .9)' }}>
         {items.map((item) => renderItem(item))}
       </Box>
     </Sticky>
