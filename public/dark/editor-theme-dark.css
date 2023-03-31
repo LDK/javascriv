@@ -1,0 +1,48 @@
+/* General styling for the editor */
+.tox.tox-tinymce {
+  background-color: #303030;
+  color: #ffffff;
+}
+
+/* Toolbar background */
+.tox.tox-tinymce .tox-toolbar {
+  background-color: #424242;
+  border-bottom: 1px solid #4f5fd5;
+}
+
+/* Toolbar buttons */
+.tox.tox-tinymce .tox-tbtn {
+  color: #e0e0e0;
+}
+
+/* Active toolbar buttons */
+.tox.tox-tinymce .tox-tbtn--enabled {
+  color: #4f5fd5;
+}
+
+/* Menu background */
+.tox.tox-tinymce .tox-menu {
+  background-color: #424242;
+}
+
+/* Menu items */
+.tox.tox-tinymce .tox-collection__item {
+  color: #ffffff;
+}
+
+/* Active menu items */
+.tox.tox-tinymce .tox-collection__item--active {
+  background-color: #4f5fd5;
+  color: #ffffff;
+}
+
+/* Editor content area */
+.tox.tox-tinymce .tox-edit-area {
+  background-color: #303030;
+  color: #ffffff;
+}
+
+/* Editor content area iframe */
+.tox.tox-tinymce .tox-edit-area__iframe {
+  background-color: #303030;
+}

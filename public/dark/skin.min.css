@@ -1,0 +1,48 @@
+/* public/dark/skin.min.css */
+
+.tox {
+  --brand-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+/* Toolbar, menu, and dialog background */
+.tox,
+.tox-toolbar,
+.tox-toolbar__group,
+.tox-menubar,
+.tox-dialog,
+.tox-statusbar {
+  background-color: #424242;
+}
+
+/* Toolbar and menu icons */
+.tox .tox-toolbar__group > .tox-tbtn svg,
+.tox .tox-toolbar__group > .tox-tbtn .tox-tbtn__icon-wrap {
+  fill: #e0e0e0;
+}
+
+/* Toolbar and menu icons on hover */
+.tox .tox-toolbar__group > .tox-tbtn:hover:not(.tox-tbtn--disabled) svg,
+.tox .tox-toolbar__group > .tox-tbtn:hover:not(.tox-tbtn--disabled) .tox-tbtn__icon-wrap {
+  fill: #ffffff;
+}
+
+/* Text color */
+.tox .tox-tbtn,
+.tox .tox-toolbar__group,
+.tox .tox-menu__item,
+.tox .tox-dialog,
+.tox .tox-statusbar {
+  color: #e0e0e0;
+}
+
+/* Active toolbar buttons */
+.tox .tox-tbtn--enabled svg,
+.tox .tox-tbtn--enabled .tox-tbtn__icon-wrap {
+  fill: #4f5fd5;
+}
+
+/* Active menu items */
+.tox .tox-collection__item--active {
+  background-color: #4f5fd5;
+  color: #ffffff;
+}

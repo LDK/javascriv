@@ -1,0 +1,51 @@
+/* public/dark/content.min.css */
+
+/* Content background */
+body {
+  background-color: #303030;
+}
+
+/* Text color */
+body,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #ffffff;
+}
+
+/* Link color */
+a {
+  color: #4f5fd5;
+}
+
+/* Link hover color */
+a:hover {
+  color: #4f5fd5;
+  text-decoration: underline;
+}
+
+/* Table styles */
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th,
+td {
+  border: 1px solid #424242;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #424242;
+  color: #ffffff;
+}
+
+tr:nth-child(even) {
+  background-color: #424242;
+}
