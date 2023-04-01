@@ -110,7 +110,7 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({
             </>
           }
           primaryTypographyProps={{
-            style: { color: item.changed ? palette.warning[isOpenPath ? palette.mode : opposite] : 'inherit' },
+            style: { color: item.changed ? palette.warning[isOpenPath ? 'main' : opposite] : 'inherit' },
           }}
         />
       </ListItem>

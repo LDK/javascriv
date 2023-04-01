@@ -41,7 +41,7 @@ const darkThemeOptions:ExtendedThemeOptions = {
     },
     warning: {
       // Yellow color, adjusted for dark mode readability.
-      main: '#ffb74d',
+      main: 'rgba(255,165,0)',
     },
     error: {
       // Red color, typically associated with error messages or negative actions.
@@ -63,7 +63,7 @@ const lightThemeOptions:ExtendedThemeOptions = {
     },
     secondary: {
       // Bright blue color, chosen for a striking contrast to the primary color, used for accents and highlights.
-      main: '#99c0ea',
+      main: 'rgb(175, 255, 255)',
     },
     tray: {
       main: '#aaccee'
@@ -73,6 +73,7 @@ const lightThemeOptions:ExtendedThemeOptions = {
       default: '#f5f5f5',
       // White color, used for paper elements and containers for better visual separation.
       paper: '#ffffff',
+      
     },
     text: {
       // Dark gray color, chosen for readability against the light background.
@@ -86,7 +87,7 @@ const lightThemeOptions:ExtendedThemeOptions = {
     },
     warning: {
       // Yellow color, typically associated with warning messages or cautionary actions.
-      main: '#ff9800',
+      main: 'rgb(255, 200, 0)',
     },
     error: {
       // Red color, adjusted for dark mode readability.
