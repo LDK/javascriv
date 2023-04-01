@@ -4,15 +4,20 @@ import { AppBar, Toolbar, Typography, useTheme } from '@mui/material';
 import Sticky from 'react-stickynode';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { ThemeName } from './theme';
+import { useDispatch, useSelector } from 'react-redux';
+import { setTheme } from './themeSlice';
+import { RootState } from './store';
 
-type HeaderProps = {
-  handleThemeChange: (arg:ThemeName) => void;
-  theme: ThemeName;
-}
 
-const Header: React.FC<HeaderProps> = ({ theme:activeTheme, handleThemeChange }) => {
+const Header: React.FC<any> = () => {
   const theme = useTheme();
-  
+  const dispatch = useDispatch();
+  const activeTheme = useSelector((state:RootState) => state.theme.active);
+
+  const handleThemeChange = (newTheme:string) => {
+    dispatch(setTheme(newTheme));
+  }
+
   return (
     <Sticky innerZ={2}>
       <AppBar sx={{ backgroundColor: theme.palette.primary.main }}>

@@ -1,5 +1,6 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import filesSlice from './filesSlice';
+import themeSlice from './themeSlice';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
 
@@ -10,6 +11,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   files: filesSlice,
+  theme: themeSlice
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

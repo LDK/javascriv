@@ -1,12 +1,14 @@
 // App.tsx
 import React, { useEffect, useState } from 'react';
-import { Box, Button, Container, Grid } from '@mui/material';
+import { Box, Button, Container, CssBaseline, Grid, ThemeProvider } from '@mui/material';
 import Header from './Header';
 import FileBrowser from './FileBrowser';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItem, BrowserItem, findItemByPath, saveItem, selectFiles, selectOpenFilePath, setContent, setOpenFilePath } from './filesSlice';
 import MyTinyEditor from './MyTinyEditor';
 import printToPdf from './pdfCompiler';
+import { ThemeName, darkTheme, lightTheme } from './theme';
+import { RootState } from './store';
 
 const App: React.FC = () => {
   const [hasContentChanged, setHasContentChanged] = useState(false);
@@ -16,6 +18,8 @@ const App: React.FC = () => {
   const openFilePath = useSelector(selectOpenFilePath);
   const dispatch = useDispatch();
   const items = useSelector(selectFiles);
+
+  const activeTheme = useSelector((state:RootState) => state.theme.active);
 
   useEffect(() => {
     console.log('openFilePath', openFilePath);
@@ -92,24 +96,23 @@ const App: React.FC = () => {
   };
 
   return (
-    <>
+    <ThemeProvider theme={activeTheme === 'light' ? lightTheme : darkTheme}>
       <Header />
+      <CssBaseline />
 
       <Box pt={8} flexGrow={1} display="flex">
         <Container maxWidth="xl" sx={{ px: "0 !important" }}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={4} lg={3} xl={2} sx={{ backgroundColor: 'rgba(10, 25, 60)', minHeight: 'calc(100vh - 40px)' }}>
-              <Box>
+          <Grid container spacing={0}>
+            <Grid item xs={12} md={4} lg={3} xl={2} px={0} mx={0}>
                 <FileBrowser
                   onDocumentClick={(documentContent: string | null, changed: boolean) => {
                     setEditorContent(documentContent);
                     setHasContentChanged(changed);
                   }}
                 />
-              </Box>
             </Grid>
             <Grid item xs={12} md={8} lg={9} xl={10}>
-              <Box px={0} pr={{ xs: 0, lg: 3 }}>
+              <Box px={0}>
                 <MyTinyEditor content={editorContent} initial={initial || ''} onEditorChange={handleEditorChange} />
 
                 <Box pt={2} className="actions">
@@ -132,7 +135,7 @@ const App: React.FC = () => {
           </Grid>
         </Container>
       </Box>
-    </>
+    </ThemeProvider>
   );
 };
 

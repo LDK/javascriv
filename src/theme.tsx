@@ -1,9 +1,18 @@
 // theme.tsx
-import { createTheme } from '@mui/material/styles';
+import { createTheme, Palette, PaletteColor, ThemeOptions } from '@mui/material/styles';
+import { PaletteOptions, PaletteColorOptions } from '@mui/material';
+
+interface ExtendedPaletteOptions extends PaletteOptions {
+  tray?: PaletteColorOptions;
+} 
+
+interface ExtendedThemeOptions extends ThemeOptions {
+  palette?: ExtendedPaletteOptions;
+}
 
 export type ThemeName = 'light' | 'dark';
 
-const darkTheme = createTheme({
+const darkThemeOptions:ExtendedThemeOptions = {
   palette: {
     mode: 'dark',
     primary: {
@@ -43,9 +52,9 @@ const darkTheme = createTheme({
       main: '#2196f3',
     },
   },
-});
+};
 
-const lightTheme = createTheme({
+const lightThemeOptions:ExtendedThemeOptions = {
   palette: {
     mode: 'light',
     primary: {
@@ -54,7 +63,10 @@ const lightTheme = createTheme({
     },
     secondary: {
       // Bright blue color, chosen for a striking contrast to the primary color, used for accents and highlights.
-      main: '#77c0ea',
+      main: '#99c0ea',
+    },
+    tray: {
+      main: '#aaccee'
     },
     background: {
       // Light gray color, chosen for a neutral and gentle background that's easy on the eyes.
@@ -85,6 +97,9 @@ const lightTheme = createTheme({
       main: '#64b5f6',
     },
   },
-});
+};
 
-export { lightTheme, darkTheme };
+export const lightTheme = createTheme(lightThemeOptions);
+export const darkTheme = createTheme(darkThemeOptions);
+export type ExtendedPalette = Palette & { tray: PaletteColor };
+
