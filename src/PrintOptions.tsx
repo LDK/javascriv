@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 import { useSelector } from 'react-redux';
-import { selectFiles, BrowserItem } from './filesSlice';
+import { selectFiles, BrowserItem, findItemByPath } from './filesSlice';
 import FilteredFileTree from './FilteredFileTree';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -41,25 +41,24 @@ const PrintOptions: React.FC<PrintOptionsProps> = ({ optionsOpen, onClose, onRea
   };
 
   const addItemByPath = (tree: BrowserItem[], path: string): BrowserItem[] => {
-    console.log('adding', path);
-    const rawPath = path.indexOf('/') !== 0 ? path : path.slice(1);
-    const pathArr = rawPath.split('/');
-    const [current, ...rest] = pathArr;
-    
-    console.log('current', current);
-    console.log('rest', rest);
+    const rawPath = path.indexOf('/') === 0 ? path.slice(1) : path;
+    const targetParentPath = path.split('/').slice(0, -1).join('/');
 
     return tree.map((item) => {
-      if (item.path === path) {
-        if (rest.length === 0) {
-          return item;
-        } else if (item.type === 'folder' && item.children) {
-          return { ...item, children: addItemByPath(item.children, rest.join('/')) };
+      if (item.type === 'folder' && item.children) {
+        if (item.path === targetParentPath) {
+          const newItem = findItemByPath(items, rawPath.split('/'));
+
+          if (newItem) {
+            return { ...item, children: [...item.children, newItem] };
+          }
+        } else {
+          return { ...item, children: addItemByPath(item.children, path) };
         }
       }
       return item;
     });
-  };
+  };  
   
   const removeItemByPath = (tree: BrowserItem[], path: string): BrowserItem[] => {
     return tree.reduce((acc: BrowserItem[], item: BrowserItem) => {
@@ -89,10 +88,6 @@ const PrintOptions: React.FC<PrintOptionsProps> = ({ optionsOpen, onClose, onRea
     });
   };
   
-  useEffect(() => {
-    console.log('published', publishedItems);
-  }, [publishedItems]);
-
   return (
     <Dialog open={optionsOpen} onClose={handleClose} fullWidth maxWidth="sm">
       <DialogTitle>Print Options</DialogTitle>

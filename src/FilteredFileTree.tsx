@@ -62,6 +62,8 @@ const FileTreeItem: React.FC<{
 const FilteredFileTree: React.FC<FilteredFileTreeProps> = ({ items, onReorder, onCheck }) => {
   const [checkedItems, setCheckedItems] = useState<string[]>(() => items.flatMap((item) => [item.path, ...(item.children?.map((child) => child.path) ?? [])]));
 
+  console.log('checkedItems', checkedItems);
+
   const handleCheck = (path: string, isChecked: boolean) => {
     setCheckedItems((prevCheckedItems) => {
       if (isChecked) {
@@ -78,7 +80,7 @@ const FilteredFileTree: React.FC<FilteredFileTreeProps> = ({ items, onReorder, o
 
   const extractFolderPaths = (items: BrowserItem[]): string[] => {
     return items.flatMap((item) => {
-      if (item.type === 'folder') {
+      if (item.children) {
         return [item.path, ...(item.children ? extractFolderPaths(item.children) : [])];
       }
       return [];
@@ -86,10 +88,11 @@ const FilteredFileTree: React.FC<FilteredFileTreeProps> = ({ items, onReorder, o
   };
   
   const allFolderPaths = extractFolderPaths(items);
+  console.log('all', allFolderPaths);
 
   return (
     <TreeView
-      expanded={allFolderPaths}
+      expanded={[...allFolderPaths, '']}
       sx={{
         maxHeight: '400px',
         overflowY: 'auto',
@@ -100,7 +103,7 @@ const FilteredFileTree: React.FC<FilteredFileTreeProps> = ({ items, onReorder, o
       }}
     >
       {items
-        .filter((item) => item.type === 'folder')
+        .filter((child) => child.subType !== 'image')
         .map((item) => (
           <FileTreeItem key={item.path} item={item} onReorder={onReorder} onCheck={handleCheck} checkedItems={checkedItems} parentChecked />
         ))}
