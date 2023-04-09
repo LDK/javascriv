@@ -14,19 +14,13 @@ const apiKey = 'nvkvn50rzrstv9udik5clmd6ee0f8y92o1glls8m9tr7hp1l';
 
 const MyTinyEditor: React.FC<MyTinyEditorProps> = ({ content, initial, onEditorChange }) => {
   const editorRef = useRef<TinyEditor | null>(null);
-  const [height, setHeight] = useState(500);
+  const height="500";
   const theme = useTheme();
 
   const handleEditorChange = (content: string) => {
     if (onEditorChange) {
       onEditorChange(content);
     }
-  };
-
-  const handleEditorResize = (event: UIEvent, editor: TinyEditor) => {
-    alert(1);
-    const height = editor.getBody().offsetHeight;
-    setHeight(height);
   };
   
   useEffect(() => {

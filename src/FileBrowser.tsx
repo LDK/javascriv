@@ -1,6 +1,6 @@
 // FileBrowser.tsx
 import React, { useState } from 'react';
-import { Box, Collapse, List, ListItem, ListItemIcon, ListItemText, Palette, PaletteColor, PaletteMode, SxProps, useTheme } from '@mui/material';
+import { Box, Collapse, List, ListItem, ListItemIcon, ListItemText, PaletteMode, SxProps, useTheme } from '@mui/material';
 import FolderIcon from '@mui/icons-material/Folder';
 import DescriptionIcon from '@mui/icons-material/Description';
 import ImageIcon from '@mui/icons-material/Image';
@@ -11,7 +11,6 @@ import { BrowserItem, selectFiles, selectOpenFilePath, setOpenFilePath } from '.
 import { useDispatch, useSelector } from 'react-redux';
 import Sticky from 'react-stickynode';
 import { ExtendedPalette } from './theme';
-import { ThemeContext } from '@emotion/react';
 
 interface FileBrowserProps {
   onDocumentClick: (documentContent: string | null, changed: boolean) => void;

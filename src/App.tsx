@@ -7,13 +7,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addItem, BrowserItem, findItemByPath, saveItem, selectFiles, selectOpenFilePath, setContent, setOpenFilePath } from './filesSlice';
 import MyTinyEditor from './MyTinyEditor';
 import printToPdf from './pdfCompiler';
-import { ThemeName, darkTheme, lightTheme } from './theme';
+import { darkTheme, lightTheme } from './theme';
 import { RootState } from './store';
+import PrintOptions from './PrintOptions';
 
 const App: React.FC = () => {
-  const [hasContentChanged, setHasContentChanged] = useState(false);
+  const [, setHasContentChanged] = useState(false);
   const [editorContent, setEditorContent] = useState<string | null>(null);
   const [initial, setInitial] = useState<string | null | false>(null);
+
+  const [printOptionsOpen, setPrintOptionsOpen] = useState(false);
 
   const openFilePath = useSelector(selectOpenFilePath);
   const dispatch = useDispatch();
@@ -29,9 +32,9 @@ const App: React.FC = () => {
       if (existing && existing.content) {
         console.log('set content', existing.content);
         setEditorContent(existing.content);
+        setInitial(existing.content as string);
         if (initial === null) {
           console.log('set initial', existing.content);
-          setInitial(existing.content as string);
         }
       } else {
         if (initial === null) {
@@ -39,14 +42,25 @@ const App: React.FC = () => {
         }
       }
     }
-  }, [items, openFilePath]);
+    // eslint-disable-next-line
+  }, [openFilePath]);
+
+  useEffect(() => {
+    if (openFilePath && items) {
+      const existing = findItemByPath(items, openFilePath.split('/'));
+      if (existing && existing.content) {
+        setInitial(existing.content as string)
+      }
+    }
+    // eslint-disable-next-line
+  }, [activeTheme])
 
   const handleSubmit = async () => {
     const htmlContent = editorContent || '';
 
     if (!openFilePath) {
       const newName = getUniqueNewDocumentName(items);
-      const newItem: BrowserItem = { name: newName, type: 'file', subType: 'document', content: htmlContent };
+      const newItem: BrowserItem = { name: newName, type: 'file', subType: 'document', content: htmlContent, path: `/${newName}` };
 
       dispatch(addItem({ path: '', item: newItem }));
       dispatch(setOpenFilePath(newName));
@@ -115,19 +129,21 @@ const App: React.FC = () => {
               <Box px={0}>
                 <MyTinyEditor content={editorContent} initial={initial || ''} onEditorChange={handleEditorChange} />
 
-                <Box pt={2} className="actions">
+                <Box pt={2} className="actions" position="absolute" bottom="2rem" width="100%" right="0" textAlign="right">
                   <Button
                     variant="contained"
                     color="primary"
                     onClick={handleSubmit}
-                    disabled={!hasContentChanged}
+                    
                   >
                     Submit
                   </Button>
 
-                  <Button onClick={() => printToPdf(items)} color="primary" variant="contained">
+                  <Button onClick={() => { setPrintOptionsOpen(true) }} color="primary" variant="contained">
                     Print
                   </Button>
+
+                  <PrintOptions optionsOpen={printOptionsOpen} onClose={() => { setPrintOptionsOpen(false) }} onReady={printToPdf} />
                 </Box>
 
               </Box>

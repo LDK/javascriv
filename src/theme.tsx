@@ -59,35 +59,35 @@ const lightThemeOptions:ExtendedThemeOptions = {
     mode: 'light',
     primary: {
       // Calm blue color, chosen for a professional appearance and readability.
-      main: '#4f8fdd',
+      main: '#8babf1',
     },
     secondary: {
       // Bright blue color, chosen for a striking contrast to the primary color, used for accents and highlights.
-      main: 'rgb(175, 255, 255)',
+      main: '#fcc9b5',
     },
     tray: {
-      main: '#aaccee'
+      main: '#d9e4ff'
     },
     background: {
       // Light gray color, chosen for a neutral and gentle background that's easy on the eyes.
-      default: '#f5f5f5',
+      default: '#b3c7f7',
       // White color, used for paper elements and containers for better visual separation.
       paper: '#ffffff',
       
     },
     text: {
       // Dark gray color, chosen for readability against the light background.
-      primary: '#424242',
+      primary: '#303030',
       // Medium gray color, used for less important text elements, providing a visual hierarchy.
       secondary: '#757575',
     },
     success: {
-      // Green color, adjusted for dark mode readability.
-      main: '#81c784',
+      // Green color, adjusted for readability.
+      main: '#90d8b2',
     },
     warning: {
       // Yellow color, typically associated with warning messages or cautionary actions.
-      main: 'rgb(255, 200, 0)',
+      main: '#faaf90',
     },
     error: {
       // Red color, adjusted for dark mode readability.
@@ -95,7 +95,7 @@ const lightThemeOptions:ExtendedThemeOptions = {
     },
     info: {
       // Blue color, adjusted for dark mode readability.
-      main: '#64b5f6',
+      main: '#d9e4ff',
     },
   },
 };

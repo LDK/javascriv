@@ -6,20 +6,31 @@ import { BrowserItem } from './filesSlice';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
-const compileDocuments = (items:BrowserItem[]) => {
+export interface PublishingOptions {
+  items: BrowserItem[];
+  pageBreaks: string;
+}
+
+const compileDocuments = (options: PublishingOptions) => {
   let compiledHtml = '';
 
-  const traverse = (node:BrowserItem) => {
-    if (node.subType === 'document') {
+  const traverse = (node: BrowserItem, isTopLevel: boolean) => {
+    if (node.type === 'folder') {
+      if (options.pageBreaks === 'Between Folders' && !isTopLevel) {
+        compiledHtml += '<div style="page-break-after: always;"></div>';
+      }
+      if (node.children) {
+        node.children.forEach((child) => traverse(child, false));
+      }
+    } else if (node.subType === 'document') {
+      if (options.pageBreaks === 'Between Documents') {
+        compiledHtml += '<div style="page-break-after: always;"></div>';
+      }
       compiledHtml += node.content || '';
-    }
-
-    if (node.children) {
-      node.children.forEach(traverse);
     }
   };
 
-  items.forEach(traverse);
+  options.items.forEach((item) => traverse(item, true));
 
   return compiledHtml;
 };
@@ -82,8 +93,8 @@ const convertHtmlToPdf = async (htmlContent: string) => {
 //   convertHtmlToPdf(compiledHtml);
 // };
 
-const printToPdf = async (items: BrowserItem[]) => {
-  const compiledHtml = compileDocuments(items);
+const printToPdf = async (options: PublishingOptions) => {
+  const compiledHtml = compileDocuments(options);
   console.log('content', compiledHtml);
   await convertHtmlToPdf(compiledHtml);
 };

@@ -2,12 +2,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from './store';
 
-type themeState = {
-  active: string;
-};
-
-const filesSlice = createSlice({
-  name: 'files',
+const themeSlice = createSlice({
+  name: 'theme',
   initialState: { active: 'light' },
   reducers: {
     setTheme: (state, action: PayloadAction<string>) => {
@@ -16,14 +12,11 @@ const filesSlice = createSlice({
   },
 });
 
-export const { setTheme } = filesSlice.actions;
-
-export const selectFiles = (state: RootState) => state.files.files;
-export const selectOpenFilePath = (state: RootState) => state.files.openFilePath;
+export const { setTheme } = themeSlice.actions;
 
 // getContent selector function
 export const getTheme = (state: RootState) => {
   return state.theme.active;
 };
 
-export default filesSlice.reducer;
+export default themeSlice.reducer;
