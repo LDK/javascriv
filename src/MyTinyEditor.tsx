@@ -1,5 +1,5 @@
 // MyTinyEditor.tsx
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import { Editor as TinyEditor } from 'tinymce';
 import { Box, useTheme } from '@mui/material';

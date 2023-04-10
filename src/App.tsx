@@ -6,17 +6,17 @@ import FileBrowser from './FileBrowser';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItem, BrowserItem, findItemByPath, saveItem, selectFiles, selectOpenFilePath, setContent, setOpenFilePath } from './filesSlice';
 import MyTinyEditor from './MyTinyEditor';
-import printToPdf from './pdfCompiler';
+import publishToPdf from './Publish/pdfCompiler';
 import { darkTheme, lightTheme } from './theme';
 import { RootState } from './store';
-import PrintOptions from './PrintOptions';
+import PublishOptions from './Publish/PublishOptions';
 
 const App: React.FC = () => {
   const [, setHasContentChanged] = useState(false);
   const [editorContent, setEditorContent] = useState<string | null>(null);
   const [initial, setInitial] = useState<string | null | false>(null);
 
-  const [printOptionsOpen, setPrintOptionsOpen] = useState(false);
+  const [publishOptionsOpen, setPublishOptionsOpen] = useState(false);
 
   const openFilePath = useSelector(selectOpenFilePath);
   const dispatch = useDispatch();
@@ -80,6 +80,7 @@ const App: React.FC = () => {
     let index = 0;
     let newName = 'New Document';
 
+    // eslint-disable-next-line
     while (items.some((item) => item.name === `${newName}${index > 0 ? ` ${index}` : ''}`)) {
       index++;
     }
@@ -139,11 +140,11 @@ const App: React.FC = () => {
                     Submit
                   </Button>
 
-                  <Button onClick={() => { setPrintOptionsOpen(true) }} color="primary" variant="contained">
-                    Print
+                  <Button onClick={() => { setPublishOptionsOpen(true) }} color="primary" variant="contained">
+                    Publish
                   </Button>
 
-                  <PrintOptions optionsOpen={printOptionsOpen} onClose={() => { setPrintOptionsOpen(false) }} onReady={printToPdf} />
+                  <PublishOptions optionsOpen={publishOptionsOpen} onClose={() => { setPublishOptionsOpen(false) }} onReady={publishToPdf} />
                 </Box>
 
               </Box>

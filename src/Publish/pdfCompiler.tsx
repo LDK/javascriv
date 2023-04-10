@@ -1,8 +1,8 @@
-// pdfCompiler.tsx
+// Publish/pdfCompiler.tsx
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import htmlToPdfMake from 'html-to-pdfmake';
-import { BrowserItem } from './filesSlice';
+import { BrowserItem } from '../filesSlice';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -87,16 +87,16 @@ const convertHtmlToPdf = async (htmlContent: string) => {
   pdfMake.createPdf(documentDefinition).download('document.pdf');
 };
 
-// const printToPdf = (items:BrowserItem[]) => {
+// const publishToPdf = (items:BrowserItem[]) => {
 //   const compiledHtml = compileDocuments(items);
 //   console.log('content', compiledHtml);
 //   convertHtmlToPdf(compiledHtml);
 // };
 
-const printToPdf = async (options: PublishingOptions) => {
+const publishToPdf = async (options: PublishingOptions) => {
   const compiledHtml = compileDocuments(options);
   console.log('content', compiledHtml);
   await convertHtmlToPdf(compiledHtml);
 };
 
-export default printToPdf;
+export default publishToPdf;

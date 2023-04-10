@@ -1,21 +1,21 @@
-// PrintOptions.tsx
+// Publish/PublishOptions.tsx
 import React, { useEffect, useState } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 import { useSelector } from 'react-redux';
-import { selectFiles, BrowserItem, findItemByPath } from './filesSlice';
-import FilteredFileTree from './FilteredFileTree';
+import { selectFiles, BrowserItem, findItemByPath } from '../filesSlice';
+import PublishTree, { PublishItem } from './PublishTree';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { SelectChangeEvent } from '@mui/material/Select';
 import { PublishingOptions } from './pdfCompiler';
 
-export interface PrintOptionsProps {
+export interface PublishOptionsProps {
   optionsOpen: boolean;
   onClose: () => void;
-  onReady: (options: any) => void; // You should define a proper type for 'options' based on the data required by the printToPdf function.
+  onReady: (options: any) => void; // You should define a proper type for 'options' based on the data required by the publishToPdf function.
 }
 
-const PrintOptions: React.FC<PrintOptionsProps> = ({ optionsOpen, onClose, onReady }) => {
+const PublishOptions: React.FC<PublishOptionsProps> = ({ optionsOpen, onClose, onReady }) => {
   const items = useSelector(selectFiles);
   const [pageBreaks, setPageBreaks] = useState<string>('Nowhere');
   const [publishedItems, setPublishedItems] = useState<BrowserItem[]>(items);
@@ -37,7 +37,20 @@ const PrintOptions: React.FC<PrintOptionsProps> = ({ optionsOpen, onClose, onRea
   };
 
   const handleReorder = (draggedPath: string, targetPath: string) => {
-    // Implement the logic to reorder checkedItems based on the draggedPath and targetPath
+    setPublishedItems((prevPublishedItems) => {
+      // First, remove the dragged item from the current tree
+      const updatedItems = removeItemByPath(prevPublishedItems, draggedPath);
+  
+      console.log('dragged path', draggedPath);
+      console.log('updated items', updatedItems);
+      const newPath = targetPath + '/' + draggedPath.split('/').pop();
+      console.log('new path', newPath);
+
+      // Then, add the dragged item to the target location
+      const newItems = addItemByPath(updatedItems, newPath);
+      console.log('new items', newItems);
+      return newItems;
+    });
   };
 
   const addItemByPath = (tree: BrowserItem[], path: string): BrowserItem[] => {
@@ -77,23 +90,33 @@ const PrintOptions: React.FC<PrintOptionsProps> = ({ optionsOpen, onClose, onRea
       return [...acc, item];
     }, []);
   };  
+
+  const handleCheck = (updatedItems: PublishItem[]) => {
+    const filterIncludedItems = (items: PublishItem[]): BrowserItem[] => {
+      return items.flatMap((item) => {
+        if (item.included) {
+          const newItem: BrowserItem = { ...item, children: item.children ? filterIncludedItems(item.children) : undefined };
+          return [newItem];
+        }
+        return [];
+      });
+    };
   
-  const handleCheck = (path: string, isChecked: boolean) => {
-    setPublishedItems((prevCheckedItems) => {
-      if (isChecked) {
-        return addItemByPath(prevCheckedItems, path);
-      } else {
-        return removeItemByPath(prevCheckedItems, path);
-      }
-    });
+    const newItems = filterIncludedItems(updatedItems);
+    console.log('set pub', newItems);
+    setPublishedItems(newItems);
   };
-  
+
+  useEffect(() => {
+    console.log('published items', publishedItems);
+  }, [publishedItems]);
+
   return (
     <Dialog open={optionsOpen} onClose={handleClose} fullWidth maxWidth="sm">
-      <DialogTitle>Print Options</DialogTitle>
+      <DialogTitle>Publish Options</DialogTitle>
       <DialogContent>
         <DndProvider backend={HTML5Backend}>
-          <FilteredFileTree items={items} onReorder={handleReorder} onCheck={handleCheck} />
+          <PublishTree items={items} onReorder={handleReorder} onCheck={handleCheck} />
         </DndProvider>
         <FormControl fullWidth variant="outlined" sx={{ mt: 2 }}>
           <InputLabel htmlFor="page-breaks-select">Insert Page Breaks...</InputLabel>
@@ -122,4 +145,4 @@ const PrintOptions: React.FC<PrintOptionsProps> = ({ optionsOpen, onClose, onRea
   );
 };
 
-export default PrintOptions;
+export default PublishOptions;
