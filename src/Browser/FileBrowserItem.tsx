@@ -1,20 +1,11 @@
-// FileBrowser.tsx
-import React, { useState } from 'react';
-import { Box, Collapse, List, ListItem, ListItemIcon, ListItemText, PaletteMode, SxProps, useTheme } from '@mui/material';
-import FolderIcon from '@mui/icons-material/Folder';
-import DescriptionIcon from '@mui/icons-material/Description';
-import ImageIcon from '@mui/icons-material/Image';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
-import { BrowserItem, selectFiles, selectOpenFilePath, setOpenFilePath } from './redux/filesSlice';
-import { useDispatch, useSelector } from 'react-redux';
-import Sticky from 'react-stickynode';
-import { ExtendedPalette } from './theme/theme';
+// Browser/FileBrowserItem.tsx
+import { SxProps, Box, PaletteMode, ListItem, ListItemIcon, ListItemText, Collapse, List, useTheme } from "@mui/material";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { BrowserItem, setOpenFilePath } from "../redux/filesSlice";
+import { ExtendedPalette } from "../theme/theme";
 
-interface FileBrowserProps {
-  onDocumentClick: (documentContent: string | null, changed: boolean) => void;
-}
+import { Folder, Description as DocIcon, Image as ImageIcon, ExpandMore, ExpandLess, InsertDriveFile } from '@mui/icons-material';
 
 type FileBrowserItemProps = {
   item: BrowserItem;
@@ -24,18 +15,10 @@ type FileBrowserItemProps = {
   onDocumentClick: (documentContent: string | null, changed: boolean) => void;
 };
 
-const FileBrowserItem: React.FC<FileBrowserItemProps> = ({
-  item,
-  level = 0,
-  path = [],
-  onDocumentClick,
-  openFilePath
-}) => {
+const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, path = [], onDocumentClick, openFilePath}) => {
   
   const isFolder = item.type === 'folder';
-
   const fullPath = [...path, item.name].join('/');
-
   const [open, setOpen] = useState<boolean>(Boolean(isFolder && openFilePath && openFilePath.startsWith(fullPath)));
 
   const dispatch = useDispatch();
@@ -43,11 +26,10 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({
   const theme = useTheme();
   const palette = theme.palette as ExtendedPalette;
 
-
   const getOpenCloseIcon = () => {
     if (isFolder) {
       const elProps:({ width: string; sx: SxProps; }) = { width: "100%", sx: { maxWidth: '100%'} };
-      const el =  open ? <ExpandLessIcon {...elProps} /> : <ExpandMoreIcon {...elProps} />;
+      const el =  open ? <ExpandLess {...elProps} /> : <ExpandMore {...elProps} />;
       return (
         <Box width="1.25rem" top={'7px'} position="relative" display="inline-block" color={palette.secondary.contrastText}>
           { el }
@@ -69,7 +51,6 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({
         }
       }
     } else if (item.subType === 'image') {
-      console.log('Image clicked:', fullPath, item);
       if (item.content) {
         onDocumentClick(null, true);
       }
@@ -77,10 +58,10 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({
   };  
 
   const getIcon = () => {
-    if (isFolder) return <FolderIcon />;
-    if (item.subType === 'document') return <DescriptionIcon />;
+    if (isFolder) return <Folder />;
+    if (item.subType === 'document') return <DocIcon />;
     if (item.subType === 'image') return <ImageIcon />;
-    return <InsertDriveFileIcon color="inherit" />;
+    return <InsertDriveFile color="inherit" />;
   };
 
   const opposite:PaletteMode = palette.mode === 'light' ? 'dark' : 'light';
@@ -118,7 +99,7 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({
         <Collapse in={open} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             {item.children?.map((child: BrowserItem, index: number) => (
-              <FileBrowserItem key={index} item={child} openFilePath={openFilePath} level={level + 1} path={[...path, item.name]} onDocumentClick={onDocumentClick} />
+              <FileBrowserItem {...{ openFilePath, onDocumentClick }} key={index} item={child} level={level + 1} path={[...path, item.name]} />
             ))}
           </List>
         </Collapse>
@@ -127,34 +108,4 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({
   );
 };
 
-const FileBrowser: React.FC<FileBrowserProps> = ({ onDocumentClick }) => {
-  const items = useSelector(selectFiles);
-  const openFilePath = useSelector(selectOpenFilePath);
-  const theme = useTheme();
-
-  const handleDocumentClick = (documentContent: string | null, changed: boolean) => {
-    onDocumentClick(documentContent, changed);
-  };
-
-  const renderItem = (item: BrowserItem, path: string[] = []) => {
-    return (
-      <FileBrowserItem
-        key={item.name}
-        onDocumentClick={(documentContent, changed) => handleDocumentClick(documentContent, changed)}
-        {...{ item, path, openFilePath }}
-      />
-    );
-  };
-
-  return (
-    <Box width="100%" sx={{ backgroundColor: theme.palette.secondary[theme.palette.mode], minHeight: 'calc(100vh - 40px)' }}>
-      <Sticky top={64} innerZ={1}>
-        <Box overflow={"scroll"} maxHeight="calc(100% - 40px)" sx={{ color: 'rgba(232, 232, 232, .9)' }}>
-          {items.map((item) => renderItem(item))}
-        </Box>
-      </Sticky>
-    </Box>
-  );
-};
-
-export default FileBrowser;
+export default FileBrowserItem;

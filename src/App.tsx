@@ -2,11 +2,10 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Button, Container, CssBaseline, Grid, ThemeProvider } from '@mui/material';
 import Header from './Header';
-import FileBrowser from './FileBrowser';
+import FileBrowser from './Browser/FileBrowser';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItem, BrowserItem, findItemByPath, saveItem, selectFiles, selectOpenFilePath, setContent, setOpenFilePath } from './redux/filesSlice';
-import MyTinyEditor from './MyTinyEditor';
-import publishToPdf from './Publish/pdfCompiler';
+import TinyEditor from './Editor/Editor';
 import { darkTheme, lightTheme } from './theme/theme';
 import { RootState } from './redux/store';
 import PublishOptions from './Publish/PublishOptions';
@@ -25,17 +24,11 @@ const App: React.FC = () => {
   const activeTheme = useSelector((state:RootState) => state.theme.active);
 
   useEffect(() => {
-    console.log('openFilePath', openFilePath);
     if (openFilePath && items) {
       const existing = findItemByPath(items, openFilePath.split('/'));
-      console.log('existing', existing);
       if (existing && existing.content) {
-        console.log('set content', existing.content);
         setEditorContent(existing.content);
         setInitial(existing.content as string);
-        if (initial === null) {
-          console.log('set initial', existing.content);
-        }
       } else {
         if (initial === null) {
           setInitial(false);
@@ -128,15 +121,10 @@ const App: React.FC = () => {
             </Grid>
             <Grid item xs={12} md={8} lg={9} xl={10}>
               <Box px={0}>
-                <MyTinyEditor content={editorContent} initial={initial || ''} onEditorChange={handleEditorChange} />
+                <TinyEditor content={editorContent} initial={initial || ''} onEditorChange={handleEditorChange} />
 
                 <Box pt={2} className="actions" position="absolute" bottom="2rem" width="100%" right="0" textAlign="right">
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleSubmit}
-                    
-                  >
+                  <Button variant="contained" color="primary"onClick={handleSubmit}>
                     Submit
                   </Button>
 
@@ -144,7 +132,7 @@ const App: React.FC = () => {
                     Publish
                   </Button>
 
-                  <PublishOptions optionsOpen={publishOptionsOpen} onClose={() => { setPublishOptionsOpen(false) }} onReady={publishToPdf} />
+                  <PublishOptions optionsOpen={publishOptionsOpen} onClose={() => { setPublishOptionsOpen(false) }} />
                 </Box>
 
               </Box>

@@ -1,10 +1,10 @@
-// MyTinyEditor.tsx
+// Editor/TinyEditor.tsx
 import React, { useEffect, useRef } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
-import { Editor as TinyEditor } from 'tinymce';
+import { Editor as MyEditor } from 'tinymce';
 import { Box, useTheme } from '@mui/material';
 
-interface MyTinyEditorProps {
+interface TinyEditorProps {
   content: string | null;
   initial: string | null;
   onEditorChange: (content: string) => void;
@@ -12,8 +12,8 @@ interface MyTinyEditorProps {
 
 const apiKey = 'nvkvn50rzrstv9udik5clmd6ee0f8y92o1glls8m9tr7hp1l';
 
-const MyTinyEditor: React.FC<MyTinyEditorProps> = ({ content, initial, onEditorChange }) => {
-  const editorRef = useRef<TinyEditor | null>(null);
+const TinyEditor: React.FC<TinyEditorProps> = ({ content, initial, onEditorChange }) => {
+  const editorRef = useRef<MyEditor | null>(null);
   const height="500";
   const theme = useTheme();
 
@@ -63,4 +63,4 @@ const MyTinyEditor: React.FC<MyTinyEditorProps> = ({ content, initial, onEditorC
   );
 };
 
-export default MyTinyEditor;
+export default TinyEditor;

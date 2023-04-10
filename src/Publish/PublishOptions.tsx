@@ -7,15 +7,14 @@ import PublishTree, { PublishItem } from './PublishTree';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { SelectChangeEvent } from '@mui/material/Select';
-import { PublishingOptions } from './pdfCompiler';
+import publishToPdf, { PublishingOptions } from './pdfCompiler';
 
 export interface PublishOptionsProps {
   optionsOpen: boolean;
   onClose: () => void;
-  onReady: (options: any) => void; // You should define a proper type for 'options' based on the data required by the publishToPdf function.
 }
 
-const PublishOptions: React.FC<PublishOptionsProps> = ({ optionsOpen, onClose, onReady }) => {
+const PublishOptions: React.FC<PublishOptionsProps> = ({ optionsOpen, onClose }) => {
   const items = useSelector(selectFiles);
   const [pageBreaks, setPageBreaks] = useState<string>('Nowhere');
   const [publishedItems, setPublishedItems] = useState<BrowserItem[]>(items);
@@ -29,7 +28,7 @@ const PublishOptions: React.FC<PublishOptionsProps> = ({ optionsOpen, onClose, o
       items: publishedItems,
       pageBreaks,
     };
-    onReady(options);
+    publishToPdf(options);
   };
   
   const handlePageBreaksChange = (event: SelectChangeEvent) => {
@@ -40,15 +39,10 @@ const PublishOptions: React.FC<PublishOptionsProps> = ({ optionsOpen, onClose, o
     setPublishedItems((prevPublishedItems) => {
       // First, remove the dragged item from the current tree
       const updatedItems = removeItemByPath(prevPublishedItems, draggedPath);
-  
-      console.log('dragged path', draggedPath);
-      console.log('updated items', updatedItems);
       const newPath = targetPath + '/' + draggedPath.split('/').pop();
-      console.log('new path', newPath);
 
       // Then, add the dragged item to the target location
       const newItems = addItemByPath(updatedItems, newPath);
-      console.log('new items', newItems);
       return newItems;
     });
   };
@@ -103,7 +97,6 @@ const PublishOptions: React.FC<PublishOptionsProps> = ({ optionsOpen, onClose, o
     };
   
     const newItems = filterIncludedItems(updatedItems);
-    console.log('set pub', newItems);
     setPublishedItems(newItems);
   };
 
