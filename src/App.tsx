@@ -4,11 +4,11 @@ import { Box, Button, Container, CssBaseline, Grid, ThemeProvider } from '@mui/m
 import Header from './Header';
 import FileBrowser from './FileBrowser';
 import { useDispatch, useSelector } from 'react-redux';
-import { addItem, BrowserItem, findItemByPath, saveItem, selectFiles, selectOpenFilePath, setContent, setOpenFilePath } from './filesSlice';
+import { addItem, BrowserItem, findItemByPath, saveItem, selectFiles, selectOpenFilePath, setContent, setOpenFilePath } from './redux/filesSlice';
 import MyTinyEditor from './MyTinyEditor';
 import publishToPdf from './Publish/pdfCompiler';
-import { darkTheme, lightTheme } from './theme';
-import { RootState } from './store';
+import { darkTheme, lightTheme } from './theme/theme';
+import { RootState } from './redux/store';
 import PublishOptions from './Publish/PublishOptions';
 
 const App: React.FC = () => {

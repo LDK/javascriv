@@ -1,4 +1,4 @@
-// src/filesSlice.tsx
+// redux/filesSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from './store';
 

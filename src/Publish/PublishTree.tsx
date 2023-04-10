@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import TreeView from '@mui/lab/TreeView';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
-import { BrowserItem } from '../filesSlice';
+import { BrowserItem } from '../redux/filesSlice';
 import PublishTreeItem from './PublishTreeItem';
 import { MinusSquare, PlusSquare } from './IconFunctions';
 

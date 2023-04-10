@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 import { useSelector } from 'react-redux';
-import { selectFiles, BrowserItem, findItemByPath } from '../filesSlice';
+import { selectFiles, BrowserItem, findItemByPath } from '../redux/filesSlice';
 import PublishTree, { PublishItem } from './PublishTree';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';

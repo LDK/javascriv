@@ -3,8 +3,8 @@ import React from 'react';
 import { AppBar, Box, Switch, Toolbar, Typography, useTheme } from '@mui/material';
 import Sticky from 'react-stickynode';
 import { useDispatch, useSelector } from 'react-redux';
-import { setTheme } from './themeSlice';
-import { RootState } from './store';
+import { setTheme } from './redux/themeSlice';
+import { RootState } from './redux/store';
 import MoonIcon from '@mui/icons-material/Brightness2';
 import SunIcon from '@mui/icons-material/Brightness7';
 

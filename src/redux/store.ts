@@ -1,3 +1,4 @@
+// redux/store.ts
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import filesSlice from './filesSlice';
 import themeSlice from './themeSlice';

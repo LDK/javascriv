@@ -7,10 +7,10 @@ import ImageIcon from '@mui/icons-material/Image';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
-import { BrowserItem, selectFiles, selectOpenFilePath, setOpenFilePath } from './filesSlice';
+import { BrowserItem, selectFiles, selectOpenFilePath, setOpenFilePath } from './redux/filesSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import Sticky from 'react-stickynode';
-import { ExtendedPalette } from './theme';
+import { ExtendedPalette } from './theme/theme';
 
 interface FileBrowserProps {
   onDocumentClick: (documentContent: string | null, changed: boolean) => void;
