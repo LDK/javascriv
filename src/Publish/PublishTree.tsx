@@ -5,7 +5,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
 import { BrowserItem } from '../filesSlice';
 import PublishTreeItem from './PublishTreeItem';
-import { MinusSquare, PlusSquare } from '../IconFunctions';
+import { MinusSquare, PlusSquare } from './IconFunctions';
 
 export interface PublishItem extends Omit<BrowserItem, 'children'> {
   included: boolean;
