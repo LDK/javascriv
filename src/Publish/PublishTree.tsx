@@ -1,8 +1,6 @@
 // Publish/PublishTree.tsx
 import React, { useEffect, useState } from 'react';
 import TreeView from '@mui/lab/TreeView';
-import { HTML5Backend } from 'react-dnd-html5-backend';
-import { DndProvider } from 'react-dnd';
 import { BrowserItem } from '../redux/filesSlice';
 import PublishTreeItem from './PublishTreeItem';
 import { MinusSquare, PlusSquare } from './IconFunctions';
@@ -14,11 +12,10 @@ export interface PublishItem extends Omit<BrowserItem, 'children'> {
 
 export interface FilteredFileTreeProps {
   items: BrowserItem[];
-  onReorder: (draggedPath: string, targetPath: string) => void;
   onCheck: (updatedItems: PublishItem[]) => void;
 }
 
-const PublishTree: React.FC<FilteredFileTreeProps> = ({ items: browserItems, onReorder, onCheck }) => {
+const PublishTree: React.FC<FilteredFileTreeProps> = ({ items: browserItems, onCheck }) => {
   const convertToPublishItems = (items: BrowserItem[]): PublishItem[] => {
     return items
       .filter((child) => child.subType !== 'image' && child.subType !== 'other')
@@ -63,26 +60,23 @@ const PublishTree: React.FC<FilteredFileTreeProps> = ({ items: browserItems, onR
   );
 
   return (
-    <DndProvider backend={HTML5Backend}>
-      <TreeView
-        defaultExpanded={defaultExpanded}
-        defaultCollapseIcon={<MinusSquare />}
-        defaultExpandIcon={<PlusSquare />}
-        defaultEndIcon={<div style={{ width: 24 }} />}
-      >
-        {publishItems.map((item) => (
-          <PublishTreeItem
-            key={item.path}
-            item={item}
-            isGreyed={false}
-            onReorder={onReorder}
-            onCheck={onCheck}
-            publishItems={publishItems}
-            setPublishItems={setPublishItems}
-          />
-        ))}
-      </TreeView>
-    </DndProvider>
+    <TreeView
+      defaultExpanded={defaultExpanded}
+      defaultCollapseIcon={<MinusSquare />}
+      defaultExpandIcon={<PlusSquare />}
+      defaultEndIcon={<div style={{ width: 24 }} />}
+    >
+      {publishItems.map((item) => (
+        <PublishTreeItem
+          key={item.path}
+          item={item}
+          isGreyed={false}
+          onCheck={onCheck}
+          publishItems={publishItems}
+          setPublishItems={setPublishItems}
+        />
+      ))}
+    </TreeView>
   );
 };
 

@@ -4,7 +4,6 @@ import { TreeItem, treeItemClasses, TreeItemProps } from "@mui/lab";
 import { alpha, Checkbox, Collapse, styled, Typography } from "@mui/material";
 import { animated, useSpring } from '@react-spring/web';
 import { PublishItem } from './PublishTree';
-import { useDrag, useDrop } from 'react-dnd';
 
 function TransitionComponent(props: TransitionProps) {
   const style = useSpring({
@@ -43,30 +42,12 @@ const StyledTreeItem = styled((props: TreeItemProps) => (
 export type FileTreeItemProps = {
   item: PublishItem;
   isGreyed: boolean;
-  onReorder: (draggedPath: string, targetPath: string) => void;
   onCheck: (updatedItems: PublishItem[]) => void;
   publishItems: PublishItem[];
   setPublishItems: (items: PublishItem[]) => void;
 };
 
-interface DraggedFileTreeItem {
-  path: string;
-}
-
-const PublishTreeItem: React.FC<FileTreeItemProps> = ({ item, isGreyed, onReorder, onCheck, publishItems, setPublishItems }) => {
-  const [, dragRef] = useDrag(() => ({
-    type: 'FILE_TREE_ITEM',
-    item: { path: item.path },
-  }));
-
-  const [, dropRef] = useDrop({
-    accept: 'FILE_TREE_ITEM',
-    drop: (draggedItem: DraggedFileTreeItem, monitor) => {
-      if (!monitor.isOver({ shallow: true })) return;
-      onReorder(draggedItem.path, item.path);
-    },
-  });
-
+const PublishTreeItem: React.FC<FileTreeItemProps> = ({ item, isGreyed, onCheck, publishItems, setPublishItems }) => {
   const handleCheck = (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
     const updatedItems = updatePublishItems(publishItems, item.path, checked);
     setPublishItems(updatedItems);
@@ -92,11 +73,7 @@ const PublishTreeItem: React.FC<FileTreeItemProps> = ({ item, isGreyed, onReorde
       key={item.path}
       nodeId={item.path}
       label={
-        <div style={{ display: 'flex', alignItems: 'flex-start' }}
-          ref={(instance) => {
-            dragRef(dropRef(instance));
-          }}
-        >
+        <div style={{ display: 'flex', alignItems: 'flex-start' }}>
           <Checkbox
             checked={item.included}
             disabled={isGreyed}
@@ -113,7 +90,6 @@ const PublishTreeItem: React.FC<FileTreeItemProps> = ({ item, isGreyed, onReorde
           key={child.path}
           item={child}
           isGreyed={isGreyed || !item.included}
-          onReorder={onReorder}
           onCheck={onCheck}
           publishItems={publishItems}
           setPublishItems={setPublishItems}

@@ -6,6 +6,7 @@ import { BrowserItem, setOpenFilePath } from "../redux/filesSlice";
 import { ExtendedPalette } from "../theme/theme";
 
 import { Folder, Description as DocIcon, Image as ImageIcon, ExpandMore, ExpandLess, InsertDriveFile } from '@mui/icons-material';
+import ItemActionBar from "./ItemActionBar";
 
 type FileBrowserItemProps = {
   item: BrowserItem;
@@ -16,7 +17,7 @@ type FileBrowserItemProps = {
 };
 
 const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, path = [], onDocumentClick, openFilePath}) => {
-  
+
   const isFolder = item.type === 'folder';
   const fullPath = [...path, item.name].join('/');
   const [open, setOpen] = useState<boolean>(Boolean(isFolder && openFilePath && openFilePath.startsWith(fullPath)));
@@ -38,7 +39,7 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, path 
     }
     return null;
   };
-
+  
   const handleItemClick = () => {
     if (isFolder) {
       setOpen(!open);
@@ -77,23 +78,32 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, path 
           color: palette.secondary.contrastText,
           paddingLeft: level * 16,
           backgroundColor: isOpenPath ? palette.secondary[opposite] : 'inherit',
+          display: "flex",
+        }}
+        sx={{
+          "&:hover > div > .MuiBox-root": {
+            visibility: "visible",
+          },
         }}
       >
-
         <ListItemIcon sx={{ color: palette.secondary.contrastText, pl: 3 }}>{getIcon()}</ListItemIcon>
 
-        <ListItemText
-          primary={
-            <>
-              {item.name}
-              {getOpenCloseIcon()}
-            </>
-          }
-          primaryTypographyProps={{
-            style: { color: item.changed ? palette.warning[isOpenPath ? 'main' : opposite] : 'inherit' },
-          }}
-        />
+        <Box sx={{ flexGrow: 1, display: "flex", alignItems: "center" }}>
+          <ListItemText
+            primary={
+              <>
+                {item.name}
+                {getOpenCloseIcon()}
+              </>
+            }
+            primaryTypographyProps={{
+              style: { color: item.changed ? palette.warning[isOpenPath ? 'main' : opposite] : 'inherit' },
+            }}
+          />
+          <ItemActionBar {...{ item }} />
+        </Box>
       </ListItem>
+
 
       {isFolder && (
         <Collapse in={open} timeout="auto" unmountOnExit>
