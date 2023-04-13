@@ -136,14 +136,18 @@ const filesSlice = createSlice({
       state.openFilePath = action.payload;
     },
     deleteItem: (state, action: PayloadAction<string>) => {
-      const path = action.payload.split('/');
-      const itemName = path.pop();
+      const rawPath = action.payload.startsWith('/') ? action.payload.slice(1) : action.payload;
+      const path = rawPath.split('/');
 
-      const parentPath = path;
+      const parentPath = path.slice(0,-1);
       const parent = parentPath.length ? findItemByPath(state.files, parentPath) : { children: state.files } as BrowserItem;
 
+      console.log('DELETE',path,'parent',parent);
+
       if (parent && parent.type === 'folder' && parent.children) {
-        parent.children = parent.children.filter((item) => item.name !== itemName);
+        parent.children = parent.children.filter((item) => item.path !== action.payload);
+      } else if (parent && !parent.type) {
+        state.files = state.files.filter((item) => item.path !== action.payload);
       }
     },
     saveItem: (state, action: PayloadAction<{ path: string }>) => {
@@ -164,7 +168,7 @@ const filesSlice = createSlice({
 
       console.log('parent', parent);
 
-      if (parent && parent.type && parent.type === 'folder' && parent.children) {
+      if (parent && parent.type && parent.children) {
         parent.children.push({ ...item, children: item.type === 'folder' ? [] : undefined });
       } else if (!parent || !parent.type) {
         // Add at root of file tree.
