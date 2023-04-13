@@ -1,14 +1,16 @@
-// Publish/pdfCompiler.tsx
+// Publish/pdfCompiler.ts
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import htmlToPdfMake from 'html-to-pdfmake';
 import { BrowserItem } from '../redux/filesSlice';
+import { Alignment, Content, Margins, TDocumentDefinitions } from 'pdfmake/interfaces';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 export interface PublishingOptions {
   items: BrowserItem[];
   pageBreaks: string;
+  pageNumbers: string;
 }
 
 const compileDocuments = (options: PublishingOptions) => {
@@ -24,7 +26,7 @@ const compileDocuments = (options: PublishingOptions) => {
       }
     } else if (node.subType === 'document') {
       compiledContent.push(node.content || '');
-        if (options.pageBreaks.includes('Between Documents')) {
+      if (options.pageBreaks.includes('Between Documents')) {
         compiledContent.push({ text: '', pageBreak: 'after' });
       }
     }
@@ -35,15 +37,14 @@ const compileDocuments = (options: PublishingOptions) => {
   return compiledContent;
 };
 
+const getPageNumberPosition = (pageNumbers: string) => {
+  const [vertical, horizontal] = pageNumbers.split(' ');
 
+  const alignment = ['Left','Right'].includes(horizontal) ? horizontal.toLowerCase() : 'center';
+  const margin:Margins = (vertical === 'Top') ? [10,10,10,0] : [10,0,10,10];
 
-// const convertHtmlToPdf = (htmlContent: string) => {
-//   const documentDefinition = {
-//     content: htmlToPdfMake(htmlContent),
-//   };
-
-//   pdfMake.createPdf(documentDefinition).download("document.pdf");
-// };
+  return { alignment, margin };
+};
 
 const fetchImageAsDataURL = async (url: string) => {
   console.log('Fetching image:', url);
@@ -100,7 +101,9 @@ const replaceRemoteImagesWithDataURLs = async (contentArray: any[]): Promise<any
   return updatedContentArray;
 };
 
-const convertHtmlToPdf = async (contentArray: any[]) => {
+type PageNumberOptions = { alignment: string; margin: number[] };
+
+const convertHtmlToPdf = async (contentArray: any[], pageNumberOptions: PageNumberOptions) => {
   const pdfContent = contentArray.map((contentItem) => {
     if (contentItem.type === 'string') {
       return htmlToPdfMake(contentItem.html);
@@ -108,9 +111,32 @@ const convertHtmlToPdf = async (contentArray: any[]) => {
       return contentItem;
     }
   });
-  const documentDefinition = {
+
+  const documentDefinition: TDocumentDefinitions = {
     content: pdfContent.flat(),
   };
+
+  if (pageNumberOptions.margin[1] > 0) {
+    // Top margin is set, so use header
+    documentDefinition.header = (currentPage: number, pageCount: number) => {
+      const pageNumberContent: Content = {
+        text: currentPage.toString() + ' of ' + pageCount,
+        alignment: pageNumberOptions.alignment as Alignment,
+        margin: pageNumberOptions.margin as Margins,
+      };
+      return pageNumberContent;
+    };
+  } else {
+    // Bottom margin is set, so use footer
+    documentDefinition.footer = (currentPage: number, pageCount: number) => {
+      const pageNumberContent: Content = {
+        text: currentPage.toString() + ' of ' + pageCount,
+        alignment: pageNumberOptions.alignment as Alignment,
+        margin: pageNumberOptions.margin as Margins,
+      };
+      return pageNumberContent;
+    };
+  }
 
   pdfMake.createPdf(documentDefinition).download('document.pdf');
 };
@@ -119,7 +145,8 @@ const publishToPdf = async (options: PublishingOptions) => {
   const compiledHtml = compileDocuments(options);
   console.log('content', compiledHtml);
   const contentWithDataURLs = await replaceRemoteImagesWithDataURLs(compiledHtml);
-  await convertHtmlToPdf(contentWithDataURLs);
+  const pageNumberOptions = getPageNumberPosition(options.pageNumbers);
+  await convertHtmlToPdf(contentWithDataURLs, pageNumberOptions);
 };
 
 export default publishToPdf;

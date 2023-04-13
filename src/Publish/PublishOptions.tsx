@@ -16,6 +16,7 @@ const PublishOptions: React.FC<PublishOptionsProps> = ({ optionsOpen, onClose })
   const items = useSelector(selectFiles);
   const [pageBreaks, setPageBreaks] = useState<string>('Nowhere');
   const [publishedItems, setPublishedItems] = useState<BrowserItem[]>(items);
+  const [pageNumberPosition, setPageNumberPosition] = useState<string>('Top Left');
 
   const handleClose = () => {
     onClose();
@@ -25,12 +26,17 @@ const PublishOptions: React.FC<PublishOptionsProps> = ({ optionsOpen, onClose })
     const options: PublishingOptions = {
       items: publishedItems,
       pageBreaks,
+      pageNumbers: pageNumberPosition
     };
     publishToPdf(options);
   };
   
   const handlePageBreaksChange = (event: SelectChangeEvent) => {
     setPageBreaks(event.target.value as string);
+  };
+
+  const handlePageNumberPositionChange = (event: SelectChangeEvent) => {
+    setPageNumberPosition(event.target.value as string);
   };
 
   const handleCheck = (updatedItems: PublishItem[]) => {
@@ -70,6 +76,24 @@ const PublishOptions: React.FC<PublishOptionsProps> = ({ optionsOpen, onClose })
             <MenuItem value="Between Documents">Between Documents</MenuItem>
             <MenuItem value="Between Folders">Between Folders</MenuItem>
             <MenuItem value="Between Folders and Between Documents">Between Folders and Between Documents</MenuItem>
+          </Select>
+        </FormControl>
+
+        {/* Add this FormControl for Page Numbers */}
+        <FormControl fullWidth variant="outlined" sx={{ mt: 2 }}>
+          <InputLabel htmlFor="page-numbers-select">Page Numbers</InputLabel>
+          <Select
+            value={pageNumberPosition}
+            onChange={handlePageNumberPositionChange}
+            label="Page Numbers"
+            inputProps={{ id: 'page-numbers-select' }}
+          >
+            <MenuItem value="Top Left">Top Left</MenuItem>
+            <MenuItem value="Top Middle">Top Middle</MenuItem>
+            <MenuItem value="Top Right">Top Right</MenuItem>
+            <MenuItem value="Bottom Left">Bottom Left</MenuItem>
+            <MenuItem value="Bottom Middle">Bottom Middle</MenuItem>
+            <MenuItem value="Bottom Right">Bottom Right</MenuItem>
           </Select>
         </FormControl>
       </DialogContent>
