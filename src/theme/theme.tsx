@@ -37,7 +37,7 @@ const darkThemeOptions:ExtendedThemeOptions = {
     },
     success: {
       // Green color, typically associated with success messages or positive actions.
-      main: '#4caf50',
+      main: '#60ff82',
     },
     warning: {
       // Yellow color, adjusted for dark mode readability.
@@ -83,7 +83,7 @@ const lightThemeOptions:ExtendedThemeOptions = {
     },
     success: {
       // Green color, adjusted for readability.
-      main: '#90d8b2',
+      main: '#20aa20',
     },
     warning: {
       // Yellow color, typically associated with warning messages or cautionary actions.
@@ -91,7 +91,7 @@ const lightThemeOptions:ExtendedThemeOptions = {
     },
     error: {
       // Red color, adjusted for dark mode readability.
-      main: '#e57373',
+      main: '#bb2222',
     },
     info: {
       // Blue color, adjusted for dark mode readability.

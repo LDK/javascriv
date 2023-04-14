@@ -101,10 +101,10 @@ const PublishOptions: React.FC<PublishOptionsProps> = ({ optionsOpen, onClose })
         </FormControl>
       </DialogContent>
       <DialogActions sx={{ px: 3, pb: 2, pt:0 }}>
-        <Button onClick={handleClose} color="error" variant={dark ? 'text' : 'outlined'} sx={{ fontWeight: 700 }}>
+        <Button onClick={handleClose} color="error" variant={dark ? 'outlined' : 'contained'} sx={{ fontWeight: 700 }}>
           Cancel
         </Button>
-        <Button onClick={handleReady} color="success" variant={dark ? 'outlined' : 'contained'} sx={{ fontWeight: 700 }}>
+        <Button onClick={handleReady} color="success" variant={dark ? 'contained' : 'contained'} sx={{ fontWeight: 700 }}>
           Ready
         </Button>
       </DialogActions>
