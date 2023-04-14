@@ -124,7 +124,7 @@ const App: React.FC = () => {
                 <TinyEditor content={editorContent} initial={initial || ''} onEditorChange={handleEditorChange} />
 
                 <Box pt={2} className="actions" position="absolute" bottom="2rem" width="100%" right="0" textAlign="right">
-                  <Button variant="contained" color="primary"onClick={handleSubmit}>
+                  <Button variant="contained" color="primary" onClick={handleSubmit}>
                     Submit
                   </Button>
 

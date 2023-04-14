@@ -1,6 +1,6 @@
 // Publish/PublishOptions.tsx
 import React, { useEffect, useState } from 'react';
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Select, MenuItem, FormControl, InputLabel, useTheme } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { selectFiles, BrowserItem } from '../redux/filesSlice';
 import PublishTree, { PublishItem } from './PublishTree';
@@ -17,6 +17,9 @@ const PublishOptions: React.FC<PublishOptionsProps> = ({ optionsOpen, onClose })
   const [pageBreaks, setPageBreaks] = useState<string>('Nowhere');
   const [publishedItems, setPublishedItems] = useState<BrowserItem[]>(items);
   const [pageNumberPosition, setPageNumberPosition] = useState<string>('Top Left');
+
+  const theme = useTheme();
+  const dark = theme.palette.mode === 'dark';
 
   const handleClose = () => {
     onClose();
@@ -97,11 +100,11 @@ const PublishOptions: React.FC<PublishOptionsProps> = ({ optionsOpen, onClose })
           </Select>
         </FormControl>
       </DialogContent>
-      <DialogActions>
-        <Button onClick={handleClose} color="primary">
+      <DialogActions sx={{ px: 3, pb: 2, pt:0 }}>
+        <Button onClick={handleClose} color="error" variant={dark ? 'text' : 'outlined'} sx={{ fontWeight: 700 }}>
           Cancel
         </Button>
-        <Button onClick={handleReady} color="primary">
+        <Button onClick={handleReady} color="success" variant={dark ? 'outlined' : 'contained'} sx={{ fontWeight: 700 }}>
           Ready
         </Button>
       </DialogActions>

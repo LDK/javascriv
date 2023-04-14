@@ -1,7 +1,7 @@
 // Publish/PublishTreeItem.tsx
 import { TransitionProps } from '@mui/material/transitions';
 import { TreeItem, treeItemClasses, TreeItemProps } from "@mui/lab";
-import { alpha, Checkbox, Collapse, styled, Typography } from "@mui/material";
+import { alpha, Checkbox, Collapse, styled, Typography, useTheme } from "@mui/material";
 import { animated, useSpring } from '@react-spring/web';
 import { PublishItem } from './PublishTree';
 
@@ -48,6 +48,9 @@ export type FileTreeItemProps = {
 };
 
 const PublishTreeItem: React.FC<FileTreeItemProps> = ({ item, isGreyed, onCheck, publishItems, setPublishItems }) => {
+  const theme = useTheme();
+  const mode = theme.palette.mode;
+
   const handleCheck = (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
     const updatedItems = updatePublishItems(publishItems, item.path, checked);
     setPublishItems(updatedItems);
@@ -79,9 +82,9 @@ const PublishTreeItem: React.FC<FileTreeItemProps> = ({ item, isGreyed, onCheck,
             disabled={isGreyed}
             onChange={handleCheck}
             size="small"
-            color="primary"
+            color={mode === 'dark' ? 'info' : 'primary'}
           />
-          <Typography variant="body2">{item.name}</Typography>
+          <Typography variant="body2" pt={1}>{item.name}</Typography>
         </div>
       }
     >
