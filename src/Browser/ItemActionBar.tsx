@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { BrowserItem, deleteItem } from "../redux/filesSlice";
 import { EditButton, UpButton, DownButton, DeleteButton, MoreButton } from "./ItemActionButtons";
 
-const ItemActionBar = ({ item }: { item: BrowserItem }) => {
+const ItemActionBar = ({ item, onEditClick }: { item: BrowserItem; onEditClick: () => void }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [deleting, setDeleting] = useState(false);
 
@@ -38,6 +38,11 @@ const ItemActionBar = ({ item }: { item: BrowserItem }) => {
     // Handle the click event for each icon, e.g., delete, edit, move up, move down, and more
   };
 
+  const handleEditClick = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    onEditClick();
+  };
+
   const handleDeleteConfirm = () => {
     dispatch(deleteItem(item.path));
     setDeleting(false);
@@ -55,7 +60,7 @@ const ItemActionBar = ({ item }: { item: BrowserItem }) => {
   return (
     <>
       <Box sx={{ marginLeft: "auto", display: "flex", alignItems: "center", visibility: "hidden" }}>
-        <EditButton action={handleIconClick} />
+        <EditButton action={handleEditClick} />
         <UpButton action={handleIconClick} />
         <DownButton action={handleIconClick} />
         <DeleteButton action={handleDeleteClick} />

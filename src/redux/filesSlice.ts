@@ -101,9 +101,10 @@ const initialState:FileTreeState = {
 };
 
 export const findItemByPath = (items: BrowserItem[], path: string[]): BrowserItem | undefined => {
-  if (!path.length) return undefined;
+  const filteredPath = path.filter(p => p !== '');
+  if (!filteredPath.length) return undefined;
 
-  const [head, ...tail] = path;
+  const [head, ...tail] = filteredPath;
   const item = items.find((i) => i.name === head);
 
   if (!item || !tail.length || item.type === 'file') {
@@ -130,6 +131,37 @@ const filesSlice = createSlice({
         const cleanContent = content.replace(/\n/g, '').trim();
     
         item.changed = cleanInitialContent !== cleanContent;
+      }
+    },
+    setName: (state, action: PayloadAction<{ path: string; newName: string }>) => {
+      const { path, newName } = action.payload;
+      const item = findItemByPath(state.files, path.split('/'));
+    
+      console.log('path', path, 'new name', newName, 'item', item);
+
+      if (item) {
+        item.changed = item.name !== newName;
+        item.name = newName;
+    
+        const pathParts = path.split('/');
+        pathParts[pathParts.length - 1] = newName;
+        item.path = pathParts.join('/');
+    
+        const updateChildPaths = (children: BrowserItem[], level: number) => {
+          children.forEach(child => {
+            const childPathParts = child.path.split('/');
+            childPathParts[childPathParts.length - level - 1] = newName;
+            child.path = childPathParts.join('/');
+    
+            if (child.type === 'folder' && child.children) {
+              updateChildPaths(child.children, level + 1);
+            }
+          });
+        };
+    
+        if (item.type === 'folder' && item.children) {
+          updateChildPaths(item.children, 1);
+        }
       }
     },
     setOpenFilePath: (state, action: PayloadAction<string>) => {
@@ -178,7 +210,7 @@ const filesSlice = createSlice({
   },
 });
 
-export const { setContent, setOpenFilePath, deleteItem, addItem, saveItem } = filesSlice.actions;
+export const { setContent, setOpenFilePath, deleteItem, addItem, saveItem, setName } = filesSlice.actions;
 
 export const selectFiles = (state: RootState) => state.files.files;
 export const selectOpenFilePath = (state: RootState) => state.files.openFilePath;

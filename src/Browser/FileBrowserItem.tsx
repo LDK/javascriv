@@ -1,8 +1,9 @@
 // Browser/FileBrowserItem.tsx
+import { KeyboardEventHandler, useCallback, useEffect, useRef } from "react";
 import { SxProps, Box, PaletteMode, ListItem, ListItemIcon, ListItemText, Collapse, List, useTheme } from "@mui/material";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { BrowserItem, setOpenFilePath } from "../redux/filesSlice";
+import { BrowserItem, setName, setOpenFilePath } from "../redux/filesSlice";
 import { ExtendedPalette } from "../theme/theme";
 
 import { Folder, Description as DocIcon, Image as ImageIcon, ExpandMore, ExpandLess, InsertDriveFile } from '@mui/icons-material';
@@ -21,6 +22,9 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, path 
   const isFolder = item.type === 'folder';
   const fullPath = [...path, item.name].join('/');
   const [open, setOpen] = useState<boolean>(Boolean(isFolder && openFilePath && openFilePath.startsWith(fullPath)));
+
+  const [renaming, setRenaming] = useState(false);
+  const renameInputRef = useRef<HTMLInputElement>(null);
 
   const dispatch = useDispatch();
 
@@ -58,6 +62,34 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, path 
     }
   };  
 
+  const handleEditClick = useCallback(() => {
+    setRenaming(true);
+  }, []);
+
+  const handleItemRename = () => {
+    // Call your renaming function here
+    const newName = renameInputRef.current?.value || item.name;
+    console.log('handle rename', newName);
+    dispatch(setName({ path: item.path, newName: newName }));
+    setRenaming(false);
+  };
+
+  const handleRenameBlur = () => {
+    handleItemRename();
+  };
+
+  const handleRenameKeyPress: KeyboardEventHandler<HTMLInputElement> = (event) => {
+    if (event.key === "Enter") {
+      handleItemRename();
+    }
+  };
+
+  useEffect(() => {
+    if (renaming && renameInputRef.current) {
+      renameInputRef.current.focus();
+    }
+  }, [renaming]);
+
   const getIcon = () => {
     if (isFolder) return <Folder />;
     if (item.subType === 'document') return <DocIcon />;
@@ -91,16 +123,26 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, path 
         <Box sx={{ flexGrow: 1, display: "flex", alignItems: "center" }}>
           <ListItemText
             primary={
-              <>
-                {item.name}
-                {getOpenCloseIcon()}
-              </>
+              renaming ? (
+                <input
+                  ref={renameInputRef}
+                  defaultValue={item.name}
+                  onBlur={handleRenameBlur}
+                  onKeyPress={handleRenameKeyPress}
+                  style={{ border: "none", outline: "none", background: "transparent", color: "inherit" }}
+                />
+              ) : (
+                <>
+                  {item.name}
+                  {getOpenCloseIcon()}
+                </>
+              )
             }
             primaryTypographyProps={{
               style: { color: item.changed ? palette.warning[isOpenPath ? 'main' : opposite] : 'inherit' },
             }}
           />
-          <ItemActionBar {...{ item }} />
+          <ItemActionBar {...{ item }} onEditClick={handleEditClick} />
         </Box>
       </ListItem>
 
