@@ -9,13 +9,21 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { generateGoogleFontsLink } from './Editor/EditorFonts';
 
 const googleFontsLink = generateGoogleFontsLink();
-const linkElement = document.createElement('link');
-linkElement.href = googleFontsLink;
-linkElement.rel = 'stylesheet';
-linkElement.type = 'text/css';
+// const linkElement = document.createElement('link');
+// linkElement.href = googleFontsLink;
+// linkElement.rel = 'stylesheet';
+// linkElement.type = 'text/css';
 
-document.head.appendChild(linkElement);
+// document.head.appendChild(linkElement);
 
+fetch(googleFontsLink)
+  .then((response) => response.text())
+  .then((css) => {
+    const style = document.createElement('style');
+    style.textContent = css;
+    document.head.appendChild(style);
+  });
+  
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );

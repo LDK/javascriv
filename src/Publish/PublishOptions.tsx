@@ -5,7 +5,8 @@ import { useSelector } from 'react-redux';
 import { selectFiles, BrowserItem } from '../redux/filesSlice';
 import PublishTree, { PublishItem } from './PublishTree';
 import { SelectChangeEvent } from '@mui/material/Select';
-import publishToPdf, { PublishingOptions } from './pdfCompiler';
+import publishToPdf from './pdfCompiler';
+import { PublishingOptions } from './publishing';
 
 export interface PublishOptionsProps {
   optionsOpen: boolean;
