@@ -3,7 +3,11 @@ import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import htmlToPdfMake from 'html-to-pdfmake';
 import { BrowserItem } from '../redux/filesSlice';
-import { Alignment, Content, Margins, TDocumentDefinitions } from 'pdfmake/interfaces';
+import { TDocumentDefinitions } from 'pdfmake/interfaces';
+import { editorFonts } from '../Editor/EditorFonts';
+import { replaceRemoteImagesWithDataURLs } from './pdfImages';
+import { addPageNumbers } from './pdfPageNumbers';
+import { generateFontConfig } from './pdfFonts';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -37,73 +41,7 @@ const compileDocuments = (options: PublishingOptions) => {
   return compiledContent;
 };
 
-const getPageNumberPosition = (pageNumbers: string) => {
-  const [vertical, horizontal] = pageNumbers.split(' ');
-
-  const alignment = ['Left','Right'].includes(horizontal) ? horizontal.toLowerCase() : 'center';
-  const margin:Margins = (vertical === 'Top') ? [10,10,10,0] : [10,0,10,10];
-
-  return { alignment, margin };
-};
-
-const fetchImageAsDataURL = async (url: string) => {
-  console.log('Fetching image:', url);
-  try {
-    const response = await fetch(url);
-    const blob = await response.blob();
-    return new Promise<string>((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onloadend = () => resolve(reader.result as string);
-      reader.onerror = reject;
-      reader.readAsDataURL(blob);
-    });
-  } catch (error) {
-    console.error('Error fetching image:', url, error);
-    throw error;
-  }
-};
-
-const replaceRemoteImagesWithDataURLs = async (contentArray: any[]): Promise<any[]> => {
-  console.log('replaceremote');
-  const updatedContentArray = await Promise.all(
-    contentArray.map(async (content) => {
-      if (typeof content === 'string') {
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(content, 'text/html');
-        const images = doc.querySelectorAll('img');
-        console.log('images', images);
-        const promises = [];
-
-        for (const img of images) {
-          const src = img.getAttribute('src');
-          console.log('src!', src);
-          if (src && src.startsWith('http')) {
-            const promise = fetchImageAsDataURL(src)
-              .then((dataUrl) => {
-                img.setAttribute('src', dataUrl);
-              })
-              .catch((error) => {
-                console.warn(`Failed to fetch image: ${src}`, error);
-              });
-            promises.push(promise);
-          }
-        }
-
-        await Promise.all(promises);
-        return { html: doc.body.innerHTML, type: 'string' };
-      } else {
-        console.log('else content', content);
-        return content;
-      }
-    })
-  );
-
-  return updatedContentArray;
-};
-
-type PageNumberOptions = { alignment: string; margin: number[] };
-
-const convertHtmlToPdf = async (contentArray: any[], pageNumberOptions: PageNumberOptions) => {
+const convertHtmlToPdf = async (contentArray: any[], options: PublishingOptions) => {
   const pdfContent = contentArray.map((contentItem) => {
     if (contentItem.type === 'string') {
       return htmlToPdfMake(contentItem.html);
@@ -112,41 +50,36 @@ const convertHtmlToPdf = async (contentArray: any[], pageNumberOptions: PageNumb
     }
   });
 
-  const documentDefinition: TDocumentDefinitions = {
+  // Generate styles for all defined fonts
+  const styles = Object.keys(pdfMake.fonts).reduce<{ [key: string]: { font: string; bold?: boolean; italics?: boolean } }>((config, sanitizedFontName) => {
+    config[sanitizedFontName] = { font: sanitizedFontName };
+    config[`${sanitizedFontName}Bold`] = { font: sanitizedFontName, bold: true };
+    config[`${sanitizedFontName}Italic`] = { font: sanitizedFontName, italics: true };
+    config[`${sanitizedFontName}BoldItalic`] = { font: sanitizedFontName, bold: true, italics: true };
+    return config;
+  }, {});
+
+  let documentDefinition: TDocumentDefinitions = {
     content: pdfContent.flat(),
+    styles,
   };
 
-  if (pageNumberOptions.margin[1] > 0) {
-    // Top margin is set, so use header
-    documentDefinition.header = (currentPage: number, pageCount: number) => {
-      const pageNumberContent: Content = {
-        text: currentPage.toString() + ' of ' + pageCount,
-        alignment: pageNumberOptions.alignment as Alignment,
-        margin: pageNumberOptions.margin as Margins,
-      };
-      return pageNumberContent;
-    };
-  } else {
-    // Bottom margin is set, so use footer
-    documentDefinition.footer = (currentPage: number, pageCount: number) => {
-      const pageNumberContent: Content = {
-        text: currentPage.toString() + ' of ' + pageCount,
-        alignment: pageNumberOptions.alignment as Alignment,
-        margin: pageNumberOptions.margin as Margins,
-      };
-      return pageNumberContent;
-    };
+  if (options.pageNumbers) {
+    documentDefinition = addPageNumbers(documentDefinition, options.pageNumbers);
   }
 
   pdfMake.createPdf(documentDefinition).download('document.pdf');
 };
 
 const publishToPdf = async (options: PublishingOptions) => {
+  const { vfs, fonts } = await generateFontConfig(editorFonts, pdfMake.fonts || {}, pdfFonts.pdfMake.vfs);
+
+  pdfMake.vfs = vfs;
+  pdfMake.fonts = fonts;
+
   const compiledHtml = compileDocuments(options);
-  console.log('content', compiledHtml);
   const contentWithDataURLs = await replaceRemoteImagesWithDataURLs(compiledHtml);
-  const pageNumberOptions = getPageNumberPosition(options.pageNumbers);
-  await convertHtmlToPdf(contentWithDataURLs, pageNumberOptions);
+  await convertHtmlToPdf(contentWithDataURLs, options);
 };
 
 export default publishToPdf;

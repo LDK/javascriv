@@ -1,8 +1,8 @@
-// Editor/TinyEditor.tsx
 import React, { useEffect, useRef } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import { Editor as MyEditor } from 'tinymce';
 import { Box, useTheme } from '@mui/material';
+import { familyFonts, generateGoogleFontsLink, googleFontFamilies } from './EditorFonts';
 
 interface TinyEditorProps {
   content: string | null;
@@ -51,11 +51,15 @@ const TinyEditor: React.FC<TinyEditorProps> = ({ content, initial, onEditorChang
             'insertdatetime', 'media', 'table', 'help', 'wordcount',
           ],
           toolbar: [
-            'undo redo | styles | image | bold italic backcolor | removeformat | help',
-            'alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table'
+            'undo redo | styles | editimage | bold italic backcolor | removeformat | help',
+            'alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table',
+            'fontfamily fontsize', // Add these for font family and font size
           ],
-          skin: theme.palette.mode === 'dark' ? 'oxide-dark' : undefined, // Use the custom skin located in the public/skin folder
-          content_css: theme.palette.mode === 'dark' ? 'dark' : undefined, // Use the custom content CSS located in the public/skin folder
+          skin: theme.palette.mode === 'dark' ? 'oxide-dark' : undefined,
+          font_family_formats: familyFonts,
+          content_style: `@import url('${generateGoogleFontsLink()}');`,
+          content_css: theme.palette.mode === 'dark' ? 'dark' : undefined,
+          font_size_formats: '8pt 10pt 12pt 14pt 18pt 24pt 36pt',
         }}
         onEditorChange={handleEditorChange}
       />
