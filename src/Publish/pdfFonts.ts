@@ -41,8 +41,8 @@ export const generateFontConfig = async (fonts: EditorFont[], pdfFonts:TFontDict
 
     const normalFontFileName = `${sanitizedFontName.replace(/ /g,'')}-Regular.ttf`;
     const boldFontFileName = `${sanitizedFontName.replace(/ /g,'')}-Bold.ttf`;
-    const italicsFontFileName = `${sanitizedFontName.replace(/ /g,'')}-Italics.ttf`;
-    const boldItalicsFontFileName = `${sanitizedFontName.replace(/ /g,'')}-BoldItalics.ttf`;
+    const italicsFontFileName = `${sanitizedFontName.replace(/ /g,'')}-Italic.ttf`;
+    const boldItalicsFontFileName = `${sanitizedFontName.replace(/ /g,'')}-BoldItalic.ttf`;
 
     const normalFontFileUrl = `/fonts/${fontId}/${normalFontFileName}`;
     const boldFontFileUrl = `/fonts/${fontId}/${boldFontFileName}`;
@@ -65,17 +65,18 @@ export const generateFontConfig = async (fonts: EditorFont[], pdfFonts:TFontDict
     if (boldItalicsExists) vfs[boldItalicsFontFileName] = boldItalicsFontDataUrl.split(',')[1];
 
     const fontVariations = (normalExists) ? {
-      ...(normalExists ? { normal: normalFontFileName } : {}),
-      ...(boldExists ? { bold: boldFontFileName } : {}),
-      ...(italicsExists ? { italics: italicsFontFileName } : {}),
-      ...(boldItalicsExists ? { bolditalics: boldItalicsFontFileName } : {}),
+      normal: normalFontFileName,
+      bold: (boldExists ? boldFontFileName : normalFontFileName),
+      italics: (italicsExists ? italicsFontFileName : (boldExists ? boldFontFileName : normalFontFileName)),
+      bolditalics: boldItalicsExists ? boldItalicsFontFileName : (boldExists ? boldFontFileName : (italicsExists ? italicsFontFileName : normalFontFileName)),
     } : undefined;
 
-    // Set the font in pdfMake.fonts
     if (fontVariations) {
       pdfFonts[sanitizedFontName] = fontVariations;
     }
   }
+
+  console.log('tha fonts', pdfFonts);
 
   return { fonts: pdfFonts, vfs };
 };

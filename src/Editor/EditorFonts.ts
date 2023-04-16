@@ -49,9 +49,12 @@ export const familyFonts = generateFontFamilyFormats(editorFonts);
 export const googleFontFamilies = generateFontFamilyFormats(googleFonts);
 
 export const generateGoogleFontsLink = () => {
-  const googleFontFamilies = googleFonts.map((font) => font.name.replace(' ', '+'));
+  // const googleFontFamilies = googleFonts.map((font) => font.name.replace(' ', '+'));
 
-  const googleFontsUrl = 'https://fonts.googleapis.com/css?family=' + googleFontFamilies.join('|') + '&display=swap';
+  // const googleFontsUrl = 'https://fonts.googleapis.com/css?family=' + googleFontFamilies.join('|') + '&display=swap';
 
-  return googleFontsUrl;
+  // return googleFontsUrl;
+
+  // For now, we'll just return a static download of the generated google fonts, since google is giving us CORS errors
+  return '/css/google-fonts.css';
 };
