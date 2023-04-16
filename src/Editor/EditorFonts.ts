@@ -6,8 +6,6 @@ export type EditorFont = {
 
 export const googleFonts: EditorFont[] = [
   { name: 'Libre Baskerville', value: 'Libre Baskerville, serif' },
-  { name: 'Didot', value: 'Didot, serif' },
-  { name: 'Futura', value: 'Futura, sans-serif' },
   { name: 'Garamond', value: 'EB Garamond, serif' },
   { name: 'Lato', value: 'Lato, sans-serif' },
   { name: 'Merriweather', value: 'Merriweather, serif' },
@@ -28,6 +26,8 @@ export const customFonts: EditorFont[] = [
   { name: 'Arial', value: 'Arial, Helvetica, sans-serif' },
   { name: 'Caslon', value: 'Caslon, serif' },
   { name: 'Courier New', value: 'Courier New, Courier, monospace' },
+  { name: 'Didot', value: 'Didot, serif' },
+  { name: 'Futura', value: 'Futura, sans-serif' },
   { name: 'Gill Sans', value: 'Gill Sans, sans-serif' },
   { name: 'Helvetica', value: 'Helvetica, sans-serif' },
   { name: 'Palatino', value: 'Palatino, Palatino Linotype, serif' },
