@@ -14,6 +14,7 @@ const fetchFontAsDataUrl = async (url: string): Promise<string> => {
       const reader = new FileReader();
       reader.onloadend = () => {
         if (reader.result) {
+          console.log(`Fetched font data for URL: ${url}`, reader.result);
           resolve(reader.result as string);
         } else {
           reject(new Error('Failed to load font data.'));
@@ -53,10 +54,10 @@ export const generateFontConfig = async (fonts: EditorFont[], pdfFonts:TFontDict
     const italicsFontDataUrl = await fetchFontAsDataUrl(italicsFontFileUrl);
     const boldItalicsFontDataUrl = await fetchFontAsDataUrl(boldItalicsFontFileUrl);
 
-    const normalExists = normalFontDataUrl !== '';
-    const boldExists = boldFontDataUrl !== '';
-    const italicsExists = italicsFontDataUrl !== '';
-    const boldItalicsExists = boldItalicsFontDataUrl !== '';
+    const normalExists = normalFontDataUrl.startsWith('data:font/ttf');
+    const boldExists = boldFontDataUrl.startsWith('data:font/ttf');
+    const italicsExists = italicsFontDataUrl.startsWith('data:font/ttf');
+    const boldItalicsExists = boldItalicsFontDataUrl.startsWith('data:font/ttf');
 
     if (normalExists) vfs[normalFontFileName] = normalFontDataUrl.split(',')[1];
     if (boldExists) vfs[boldFontFileName] = boldFontDataUrl.split(',')[1];
@@ -81,7 +82,7 @@ export const generateFontConfig = async (fonts: EditorFont[], pdfFonts:TFontDict
 
 export const addFontStyles = (docDef: TDocumentDefinitions, fonts: TFontDictionary): TDocumentDefinitions => {
   if (fonts) {
-    let existingStyles:StyleDictionary = docDef.styles ? {...docDef.styles} : {};
+    let existingStyles: StyleDictionary = docDef.styles ? { ...docDef.styles } : {};
 
     // Generate styles for all defined fonts
     const fontStyles = Object.keys(fonts).reduce<{ [key: string]: { font: string; bold?: boolean; italics?: boolean } }>((config, fontName) => {
@@ -92,8 +93,16 @@ export const addFontStyles = (docDef: TDocumentDefinitions, fonts: TFontDictiona
       return config;
     }, {});
 
-    docDef.styles = {...existingStyles, fontStyles};
+    docDef.styles = { ...existingStyles, ...fontStyles };
+
+    // Set Lato as the default font
+    if (fonts['Lato']) {
+      docDef.defaultStyle = {
+        ...docDef.defaultStyle,
+        font: 'Lato',
+      };
+    }
   }
 
   return docDef;
-}
+};

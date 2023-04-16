@@ -69,6 +69,8 @@ const publishToPdf = async (options: PublishingOptions) => {
   pdfMake.vfs = vfs;
   pdfMake.fonts = fonts;
 
+  console.log('pdfmake', pdfMake);
+
   const compiledHtml = compileDocuments(options);
   const contentWithDataURLs = await replaceRemoteImagesWithDataURLs(compiledHtml);
   await convertHtmlToPdf(contentWithDataURLs, options);
