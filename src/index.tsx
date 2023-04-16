@@ -6,15 +6,15 @@ import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { store, persistor } from './redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
-import { generateGoogleFontsLink } from './Editor/EditorFonts';
+// import { generateGoogleFontsLink } from './Editor/EditorFonts';
 
-const googleFontsLink = generateGoogleFontsLink();
-const linkElement = document.createElement('link');
-linkElement.href = googleFontsLink;
-linkElement.rel = 'stylesheet';
-linkElement.type = 'text/css';
+// const googleFontsLink = generateGoogleFontsLink();
+// const linkElement = document.createElement('link');
+// linkElement.href = googleFontsLink;
+// linkElement.rel = 'stylesheet';
+// linkElement.type = 'text/css';
 
-document.head.appendChild(linkElement);
+// document.head.appendChild(linkElement);
 
 // fetch(googleFontsLink)
 //   .then((response) => response.text())
