@@ -12,6 +12,7 @@ const googleFontsLink = generateGoogleFontsLink();
 const linkElement = document.createElement('link');
 linkElement.href = googleFontsLink;
 linkElement.rel = 'stylesheet';
+linkElement.type = 'text/css';
 
 document.head.appendChild(linkElement);
 
