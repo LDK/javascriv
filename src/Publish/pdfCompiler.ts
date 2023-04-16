@@ -7,7 +7,7 @@ import { TDocumentDefinitions } from 'pdfmake/interfaces';
 import { editorFonts } from '../Editor/EditorFonts';
 import { replaceRemoteImagesWithDataURLs } from './pdfImages';
 import { addPageNumbers } from './pdfPageNumbers';
-import { generateFontConfig } from './pdfFonts';
+import { addFontStyles, generateFontConfig } from './pdfFonts';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -50,19 +50,11 @@ const convertHtmlToPdf = async (contentArray: any[], options: PublishingOptions)
     }
   });
 
-  // Generate styles for all defined fonts
-  const styles = Object.keys(pdfMake.fonts).reduce<{ [key: string]: { font: string; bold?: boolean; italics?: boolean } }>((config, sanitizedFontName) => {
-    config[sanitizedFontName] = { font: sanitizedFontName };
-    config[`${sanitizedFontName}Bold`] = { font: sanitizedFontName, bold: true };
-    config[`${sanitizedFontName}Italic`] = { font: sanitizedFontName, italics: true };
-    config[`${sanitizedFontName}BoldItalic`] = { font: sanitizedFontName, bold: true, italics: true };
-    return config;
-  }, {});
-
   let documentDefinition: TDocumentDefinitions = {
-    content: pdfContent.flat(),
-    styles,
+    content: pdfContent.flat()
   };
+
+  documentDefinition = addFontStyles(documentDefinition, pdfMake.fonts);
 
   if (options.pageNumbers) {
     documentDefinition = addPageNumbers(documentDefinition, options.pageNumbers);
@@ -83,3 +75,4 @@ const publishToPdf = async (options: PublishingOptions) => {
 };
 
 export default publishToPdf;
+

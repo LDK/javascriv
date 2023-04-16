@@ -1,3 +1,4 @@
+// Publish/pdfPageNumbers.ts
 import { Margins, Content, Alignment, TDocumentDefinitions } from "pdfmake/interfaces";
 
 export type PageNumberOptions = { alignment: string; margin: number[] };

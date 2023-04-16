@@ -1,4 +1,5 @@
-import { TFontDictionary } from "pdfmake/interfaces";
+// Publish/pdfFonts.ts
+import { StyleDictionary, TDocumentDefinitions, TFontDictionary } from "pdfmake/interfaces";
 import { EditorFont } from "../Editor/EditorFonts";
 
 type VFS = {
@@ -75,6 +76,24 @@ export const generateFontConfig = async (fonts: EditorFont[], pdfFonts:TFontDict
     }
   }
 
-  console.log('pdfmake fonts', pdfFonts);
   return { fonts: pdfFonts, vfs };
 };
+
+export const addFontStyles = (docDef: TDocumentDefinitions, fonts: TFontDictionary): TDocumentDefinitions => {
+  if (fonts) {
+    let existingStyles:StyleDictionary = docDef.styles ? {...docDef.styles} : {};
+
+    // Generate styles for all defined fonts
+    const fontStyles = Object.keys(fonts).reduce<{ [key: string]: { font: string; bold?: boolean; italics?: boolean } }>((config, fontName) => {
+      config[fontName] = { font: fontName };
+      config[`${fontName}Bold`] = { font: fontName, bold: true };
+      config[`${fontName}Italic`] = { font: fontName, italics: true };
+      config[`${fontName}BoldItalic`] = { font: fontName, bold: true, italics: true };
+      return config;
+    }, {});
+
+    docDef.styles = {...existingStyles, fontStyles};
+  }
+
+  return docDef;
+}
