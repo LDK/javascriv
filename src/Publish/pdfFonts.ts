@@ -14,7 +14,6 @@ const fetchFontAsDataUrl = async (url: string): Promise<string> => {
       const reader = new FileReader();
       reader.onloadend = () => {
         if (reader.result) {
-          console.log(`Fetched font data for URL: ${url}`, reader.result);
           resolve(reader.result as string);
         } else {
           reject(new Error('Failed to load font data.'));
@@ -31,19 +30,19 @@ const fetchFontAsDataUrl = async (url: string): Promise<string> => {
   }
 };
 
-// Helper function to generate the pdfMake font configuration object for ttf fonts.
+// Helper function to generate the pdfMake font configuration object for ttf/otf fonts.
 export const generateFontConfig = async (fonts: EditorFont[], pdfFonts:TFontDictionary, vfs:VFS) => {
-  // Initialize pdfFonts object if it is undefined
-  
   for (const font of fonts) {
     const ext = font.extension || 'ttf';
     const sanitizedFontName = font.name.replace(/ /g, '');
     const fontId = sanitizedFontName.toLowerCase(); // Replace all spaces in the font name
 
-    const normalFontFileName = `${sanitizedFontName.replace(/ /g,'')}-Regular.${ext}`;
-    const boldFontFileName = `${sanitizedFontName.replace(/ /g,'')}-Bold.${ext}`;
-    const italicsFontFileName = `${sanitizedFontName.replace(/ /g,'')}-Italic.${ext}`;
-    const boldItalicsFontFileName = `${sanitizedFontName.replace(/ /g,'')}-BoldItalic.${ext}`;
+    const baseFontFileName = sanitizedFontName.replace(/ /g,'');
+
+    const normalFontFileName = `${baseFontFileName}-Regular.${ext}`;
+    const boldFontFileName = `${baseFontFileName}-Bold.${ext}`;
+    const italicsFontFileName = `${baseFontFileName}-Italic.${ext}`;
+    const boldItalicsFontFileName = `${baseFontFileName}-BoldItalic.${ext}`;
 
     const normalFontFileUrl = `/fonts/${fontId}/${normalFontFileName}`;
     const boldFontFileUrl = `/fonts/${fontId}/${boldFontFileName}`;
@@ -54,6 +53,10 @@ export const generateFontConfig = async (fonts: EditorFont[], pdfFonts:TFontDict
     const boldFontDataUrl = await fetchFontAsDataUrl(boldFontFileUrl);
     const italicsFontDataUrl = await fetchFontAsDataUrl(italicsFontFileUrl);
     const boldItalicsFontDataUrl = await fetchFontAsDataUrl(boldItalicsFontFileUrl);
+
+    if (ext === 'otf') {
+      console.log('OTF url', normalFontFileUrl);
+    }
 
     const normalExists = normalFontDataUrl.startsWith('data:font');
     const boldExists = boldFontDataUrl.startsWith('data:font');
