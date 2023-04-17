@@ -36,13 +36,14 @@ export const generateFontConfig = async (fonts: EditorFont[], pdfFonts:TFontDict
   // Initialize pdfFonts object if it is undefined
   
   for (const font of fonts) {
+    const ext = font.extension || 'ttf';
     const sanitizedFontName = font.name.replace(/ /g, '');
     const fontId = sanitizedFontName.toLowerCase(); // Replace all spaces in the font name
 
-    const normalFontFileName = `${sanitizedFontName.replace(/ /g,'')}-Regular.ttf`;
-    const boldFontFileName = `${sanitizedFontName.replace(/ /g,'')}-Bold.ttf`;
-    const italicsFontFileName = `${sanitizedFontName.replace(/ /g,'')}-Italic.ttf`;
-    const boldItalicsFontFileName = `${sanitizedFontName.replace(/ /g,'')}-BoldItalic.ttf`;
+    const normalFontFileName = `${sanitizedFontName.replace(/ /g,'')}-Regular.${ext}`;
+    const boldFontFileName = `${sanitizedFontName.replace(/ /g,'')}-Bold.${ext}`;
+    const italicsFontFileName = `${sanitizedFontName.replace(/ /g,'')}-Italic.${ext}`;
+    const boldItalicsFontFileName = `${sanitizedFontName.replace(/ /g,'')}-BoldItalic.${ext}`;
 
     const normalFontFileUrl = `/fonts/${fontId}/${normalFontFileName}`;
     const boldFontFileUrl = `/fonts/${fontId}/${boldFontFileName}`;
@@ -54,10 +55,10 @@ export const generateFontConfig = async (fonts: EditorFont[], pdfFonts:TFontDict
     const italicsFontDataUrl = await fetchFontAsDataUrl(italicsFontFileUrl);
     const boldItalicsFontDataUrl = await fetchFontAsDataUrl(boldItalicsFontFileUrl);
 
-    const normalExists = normalFontDataUrl.startsWith('data:font/ttf');
-    const boldExists = boldFontDataUrl.startsWith('data:font/ttf');
-    const italicsExists = italicsFontDataUrl.startsWith('data:font/ttf');
-    const boldItalicsExists = boldItalicsFontDataUrl.startsWith('data:font/ttf');
+    const normalExists = normalFontDataUrl.startsWith('data:font');
+    const boldExists = boldFontDataUrl.startsWith('data:font');
+    const italicsExists = italicsFontDataUrl.startsWith('data:font');
+    const boldItalicsExists = boldItalicsFontDataUrl.startsWith('data:font');
 
     if (normalExists) vfs[normalFontFileName] = normalFontDataUrl.split(',')[1];
     if (boldExists) vfs[boldFontFileName] = boldFontDataUrl.split(',')[1];
@@ -75,8 +76,6 @@ export const generateFontConfig = async (fonts: EditorFont[], pdfFonts:TFontDict
       pdfFonts[sanitizedFontName] = fontVariations;
     }
   }
-
-  console.log('tha fonts', pdfFonts);
 
   return { fonts: pdfFonts, vfs };
 };

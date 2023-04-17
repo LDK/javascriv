@@ -2,6 +2,7 @@
 export type EditorFont = {
   name: string;
   value: string;
+  extension?: 'ttf' | 'otf';
 };
 
 export const googleFonts: EditorFont[] = [
@@ -28,7 +29,7 @@ export const customFonts: EditorFont[] = [
   { name: 'Courier New', value: 'Courier New, Courier, monospace' },
   { name: 'Didot', value: 'Didot, serif' },
   { name: 'Futura', value: 'Futura, sans-serif' },
-  { name: 'Gill Sans', value: 'Gill Sans, sans-serif' },
+  { name: 'Gill Sans', value: 'Gill Sans, sans-serif', extension: 'otf' },
   { name: 'Helvetica', value: 'Helvetica, sans-serif' },
   { name: 'Palatino', value: 'Palatino, Palatino Linotype, serif' },
   { name: 'Times New Roman', value: 'Times New Roman, Times, serif' },
