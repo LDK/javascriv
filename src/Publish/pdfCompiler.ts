@@ -7,7 +7,7 @@ import { editorFonts } from '../Editor/EditorFonts';
 import { replaceRemoteImagesWithDataURLs } from './pdfImages';
 import { addPageNumbers } from './pdfPageNumbers';
 import { addFontStyles, generateFontConfig } from './pdfFonts';
-import { PublishingOptions, compileHtml } from './publishing';
+import { PublishingOptions, compileHtml, extractUsedFonts } from './publishing';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -34,15 +34,18 @@ const convertHtmlToPdf = async (contentArray: any[], options: PublishingOptions)
 };
 
 const publishToPdf = async (options: PublishingOptions) => {
-  const { vfs, fonts } = await generateFontConfig(editorFonts, pdfMake.fonts || {}, pdfFonts.pdfMake.vfs);
+  const compiledHtml = compileHtml(options);
+  const joinedHtml = compiledHtml.join('');
+
+  const usedFonts = extractUsedFonts(joinedHtml, editorFonts);
+  const filteredFonts = editorFonts.filter((font) => usedFonts.includes(font.name));
+  const { vfs, fonts } = await generateFontConfig(filteredFonts, pdfMake.fonts || {}, pdfFonts.pdfMake.vfs);
 
   pdfMake.vfs = vfs;
   pdfMake.fonts = fonts;
 
-  const compiledHtml = compileHtml(options);
   const contentWithDataURLs = await replaceRemoteImagesWithDataURLs(compiledHtml);
   await convertHtmlToPdf(contentWithDataURLs, options);
 };
 
 export default publishToPdf;
-
