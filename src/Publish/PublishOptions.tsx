@@ -58,10 +58,6 @@ const PublishOptions: React.FC<PublishOptionsProps> = ({ optionsOpen, onClose })
     setPublishedItems(newItems);
   };
 
-  useEffect(() => {
-    console.log('published items', publishedItems);
-  }, [publishedItems]);
-
   return (
     <Dialog open={optionsOpen} onClose={handleClose} fullWidth maxWidth="sm">
       <DialogTitle>Publish Options</DialogTitle>

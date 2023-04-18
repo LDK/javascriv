@@ -32,6 +32,8 @@ const fetchFontAsDataUrl = async (url: string): Promise<string> => {
 
 // Helper function to generate the pdfMake font configuration object for ttf/otf fonts.
 export const generateFontConfig = async (fonts: EditorFont[], pdfFonts:TFontDictionary, vfs:VFS) => {
+  const apiUrl = 'https://d451p6a2yse39.cloudfront.net';
+
   for (const font of fonts) {
     const ext = font.extension || 'ttf';
     const sanitizedFontName = font.name.replace(/ /g, '');
@@ -44,10 +46,10 @@ export const generateFontConfig = async (fonts: EditorFont[], pdfFonts:TFontDict
     const italicsFontFileName = `${baseFontFileName}-Italic.${ext}`;
     const boldItalicsFontFileName = `${baseFontFileName}-BoldItalic.${ext}`;
 
-    const normalFontFileUrl = `/fonts/${fontId}/${normalFontFileName}`;
-    const boldFontFileUrl = `/fonts/${fontId}/${boldFontFileName}`;
-    const italicsFontFileUrl = `/fonts/${fontId}/${italicsFontFileName}`;
-    const boldItalicsFontFileUrl = `/fonts/${fontId}/${boldItalicsFontFileName}`;
+    const normalFontFileUrl = `${apiUrl}/${fontId}/${normalFontFileName}`;
+    const boldFontFileUrl = `${apiUrl}/${fontId}/${boldFontFileName}`;
+    const italicsFontFileUrl = `${apiUrl}/${fontId}/${italicsFontFileName}`;
+    const boldItalicsFontFileUrl = `${apiUrl}/${fontId}/${boldItalicsFontFileName}`;
 
     const normalFontDataUrl = await fetchFontAsDataUrl(normalFontFileUrl);
     const boldFontDataUrl = await fetchFontAsDataUrl(boldFontFileUrl);
