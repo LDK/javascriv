@@ -24,15 +24,15 @@ export const googleFonts: EditorFont[] = [
 ];
 
 export const customFonts: EditorFont[] = [
-  { name: 'Arial', value: 'Arial, Helvetica, sans-serif' },
+  { name: 'Arial', value: 'Arial, sans-serif' },
   { name: 'Caslon', value: 'Caslon, serif' },
-  { name: 'Courier New', value: 'Courier New, Courier, monospace' },
+  { name: 'Courier New', value: 'Courier New, monospace' },
   { name: 'Didot', value: 'Didot, serif' },
   { name: 'Futura', value: 'Futura, sans-serif' },
   { name: 'Gill Sans', value: 'Gill Sans, sans-serif', extension: 'otf' },
   { name: 'Helvetica', value: 'Helvetica, sans-serif' },
-  { name: 'Palatino', value: 'Palatino, Palatino Linotype, serif' },
-  { name: 'Times New Roman', value: 'Times New Roman, Times, serif' },
+  { name: 'Palatino', value: 'Palatino, serif' },
+  { name: 'Times New Roman', value: 'Times New Roman, serif' },
 ];
 
 export const editorFonts: EditorFont[] = [...googleFonts, ...customFonts].sort((a, b) =>
