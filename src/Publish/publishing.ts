@@ -34,7 +34,7 @@ export const compileHtml = (options: PublishingOptions) => {
 };
 
 export const extractUsedFonts = (html: string, availableFonts: EditorFont[]): string[] => {
-  const usedFonts: string[] = [];
+  const usedFonts: string[] = ['Roboto'];
 
   // Find all font-family declarations
   const fontFamilyRegex = /font-family: [^;]+;/g;
@@ -60,5 +60,5 @@ export const extractUsedFonts = (html: string, availableFonts: EditorFont[]): st
     }
   }
 
-  return usedFonts;
+  return [...new Set(usedFonts)];
 };

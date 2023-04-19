@@ -6,22 +6,44 @@ type VFS = {
   [file: string]: string;
 };
 
+const getFontMimeType = (url: string): string => {
+  const extension = url.split('.').pop()?.toLowerCase();
+  switch (extension) {
+    case 'otf':
+      return 'font/otf';
+    case 'ttf':
+      return 'font/ttf';
+    case 'woff':
+      return 'font/woff';
+    case 'woff2':
+      return 'font/woff2';
+    default:
+      return 'binary/octet-stream';
+  }
+};
+
 const fetchFontAsDataUrl = async (url: string): Promise<string> => {
   try {
     const response = await fetch(url);
     const blob = await response.blob();
+    const mimeType = getFontMimeType(url);
+
     return new Promise<string>((resolve, reject) => {
       const reader = new FileReader();
+
       reader.onloadend = () => {
         if (reader.result) {
-          resolve(reader.result as string);
+          const resultString = reader.result as string;
+          resolve(resultString.replace('data:binary/octet-stream', `data:${mimeType}`));
         } else {
           reject(new Error('Failed to load font data.'));
         }
       };
+      
       reader.onerror = () => {
         reject(new Error('Failed to read font data.'));
       };
+
       reader.readAsDataURL(blob);
     });
   } catch (error) {
@@ -29,6 +51,7 @@ const fetchFontAsDataUrl = async (url: string): Promise<string> => {
     return '';
   }
 };
+
 
 // Helper function to generate the pdfMake font configuration object for ttf/otf fonts.
 export const generateFontConfig = async (fonts: EditorFont[], pdfFonts:TFontDictionary, vfs:VFS) => {
@@ -59,6 +82,8 @@ export const generateFontConfig = async (fonts: EditorFont[], pdfFonts:TFontDict
     if (ext === 'otf') {
       console.log('OTF url', normalFontFileUrl);
     }
+
+    console.log('normal url', normalFontDataUrl);
 
     const normalExists = normalFontDataUrl.startsWith('data:font');
     const boldExists = boldFontDataUrl.startsWith('data:font');

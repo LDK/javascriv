@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import { Editor as MyEditor } from 'tinymce';
 import { Box, useTheme } from '@mui/material';
-import { familyFonts, generateGoogleFontsLink, googleFontFamilies } from './EditorFonts';
+import { familyFonts, generateGoogleFontsLink } from './EditorFonts';
 
 interface TinyEditorProps {
   content: string | null;
@@ -53,7 +53,7 @@ const TinyEditor: React.FC<TinyEditorProps> = ({ content, initial, onEditorChang
           toolbar: [
             'undo redo | styles | editimage | bold italic backcolor | removeformat | help',
             'alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table',
-            'fontfamily fontsize', // Add these for font family and font size
+            'fontfamily fontsize | code', // Add the "code" button here
           ],
           skin: theme.palette.mode === 'dark' ? 'oxide-dark' : undefined,
           font_family_formats: familyFonts,

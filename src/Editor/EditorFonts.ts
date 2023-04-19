@@ -47,8 +47,6 @@ const generateFontFamilyFormats = (fonts: EditorFont[]) => {
 
 export const familyFonts = generateFontFamilyFormats(editorFonts);
 
-export const googleFontFamilies = generateFontFamilyFormats(googleFonts);
-
 export const generateGoogleFontsLink = () => {
   // const googleFontFamilies = googleFonts.map((font) => font.name.replace(' ', '+'));
 
