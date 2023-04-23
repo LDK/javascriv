@@ -57,6 +57,10 @@ const fetchFontAsDataUrl = async (url: string): Promise<string> => {
 export const generateFontConfig = async (fonts: EditorFont[], pdfFonts:TFontDictionary, vfs:VFS) => {
   const apiUrl = 'https://d451p6a2yse39.cloudfront.net';
 
+  // Fetch the JSON file containing font variants information
+  const response = await fetch(`${apiUrl}/javascriv-fonts.json`);
+  const fontVariants:{[key:string]: string[]} = await response.json();
+
   for (const font of fonts) {
     const ext = font.extension || 'ttf';
     const sanitizedFontName = font.value;
@@ -75,10 +79,10 @@ export const generateFontConfig = async (fonts: EditorFont[], pdfFonts:TFontDict
     const italicsFontFileUrl = `${apiUrl}/${fontId}/${italicsFontFileName}`;
     const boldItalicsFontFileUrl = `${apiUrl}/${fontId}/${boldItalicsFontFileName}`;
 
-    const normalFontDataUrl = await fetchFontAsDataUrl(normalFontFileUrl);
-    const boldFontDataUrl = await fetchFontAsDataUrl(boldFontFileUrl);
-    const italicsFontDataUrl = await fetchFontAsDataUrl(italicsFontFileUrl);
-    const boldItalicsFontDataUrl = await fetchFontAsDataUrl(boldItalicsFontFileUrl);
+    const normalFontDataUrl = !fontVariants[sanitizedFontName].includes('regular') ? '' : await fetchFontAsDataUrl(normalFontFileUrl);
+    const boldFontDataUrl = !fontVariants[sanitizedFontName].includes('bold') ? '' : await fetchFontAsDataUrl(boldFontFileUrl);
+    const italicsFontDataUrl = !fontVariants[sanitizedFontName].includes('italic') ? '' : await fetchFontAsDataUrl(italicsFontFileUrl);
+    const boldItalicsFontDataUrl = !fontVariants[sanitizedFontName].includes('bolditalic') ? '' : await fetchFontAsDataUrl(boldItalicsFontFileUrl);
 
     const normalExists = normalFontDataUrl.startsWith('data:font');
     const boldExists = boldFontDataUrl.startsWith('data:font');
@@ -104,8 +108,6 @@ export const generateFontConfig = async (fonts: EditorFont[], pdfFonts:TFontDict
       pdfFonts[font.value.toLowerCase().split(' ').map((word) =>  word[0].toUpperCase() + word.slice(1)).join('')] = fontVariations;
     }
   }
-
-  console.log('pdfFonts', pdfFonts);
 
   return { fonts: pdfFonts, vfs };
 };
