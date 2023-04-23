@@ -100,8 +100,12 @@ export const generateFontConfig = async (fonts: EditorFont[], pdfFonts:TFontDict
     if (fontVariations) {
       pdfFonts[font.value] = fontVariations;
       pdfFonts[font.value.replace(/ /g,'')] = fontVariations;
+      pdfFonts[font.value.toLowerCase().split(' ').map((word) =>  word[0].toUpperCase() + word.slice(1)).join(' ')] = fontVariations;
+      pdfFonts[font.value.toLowerCase().split(' ').map((word) =>  word[0].toUpperCase() + word.slice(1)).join('')] = fontVariations;
     }
   }
+
+  console.log('pdfFonts', pdfFonts);
 
   return { fonts: pdfFonts, vfs };
 };

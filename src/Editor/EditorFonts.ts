@@ -31,7 +31,6 @@ export const customFonts: EditorFont[] = [
   { name: 'Futura', value: 'Futura' },
   { name: 'Gill Sans', value: 'Gill Sans', extension: 'otf' },
   { name: 'Helvetica', value: 'Helvetica' },
-  { name: 'Palatino', value: 'Palatino' },
   { name: 'Liberation Serif', value: 'Liberation Serif' },
 ];
 
