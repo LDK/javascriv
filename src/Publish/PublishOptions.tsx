@@ -1,5 +1,5 @@
 // Publish/PublishOptions.tsx
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Select, MenuItem, FormControl, InputLabel, useTheme } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { selectFiles, BrowserItem } from '../redux/filesSlice';

@@ -39,10 +39,9 @@ export const extractUsedFonts = (html: string, availableFonts: EditorFont[]): st
   // Find all font-family declarations
   const fontFamilyRegex = /font-family: [^;]+;/g;
   const fontFamilyDeclarations = html.match(fontFamilyRegex);
-  console.log('All font-family declarations:', fontFamilyDeclarations, html);
-
+ 
   const sanitizeFontName = (fontName: string): string => {
-    return fontName.replace(/ /g, '').replace(/'|,serif|,monospace|,sans-serif/gi, '');
+    return fontName.replace(/'|,serif|,monospace|,sans-serif/gi, '');
   };
 
   if (fontFamilyDeclarations) {
@@ -52,10 +51,10 @@ export const extractUsedFonts = (html: string, availableFonts: EditorFont[]): st
     });
 
     for (const font of availableFonts) {
-      const sanitizedFontName = sanitizeFontName(font.name);
+      const sanitizedFontName = sanitizeFontName(font.value);
 
-      if (sanitizedFontFamilyDeclarations.includes(sanitizedFontName) && !usedFonts.includes(font.name)) {
-        usedFonts.push(font.name);
+      if (sanitizedFontFamilyDeclarations.includes(sanitizedFontName) && !usedFonts.includes(font.value)) {
+        usedFonts.push(font.value);
       }
     }
   }

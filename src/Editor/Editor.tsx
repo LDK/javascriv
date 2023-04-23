@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import { Editor as MyEditor } from 'tinymce';
 import { Box, useTheme } from '@mui/material';
-import { familyFonts, generateGoogleFontsLink } from './EditorFonts';
+import { familyFonts, getFontsCSS } from './EditorFonts';
 
 interface TinyEditorProps {
   content: string | null;
@@ -34,7 +34,9 @@ const TinyEditor: React.FC<TinyEditorProps> = ({ content, initial, onEditorChang
       editorRef.current.selection.moveToBookmark(bookmark);
     }
   }, [content]);
-    
+
+  console.log('family fonts', familyFonts);
+
   return (
     <Box width="100%" sx={{ backgroundColor: 'rgba(10, 25, 60)', minHeight: 'calc(100vh - 40px)' }} mt={0}>
       <Editor
@@ -57,7 +59,7 @@ const TinyEditor: React.FC<TinyEditorProps> = ({ content, initial, onEditorChang
           ],
           skin: theme.palette.mode === 'dark' ? 'oxide-dark' : undefined,
           font_family_formats: familyFonts,
-          content_style: `@import url('${generateGoogleFontsLink()}');`,
+          content_style: `@import url('${getFontsCSS()}');`,
           content_css: theme.palette.mode === 'dark' ? 'dark' : undefined,
           font_size_formats: '8pt 10pt 12pt 14pt 18pt 24pt 36pt',
         }}

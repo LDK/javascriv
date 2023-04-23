@@ -6,33 +6,33 @@ export type EditorFont = {
 };
 
 export const googleFonts: EditorFont[] = [
-  { name: 'Libre Baskerville', value: 'Libre Baskerville, serif' },
-  { name: 'Garamond', value: 'EB Garamond, serif' },
-  { name: 'Lato', value: 'Lato, sans-serif' },
-  { name: 'Merriweather', value: 'Merriweather, serif' },
-  { name: 'Montserrat', value: 'Montserrat, sans-serif' },
-  { name: 'Noto Sans', value: 'Noto Sans, sans-serif' },
-  { name: 'Noto Serif', value: 'Noto Serif, serif' },
-  { name: 'Open Sans', value: 'Open Sans, sans-serif' },
-  { name: 'Oswald', value: 'Oswald, sans-serif' },
-  { name: 'PT Sans', value: 'PT Sans, sans-serif' },
-  { name: 'Raleway', value: 'Raleway, sans-serif' },
-  { name: 'Roboto', value: 'Roboto, sans-serif' },
-  { name: 'Rubik', value: 'Rubik, sans-serif' },
-  { name: 'Slabo 27px', value: 'Slabo 27px, serif' },
-  { name: 'Source Sans Pro', value: 'Source Sans Pro, sans-serif' },
+  { name: 'Baskerville', value: 'Libre Baskerville' },
+  { name: 'Garamond', value: 'EB Garamond' },
+  { name: 'Lato', value: 'Lato' },
+  { name: 'Merriweather', value: 'Merriweather' },
+  { name: 'Montserrat', value: 'Montserrat' },
+  { name: 'Noto Sans', value: 'Noto Sans' },
+  { name: 'Noto Serif', value: 'Noto Serif' },
+  { name: 'Open Sans', value: 'Open Sans' },
+  { name: 'Oswald', value: 'Oswald' },
+  { name: 'PT Sans', value: 'PT Sans' },
+  { name: 'Raleway', value: 'Raleway' },
+  { name: 'Roboto', value: 'Roboto' },
+  { name: 'Rubik', value: 'Rubik' },
+  { name: 'Slabo 27px', value: 'Slabo 27px' },
+  { name: 'Source Sans Pro', value: 'Source Sans Pro' },
 ];
 
 export const customFonts: EditorFont[] = [
-  { name: 'Arial', value: 'Arial, sans-serif' },
-  { name: 'Caslon', value: 'Caslon, serif' },
-  { name: 'Courier New', value: 'Courier New, monospace' },
-  { name: 'Didot', value: 'Didot, serif' },
-  { name: 'Futura', value: 'Futura, sans-serif' },
-  { name: 'Gill Sans', value: 'Gill Sans, sans-serif', extension: 'otf' },
-  { name: 'Helvetica', value: 'Helvetica, sans-serif' },
-  { name: 'Palatino', value: 'Palatino, serif' },
-  { name: 'Times New Roman', value: 'Times New Roman, serif' },
+  { name: 'Arial', value: 'Arial' },
+  { name: 'Caslon', value: 'Caslon' },
+  { name: 'Courier New', value: 'Courier New' },
+  { name: 'Didot', value: 'Didot' },
+  { name: 'Futura', value: 'Futura' },
+  { name: 'Gill Sans', value: 'Gill Sans', extension: 'otf' },
+  { name: 'Helvetica', value: 'Helvetica' },
+  { name: 'Palatino', value: 'Palatino' },
+  { name: 'Liberation Serif', value: 'Liberation Serif' },
 ];
 
 export const editorFonts: EditorFont[] = [...googleFonts, ...customFonts].sort((a, b) =>
@@ -47,13 +47,6 @@ const generateFontFamilyFormats = (fonts: EditorFont[]) => {
 
 export const familyFonts = generateFontFamilyFormats(editorFonts);
 
-export const generateGoogleFontsLink = () => {
-  // const googleFontFamilies = googleFonts.map((font) => font.name.replace(' ', '+'));
-
-  // const googleFontsUrl = 'https://fonts.googleapis.com/css?family=' + googleFontFamilies.join('|') + '&display=swap';
-
-  // return googleFontsUrl;
-
-  // For now, we'll just return a static download of the generated google fonts, since google is giving us CORS errors
-  return '/css/google-fonts.css';
+export const getFontsCSS = () => {
+  return 'https://d451p6a2yse39.cloudfront.net/javascriv-fonts.css';
 };

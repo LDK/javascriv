@@ -38,9 +38,8 @@ const publishToPdf = async (options: PublishingOptions) => {
   const joinedHtml = compiledHtml.join('');
 
   const usedFonts = extractUsedFonts(joinedHtml, editorFonts);
-  const filteredFonts = editorFonts.filter((font) => usedFonts.includes(font.name));
+  const filteredFonts = editorFonts.filter((font) => usedFonts.includes(font.value));
   const { vfs, fonts } = await generateFontConfig(filteredFonts, pdfMake.fonts || {}, pdfFonts.pdfMake.vfs);
-
   pdfMake.vfs = vfs;
   pdfMake.fonts = fonts;
 
