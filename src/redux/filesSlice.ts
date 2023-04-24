@@ -136,8 +136,6 @@ const filesSlice = createSlice({
     setName: (state, action: PayloadAction<{ path: string; newName: string }>) => {
       const { path, newName } = action.payload;
       const item = findItemByPath(state.files, path.split('/'));
-    
-      console.log('path', path, 'new name', newName, 'item', item);
 
       if (item) {
         item.changed = item.name !== newName;
@@ -174,8 +172,6 @@ const filesSlice = createSlice({
       const parentPath = path.slice(0,-1);
       const parent = parentPath.length ? findItemByPath(state.files, parentPath) : { children: state.files } as BrowserItem;
 
-      console.log('DELETE',path,'parent',parent);
-
       if (parent && parent.type === 'folder' && parent.children) {
         parent.children = parent.children.filter((item) => item.path !== action.payload);
       } else if (parent && !parent.type) {
@@ -197,8 +193,6 @@ const filesSlice = createSlice({
     ) => {
       const { path, item } = action.payload;
       const parent = path.length ? findItemByPath(state.files, path.split('/')) : { children: state.files } as BrowserItem;
-
-      console.log('parent', parent);
 
       if (parent && parent.type && parent.children) {
         parent.children.push({ ...item, children: item.type === 'folder' ? [] : undefined });

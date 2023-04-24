@@ -114,7 +114,6 @@ export const generateFontConfig = async (fonts: EditorFont[], pdfFonts:TFontDict
 
 export const addFontStyles = (docDef: TDocumentDefinitions, fonts: TFontDictionary): TDocumentDefinitions => {
   if (fonts) {
-    console.log('add fonts', fonts);
     let existingStyles: StyleDictionary = docDef.styles ? { ...docDef.styles } : {};
 
     // Generate styles for all defined fonts
@@ -125,8 +124,6 @@ export const addFontStyles = (docDef: TDocumentDefinitions, fonts: TFontDictiona
       config[`${fontName}BoldItalic`] = { font: fontName, bold: true, italics: true };
       return config;
     }, {});
-
-    console.log('FONT STYLES', fontStyles);
 
     docDef.styles = { ...existingStyles, ...fontStyles };
 

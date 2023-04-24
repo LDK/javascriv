@@ -69,7 +69,6 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, path 
   const handleItemRename = () => {
     // Call your renaming function here
     const newName = renameInputRef.current?.value || item.name;
-    console.log('handle rename', newName);
     dispatch(setName({ path: item.path, newName: newName }));
     setRenaming(false);
   };

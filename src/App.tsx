@@ -60,7 +60,6 @@ const App: React.FC = () => {
       handleFileSave(newItem);
     } else {
       const payload = { path: openFilePath, content: htmlContent };
-      console.log('payload', payload)
       dispatch(setContent(payload));
       const existing = findItemByPath(items, openFilePath.split('/'));
       if (existing) {

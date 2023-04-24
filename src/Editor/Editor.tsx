@@ -35,8 +35,6 @@ const TinyEditor: React.FC<TinyEditorProps> = ({ content, initial, onEditorChang
     }
   }, [content]);
 
-  console.log('family fonts', familyFonts);
-
   return (
     <Box width="100%" sx={{ backgroundColor: 'rgba(10, 25, 60)', minHeight: 'calc(100vh - 40px)' }} mt={0}>
       <Editor
