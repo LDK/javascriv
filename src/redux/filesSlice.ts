@@ -14,7 +14,7 @@ export type BrowserItem = {
   changed?: boolean;
 };
 
-type FileTreeState = {
+export type FileTreeState = {
   files: BrowserItem[];
   openFilePath: string | null;
 };
@@ -165,6 +165,9 @@ const filesSlice = createSlice({
     setOpenFilePath: (state, action: PayloadAction<string>) => {
       state.openFilePath = action.payload;
     },
+    setFiles: (state, action: PayloadAction<BrowserItem[]>) => {
+      state.files = action.payload;
+    },
     deleteItem: (state, action: PayloadAction<string>) => {
       const rawPath = action.payload.startsWith('/') ? action.payload.slice(1) : action.payload;
       const path = rawPath.split('/');
@@ -204,7 +207,7 @@ const filesSlice = createSlice({
   },
 });
 
-export const { setContent, setOpenFilePath, deleteItem, addItem, saveItem, setName } = filesSlice.actions;
+export const { setContent, setOpenFilePath, deleteItem, addItem, saveItem, setName, setFiles } = filesSlice.actions;
 
 export const selectFiles = (state: RootState) => state.files.files;
 export const selectOpenFilePath = (state: RootState) => state.files.openFilePath;

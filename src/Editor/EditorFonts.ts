@@ -6,6 +6,7 @@ export type EditorFont = {
 };
 
 export const googleFonts: EditorFont[] = [
+  { name: 'Amiri', value: 'Amiri' },
   { name: 'Baskerville', value: 'Libre Baskerville' },
   { name: 'Garamond', value: 'EB Garamond' },
   { name: 'Lato', value: 'Lato' },

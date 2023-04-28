@@ -45,6 +45,7 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, path 
   };
   
   const handleItemClick = () => {
+    console.log('handle item click', item);
     if (isFolder) {
       setOpen(!open);
     } else if (item.subType === 'document') {

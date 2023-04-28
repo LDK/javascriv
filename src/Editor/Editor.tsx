@@ -1,3 +1,4 @@
+// Editor/Editor.tsx
 import React, { useEffect, useRef } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import { Editor as MyEditor } from 'tinymce';
@@ -17,6 +18,10 @@ const TinyEditor: React.FC<TinyEditorProps> = ({ content, initial, onEditorChang
   const height="500";
   const theme = useTheme();
 
+  const handleInit = (_event: any, editor: MyEditor) => {
+    editorRef.current = editor;
+  };
+    
   const handleEditorChange = (content: string) => {
     if (onEditorChange) {
       onEditorChange(content);
@@ -24,6 +29,7 @@ const TinyEditor: React.FC<TinyEditorProps> = ({ content, initial, onEditorChang
   };
   
   useEffect(() => {
+    console.log('content useEffect', content, editorRef);
     if (editorRef.current && content !== null) {
       const bookmark = editorRef.current.selection.getBookmark(2, true);
       editorRef.current.undoManager.transact(() => {
@@ -41,6 +47,7 @@ const TinyEditor: React.FC<TinyEditorProps> = ({ content, initial, onEditorChang
         key={`editor-${theme.palette.mode}`}
         apiKey={apiKey}
         initialValue={initial || ''}
+        onInit={handleInit}
         init={{
           height: height,
           menubar: false,
