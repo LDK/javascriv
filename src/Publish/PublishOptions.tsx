@@ -1,5 +1,5 @@
 // Publish/PublishOptions.tsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Select, MenuItem, FormControl, InputLabel, useTheme } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { selectFiles, BrowserItem } from '../redux/filesSlice';
@@ -15,6 +15,9 @@ export interface PublishOptionsProps {
 
 const PublishOptions: React.FC<PublishOptionsProps> = ({ optionsOpen, onClose }) => {
   const items = useSelector(selectFiles);
+
+  console.log('items', items);
+
   const [pageBreaks, setPageBreaks] = useState<string>('Nowhere');
   const [publishedItems, setPublishedItems] = useState<BrowserItem[]>(items);
   const [pageNumberPosition, setPageNumberPosition] = useState<string>('Top Left');
@@ -27,6 +30,7 @@ const PublishOptions: React.FC<PublishOptionsProps> = ({ optionsOpen, onClose })
   };
 
   const handleReady = () => {
+    console.log('handle ready', publishedItems);
     const options: PublishingOptions = {
       items: publishedItems,
       pageBreaks,
@@ -55,8 +59,15 @@ const PublishOptions: React.FC<PublishOptionsProps> = ({ optionsOpen, onClose })
     };
   
     const newItems = filterIncludedItems(updatedItems);
+
+    console.log('new items', newItems);
+
     setPublishedItems(newItems);
   };
+
+  useEffect(() => {
+    setPublishedItems(items);
+  }, [items]);
 
   return (
     <Dialog open={optionsOpen} onClose={handleClose} fullWidth maxWidth="sm">

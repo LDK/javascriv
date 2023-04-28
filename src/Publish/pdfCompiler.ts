@@ -34,6 +34,7 @@ const convertHtmlToPdf = async (contentArray: any[], options: PublishingOptions)
 };
 
 const publishToPdf = async (options: PublishingOptions) => {
+  console.log('publishToPdf', options);
   const compiledHtml = compileHtml(options);
   const joinedHtml = compiledHtml.join('');
 
