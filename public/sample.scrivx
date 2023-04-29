@@ -1,0 +1,1471 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ScrivenerProject Identifier="2E715FEC-C0CE-46BF-AE03-B82CB63F2384" Version="2.0" Creator="SCRMAC-3.3.1-15588" Device="Daniels-MacBook-Air" Author="" Modified="2023-04-28 18:35:09 -0700" ModID="C2DE5D7C-CDC5-4C2D-866D-C4FF224DC792">
+    <Binder>
+        <BinderItem UUID="F258C1C7-7BE9-4655-AF51-B76BC2B05F08" Type="DraftFolder" Created="2017-05-26 20:14:20 -0700" Modified="2017-05-26 20:14:20 -0700">
+            <Title>Draft</Title>
+            <MetaData>
+                <IncludeInCompile>Yes</IncludeInCompile>
+            </MetaData>
+            <Children>
+                <BinderItem UUID="E45BC75A-70AF-4EE9-B786-7AEE2B37CB5A" Type="Folder" Created="2017-06-02 21:02:38 -0700" Modified="2017-06-02 21:02:49 -0700">
+                    <Title>Part 1: New Power Wrestling</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>0,0</TextSelection>
+                    </TextSettings>
+                    <Children>
+                        <BinderItem UUID="1A3CDB35-CAB7-4DCF-A33B-6D4EE9EC08E6" Type="Folder" Created="2017-06-01 10:43:51 -0700" Modified="2017-06-03 18:05:55 -0700">
+                            <Title>Chapter 1: Introduction</Title>
+                            <MetaData>
+                                <IncludeInCompile>Yes</IncludeInCompile>
+                            </MetaData>
+                            <TextSettings>
+                                <TextSelection>224,0</TextSelection>
+                            </TextSettings>
+                        </BinderItem>
+                        <BinderItem UUID="E6B2B0BE-9D6E-415E-BE94-9FFA2C55DB20" Type="Folder" Created="2017-05-26 20:14:20 -0700" Modified="2017-06-01 12:28:12 -0700">
+                            <Title>Chapter 2: Terms and Concepts</Title>
+                            <MetaData>
+                                <IncludeInCompile>Yes</IncludeInCompile>
+                            </MetaData>
+                            <TextSettings>
+                                <TextSelection>103,0</TextSelection>
+                            </TextSettings>
+                            <Children>
+                                <BinderItem UUID="741C7791-6BDE-4B4F-8D97-DE26A214DBE1" Type="Text" Created="2017-06-01 11:04:50 -0700" Modified="2017-06-01 11:06:45 -0700">
+                                    <Title>Talents</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>339,0</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                                <BinderItem UUID="ED928ADC-5372-46B7-BF68-C91760D4C6FF" Type="Text" Created="2017-06-01 11:06:36 -0700" Modified="2017-06-01 11:08:12 -0700">
+                                    <Title>Skills</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>0,0</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                                <BinderItem UUID="0CFBA6CF-2C7A-4BCA-B5EB-51EA981DFB85" Type="Text" Created="2017-06-01 11:06:52 -0700" Modified="2017-06-01 11:08:12 -0700">
+                                    <Title>Techniques</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>590,0</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                                <BinderItem UUID="F31B1D94-AFBE-4C1E-960E-9F578FC20344" Type="Text" Created="2017-06-01 11:06:58 -0700" Modified="2017-06-01 11:07:54 -0700">
+                                    <Title>Moves</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>728,0</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                                <BinderItem UUID="99AF36AE-935E-4F28-97CF-D9E7B146434E" Type="Text" Created="2017-06-01 11:07:00 -0700" Modified="2017-06-01 11:07:54 -0700">
+                                    <Title>Factors</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>545,0</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                            </Children>
+                        </BinderItem>
+                    </Children>
+                </BinderItem>
+                <BinderItem UUID="6A1CDE35-E54E-4303-BACA-878BA9367162" Type="Folder" Created="2017-06-02 21:02:19 -0700" Modified="2017-06-02 21:10:34 -0700">
+                    <Title>Part 2: Characters</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>0,0</TextSelection>
+                    </TextSettings>
+                    <Children>
+                        <BinderItem UUID="EB16A1FC-4EEE-4019-8528-EB103E7B59C9" Type="Folder" Created="2017-06-01 12:26:05 -0700" Modified="2017-06-02 21:04:10 -0700">
+                            <Title>Chapter 3: Wrestlers</Title>
+                            <MetaData>
+                                <IncludeInCompile>Yes</IncludeInCompile>
+                            </MetaData>
+                            <TextSettings>
+                                <TextSelection>0,0</TextSelection>
+                            </TextSettings>
+                            <Children>
+                                <BinderItem UUID="473947B9-5C5C-4A70-9230-1E9D4AA61745" Type="Text" Created="2017-06-01 20:35:43 -0700" Modified="2017-06-02 17:38:13 -0700">
+                                    <Title>Build</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>496,0</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                                <BinderItem UUID="380F84E5-322F-4860-AB4E-EE199D6ADDFF" Type="Text" Created="2017-06-01 20:35:53 -0700" Modified="2017-06-01 20:35:56 -0700">
+                                    <Title>Make-Up</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>0,0</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                                <BinderItem UUID="067B8BC2-D119-4872-B351-E79028EA328D" Type="Text" Created="2017-06-01 20:35:57 -0700" Modified="2017-06-01 20:36:07 -0700">
+                                    <Title>Specialties</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>0,0</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                                <BinderItem UUID="C4391AC6-C845-4AE6-A52E-C622113D304D" Type="Text" Created="2017-06-01 20:36:08 -0700" Modified="2017-06-01 20:36:29 -0700">
+                                    <Title>Moveset</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>0,0</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                                <BinderItem UUID="54E952FD-43E3-4DC5-AE0B-6172213B3035" Type="Text" Created="2017-06-01 20:36:31 -0700" Modified="2017-06-01 20:36:53 -0700">
+                                    <Title>Learning Moves</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>0,0</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                                <BinderItem UUID="FDCC5689-69EC-42EC-96F7-BAC1D90B9429" Type="Text" Created="2017-06-01 20:36:47 -0700" Modified="2017-06-01 20:37:00 -0700">
+                                    <Title>Learning Techniques</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>0,0</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                                <BinderItem UUID="F602C0F0-59A3-416F-8BF2-44A87D6DCF49" Type="Text" Created="2017-06-01 20:36:45 -0700" Modified="2017-06-01 20:37:09 -0700">
+                                    <Title>Developing Skills</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>0,0</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                            </Children>
+                        </BinderItem>
+                        <BinderItem UUID="18BA91C0-3BEF-49DD-9912-8BFF34E878A8" Type="Folder" Created="2017-06-01 10:41:25 -0700" Modified="2017-06-01 15:38:59 -0700">
+                            <Title>Chapter 4: Wrestler Classes and Backgrounds</Title>
+                            <MetaData>
+                                <IncludeInCompile>Yes</IncludeInCompile>
+                            </MetaData>
+                            <TextSettings>
+                                <TextSelection>0,0</TextSelection>
+                            </TextSettings>
+                            <Children>
+                                <BinderItem UUID="3BA6907A-5C3D-4767-868B-968B228BBDCA" Type="Text" Created="2017-06-15 19:40:33 -0700" Modified="2017-06-15 19:47:14 -0700">
+                                    <Title>Quick-list of classes</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>0,649</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                                <BinderItem UUID="A6E6615F-47E7-4FDB-B3D1-BBB96542B564" Type="Folder" Created="2017-06-01 15:06:49 -0700" Modified="2017-06-03 18:09:20 -0700">
+                                    <Title>Hero Types</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>254,0</TextSelection>
+                                    </TextSettings>
+                                    <Children>
+                                        <BinderItem UUID="056FD70D-3301-4D5A-92D8-A6715191C6AF" Type="Text" Created="2017-06-01 15:08:04 -0700" Modified="2017-06-16 09:32:35 -0700">
+                                            <Title>Class: Patriot</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>179,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem UUID="A53597A9-55F8-4AD1-952C-7D3B2DC21BCC" Type="Text" Created="2017-06-01 15:08:08 -0700" Modified="2017-06-16 09:32:39 -0700">
+                                            <Title>Class: Clean-Cut</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>532,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem UUID="F5EA70A9-1E9A-40CC-B873-1F4F20685AB6" Type="Text" Created="2017-06-01 15:08:11 -0700" Modified="2017-06-16 09:32:42 -0700">
+                                            <Title>Class: Blue-Collar</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>311,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem UUID="B6E0E62E-681F-41E3-98C8-D2D260F4ADC2" Type="Text" Created="2017-06-01 15:08:17 -0700" Modified="2017-06-03 18:39:42 -0700">
+                                            <Title>Class: Anti-Hero</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>237,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem UUID="41803922-CC09-42C9-BED4-B896EF3DFF6A" Type="Text" Created="2017-06-03 20:15:20 -0700" Modified="2017-06-03 20:21:00 -0700">
+                                            <Title>Class: Reckless Warrior</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>235,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem UUID="4A6F40EF-DA0A-48FE-A699-5D93B0B5728A" Type="Text" Created="2017-06-16 09:32:52 -0700" Modified="2017-06-16 09:32:59 -0700">
+                                            <Title>Class: Pure Competitor</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>0,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                    </Children>
+                                </BinderItem>
+                                <BinderItem UUID="E968D68D-3C80-431B-BD5E-787FF0A13E7F" Type="Folder" Created="2017-06-16 09:21:23 -0700" Modified="2017-06-16 09:21:28 -0700">
+                                    <Title>Villain Types</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>0,0</TextSelection>
+                                    </TextSettings>
+                                    <Children>
+                                        <BinderItem UUID="75193E94-24F8-4315-98F8-8969B038E09F" Type="Text" Created="2017-06-16 09:21:46 -0700" Modified="2017-06-23 10:37:08 -0700">
+                                            <Title>Class: Assassin</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>1201,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem UUID="ABDD78C3-8950-4841-BF6C-A45A21226C4C" Type="Text" Created="2017-06-16 11:44:49 -0700" Modified="2017-06-23 10:36:39 -0700">
+                                            <Title>Class: Scumbag</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>0,907</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem UUID="17D06A68-302D-4370-A41D-8083E984DBBB" Type="Text" Created="2017-06-16 11:44:49 -0700" Modified="2017-06-23 10:40:58 -0700">
+                                            <Title>Class: Manipulator</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>0,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                    </Children>
+                                </BinderItem>
+                                <BinderItem UUID="D3E5FCEB-0FA8-485B-A056-BEF14F7B4210" Type="Folder" Created="2017-06-01 15:07:34 -0700" Modified="2017-06-15 18:04:16 -0700">
+                                    <Title>Athlete Types</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>206,0</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                                <BinderItem UUID="57E61309-8EE8-482E-B707-BB28E3A9FB78" Type="Folder" Created="2017-06-16 09:36:34 -0700" Modified="2017-06-16 09:36:41 -0700">
+                                    <Title>Specialist Types</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>0,0</TextSelection>
+                                    </TextSettings>
+                                    <Children>
+                                        <BinderItem UUID="2ED55294-7AD7-4EFC-9FC3-41A85189324D" Type="Text" Created="2017-06-16 09:37:01 -0700" Modified="2017-06-16 12:11:19 -0700">
+                                            <Title>Class: Powerhouse</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>900,1</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem UUID="27CAABEB-BD47-4931-9E84-2854D109AA44" Type="Text" Created="2017-06-18 15:13:39 -0700" Modified="2017-06-18 15:31:57 -0700">
+                                            <Title>Class: Extremist</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>560,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                    </Children>
+                                </BinderItem>
+                            </Children>
+                        </BinderItem>
+                        <BinderItem UUID="816B2633-3D17-4D52-97DF-7721CE271753" Type="Folder" Created="2017-06-02 20:52:13 -0700" Modified="2017-06-03 18:28:25 -0700">
+                            <Title>Chapter: Backgrounds</Title>
+                            <MetaData>
+                                <IncludeInCompile>Yes</IncludeInCompile>
+                            </MetaData>
+                            <TextSettings>
+                                <TextSelection>399,0</TextSelection>
+                            </TextSettings>
+                        </BinderItem>
+                        <BinderItem UUID="EC93B5A7-1BBD-4E29-A565-09B6E22070E5" Type="Folder" Created="2017-06-01 10:41:09 -0700" Modified="2017-06-01 15:39:08 -0700">
+                            <Title>Chapter 5: Managers</Title>
+                            <MetaData>
+                                <IncludeInCompile>Yes</IncludeInCompile>
+                            </MetaData>
+                            <TextSettings>
+                                <TextSelection>611,0</TextSelection>
+                            </TextSettings>
+                            <Children>
+                                <BinderItem UUID="B1E4A417-E5A1-4BAB-8E4E-B1229684A544" Type="Text" Created="2017-06-01 12:23:48 -0700" Modified="2017-06-01 13:22:12 -0700">
+                                    <Title>Class: Retired Wrestler</Title>
+                                    <MetaData>
+                                        <SectionType>AFDE940B-3CE6-4501-8F9D-FB93B136D0AD</SectionType>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>773,0</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                                <BinderItem UUID="1AF34D10-CFBC-4F28-90D9-C099CB760D89" Type="Text" Created="2017-06-01 12:23:38 -0700" Modified="2017-06-01 13:06:03 -0700">
+                                    <Title>Class: Valet</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>647,0</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                                <BinderItem UUID="F23ACE34-459B-4EE6-A658-0CAD7412E79A" Type="Text" Created="2017-06-01 12:23:45 -0700" Modified="2017-06-01 13:20:44 -0700">
+                                    <Title>Class: Agent</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>94,0</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                                <BinderItem UUID="123FF1FD-6605-419D-9AED-1C891C5E0008" Type="Text" Created="2017-06-01 12:23:59 -0700" Modified="2017-06-01 13:15:31 -0700">
+                                    <Title>Class: Handler</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>832,0</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                                <BinderItem UUID="60447CC3-7FB1-428A-97AC-C315789A6896" Type="Text" Created="2017-06-01 12:24:52 -0700" Modified="2017-06-01 12:25:28 -0700">
+                                    <Title>Class: Trainer</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>0,0</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                                <BinderItem UUID="6F92A3BF-EE2B-40EE-824D-4E6EBFE8493E" Type="Text" Created="2017-06-01 12:24:44 -0700" Modified="2017-06-01 12:24:51 -0700">
+                                    <Title>Class: Part-Time Wrestler</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>0,0</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                            </Children>
+                        </BinderItem>
+                        <BinderItem UUID="01E34042-466F-47DF-8BE1-20AC997C4BCF" Type="Folder" Created="2017-06-04 10:29:12 -0700" Modified="2017-06-04 10:29:15 -0700">
+                            <Title>Chapter: Trainers</Title>
+                            <MetaData>
+                                <IncludeInCompile>Yes</IncludeInCompile>
+                            </MetaData>
+                            <TextSettings>
+                                <TextSelection>0,0</TextSelection>
+                            </TextSettings>
+                        </BinderItem>
+                        <BinderItem UUID="13668938-FB6D-4D5B-A551-94E5E3695BB2" Type="Folder" Created="2017-06-01 10:36:51 -0700" Modified="2017-06-15 18:12:24 -0700">
+                            <Title>Chapter: Character Creation</Title>
+                            <MetaData>
+                                <IncludeInCompile>Yes</IncludeInCompile>
+                            </MetaData>
+                            <TextSettings>
+                                <TextSelection>318,0</TextSelection>
+                            </TextSettings>
+                            <Children>
+                                <BinderItem UUID="1F8282BB-6A6A-4B5B-8270-3B389F2DFD3B" Type="Text" Created="2017-06-09 20:44:28 -0700" Modified="2017-06-09 20:46:01 -0700">
+                                    <Title>Selecting Character Class and Background</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>263,0</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                                <BinderItem UUID="1601EEA1-56CF-41FC-A069-061411A5CBD5" Type="Text" Created="2017-06-09 20:39:54 -0700" Modified="2017-06-15 18:13:43 -0700">
+                                    <Title>Selecting Character Build</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>318,0</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                                <BinderItem UUID="1AD54FA6-31BD-4E82-A324-C410F24008A0" Type="Text" Created="2017-06-09 20:44:28 -0700" Modified="2017-06-09 20:49:55 -0700">
+                                    <Title>Selecting Character Fighting Styles</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>402,0</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                                <BinderItem UUID="ABC04043-4AEC-408C-B20E-845EC2B050F4" Type="Text" Created="2017-06-09 20:50:09 -0700" Modified="2017-06-15 18:15:07 -0700">
+                                    <Title>Selecting Character Move Set</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>508,0</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                            </Children>
+                        </BinderItem>
+                        <BinderItem UUID="6FD0182F-C17B-4B46-9456-9EAB32BACB3E" Type="Folder" Created="2017-06-09 20:57:34 -0700" Modified="2017-06-09 21:02:58 -0700">
+                            <Title>Chapter: Developmental</Title>
+                            <MetaData>
+                                <IncludeInCompile>Yes</IncludeInCompile>
+                            </MetaData>
+                            <TextSettings>
+                                <TextSelection>580,0</TextSelection>
+                            </TextSettings>
+                            <Children>
+                                <BinderItem UUID="CD8832C2-478E-4D97-9C9F-0893398DA128" Type="Text" Created="2017-06-09 21:03:27 -0700" Modified="2017-06-09 23:11:59 -0700">
+                                    <Title>The Introductory Interview</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>531,0</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                                <BinderItem UUID="5AAE6F54-20FC-4E00-A03C-66C63BEC57CD" Type="Text" Created="2017-06-09 21:03:48 -0700" Modified="2017-06-09 21:37:55 -0700">
+                                    <Title>All-Day Activities</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>448,0</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                                <BinderItem UUID="5FD1CDB9-24FB-4117-8025-A4C55A3576A0" Type="Text" Created="2017-06-09 21:03:48 -0700" Modified="2017-06-09 21:04:04 -0700">
+                                    <Title>Morning Activities</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>0,0</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                                <BinderItem UUID="37E6EDBD-49B5-4DEE-B7D1-50AC963F1694" Type="Text" Created="2017-06-09 21:03:48 -0700" Modified="2017-06-09 21:04:11 -0700">
+                                    <Title>Afternoon Activities</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>0,0</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                                <BinderItem UUID="0E57E109-84ED-40E3-9D1B-B8AB1C589EAD" Type="Text" Created="2017-06-09 21:03:48 -0700" Modified="2017-06-09 21:04:22 -0700">
+                                    <Title>Evening Activities</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>0,0</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                                <BinderItem UUID="39AE2113-7299-4418-B477-61B9242564C0" Type="Text" Created="2017-06-09 21:38:03 -0700" Modified="2017-06-09 21:38:12 -0700">
+                                    <Title>Practice with Trainers</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>0,0</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                                <BinderItem UUID="4587777B-FE36-4BA9-BC5A-086DA11356CF" Type="Text" Created="2017-06-09 21:38:14 -0700" Modified="2017-06-09 21:38:16 -0700">
+                                    <Title>Sparring</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>0,0</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                                <BinderItem UUID="E553A140-9D10-4C38-92A4-409CB38056F3" Type="Text" Created="2017-06-09 21:38:37 -0700" Modified="2017-06-09 21:38:42 -0700">
+                                    <Title>Physical Training</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>0,0</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                                <BinderItem UUID="C58BECF4-5712-486A-B963-C42A5BB5E5E3" Type="Text" Created="2017-06-09 21:38:48 -0700" Modified="2017-06-09 21:38:50 -0700">
+                                    <Title>Workshops</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>0,0</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                                <BinderItem UUID="10590681-75AC-49CD-9AE6-3E71363F9BB2" Type="Text" Created="2017-06-09 21:38:57 -0700" Modified="2017-06-09 21:39:00 -0700">
+                                    <Title>Video Study</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>0,0</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                                <BinderItem UUID="0091645C-52AC-4A37-BF00-F66DC5A4089F" Type="Folder" Created="2017-06-19 23:08:34 -0700" Modified="2017-06-19 23:08:38 -0700">
+                                    <Title>The Development Center</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>0,0</TextSelection>
+                                    </TextSettings>
+                                    <Children>
+                                        <BinderItem UUID="5DAF4800-5D96-49F4-90C3-2DE6E9536A76" Type="Text" Created="2017-06-19 23:08:58 -0700" Modified="2017-06-19 23:10:03 -0700">
+                                            <Title>Sparring Room</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>165,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem UUID="D1099E93-6B32-4E9B-A0F0-C0741EF13A2F" Type="Text" Created="2017-06-19 23:09:49 -0700" Modified="2017-06-19 23:10:37 -0700">
+                                            <Title>Workout Facility</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>64,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem UUID="52A2FE3F-7AA2-4B89-91B7-6846BC99E7CF" Type="Text" Created="2017-06-19 23:10:25 -0700" Modified="2017-06-19 23:11:24 -0700">
+                                            <Title>Video Library</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>154,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem UUID="A4A1D329-598A-4B82-B164-33D19E975892" Type="Text" Created="2017-06-19 23:15:09 -0700" Modified="2017-06-19 23:16:05 -0700">
+                                            <Title>Locker Room</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>207,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem UUID="95A1A148-929D-4CBF-8271-D411FED0B3C8" Type="Text" Created="2017-06-19 23:10:37 -0700" Modified="2017-06-19 23:16:59 -0700">
+                                            <Title>Bosses' Office</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>123,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem UUID="9D42C6C1-11A2-4705-AD0A-5FD131CD66A2" Type="Text" Created="2017-06-19 23:12:07 -0700" Modified="2017-06-19 23:12:43 -0700">
+                                            <Title>Showroom</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>80,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem UUID="86090D30-2FA0-4B6B-9580-69ED4B5FA8E6" Type="Text" Created="2017-06-19 23:13:58 -0700" Modified="2017-06-19 23:14:56 -0700">
+                                            <Title>Training Room</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>315,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                    </Children>
+                                </BinderItem>
+                            </Children>
+                        </BinderItem>
+                        <BinderItem UUID="465A3153-CBDE-4DB4-847D-2FF9CC82133A" Type="Folder" Created="2017-06-01 10:41:40 -0700" Modified="2017-06-01 21:24:21 -0700">
+                            <Title>Chapter: Fighting Styles</Title>
+                            <MetaData>
+                                <IncludeInCompile>Yes</IncludeInCompile>
+                            </MetaData>
+                            <TextSettings>
+                                <TextSelection>352,0</TextSelection>
+                            </TextSettings>
+                        </BinderItem>
+                        <BinderItem UUID="943C904D-0C54-41F8-8590-9A7B8CF27848" Type="Folder" Created="2017-06-01 10:36:40 -0700" Modified="2017-06-04 10:20:29 -0700">
+                            <Title>Chapter: Talents</Title>
+                            <MetaData>
+                                <IncludeInCompile>Yes</IncludeInCompile>
+                            </MetaData>
+                            <TextSettings>
+                                <TextSelection>108,0</TextSelection>
+                            </TextSettings>
+                        </BinderItem>
+                        <BinderItem UUID="0A8DB365-16A7-4311-9668-BD01718D792B" Type="Folder" Created="2017-06-03 18:42:44 -0700" Modified="2017-06-08 22:41:31 -0700">
+                            <Title>Chapter: Personality</Title>
+                            <MetaData>
+                                <IncludeInCompile>Yes</IncludeInCompile>
+                            </MetaData>
+                            <TextSettings>
+                                <TextSelection>403,0</TextSelection>
+                            </TextSettings>
+                            <Children>
+                                <BinderItem UUID="83CD6C90-BCD7-4F0A-B111-72DFE64EC4F6" Type="Folder" Created="2017-06-08 22:41:50 -0700" Modified="2017-06-08 23:20:51 -0700">
+                                    <Title>Personality Scales</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>286,0</TextSelection>
+                                    </TextSettings>
+                                    <Children>
+                                        <BinderItem UUID="67E53240-86BC-4D10-B7C5-D189B5FFA8FA" Type="Text" Created="2017-06-08 22:51:41 -0700" Modified="2017-06-08 23:20:51 -0700">
+                                            <Title>Aggression</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>0,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem UUID="8A1EF16F-EDFF-4E48-9D29-CA2A171E936B" Type="Text" Created="2017-06-08 22:51:41 -0700" Modified="2017-06-08 23:20:51 -0700">
+                                            <Title>Loyalty</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>0,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem UUID="38791708-1F2F-4B41-A15C-A3631FEB6B2E" Type="Text" Created="2017-06-08 22:51:41 -0700" Modified="2017-06-08 23:20:51 -0700">
+                                            <Title>Empathy</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>0,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem UUID="E86EFF4D-64F1-432A-9123-73EA21C858E1" Type="Text" Created="2017-06-08 22:51:41 -0700" Modified="2017-06-09 23:22:01 -0700">
+                                            <Title>Honesty</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>0,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem UUID="1FC6755D-215C-4C50-BA4A-D23942ED7D4E" Type="Text" Created="2017-06-08 23:02:30 -0700" Modified="2017-06-08 23:20:51 -0700">
+                                            <Title>Courage</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>0,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem UUID="4DBF211E-FFB5-41EA-B565-BD1D45835707" Type="Text" Created="2017-06-08 22:51:41 -0700" Modified="2017-06-08 23:20:51 -0700">
+                                            <Title>Speaking Ability</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>347,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem UUID="A8C74249-ECFC-4DE4-994B-57BE81EF24F1" Type="Text" Created="2017-06-08 22:51:41 -0700" Modified="2017-06-28 11:04:50 -0700">
+                                            <Title>Patience</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>21,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem UUID="107417ED-C56D-4EE9-A771-F802396D90D1" Type="Text" Created="2017-06-22 22:30:04 -0700" Modified="2017-06-22 22:32:13 -0700">
+                                            <Title>Character</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>116,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                    </Children>
+                                </BinderItem>
+                                <BinderItem UUID="4564B82A-92EC-4168-9A6A-4F05561141B3" Type="Folder" Created="2017-06-16 12:34:13 -0700" Modified="2017-06-16 12:47:53 -0700">
+                                    <Title>Motivation</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>104,0</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                            </Children>
+                        </BinderItem>
+                        <BinderItem UUID="4C4214F5-2BC3-49CC-8D34-9A4885A18752" Type="Folder" Created="2017-06-01 20:37:28 -0700" Modified="2017-06-01 20:37:31 -0700">
+                            <Title>Chapter: Specialties</Title>
+                            <MetaData>
+                                <IncludeInCompile>Yes</IncludeInCompile>
+                            </MetaData>
+                            <TextSettings>
+                                <TextSelection>0,0</TextSelection>
+                            </TextSettings>
+                        </BinderItem>
+                        <BinderItem UUID="C76DD236-3E50-4735-849E-81FAFA9F4606" Type="Folder" Created="2017-06-15 10:43:27 -0700" Modified="2017-06-15 10:43:35 -0700">
+                            <Title>Chapter: Non-Player Characters</Title>
+                            <MetaData>
+                                <IncludeInCompile>Yes</IncludeInCompile>
+                            </MetaData>
+                            <TextSettings>
+                                <TextSelection>0,0</TextSelection>
+                            </TextSettings>
+                        </BinderItem>
+                        <BinderItem UUID="AED3C35A-21BA-495D-91AF-3760FB29918B" Type="Folder" Created="2017-06-08 22:58:43 -0700" Modified="2017-06-08 23:01:53 -0700">
+                            <Title>Chapter: Character Relationships</Title>
+                            <MetaData>
+                                <IncludeInCompile>Yes</IncludeInCompile>
+                            </MetaData>
+                            <TextSettings>
+                                <TextSelection>456,0</TextSelection>
+                            </TextSettings>
+                        </BinderItem>
+                    </Children>
+                </BinderItem>
+                <BinderItem UUID="FBE298F3-EEAD-4D91-894E-2249FBB523FD" Type="Folder" Created="2017-06-02 21:05:20 -0700" Modified="2017-06-02 21:05:27 -0700">
+                    <Title>Part 3: Teams and Stables</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>0,0</TextSelection>
+                    </TextSettings>
+                    <Children>
+                        <BinderItem UUID="9EBB2E65-BBED-44D9-A6E7-E1AC0EB07A86" Type="Folder" Created="2017-06-01 10:41:16 -0700" Modified="2017-06-01 15:39:24 -0700">
+                            <Title>Chapter 6: Tag Teams</Title>
+                            <MetaData>
+                                <IncludeInCompile>Yes</IncludeInCompile>
+                            </MetaData>
+                            <TextSettings>
+                                <TextSelection>0,0</TextSelection>
+                            </TextSettings>
+                        </BinderItem>
+                        <BinderItem UUID="CA39CC9B-8AE4-4913-AA88-8A2E65D61B90" Type="Folder" Created="2017-06-01 15:39:29 -0700" Modified="2017-06-01 15:39:32 -0700">
+                            <Title>Chapter 7 Stables</Title>
+                            <MetaData>
+                                <IncludeInCompile>Yes</IncludeInCompile>
+                            </MetaData>
+                            <TextSettings>
+                                <TextSelection>0,0</TextSelection>
+                            </TextSettings>
+                        </BinderItem>
+                    </Children>
+                </BinderItem>
+                <BinderItem UUID="94B962E6-454D-4D2A-8DA4-8863B10BA8E8" Type="Folder" Created="2017-06-02 21:07:27 -0700" Modified="2017-06-02 21:07:33 -0700">
+                    <Title>Part 4: Moves and Techniques</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>0,0</TextSelection>
+                    </TextSettings>
+                    <Children>
+                        <BinderItem UUID="424CDE76-83F6-41D7-AEE4-4E30A6B3DCF1" Type="Folder" Created="2017-05-26 20:14:20 -0700" Modified="2017-06-25 15:43:44 -0700">
+                            <Title>Chapter 8: Moves</Title>
+                            <MetaData>
+                                <IncludeInCompile>Yes</IncludeInCompile>
+                            </MetaData>
+                            <TextSettings>
+                                <TextSelection>229,0</TextSelection>
+                            </TextSettings>
+                            <Children>
+                                <BinderItem UUID="C31168F2-3B9C-46EB-A64F-D44087ED7A7E" Type="Text" Created="2017-06-01 20:41:15 -0700" Modified="2017-06-02 13:42:11 -0700">
+                                    <Title>Move Types</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>126,0</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                                <BinderItem UUID="DDB5015C-4EF5-448D-B293-4A7FAAD306C1" Type="Text" Created="2017-06-01 20:40:11 -0700" Modified="2017-06-02 13:40:42 -0700">
+                                    <Title>Damage</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>397,0</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                                <BinderItem UUID="A62DBFFC-D6AD-40AC-8057-17CA46E519DF" Type="Text" Created="2017-06-01 20:40:14 -0700" Modified="2017-06-02 13:55:53 -0700">
+                                    <Title>Stun</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>525,0</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                                <BinderItem UUID="217FAA93-E090-4AB3-9DDA-E9143ED535BF" Type="Text" Created="2017-06-01 20:40:18 -0700" Modified="2017-06-02 12:37:45 -0700">
+                                    <Title>Difficulty</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>0,0</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                                <BinderItem UUID="EB21C303-A2F3-46FA-91C8-10425DF4D065" Type="Text" Created="2017-06-04 11:28:19 -0700" Modified="2017-06-04 11:39:02 -0700">
+                                    <Title>Quickness</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>0,0</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                            </Children>
+                        </BinderItem>
+                        <BinderItem UUID="40D4E870-DA0F-4099-AAC0-CAEC7C80C090" Type="Folder" Created="2017-06-15 18:16:18 -0700" Modified="2017-06-15 18:24:21 -0700">
+                            <Title>Chapter: Move Sets</Title>
+                            <MetaData>
+                                <IncludeInCompile>Yes</IncludeInCompile>
+                            </MetaData>
+                            <TextSettings>
+                                <TextSelection>379,0</TextSelection>
+                            </TextSettings>
+                        </BinderItem>
+                        <BinderItem UUID="51B0E61B-A7E1-45CC-B226-F4C708AC778F" Type="Folder" Created="2017-05-26 20:14:20 -0700" Modified="2017-06-28 19:41:33 -0700">
+                            <Title>Chapter: Techniques</Title>
+                            <MetaData>
+                                <IncludeInCompile>Yes</IncludeInCompile>
+                            </MetaData>
+                            <TextSettings>
+                                <TextSelection>104,0</TextSelection>
+                            </TextSettings>
+                            <Children>
+                                <BinderItem UUID="A086D7BF-68C8-4064-85EF-6F948EF9F9B8" Type="Text" Created="2017-06-15 18:25:34 -0700" Modified="2017-06-28 19:49:53 -0700">
+                                    <Title>Technique Types</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>0,0</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                                <BinderItem UUID="33CEBCB3-6C7A-45DB-B0DD-78392D1F122B" Type="Text" Created="2017-06-28 19:50:24 -0700" Modified="2017-06-28 20:00:44 -0700">
+                                    <Title>Fighting: Striking Techniques</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>1531,0</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                            </Children>
+                        </BinderItem>
+                        <BinderItem UUID="1C22E0FE-C065-48FC-A6B4-BD29739F207C" Type="Folder" Created="2017-06-01 20:37:20 -0700" Modified="2017-06-01 20:39:02 -0700">
+                            <Title>Chapter: Scouting</Title>
+                            <MetaData>
+                                <IncludeInCompile>Yes</IncludeInCompile>
+                            </MetaData>
+                            <TextSettings>
+                                <TextSelection>214,0</TextSelection>
+                            </TextSettings>
+                        </BinderItem>
+                    </Children>
+                </BinderItem>
+                <BinderItem UUID="1EC24FF4-CE26-494A-AC83-F5307D342A35" Type="Folder" Created="2017-06-28 18:40:02 -0700" Modified="2017-06-28 19:14:29 -0700">
+                    <Title>Part 5: Skills</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>0,0</TextSelection>
+                    </TextSettings>
+                    <Children>
+                        <BinderItem UUID="4694E23D-76E1-4701-81D1-FA384E53CF60" Type="Folder" Created="2017-06-28 18:50:25 -0700" Modified="2017-06-28 18:50:34 -0700">
+                            <Title>Fighting Skills</Title>
+                            <MetaData>
+                                <IncludeInCompile>Yes</IncludeInCompile>
+                            </MetaData>
+                            <TextSettings>
+                                <TextSelection>0,0</TextSelection>
+                            </TextSettings>
+                            <Children>
+                                <BinderItem UUID="4D7E2F31-9FB4-4AA7-B562-1245767AC063" Type="Folder" Created="2017-06-28 18:51:01 -0700" Modified="2017-06-28 18:51:12 -0700">
+                                    <Title>Striking Skills</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>0,0</TextSelection>
+                                    </TextSettings>
+                                    <Children>
+                                        <BinderItem UUID="9B46E0C7-201E-4886-B7F2-7544BE17E0D5" Type="Text" Created="2017-06-28 18:50:48 -0700" Modified="2017-06-28 19:50:17 -0700">
+                                            <Title>General Striking Skills</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>0,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem UUID="863BA4E3-CCFB-41BD-901E-E29A67FBB78F" Type="Text" Created="2017-06-28 18:51:21 -0700" Modified="2017-06-28 18:51:29 -0700">
+                                            <Title>Leg Strikes/Kicking Skills</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>0,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                    </Children>
+                                </BinderItem>
+                            </Children>
+                        </BinderItem>
+                    </Children>
+                </BinderItem>
+                <BinderItem UUID="0C011B3B-17D6-4E9D-897E-4FC9A3DEC333" Type="Folder" Created="2017-06-02 21:05:58 -0700" Modified="2017-06-28 18:39:53 -0700">
+                    <Title>Part 6: Matches</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>0,0</TextSelection>
+                    </TextSettings>
+                    <Children>
+                        <BinderItem UUID="7175FBE7-C9B0-4ED6-B72E-CC3FBB6A6A9C" Type="Folder" Created="2017-06-01 15:40:16 -0700" Modified="2017-06-02 21:08:11 -0700">
+                            <Title>Chapter 10: The Rules of a Wrestling Match</Title>
+                            <MetaData>
+                                <IncludeInCompile>Yes</IncludeInCompile>
+                            </MetaData>
+                            <TextSettings>
+                                <TextSelection>0,0</TextSelection>
+                            </TextSettings>
+                            <Children>
+                                <BinderItem UUID="94BC844C-E6AD-4C5F-AC64-DC814B203759" Type="Text" Created="2017-06-01 15:41:45 -0700" Modified="2017-06-01 16:08:33 -0700">
+                                    <Title>Means of Victory</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>21,0</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                                <BinderItem UUID="B4C76C60-BD34-4729-B7E3-A50BF25ACAAF" Type="Folder" Created="2017-06-01 15:41:52 -0700" Modified="2017-06-01 15:42:25 -0700">
+                                    <Title>Grounds for Disqualification</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>0,0</TextSelection>
+                                    </TextSettings>
+                                    <Children>
+                                        <BinderItem UUID="A98B96C9-3D38-4708-9711-883ABE1B8951" Type="Text" Created="2017-06-01 15:43:38 -0700" Modified="2017-06-01 16:03:46 -0700">
+                                            <Title>Levels of Infraction</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>695,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                        <BinderItem UUID="186D83FE-5CD2-40EC-9A49-1963D3B0A19F" Type="Text" Created="2017-06-01 15:56:59 -0700" Modified="2017-06-01 16:07:19 -0700">
+                                            <Title>Infractions</Title>
+                                            <MetaData>
+                                                <IncludeInCompile>Yes</IncludeInCompile>
+                                            </MetaData>
+                                            <TextSettings>
+                                                <TextSelection>339,0</TextSelection>
+                                            </TextSettings>
+                                        </BinderItem>
+                                    </Children>
+                                </BinderItem>
+                            </Children>
+                        </BinderItem>
+                        <BinderItem UUID="781CE511-0D96-4AFE-8887-DCC770F48EBC" Type="Folder" Created="2017-06-01 15:40:26 -0700" Modified="2017-06-04 10:30:14 -0700">
+                            <Title>Chapter 11: The Flow of a Wrestling Match</Title>
+                            <MetaData>
+                                <IncludeInCompile>Yes</IncludeInCompile>
+                            </MetaData>
+                            <TextSettings>
+                                <TextSelection>277,0</TextSelection>
+                            </TextSettings>
+                            <Children>
+                                <BinderItem UUID="812B77F6-B894-4C57-A5BA-5DEAECE33551" Type="Text" Created="2017-06-04 10:24:38 -0700" Modified="2017-06-04 10:28:01 -0700">
+                                    <Title>Before the Match</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>528,0</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                                <BinderItem UUID="7532550B-9C2D-4E79-AB2B-82AA9D714F7C" Type="Text" Created="2017-06-04 10:28:13 -0700" Modified="2017-06-04 10:45:38 -0700">
+                                    <Title>Start of the Match</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>956,0</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                                <BinderItem UUID="6C049B46-8046-4D07-8FDC-977E60160976" Type="Text" Created="2017-06-01 20:39:58 -0700" Modified="2017-06-04 11:27:50 -0700">
+                                    <Title>Sequences</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>485,0</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                                <BinderItem UUID="6A38D256-9D07-41B2-8441-AFD648084E8A" Type="Text" Created="2017-06-04 10:48:58 -0700" Modified="2017-06-04 11:41:55 -0700">
+                                    <Title>The Initiative Roll</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>1275,0</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                                <BinderItem UUID="DAB65A71-9D8B-4C9D-826C-4ACF3F287692" Type="Text" Created="2017-06-01 20:41:24 -0700" Modified="2017-06-04 12:20:29 -0700">
+                                    <Title>Execution Score</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>83,0</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                                <BinderItem UUID="B544726F-91D5-46CA-82E2-1F29305C8A5E" Type="Text" Created="2017-06-01 21:19:01 -0700" Modified="2017-06-01 21:19:15 -0700">
+                                    <Title>Execution Score Tiers</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>0,132</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                                <BinderItem UUID="2F1F22C1-2F87-4CC7-A365-8797A6701C14" Type="Text" Created="2017-06-01 21:10:00 -0700" Modified="2017-06-04 13:48:38 -0700">
+                                    <Title>Execution Score Examples</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>403,0</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                                <BinderItem UUID="52406178-50E6-473C-B023-921D0F7F18D9" Type="Text" Created="2017-06-04 12:20:36 -0700" Modified="2017-06-04 13:54:33 -0700">
+                                    <Title>Defense Score</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>1,778</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                                <BinderItem UUID="82C7B537-F08E-482F-9C66-DB8C3482B4AE" Type="Text" Created="2017-06-04 12:20:36 -0700" Modified="2017-06-04 13:12:46 -0700">
+                                    <Title>Defense Score Effects</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>0,129</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                                <BinderItem UUID="B4A0ED28-2BA5-4BE5-B78F-72AC2ADE7B81" Type="Text" Created="2017-06-04 12:37:26 -0700" Modified="2017-06-04 13:48:44 -0700">
+                                    <Title>Defense Score Examples</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>0,2795</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                                <BinderItem UUID="734F2961-385E-4E89-9774-33F4263AD739" Type="Text" Created="2017-06-04 10:44:26 -0700" Modified="2017-06-04 10:44:37 -0700">
+                                    <Title>Brawling</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>0,0</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                            </Children>
+                        </BinderItem>
+                    </Children>
+                </BinderItem>
+                <BinderItem UUID="490FC9F4-DB98-404C-A1F3-F0BCAE5CEA18" Type="Folder" Created="2017-06-02 21:10:07 -0700" Modified="2017-06-28 18:39:57 -0700">
+                    <Title>Part 7: Promotions &amp; Timelines</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>0,0</TextSelection>
+                    </TextSettings>
+                    <Children>
+                        <BinderItem UUID="759FA09A-C777-4E64-BA24-70D7297BB476" Type="Folder" Created="2017-06-01 10:41:22 -0700" Modified="2017-06-01 21:27:05 -0700">
+                            <Title>Chapter: Timelines</Title>
+                            <MetaData>
+                                <IncludeInCompile>Yes</IncludeInCompile>
+                            </MetaData>
+                            <TextSettings>
+                                <TextSelection>369,0</TextSelection>
+                            </TextSettings>
+                        </BinderItem>
+                        <BinderItem UUID="A80D274C-1648-4CE2-8272-8D61CCD4FB5E" Type="Folder" Created="2017-06-01 10:41:19 -0700" Modified="2017-06-01 21:28:06 -0700">
+                            <Title>Chapter: Promotions</Title>
+                            <MetaData>
+                                <IncludeInCompile>Yes</IncludeInCompile>
+                            </MetaData>
+                            <TextSettings>
+                                <TextSelection>200,0</TextSelection>
+                            </TextSettings>
+                        </BinderItem>
+                        <BinderItem UUID="A8B9B83B-2723-4250-A0C6-220734DABD23" Type="Folder" Created="2017-06-02 22:15:21 -0700" Modified="2017-06-02 22:15:27 -0700">
+                            <Title>Chapter: Shows</Title>
+                            <MetaData>
+                                <IncludeInCompile>Yes</IncludeInCompile>
+                            </MetaData>
+                            <TextSettings>
+                                <TextSelection>0,0</TextSelection>
+                            </TextSettings>
+                        </BinderItem>
+                        <BinderItem UUID="6E9D2A85-77AE-42A4-94BC-C44890800088" Type="Folder" Created="2017-06-02 22:15:49 -0700" Modified="2017-06-02 22:15:56 -0700">
+                            <Title>Chapter: Arenas</Title>
+                            <MetaData>
+                                <IncludeInCompile>Yes</IncludeInCompile>
+                            </MetaData>
+                            <TextSettings>
+                                <TextSelection>0,0</TextSelection>
+                            </TextSettings>
+                            <Children>
+                                <BinderItem UUID="D5153B00-1074-45BB-97AA-6D9659E19069" Type="Text" Created="2017-07-25 14:52:45 -0700" Modified="2017-07-25 14:52:45 -0700">
+                                    <Title>Untitled</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>0,0</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                                <BinderItem UUID="C345116A-1FD9-4BC5-B9F5-FC8B7706189A" Type="Text" Created="2017-06-04 10:03:55 -0700" Modified="2017-06-08 23:20:04 -0700">
+                                    <Title>The Wrestling Ring</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>519,0</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                                <BinderItem UUID="CCBAAA53-041B-436B-8494-D3C633F80B27" Type="Text" Created="2017-06-04 10:04:33 -0700" Modified="2017-06-04 10:18:17 -0700">
+                                    <Title>Special Rings</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>157,0</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                                <BinderItem UUID="7B88C738-A816-43B9-816D-389556DDB2F9" Type="Text" Created="2017-06-04 10:04:50 -0700" Modified="2017-06-04 11:39:52 -0700">
+                                    <Title>Outside the Ring</Title>
+                                    <MetaData>
+                                        <IncludeInCompile>Yes</IncludeInCompile>
+                                    </MetaData>
+                                    <TextSettings>
+                                        <TextSelection>0,0</TextSelection>
+                                    </TextSettings>
+                                </BinderItem>
+                            </Children>
+                        </BinderItem>
+                    </Children>
+                </BinderItem>
+                <BinderItem UUID="B4670315-B5BC-4D1F-A7A7-2DDCC1E13C50" Type="Text" Created="2017-06-28 11:06:48 -0700" Modified="2017-06-28 13:38:50 -0700">
+                    <Title>Quick Reference</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>0,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+            </Children>
+        </BinderItem>
+        <BinderItem UUID="BF089563-3FF6-4170-A4C9-CDB35889A580" Type="ResearchFolder" Created="2017-05-26 20:14:20 -0700" Modified="2017-05-26 20:14:20 -0700">
+            <Title>Research</Title>
+            <MetaData>
+                <IncludeInCompile>Yes</IncludeInCompile>
+            </MetaData>
+            <Children>
+                <BinderItem UUID="D6DE7394-DFAF-4DB4-92DE-18F446ED91F5" Type="Image" Created="2017-06-01 10:48:28 -0700" Modified="2017-06-01 10:48:28 -0700">
+                    <Title>stock_wrestling_ring_08_by_nachomanandyravage</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <FileExtension>png</FileExtension>
+                        <ShowSynopsisImage>Yes</ShowSynopsisImage>
+                    </MetaData>
+                    <MediaSettings>
+                        <ImageScaleFactor>1.0</ImageScaleFactor>
+                        <ImageRotation>None</ImageRotation>
+                        <ImageScalesProportionally>No</ImageScalesProportionally>
+                    </MediaSettings>
+                </BinderItem>
+                <BinderItem UUID="0EBFAC0D-958E-457E-87F5-8A3ED7945D25" Type="Image" Created="2017-03-21 15:41:50 -0700" Modified="2017-03-21 15:41:50 -0700">
+                    <Title>Ring Layout</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <FileExtension>png</FileExtension>
+                        <ShowSynopsisImage>Yes</ShowSynopsisImage>
+                    </MetaData>
+                    <MediaSettings>
+                        <ImageScaleFactor>1.0</ImageScaleFactor>
+                        <ImageRotation>None</ImageRotation>
+                        <ImageScalesProportionally>No</ImageScalesProportionally>
+                    </MediaSettings>
+                </BinderItem>
+                <BinderItem UUID="D2F6A15C-42DD-4851-9909-3B5CDA86F85A" Type="Image" Created="2017-03-21 16:26:37 -0700" Modified="2017-06-04 10:11:57 -0700">
+                    <Title>Ring and Apron Layout</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                        <FileExtension>png</FileExtension>
+                        <ShowSynopsisImage>Yes</ShowSynopsisImage>
+                    </MetaData>
+                    <MediaSettings>
+                        <ImageScaleFactor>1.0</ImageScaleFactor>
+                        <ImageRotation>None</ImageRotation>
+                        <ImageScalesProportionally>No</ImageScalesProportionally>
+                    </MediaSettings>
+                </BinderItem>
+            </Children>
+        </BinderItem>
+        <BinderItem UUID="01BAEFC7-5008-4F62-94F0-1F145C788566" Type="TrashFolder" Created="2017-05-26 20:14:20 -0700" Modified="2017-05-26 20:14:20 -0700">
+            <Title>Trash</Title>
+            <MetaData>
+                <IncludeInCompile>Yes</IncludeInCompile>
+            </MetaData>
+            <Children>
+                <BinderItem UUID="315FE4DC-6022-4FB4-AFAB-7D4AA5B29126" Type="Text" Created="2017-06-01 11:14:17 -0700" Modified="2017-06-01 11:17:48 -0700">
+                    <Title>Welcome to New Power Wrestling</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>0,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem UUID="D7BEB453-936F-4F36-90C7-7B03F5645D9C" Type="Text" Created="2017-06-01 12:25:22 -0700" Modified="2017-06-01 12:25:22 -0700">
+                    <Title>Untitled</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>0,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem UUID="6C468035-D07A-44BB-994D-17DABD7D7790" Type="Text" Created="2017-06-01 12:25:54 -0700" Modified="2017-06-01 12:25:54 -0700">
+                    <Title>Untitled</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>0,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem UUID="965BDBD1-7CD5-4CBF-B477-919F2CEC224C" Type="Folder" Created="2017-05-26 20:14:20 -0700" Modified="2017-06-01 10:36:34 -0700">
+                    <Title>Chapter: Skills</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>0,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem UUID="4F578FDD-CC20-4278-9818-5EC282A8B2B4" Type="Text" Created="2017-06-01 12:24:28 -0700" Modified="2017-06-01 12:25:02 -0700">
+                    <Title>Class: Semi-Retired Wrestler</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>0,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem UUID="DBDACCFB-9EC3-4AF2-ADDE-E242E38181C3" Type="Text" Created="2017-06-02 20:55:21 -0700" Modified="2017-06-02 20:55:21 -0700">
+                    <Title>Untitled</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>0,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem UUID="5046139F-E894-4A88-B79C-8DF2BBB9E218" Type="Text" Created="2017-06-02 21:03:59 -0700" Modified="2017-06-02 21:03:59 -0700">
+                    <Title>Untitled</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>0,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem UUID="2175F2CA-0AEC-47FC-9C25-B064D4B4E87C" Type="Text" Created="2017-06-02 21:07:54 -0700" Modified="2017-06-02 21:07:54 -0700">
+                    <Title>Untitled</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>0,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem UUID="781AFE85-6E08-4053-B421-2B0614481D6A" Type="Text" Created="2017-06-04 10:15:58 -0700" Modified="2017-06-04 10:16:00 -0700">
+                    <Title> a</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>0,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem UUID="2A322F23-C1B7-4393-8372-BE4973481EC3" Type="Folder" Created="2017-06-08 22:58:15 -0700" Modified="2017-06-08 22:58:15 -0700">
+                    <Title>New Folder</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>0,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem UUID="2CE23329-4C64-4A26-BC3E-17B3CCB07DD3" Type="Text" Created="2017-06-16 11:42:45 -0700" Modified="2017-06-16 11:42:50 -0700">
+                    <Title>Class: Conniver</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>0,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+                <BinderItem UUID="73CCE6E6-9E29-403D-89BC-B8A1A84179B8" Type="Text" Created="2017-06-28 18:39:44 -0700" Modified="2017-06-28 18:39:44 -0700">
+                    <Title>Untitled</Title>
+                    <MetaData>
+                        <IncludeInCompile>Yes</IncludeInCompile>
+                    </MetaData>
+                    <TextSettings>
+                        <TextSelection>0,0</TextSelection>
+                    </TextSettings>
+                </BinderItem>
+            </Children>
+        </BinderItem>
+    </Binder>
+    <Collections>
+        <Collection Type="Binder" ID="05E4053F-EB0E-4B29-9D35-26D8B333FC32" Color="1.0 1.0 1.0">
+            <Title>Binder</Title>
+        </Collection>
+        <Collection Type="RecentSearch" ID="C0BA9ABF-4CAE-48AF-901D-9BC2393E274C" Color="0.922173 0.818612 0.999627">
+            <Title>Search Results</Title>
+            <SearchSettings Operator="Exact" Type="All" CaseSensitive="No" IgnoreDiacritics="No">skills</SearchSettings>
+        </Collection>
+    </Collections>
+    <SectionTypes>
+        <TypeDefinitions>
+            <Type ID="B0381984-02C3-49FF-96C7-193CA804032C">Heading</Type>
+            <Type ID="09724DF6-033B-4647-AE33-1AFE3F4293A9">Sub-Heading</Type>
+            <Type ID="B4F32551-501E-4CB2-A998-4D2C0A5C9FE8">Section</Type>
+            <Type ID="AFDE940B-3CE6-4501-8F9D-FB93B136D0AD">Section Start</Type>
+        </TypeDefinitions>
+        <LevelTypes>
+            <Folders>
+                <Type>B0381984-02C3-49FF-96C7-193CA804032C</Type>
+            </Folders>
+            <Containers>
+                <Type>B4F32551-501E-4CB2-A998-4D2C0A5C9FE8</Type>
+            </Containers>
+            <Files>
+                <Type>B4F32551-501E-4CB2-A998-4D2C0A5C9FE8</Type>
+            </Files>
+        </LevelTypes>
+    </SectionTypes>
+    <LabelSettings>
+        <Title>Label</Title>
+        <DefaultLabelID>-1</DefaultLabelID>
+        <Labels>
+            <Label ID="-1">No Label</Label>
+            <Label ID="0" Color="0.9 0.92 0.95">Concept</Label>
+            <Label ID="1" Color="0.985 0.875 0.85">Chapter</Label>
+        </Labels>
+    </LabelSettings>
+    <StatusSettings>
+        <Title>Status</Title>
+        <DefaultStatusID>-1</DefaultStatusID>
+        <StatusItems>
+            <Status ID="-1">No Status</Status>
+            <Status ID="0">To Do</Status>
+            <Status ID="1">First Draft</Status>
+            <Status ID="2">Revised Draft</Status>
+            <Status ID="3">Final Draft</Status>
+            <Status ID="4">Done</Status>
+        </StatusItems>
+    </StatusSettings>
+    <ProjectTargets Notify="No">
+        <DraftTarget Type="Words" CountIncludedOnly="Yes" CurrentCompileGroupOnly="No" Deadline="2017-05-26 20:14:20 -0700" IgnoreDeadline="Yes">0</DraftTarget>
+        <SessionTarget Type="Words" CountDraftOnly="Yes" AllowNegatives="Yes" NextResetDate="2023-04-29 01:00:00 -0700" ResetType="Time" ResetTime="00:00" DeterminedFromDeadline="No" WritingDays="" CanWriteOnDeadlineDate="No">0</SessionTarget>
+        <PreviousSession Words="0" Characters="0" Date="2023-04-28 18:35:06 -0700"/>
+    </ProjectTargets>
+    <RecentWritingHistory Date="2023-04-28 00:00:00 -0700">
+        <DraftWordCount>0</DraftWordCount>
+        <DraftCharCount>0</DraftCharCount>
+        <OtherWordCount>0</OtherWordCount>
+        <OtherCharCount>0</OtherCharCount>
+    </RecentWritingHistory>
+    <PrintSettings PaperSize="612.0,792.0" LeftMargin="72.0" RightMargin="72.0" TopMargin="90.0" BottomMargin="90.0" PaperType="na-letter" Orientation="Portrait" HorizontalPagination="Clip" VerticalPagination="Auto" ScaleFactor="1.0" HorizontallyCentered="Yes" VerticallyCentered="Yes" Collates="Yes" PagesAcross="1" PagesDown="1"/>
+</ScrivenerProject>

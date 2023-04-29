@@ -7,7 +7,7 @@ import { editorFonts } from '../Editor/EditorFonts';
 import { replaceRemoteImagesWithDataURLs } from './pdfImages';
 import { addPageNumbers } from './pdfPageNumbers';
 import { addFontStyles, generateFontConfig } from './pdfFonts';
-import { PublishingOptions, compileHtml, extractUsedFonts } from './publishing';
+import { PublishingOptions, compileHtml, extractUsedFonts } from './compiling';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 

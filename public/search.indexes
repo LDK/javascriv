@@ -1,0 +1,1417 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SearchIndexes Version="1.0">
+    <Documents>
+        <Document ID="2CE23329-4C64-4A26-BC3E-17B3CCB07DD3">
+            <Title>Class: Conniver</Title>
+        </Document>
+        <Document ID="27CAABEB-BD47-4931-9E84-2854D109AA44">
+            <Title>Class: Extremist</Title>
+            <Text>The Extremist is at home when things become ultra-violent. He loves weapons and fighting outside the ring. This services him greatly in no-holds-barred situations, but leaves him open to disqualification and count-outs in normal matches.
+
+Class Effects
+Class Bonuses
+Upper Body Strength: -10
+Lower Body Strength: -10
+Speed: -5
+Agility -5
+Quickness -5
+Intelligence: -10
+Toughness: +20
+Charisma: +5
+Will: +10
+Head HP: +20
+Aggression: Aggressive
+Courage: Daring
+Patience: Hot-headed
+Technique: Thumbtacks
+Technique: Set Up Tables
+Technique: Weapon Use Mastery +20
+</Text>
+        </Document>
+        <Document ID="1FC6755D-215C-4C50-BA4A-D23942ED7D4E">
+            <Title>Courage</Title>
+            <Text>This personality trait measures a wrestler’s loyalty from the most determined loner in the world to the soldier who sacrifices everything for the team.
+
+The Courage Scale
+
+0-5: 		Wimp
+6-20:		Spineless
+21-40:		Cowardly
+41-60:		Average
+61-80:		Game
+81-100:		Daring
+101-114:		Fearless
+115-120:		Heroic
+</Text>
+        </Document>
+        <Document ID="54E952FD-43E3-4DC5-AE0B-6172213B3035">
+            <Title>Learning Moves</Title>
+        </Document>
+        <Document ID="A8C74249-ECFC-4DE4-994B-57BE81EF24F1">
+            <Title>Patience</Title>
+            <Text>Frustration is inevitable in a tough match.  The more patient a wrestler is, the better he can deal with that frustration.  On the other hand, many successful wrestlers have been hot-heads who would use their rage to destroy everything in their path.
+
+The Patience Scale
+
+0-5: 		Permanent Anger
+6-20:		Hot-headed
+21-40:		Quick to Anger
+41-60:		Impatient
+61-80:		Average
+81-100:		Patient
+101-114:		Dilligent
+115-120:		Unshakeable
+</Text>
+        </Document>
+        <Document ID="A6E6615F-47E7-4FDB-B3D1-BBB96542B564">
+            <Title>Hero Types</Title>
+            <Text>Classes of the Hero type are characters that stand for some sort of valor.  This calling may be earnest and righteous or it may be disingenuous or wrong-minded. Whatever the situation, these heroes bring intensity, charisma and resiliency to their quest.</Text>
+        </Document>
+        <Document ID="A98B96C9-3D38-4708-9711-883ABE1B8951">
+            <Title>Levels of Infraction</Title>
+            <Text>Not every illegal action in a match is of the same severity.
+
+Level 1: Warning
+A level-1 infraction, if seen by a referee, will result in a warning.  By default, 3 warnings for the same action will result in a disqualification.  This number can be adjusted by each promotion, and dq for this level of warning can be disabled either for an entire promotion or for certain match types.
+
+Level 2: 5-Count
+A level-2 infraction is a sustained action.  If the referee spots the activity, he will issue a count, resulting in a DQ if his count reaches 5.  Level 2 infractions also function similarly to level 1 infractions in that by default, 3 abuses of the same rule will result in a disqualification.
+
+Level 3: Ejection
+If a non-participant in the match performs a level-3 infraction, they will be sent back to the locker room.  If they return, the wrestler they represent will be disqualified.
+
+Level 4: Instant Disqualification
+Level-4 infractions result in an immediate disqualification unless a stipulation specifically makes it legal, or the match has no disqualifications.
+
+Level 1 infractions can be changed to Level 4 infractions, and vice versa, by a promotion.  Level 3 infractions can be made into Level 1 or Level 4 infractions by the promotion.
+</Text>
+        </Document>
+        <Document ID="7175FBE7-C9B0-4ED6-B72E-CC3FBB6A6A9C">
+            <Title>Chapter 10: The Rules of a Wrestling Match</Title>
+        </Document>
+        <Document ID="4A6F40EF-DA0A-48FE-A699-5D93B0B5728A">
+            <Title>Class: Pure Competitor</Title>
+        </Document>
+        <Document ID="6E9D2A85-77AE-42A4-94BC-C44890800088">
+            <Title>Chapter: Arenas</Title>
+        </Document>
+        <Document ID="2A322F23-C1B7-4393-8372-BE4973481EC3">
+            <Title>New Folder</Title>
+        </Document>
+        <Document ID="6A38D256-9D07-41B2-8441-AFD648084E8A">
+            <Title>The Initiative Roll</Title>
+            <Text>Since players in NPW take their turns simultaneously, whose action gets attempted first is a matter of initiative.  Rather than being completely determined by random chance, initiative is determined by the wrestlers’ respective quickness talents and the quickness of the move or technique they’re attempting.  It is, of course, modified by some random chance.
+
+For the initiative roll:
+1. Start with Wrestler Quickness, divided by 4.
+2. Multiply Move Quickness by 4, and subtract this from the first number.
+3. Set aside the resulting number, the natural initiative.  The one-line formula is :
+	(Wrestler Quickness / 4) - (Move Quickness x 4)
+4. Roll a 1d20.  If the value is anything other than 1 or 20, divide the value by 4 and add this number to the natural initiative.  This is your initiative roll score.
+
+	If one wrestler rolls a 20, he automatically wins the initiative roll.
+
+	If one wrestler rolls a 1, he automatically loses the initiative roll.
+
+	If one wrestler rolls a 20 and the other rolls a 1, the wrestler rolling 20 automatically wins the initiative roll and his move or technique cannot be blocked or countered (although his execution can still fail.)    
+
+	If both wrestlers roll a 20 or both roll a 1, the natural initiative is used as the tiebreaker.
+
+</Text>
+        </Document>
+        <Document ID="C4391AC6-C845-4AE6-A52E-C622113D304D">
+            <Title>Moveset</Title>
+        </Document>
+        <Document ID="965BDBD1-7CD5-4CBF-B477-919F2CEC224C">
+            <Title>Chapter: Skills</Title>
+        </Document>
+        <Document ID="7B88C738-A816-43B9-816D-389556DDB2F9">
+            <Title>Outside the Ring</Title>
+        </Document>
+        <Document ID="9EBB2E65-BBED-44D9-A6E7-E1AC0EB07A86">
+            <Title>Chapter 6: Tag Teams</Title>
+        </Document>
+        <Document ID="107417ED-C56D-4EE9-A771-F802396D90D1">
+            <Title>Character</Title>
+            <Text>This is simply how good of a person a character is.
+
+0-5: Pure evil
+6-20: Despicable
+21-40: Immoral
+41-60: Shady
+61-80: Decent
+81-100: Good
+100-115: Heroic
+116-120: Saintly</Text>
+        </Document>
+        <Document ID="D2F6A15C-42DD-4851-9909-3B5CDA86F85A">
+            <Title>Ring and Apron Layout</Title>
+        </Document>
+        <Document ID="F23ACE34-459B-4EE6-A658-0CAD7412E79A">
+            <Title>Class: Agent</Title>
+            <Text>Agents are true businessmen who study the art of representing wrestlers, creating stars and winning  championships.  They are negotiators, spokespersons and big picture strategists.  They know how to maneuver politically within promotions and have a working relationship with a variety of trainers.
+
+Managerial Skills
+Training: 	B-
+Interference: 	B-
+Business: 	A+
+Charisma:	B+
+Politics:		A+
+Connections:	A+
+Inspiration:	B-</Text>
+        </Document>
+        <Document ID="C345116A-1FD9-4BC5-B9F5-FC8B7706189A">
+            <Title>The Wrestling Ring</Title>
+            <Text>The ring is the most recognizable symbol of professional wrestling.  The majority of matches begin and end there, with a few trips outside.  
+
+The NPW ring is divided into the following sectors:
+
+#
+
+NWC, NEC, SWC and SEC all represent the situation of a wrestler being against the turnbuckles in a corner of the ring.
+
+The outer-most sectors are segments of the ring apron.  This is among the most dangerous places to be for multiple reasons.  First, it provides the opportunity for moves to be performed onto the floor.  Second, the apron is the hardest part of the ring.  Moves that drop or drive a wrestler into the mat hurt just a bit more when done on the apron.  The apron on each side of the ring is divided into three parts.  For example, the West apron is divided into AWN, AWC and AWS meaning the North, Center and South portions of the West apron.
+</Text>
+        </Document>
+        <Document ID="B1E4A417-E5A1-4BAB-8E4E-B1229684A544">
+            <Title>Class: Retired Wrestler</Title>
+            <Text>A former wrestler who, whether due to age, injury or change in interests, has hung up the tights to become a manager.  A retired wrestler has years of knowledge, connections and training experience at his/her disposal.  At times, a retired wrestler may return to the ring as a wrestler, but their wrestling skills are a fraction of what they used to be.
+
+The ex-wrestler has great training connections and can expose his trainees to a great number of styles early in their careers.  They also tend to have powerful enemies inside promotions which can hinder them in political situations.
+
+A wrestler character can be converted into this manager type.
+
+Managerial Skills
+Training: 	A
+Interference: 	A+
+Business: 	B-
+Charisma:	B+
+Politics:		B-
+Connections:	A+
+Inspiration:	B+</Text>
+        </Document>
+        <Document ID="DDB5015C-4EF5-448D-B293-4A7FAAD306C1">
+            <Title>Damage</Title>
+            <Text>Damage is just what it says.  It is a measurement of bodily damage taken by a wrestler over the course of a wrestling match.  When a wrestler takes damage, it is targeted at one or more body parts, and the damage is subtracted from those body parts’ hit points.  Hit points will vary depending on a number of character factors, but the defaults are as follow.
+
+Body Part
+Default Hit Points
+Head
+80
+Legs
+80
+Back
+127
+Abdomen
+127
+Chest
+127
+Arms
+80
+Neck
+70
+Ankles
+70
+Shoulders
+100
+
+</Text>
+        </Document>
+        <Document ID="FBE298F3-EEAD-4D91-894E-2249FBB523FD">
+            <Title>Part 3: Teams and Stables</Title>
+        </Document>
+        <Document ID="A4A1D329-598A-4B82-B164-33D19E975892">
+            <Title>Locker Room</Title>
+            <Text>In between training sessions, you’ll want to cool down in the locker room.  But make no mistake — things can get heated here in a hurry.  You’ll make as many friends and enemies here as you will in the ring.</Text>
+        </Document>
+        <Document ID="380F84E5-322F-4860-AB4E-EE199D6ADDFF">
+            <Title>Make-Up</Title>
+        </Document>
+        <Document ID="EB16A1FC-4EEE-4019-8528-EB103E7B59C9">
+            <Title>Chapter 3: Wrestlers</Title>
+        </Document>
+        <Document ID="D7BEB453-936F-4F36-90C7-7B03F5645D9C">
+            <Title>Untitled</Title>
+        </Document>
+        <Document ID="37E6EDBD-49B5-4DEE-B7D1-50AC963F1694">
+            <Title>Afternoon Activities</Title>
+        </Document>
+        <Document ID="B544726F-91D5-46CA-82E2-1F29305C8A5E">
+            <Title>Execution Score Tiers</Title>
+            <Text>
+40 &amp; above:	Superb
+30 to 39: 		Excellent
+20 to29: 		Good
+10 to 19: 		Fair
+1 to 9: 		Poor
+0 to -9: 		Failed
+-9 &amp; below: 	Disastrous
+</Text>
+        </Document>
+        <Document ID="ED928ADC-5372-46B7-BF68-C91760D4C6FF">
+            <Title>Skills</Title>
+            <Text>Skills are practical abilities that are acquired by a combination of talents, training and experience.  A skill’s level can be increased through training and experience.  Their base values range from 0-120.  The base values can be divided into the following tiers:
+
+0-20: 	Tier 6: Incompetent
+21-40: 	Tier 5: Novice
+41-60: 	Tier 4: Intermediate
+61-80: 	Tier 3: Adept
+81-100: 	Tier 2: Expert
+100+: 	Tier 1: Master</Text>
+        </Document>
+        <Document ID="123FF1FD-6605-419D-9AED-1C891C5E0008">
+            <Title>Class: Handler</Title>
+            <Text>Handlers are a special type of manager, who tend to deal with Monsters and similar classes of wrestlers.  Handlers have a solid knowledge of wrestling, but where they shine is controlling the otherwise uncontrollable.  Their influence over Chaotic Type wrestlers allows them to wield a very dangerous army of maniacs.  The devious reputation of these managers keeps them out of political favor within promotions, but their underground connections grant their clients access to some of the most bizarre and unscrupulous trainers in the world.
+
+Managerial Skills
+Training: 	B-
+Interference: 	A-
+Business: 	B+
+Charisma:	B-
+Politics:		C
+Connections:	A-
+Inspiration:	B-
+
+Special Skills
+Training and Inspiration skill bumped to A+ for wrestlers in Chaotic Type classes.
+Boost Poise of Chaotic Type wrestlers by 20 points when at ringside.</Text>
+        </Document>
+        <Document ID="F31B1D94-AFBE-4C1E-960E-9F578FC20344">
+            <Title>Moves</Title>
+            <Text>Moves are the fundamental method of attack.  They are learned through training and scouting.  A move’s effectiveness is determined by talent and skill level.  Other factors and conditions may be defined, such as a move not working if the opponent’s weight is above the attacker’s lift limit (a condition) or a move being incrementally more difficult the taller the opponent is (a factor).  The main measure of a wrestler’s effectiveness with a move is his mastery score for that move. The mastery score values range from 0-120.  The values can be divided into the following tiers:
+
+0-20: 	Tier 6: Incompetent
+21-40: 	Tier 5: Novice
+41-60: 	Tier 4: Intermediate
+61-80: 	Tier 3: Adept
+81-100: 	Tier 2: Expert
+100+: 	Tier 1: Master</Text>
+        </Document>
+        <Document ID="D6DE7394-DFAF-4DB4-92DE-18F446ED91F5">
+            <Title>stock_wrestling_ring_08_by_nachomanandyravage</Title>
+        </Document>
+        <Document ID="812B77F6-B894-4C57-A5BA-5DEAECE33551">
+            <Title>Before the Match</Title>
+            <Text>Before the match begins, each opponent will have a chance to review the matchup, including any scouting they’ve done of this opponent or of previous encounters between them.  Both players will lock in an initial strategy. [Expand this, describe opening gambit.]
+
+Then it’s on to the ring introductions.  This is generally a formality but things don’t always go as planned.  Someone may have decided to jump your wrestler during his introduction, or a wrestler may shockingly walk out with a once-hated rival as his new manager.
+</Text>
+        </Document>
+        <Document ID="94BC844C-E6AD-4C5F-AC64-DC814B203759">
+            <Title>Means of Victory</Title>
+            <Text>Pin-fall, submission.</Text>
+        </Document>
+        <Document ID="E6B2B0BE-9D6E-415E-BE94-9FFA2C55DB20">
+            <Title>Chapter 2: Terms and Concepts</Title>
+            <Text>These are the key terms and concepts in the game.  Many of them are covered in their own full chapters.</Text>
+        </Document>
+        <Document ID="13668938-FB6D-4D5B-A551-94E5E3695BB2">
+            <Title>Chapter: Character Creation</Title>
+            <Text>This chapter covers the process of creating a character (wrestler, manager or promoter.)  A quick breakdown of the process (with only the first 3 pertaining to a non-wrestler) would be:
+
+1. Name your character.
+2. Select your character’s class and background.
+3. Select your character’s build.
+4. Select your character’s primary and secondary fighting styles.
+5. Select your character’s initial move set.
+6. Run your character through Developmental, which will determine the character’s personality, motivations and other aspects that make him unique and establish the beginning of his career path.
+
+</Text>
+        </Document>
+        <Document ID="99AF36AE-935E-4F28-97CF-D9E7B146434E">
+            <Title>Factors</Title>
+            <Text>Factors are variable effects applied to techniques and moves.  Their structure is: [factor type] [has effect] by a factor of +/- [degree].  For instance, if the move “splash” has base damage of 10 and a defined factor that states that the attacker’s weight affects move damage by a degree of +2.5, then for each unit of 20 pounds of weight in the attacker’s advantage, the damage would be increased by 2.5 points.  That means a 500-pound wrestler successfully landing a splash on a 180-pound wrestler would cause 50 damage (320 / 20 * 2.5) + 10.</Text>
+        </Document>
+        <Document ID="2175F2CA-0AEC-47FC-9C25-B064D4B4E87C">
+            <Title>Untitled</Title>
+        </Document>
+        <Document ID="A80D274C-1648-4CE2-8272-8D61CCD4FB5E">
+            <Title>Chapter: Promotions</Title>
+            <Text>To describe promotions in the most basic sense, they are companies that promote wrestling matches.  Promotions have champions and sign wrestlers and managers to contracts.  They differ in size, reach and level of competition.</Text>
+        </Document>
+        <Document ID="CCBAAA53-041B-436B-8494-D3C633F80B27">
+            <Title>Special Rings</Title>
+            <Text>The most common ring modification is the steel cage, but other situations may call for barbed-wire ropes, no ropes, or nearly any other variation imaginable.</Text>
+        </Document>
+        <Document ID="A086D7BF-68C8-4064-85EF-6F948EF9F9B8">
+            <Title>Technique Types</Title>
+            <Text>[Quick listing]
+Escape
+Recovery
+Personality
+Tag Team
+Grappling
+Fighting
+Aerial
+</Text>
+        </Document>
+        <Document ID="D1099E93-6B32-4E9B-A0F0-C0741EF13A2F">
+            <Title>Workout Facility</Title>
+            <Text>A state-of-the-art workout facility allows you to strengthen all your physical traits.</Text>
+        </Document>
+        <Document ID="186D83FE-5CD2-40EC-9A49-1963D3B0A19F">
+            <Title>Infractions</Title>
+            <Text>
+Infraction Name
+Default Infraction Level
+Non-Violent Outside Interference
+3
+Violent Outside Interference
+4
+Choking
+2
+Hair-Pulling
+1
+Rope-Assisted Hold
+2
+Hold with Opponent in Ropes
+2
+Attack to the Eye
+1
+Closed Fist
+1
+Weapon Use
+4
+Low Blow
+4
+Biting
+2
+Non-Violent Referee Interference
+1
+Violent Referee Interference
+4
+Use of Banned Move
+4
+
+</Text>
+        </Document>
+        <Document ID="E968D68D-3C80-431B-BD5E-787FF0A13E7F">
+            <Title>Villain Types</Title>
+        </Document>
+        <Document ID="F602C0F0-59A3-416F-8BF2-44A87D6DCF49">
+            <Title>Developing Skills</Title>
+        </Document>
+        <Document ID="1A3CDB35-CAB7-4DCF-A33B-6D4EE9EC08E6">
+            <Title>Chapter 1: Introduction</Title>
+            <Text>Welcome to the world of New Power Wrestling.  This game is a role-playing/simulator hybrid that lets you create your own path to fame, fortune and glory in the world of professional wrestling.  It’s still real to us, dammit.
+
+Most of the core game mechanics are patterned after tabletop RPG systems, but the core of the match system is a very complex web of moves, counters, chains and other factors that would take an immense amount of patience to carry out in a real-life dice-rolling environment.</Text>
+        </Document>
+        <Document ID="0EBFAC0D-958E-457E-87F5-8A3ED7945D25">
+            <Title>Ring Layout</Title>
+        </Document>
+        <Document ID="D3E5FCEB-0FA8-485B-A056-BEF14F7B4210">
+            <Title>Athlete Types</Title>
+            <Text>Many athletes from other sports are drawn to the glamour of pro wrestling.  Whether it’s an amateur wrestling master ready to try his hand at stardom, or a football player looking to transition to the pros.</Text>
+        </Document>
+        <Document ID="38791708-1F2F-4B41-A15C-A3631FEB6B2E">
+            <Title>Empathy</Title>
+            <Text>This personality trait measures a wrestler’s level of emotion in seeing others badly hurt or treated unjustly.  Combined with courage and loyalty, this trait leads to the formation of many alliances.
+
+The Empathy Scale
+
+0-5: 		Sociopathic
+6-20:		Unfeeling
+21-40:		Hard
+41-60:		Average
+61-80:		Sensitive
+81-100:		Caring
+101-114:		Compassionate
+115-120:		Saintly
+</Text>
+        </Document>
+        <Document ID="4564B82A-92EC-4168-9A6A-4F05561141B3">
+            <Title>Motivation</Title>
+            <Text>The main goal of just about any wrestler is to win matches and championships, because these are the markers of success within professional wrestling.  Separate of that goal, there is motivation.  This tells us why this person became a professional wrestler, and what they hope to accomplish in their quest for wrestling success.  More than any other individual aspect of a character’s personality, the motivation will guide the path of a wrestler’s personal interactions.
+
+Motivation list:
+Achievement
+Adoration
+Competition
+Community
+Conflict
+Destruction
+Entertainment
+Fame
+Hedonism
+Heroism
+Honor
+Power
+Rebellion
+Thrill
+Torment
+Vice
+Wealth
+
+</Text>
+        </Document>
+        <Document ID="741C7791-6BDE-4B4F-8D97-DE26A214DBE1">
+            <Title>Talents</Title>
+            <Text>Talents are physical abilities such as strength, speed and agility.  Their base values range from 0-120.  A 0 would likely never be seen.  The base values can be divided into the following tiers:
+
+0-20: 	Tier 6: Pathetic
+21-40: 	Tier 5: Poor
+41-60: 	Tier 4: Mediocre
+61-80: 	Tier 3: Above Average
+81-100: 	Tier 2: Good
+100+: 	Tier 1: Elite</Text>
+        </Document>
+        <Document ID="67E53240-86BC-4D10-B7C5-D189B5FFA8FA">
+            <Title>Aggression</Title>
+            <Text>This personality trait measures how cold-blooded or hot-blooded a wrestler is.  Does the wrestler stay calm in every situation, or is he a loose cannon?
+
+The Aggression Scale
+
+0-5: 		Ice Cold
+6-20:		Laid Back
+21-40:		Calm
+41-60:		Temperate
+61-80:		Irritable
+81-100:		Aggressive
+101-114:		Reckless
+115-120:		Wild
+</Text>
+        </Document>
+        <Document ID="4D7E2F31-9FB4-4AA7-B562-1245767AC063">
+            <Title>Striking Skills</Title>
+        </Document>
+        <Document ID="82C7B537-F08E-482F-9C66-DB8C3482B4AE">
+            <Title>Defense Score Effects</Title>
+            <Text>20+:		1. Counter, if applicable
+			2. Escape, if applicable
+			3. Block
+
+16+:		1. Escape, if applicable
+			2. Block
+
+12+:		Block
+</Text>
+        </Document>
+        <Document ID="5046139F-E894-4A88-B79C-8DF2BBB9E218">
+            <Title>Untitled</Title>
+        </Document>
+        <Document ID="A62DBFFC-D6AD-40AC-8057-17CA46E519DF">
+            <Title>Stun</Title>
+            <Text>The impact of wrestling moves can momentarily stun a wrestler.  This is not permanent damage, but a temporary state of disorientation, up to unconsciousness.  A wrestler’s stun rating drops by a rate dependent on the wrestler’s stats (for an average wrestler, 4 points are recovered — or subtracted — per turn).  Stun ratings are divided into the following levels.
+
+Stun Level
+Description
+Value Range
+0
+Alert
+0-5
+1
+Phased
+6-9
+2
+Bothered
+10-13
+3
+Dazed
+14-17
+4
+Staggered
+18-21
+5
+Unstable
+22-25
+6
+Floored
+26-29
+7
+Unconscious
+30+
+</Text>
+        </Document>
+        <Document ID="734F2961-385E-4E89-9774-33F4263AD739">
+            <Title>Brawling</Title>
+        </Document>
+        <Document ID="DAB65A71-9D8B-4C9D-826C-4ACF3F287692">
+            <Title>Execution Score</Title>
+            <Text>The execution score measures how well a wrestler performs (or attempts to perform) a move.  A higher execution score makes a move more difficult to block or counter, and on many moves affects the damage and/or stun.  It is affected by your wrestler’s mastery score for a given move and the move’s difficulty rating.  Bear in mind that the difficulty rating is variable given different situations in the match, and different factors such as opponent weight or your wrestler’s injuries.
+
+To determine the execution score for a move attempt:
+
+1. Start with the wrestler’s move mastery score.
+2. Divide by 4.
+3. Subtract the move’s difficulty rating.
+4. Roll 1d20.  If the roll is 1, subtract 10.  If the roll is 20, add 30.  For any other roll, add the roll value.
+
+Any time a 20 is rolled on a move in a non-exhibition match, you gain 1 mastery on that move.
+</Text>
+        </Document>
+        <Document ID="40D4E870-DA0F-4099-AAC0-CAEC7C80C090">
+            <Title>Chapter: Move Sets</Title>
+            <Text>[Quick jotting down of move sets]
+Basics 101, 102
+Aerial 101, 102, 201, 202, 301, 302, 400
+Power 101, 102, 201, 202, 301, 302, 400
+Suplexes 101, 102, 201, 202
+Double-Team 101, 102, 201, 202, 300
+Triple-Team 201, 202, 301, 302, 400
+Lucha Libre 101, 102, 201, 202, 300
+Japanese Strong Style 101, 102, 201, 202, 300
+European Wrestling 101, 102, 201, 202, 300
+Cheating 101, 102, 200
+
+
+</Text>
+        </Document>
+        <Document ID="2ED55294-7AD7-4EFC-9FC3-41A85189324D">
+            <Title>Class: Powerhouse</Title>
+            <Text>The Powerhouse is all about physical strength.  The key to success for a Powerhouse is to diversify, to find another element or two that separates him from all the other strong guys out there.  
+
+Powerhouses tend to be among the most successful wrestlers early in their careers, when they are facing opponents who don’t have a developed skill set and can’t match their physical talents.  When facing more experienced competition, the Powerhouse will have to bring more than strength to the table, because predictability will negate all their physical advantages.
+
+Due to the amount of time they spend in the gym, Powerhouses are not good scouts by default.  The bulk they carry around also limits their agility, speed, quickness and aerial ability.  All that muscle allows them to absorb more damage to the legs, arms, back and abdomen.
+
+Class Effects
+Upper Body Strength: +25
+Lower Body Strength: +20
+Legs HP: +15
+Arms HP: +10
+Back HP: +15
+Abdomen HP: +15
+Agility: -15
+Speed: -15
+Quickness: -10
+Scouting: -10
+Aerial: -15
+Intelligence: -10
+
+Class Bonuses
+
+Technique: Dead Lift
+
+Lift an opponent from the mat directly into a hold or move.
+Requirements: Opponent weight under (0.9 x Attacker Lift Limit)
+Effect: Move Difficulty x 1.1, Move Showmanship x 2
+</Text>
+        </Document>
+        <Document ID="E553A140-9D10-4C38-92A4-409CB38056F3">
+            <Title>Physical Training</Title>
+        </Document>
+        <Document ID="067B8BC2-D119-4872-B351-E79028EA328D">
+            <Title>Specialties</Title>
+        </Document>
+        <Document ID="94B962E6-454D-4D2A-8DA4-8863B10BA8E8">
+            <Title>Part 4: Moves and Techniques</Title>
+        </Document>
+        <Document ID="A53597A9-55F8-4AD1-952C-7D3B2DC21BCC">
+            <Title>Class: Clean-Cut</Title>
+            <Text>The Clean-Cut Hero is a true role model to all the kids out there.  He may not be the most intriguing figure in the world, but that’s all part of his appeal.  This wrestler’s healthy lifestyle helps him maintain a great athletic condition and his heartfelt appreciation for fan support helps fuel his comebacks during tough matches.  Make no mistake, however, there are those who find the whole goody-two-shoes thing infuriating, and if the Clean-Cut Hero shows himself to be cowardly or arrogant, crowds will turn on him viciously.</Text>
+        </Document>
+        <Document ID="473947B9-5C5C-4A70-9230-1E9D4AA61745">
+            <Title>Build</Title>
+            <Text>A wrestler’s build is essentially his height and weight.  Increasing height and weight in character creation raises the power ceiling for that character, but lowers the ceiling for speed and agility.  There are also other advantages to weight, such as added damage on certain moves and increase difficulty of many your opponent’s attacks.
+
+Weight
+Power Max
+Speed Max
+Agility Max
+&lt;180
+-30
++20
++10
+180-205
+-20
++14
++6
+206-230
+-10
++8
++2
+231-260
+0
+0
+0
+261-290
++10
+-8
+-2
+291-350
++20
+-14
+-6
+351-399
++25
+-20
+-12
+400-499
++25
+-25
+-18
+500+
++25
+-30
+-25
+
+</Text>
+        </Document>
+        <Document ID="5FD1CDB9-24FB-4117-8025-A4C55A3576A0">
+            <Title>Morning Activities</Title>
+        </Document>
+        <Document ID="B6E0E62E-681F-41E3-98C8-D2D260F4ADC2">
+            <Title>Class: Anti-Hero</Title>
+            <Text>The Anti-Hero has a job to do, and doesn’t care what anyone thinks of his methods.  This, of course, often leads to the Anti-Hero being very popular.  These wrestlers are resourceful, charismatic and brash, and have a deep bag of tricks.</Text>
+        </Document>
+        <Document ID="83CD6C90-BCD7-4F0A-B111-72DFE64EC4F6">
+            <Title>Personality Scales</Title>
+            <Text>Personality traits are measured on a scale.  Some of these are bipolar scales, such as Aggression, which represents ice-cold poise at the bottom of the scale and wild fury at the top of the scale.  Others, such as Speaking Ability, are a measure from 0-120 of a single specific trait, </Text>
+        </Document>
+        <Document ID="0E57E109-84ED-40E3-9D1B-B8AB1C589EAD">
+            <Title>Evening Activities</Title>
+        </Document>
+        <Document ID="8A1EF16F-EDFF-4E48-9D29-CA2A171E936B">
+            <Title>Loyalty</Title>
+            <Text>This personality trait measures a wrestler’s loyalty from the most determined loner in the world to the soldier who sacrifices everything for the team.
+
+The Loyalty Scale
+
+0-5: 		Absolute Loner
+6-20:		Fickle
+21-40:		Petty
+41-60:		Trustworthy
+61-80:		Dependable
+81-100:		Loyal
+101-114:		Dedicated
+115-120:		Zealous
+</Text>
+        </Document>
+        <Document ID="315FE4DC-6022-4FB4-AFAB-7D4AA5B29126">
+            <Title>Welcome to New Power Wrestling</Title>
+        </Document>
+        <Document ID="FDCC5689-69EC-42EC-96F7-BAC1D90B9429">
+            <Title>Learning Techniques</Title>
+        </Document>
+        <Document ID="17D06A68-302D-4370-A41D-8083E984DBBB">
+            <Title>Class: Manipulator</Title>
+            <Text>The Manipulator makes a career out of getting others to do his bidding.  He politics for opportunities, he forms one-sided alliances with unsuspecting wrestlers and he plays mind games at an elevated level.  He possesses a blinding charisma that allows him to control the weak-minded.
+
+Class Effects
+Charisma: +20
+Heart: -20
+Illegal Tactics: +15
+Intelligence: +20
+Scouting: +10
+Toughness: -20
+
+Personality Effects
+Loyalty: Fickle
+Empathy: Sociopathic
+Honesty: Pathological Liar
+Courage: Spineless
+Character: Shady
+
+Class Bonuses
+Skill: Fueled by Hatred
+- The more the crowd boos and taunts this wrestler, the more power he draws from it.
+Skill: False Front
+- A member of this class can choose to present as another class.  Other wrestlers will see him as the false class until his true nature is exposed.</Text>
+        </Document>
+        <Document ID="52A2FE3F-7AA2-4B89-91B7-6846BC99E7CF">
+            <Title>Video Library</Title>
+            <Text>With thousands of matches from history on video, there is an endless source of educational material at the finger tips of any wrestler training at the DC.</Text>
+        </Document>
+        <Document ID="816B2633-3D17-4D52-97DF-7721CE271753">
+            <Title>Chapter: Backgrounds</Title>
+            <Text>Wrestlers come to the sport from many walks of life.  Some are former amateur wrestlers, football players or other athletes.  Some are from mysterious, unknown origins.  Some learned to fight on the streets. Others were born into the business as second-or-third-generation professional wrestlers.
+
+Backgrounds affect character talents and available skills, as well as directing personality creation.</Text>
+        </Document>
+        <Document ID="51B0E61B-A7E1-45CC-B226-F4C708AC778F">
+            <Title>Chapter: Techniques</Title>
+            <Text>The term technique is used for just about any action a character performs other than a wrestling move.  </Text>
+        </Document>
+        <Document ID="52406178-50E6-473C-B023-921D0F7F18D9">
+            <Title>Defense Score</Title>
+            <Text>
+1. Start with zero.
+2. Subtract the execution score of the attempted move.  
+3. Add your wrestler’s scouting score for this move (max: 15)
+4. Add the value of the wrestler’s countering skill (max: 10)
+5. Add the quickness value of this move (max: 7)
+6. Subtract your wrestler’s stun level.  If the value is over 3, subtract 1 more point.
+7. Set aside this number, the natural defense score.
+The one-line formula is (0-execution) + scouting + countering + quickness - stun.
+8. Roll a 1d20.  If the value is not a 1 or a 20, add this number to your defense score.  This is your defense score.
+	If the value is a 1, your defense score is 0 or your natural defense score, whichever is lower.
+	If the value is a 20, add 30 to your natural defense score.  This is your defense score.
+</Text>
+        </Document>
+        <Document ID="490FC9F4-DB98-404C-A1F3-F0BCAE5CEA18">
+            <Title>Part 7: Promotions &amp; Timelines</Title>
+        </Document>
+        <Document ID="9B46E0C7-201E-4886-B7F2-7544BE17E0D5">
+            <Title>General Striking Skills</Title>
+        </Document>
+        <Document ID="C58BECF4-5712-486A-B963-C42A5BB5E5E3">
+            <Title>Workshops</Title>
+        </Document>
+        <Document ID="39AE2113-7299-4418-B477-61B9242564C0">
+            <Title>Practice with Trainers</Title>
+        </Document>
+        <Document ID="75193E94-24F8-4315-98F8-8969B038E09F">
+            <Title>Class: Assassin</Title>
+            <Text>Assassins bring laser focus and precision in their attacks.  They possess great nerve and are elite scouts.  They come in with a strong game plan which they execute in a cold, calculated fashion.  
+
+When a match doesn’t go according to plan, the Assassin becomes more vulnerable.  They are strategists, not improvisers.  For this reason, it’s important to get off to a fast start.
+
+An Assassin’s blood runs cold, and therefore adrenaline and crowd interaction are basically non-factors. This is a bonus for their poise. The lack of adrenaline limits their comeback ability, but this is counteracted in part by the Assassin’s scouting excellence, which leads to a lot of counters and escapes.
+
+Assassins tend to be loners who don’t say much, and when they do speak, it’s rarely pleasant.  If you want to have a positive relationship with an Assassin, it’s going to involve money.  They are as loyal as they are well-compensated.
+
+Class Effects
+Quickness: +15
+Focus: +20
+Scouting: +20
+Poise: +20
+Crowd Motivation: -20
+Adrenaline: -15
+Heart: -15
+Recuperation: -5
+Charisma: -10
+
+Personality Effects
+Loyalty: Absolute Loner
+Empathy: Unfeeling
+Honesty: Cagey
+Courage: Daring
+Character: Shady
+
+Class Bonuses
+Skill: False Front
+- A member of this class can choose to present as another class.  Other wrestlers will see him as the false class until his true nature is exposed.</Text>
+        </Document>
+        <Document ID="1C22E0FE-C065-48FC-A6B4-BD29739F207C">
+            <Title>Chapter: Scouting</Title>
+            <Text>Since defense is so important in NPW, it’s very important to know your opponent.  Therefore your wrestler may wish to spend some of his off-time scouting opponents, to learn their moves, techniques and specialties.</Text>
+        </Document>
+        <Document ID="EC93B5A7-1BBD-4E29-A565-09B6E22070E5">
+            <Title>Chapter 5: Managers</Title>
+            <Text>Managers are characters that act on behalf of wrestlers.  They assist in such things as training, scouting, strategy, team/stable-forming and negotiation.  They can also become physically involved in matches (risking disqualification in many instances) or even compete in the ring if need be.
+
+Typically, a manager will accompany his wrestler(s) to any match.  In some cases, they may be barred from ringside.  A player may also elect not to bring a manager character to ringside.
+
+Like wrestlers, managers have a set of character classes that correspond with different sets of skills, strengths and weaknesses.</Text>
+        </Document>
+        <Document ID="4C4214F5-2BC3-49CC-8D34-9A4885A18752">
+            <Title>Chapter: Specialties</Title>
+        </Document>
+        <Document ID="465A3153-CBDE-4DB4-847D-2FF9CC82133A">
+            <Title>Chapter: Fighting Styles</Title>
+            <Text>NPW adheres to the adage that “styles make fights.”  That’s why each character picks 2 fighting styles (or doubles down on one) at the outset.  The variety of fighting styles help make each wrestler and each match unique.  Fighting Styles consist of moves and techniques that reflect different disciplines and seek to achieve victory in different ways.</Text>
+        </Document>
+        <Document ID="B4670315-B5BC-4D1F-A7A7-2DDCC1E13C50">
+            <Title>Quick Reference</Title>
+            <Text>#</Text>
+        </Document>
+        <Document ID="DBDACCFB-9EC3-4AF2-ADDE-E242E38181C3">
+            <Title>Untitled</Title>
+        </Document>
+        <Document ID="0C011B3B-17D6-4E9D-897E-4FC9A3DEC333">
+            <Title>Part 6: Matches</Title>
+        </Document>
+        <Document ID="F5EA70A9-1E9A-40CC-B873-1F4F20685AB6">
+            <Title>Class: Blue-Collar</Title>
+            <Text>The Blue-Collar Hero represents the every-man.  He has an unwavering sense of justice, and if you violate that, he’ll kick your ass.  He doesn’t care for sophistication, preferring a straight-forward, and often very painful approach.  He doesn’t get paid by the hour but he can fight for as long as you want to.</Text>
+        </Document>
+        <Document ID="4F578FDD-CC20-4278-9818-5EC282A8B2B4">
+            <Title>Class: Semi-Retired Wrestler</Title>
+        </Document>
+        <Document ID="863BA4E3-CCFB-41BD-901E-E29A67FBB78F">
+            <Title>Leg Strikes/Kicking Skills</Title>
+        </Document>
+        <Document ID="CD8832C2-478E-4D97-9C9F-0893398DA128">
+            <Title>The Introductory Interview</Title>
+            <Text>At the beginning of Developmental, your wrestler will take part in a mandatory interview.  If he requires a spokesperson (usually a manager), one may speak for him.
+
+The interview consists of ten interview questions, the first of which is always, “Why do you want to be a professional wrestler?”  The options to that question, and the follow-up questions will be determined by the wrestler’s class.  The remaining questions in the interview will be pulled from a class-specific pool of questions and/or a general pool of questions.</Text>
+        </Document>
+        <Document ID="781CE511-0D96-4AFE-8887-DCC770F48EBC">
+            <Title>Chapter 11: The Flow of a Wrestling Match</Title>
+            <Text>This chapter describes the flow of a wrestling match in NPW, from the pre-match introductions to the post-match extracurriculars.  For the sake of simplicity, the concepts will mostly be explained in a way that pertains to a standard singles match with no unusual stipulations.
+</Text>
+        </Document>
+        <Document ID="6FD0182F-C17B-4B46-9456-9EAB32BACB3E">
+            <Title>Chapter: Developmental</Title>
+            <Text>Developmental is the final step in the Character Creation process, but it needs its own chapter.  This is where your wrestler first develops a personality and determines the best set of moves and techniques for the beginning of his or her career.
+
+Developmental is a 90-day program that proceeds at the user’s pace.  Personalities are developed through interviews and interactions with other characters. Each day is divided into morning, afternoon and evening sections.  Players have a degree of freedom on how to use each day, but some activities — such as shows — are mandatory.</Text>
+        </Document>
+        <Document ID="424CDE76-83F6-41D7-AEE4-4E30A6B3DCF1">
+            <Title>Chapter 8: Moves</Title>
+            <Text>Moves are the fundamental method of attack in NPW.  
+
+Things to cover:
+Tag team moves
+Switches
+Submission hold turn-per-turn options [wrench, transition, reposition, release, technique]
+Momentum Score [based on weight and speed]
+</Text>
+        </Document>
+        <Document ID="95A1A148-929D-4CBF-8271-D411FED0B3C8">
+            <Title>Bosses' Office</Title>
+            <Text>Where dreams are made and shattered.  Your bosses want to see you become the best, but don’t undersell their sadistic side.</Text>
+        </Document>
+        <Document ID="5AAE6F54-20FC-4E00-A03C-66C63BEC57CD">
+            <Title>All-Day Activities</Title>
+            <Text>Prospects in NPW’s Developmental program have 24-hour access to the state-of-the-art Development Center.  At any given time, wrestlers can spend an hour at the Center lifting weights, running laps, sparring with other wrestlers or practicing moves and techniques with the in-house trainers.  During mornings and afternoons, there may be special workshops taking place.
+
+Also, at any time you may spend an hour in your apartment studying video tape.</Text>
+        </Document>
+        <Document ID="7532550B-9C2D-4E79-AB2B-82AA9D714F7C">
+            <Title>Start of the Match</Title>
+            <Text>Assuming all parties are present and ready to begin, the bell rings.  In most cases, wrestlers begin in opposite corners.  However, one wrestler or both may have selected to jump his opponent before the bell, in which case the fight is on.
+
+Otherwise, the match begins with each wrestler standing in his corner.  Since the two wrestlers are not near enough to attempt any actual moves yet, they can either choose to:
+
+1) Move to a different area of the ring, or outside of the ring, or on the ropes.  Distance covered in one turn is dependent on the wrestler’s speed.
+2) Use any technique that is available in this situation, such as “Appeal to Crowd” or “Test of Strength Challenge”
+3) Select a broad strategy such as “Look to Grapple” or “Look to Brawl”
+
+After both players select their actions, the turn plays out.  If both players have selected a strategy, the two will converge in the center of the ring, and this will lead us to our first sequence.
+
+</Text>
+        </Document>
+        <Document ID="4DBF211E-FFB5-41EA-B565-BD1D45835707">
+            <Title>Speaking Ability</Title>
+            <Text>This personality trait measures a wrestler’s ability to express himself and win over fans or strike fear into the heart of an upcoming opponent, all with the aid of a microphone.
+
+The Speaking Ability Scale
+
+0-5: 		Non-Verbal
+6-20:		Unintelligible
+21-40:		Bumbling
+41-60:		Dull
+61-80:		Average
+81-100:		Eloquent
+101-114:		Silver-Tongued
+115-120:		The Gift of Gab
+</Text>
+        </Document>
+        <Document ID="CA39CC9B-8AE4-4913-AA88-8A2E65D61B90">
+            <Title>Chapter 7 Stables</Title>
+        </Document>
+        <Document ID="E86EFF4D-64F1-432A-9123-73EA21C858E1">
+            <Title>Honesty</Title>
+            <Text>This personality trait measures a wrestler’s willingness to speak the truth, answer questions directly and generally be trusted to mean what he says.  
+
+The Honesty Scale
+
+0-5: 		Pathological Liar
+6-20:		Two-Faced
+21-40:		Deceitful
+41-60:		Cagey
+61-80:		Reliable
+81-100:		Honest
+101-114:		Genuine
+115-120:		Unquestionable
+</Text>
+        </Document>
+        <Document ID="86090D30-2FA0-4B6B-9580-69ED4B5FA8E6">
+            <Title>Training Room</Title>
+            <Text>In the Training Room, you go one-on-one with one of the Development Center’s on-staff trainers to work on new moves and techniques or get better at the ones you do have.  At some times, this room will feature special workshops.  You can not train one-on-one at those times, but the workshops are highly recommended.</Text>
+        </Document>
+        <Document ID="943C904D-0C54-41F8-8590-9A7B8CF27848">
+            <Title>Chapter: Talents</Title>
+            <Text>Upper Body Strength
+Lower Body Strength
+Speed
+Agility
+Quickness
+Stamina
+Toughness
+Charisma
+Intelligence
+Will</Text>
+        </Document>
+        <Document ID="5DAF4800-5D96-49F4-90C3-2DE6E9536A76">
+            <Title>Sparring Room</Title>
+            <Text>The sparring room simply contains 5 wrestling rings.  If one is unoccupied you can face another wrestler or one of the training assistants, to refine your technique.</Text>
+        </Document>
+        <Document ID="60447CC3-7FB1-428A-97AC-C315789A6896">
+            <Title>Class: Trainer</Title>
+        </Document>
+        <Document ID="1601EEA1-56CF-41FC-A069-061411A5CBD5">
+            <Title>Selecting Character Build</Title>
+            <Text>At this time, build simply consists of height and weight, which come with certain benefits and detriments.  For more details, see the Build section of the Wrestlers chapter.  Character heights can range from 5’0 to 7’6 and weight can range from 130 to 600.  Most characters will be nowhere near any of those extremes.
+</Text>
+        </Document>
+        <Document ID="0091645C-52AC-4A37-BF00-F66DC5A4089F">
+            <Title>The Development Center</Title>
+        </Document>
+        <Document ID="6C468035-D07A-44BB-994D-17DABD7D7790">
+            <Title>Untitled</Title>
+        </Document>
+        <Document ID="B4A0ED28-2BA5-4BE5-B78F-72AC2ADE7B81">
+            <Title>Defense Score Examples</Title>
+            <Text>Example: Your opponent attempts a top-rope moonsault, with execution score of 40 (Superb).  You have 9 scouting points on top-rope moonsault and 7 countering skill points.  The move has a quickness value of 6.  You roll a 20.
+
+0-40 = -40
+-40 + 8 + 7 + 6  =-19
+-19 + 30 = 12
+
+Despite his superb execution, you get the knees up just in time. (As per the Blocked condition on the top-rope moonsault)
+
+Example: Your opponent attempts a piledriver, with execution score of 23 (Good).  You have 15 scouting points on piledriver and 8 countering skill points.  The move has a quickness value of 6.  You roll a 12.
+
+0-23 = -23
+-23 + 15 + 8 + 6 = 6
+6 + 12 = 18
+
+Your execution score is 18.  The Escape effect on piledriver is a backdrop, which effectively works like a counter.  
+
+Example: Your opponent attempts a standing dropkick, with execution score of 30 (Excellent).  You have 8 scouting points on standing dropkick and 10 countering skill points.  The move has a quickness value of 3.  You roll a 9.
+
+-30 + 8 + 10 + 3 = -9
+-9 + 9 = 0
+
+Despite your excellent countering ability, it’s hard to stop a move that quick when it’s done that well.  The dropkick connects.
+
+TODO: REWRITE EXAMPLES TO INCLUDE STUN LEVEL
+
+Example: Your opponent attempts a powerslam, with execution score of 12 (Fair).  You have 7 scouting points off standing dropkick and 7 countering skill points.  The move has a quickness value of 5.  You roll a 15.
+
+-12 + 7 + 7 + 5 = 7
+7 + 16 = 23
+
+His so-so execution of a slow-executing move gave you the chance to counter with a good roll, and with a 15 you made him pay by countering with a swinging DDT.
+
+Example: Your opponent attempts a running superkick (a move he hasn’t used before), with execution score of 20 (good).  The move has a quickness score of 4.  You have 0 scouting points as it’s a new move, and you have 10 countering skill points.  You roll a 17.
+
+-20 + 0 + 10 + 4 = -6
+-6 + 17 = 11
+
+You’re a master of counters, but with a surprise move like that, you had to hope he wouldn’t execute it well.  He executed it just well enough to mean you’d need a great roll to block it.  You come close!  However, the running superkick nails your wrestler in the jaw.
+
+Example: Your opponent attempts a jab, with execution score of 21 (good).  The move has a quickness score of 1.  You have 8 scouting points on jab. You have 7 countering skill points.
+
+-21 + 1 + 8 + 7 = -5
+
+You roll a 14.
+
+-5 + 14 = 9.  
+
+The jab is just too quick.  Luckily, each time you see that move within this match, your wrestler will gain a scouting point for it that lasts the rest of the match, maxing out at 15.  If the match is non-exhibition, your wrestler will also gain a permanent scouting point for each move he sees in the match (pertaining only to the person who executes the moves).
+
+</Text>
+        </Document>
+        <Document ID="C31168F2-3B9C-46EB-A64F-D44087ED7A7E">
+            <Title>Move Types</Title>
+            <Text>Striking Moves
+
+Submission Holds
+
+Throws
+
+Extreme
+
+Grappling
+
+Illegal Tactics
+
+Aerial Moves
+
+Pinning Positions
+
+Hold Positions</Text>
+        </Document>
+        <Document ID="1F8282BB-6A6A-4B5B-8270-3B389F2DFD3B">
+            <Title>Selecting Character Class and Background</Title>
+            <Text>In character creation, a created wrestler can be given any class and background unless that class or background has a special prerequisite.  Some classes will contain “flavors” for further customization.  For more detail, see the chapter on Wrestler Classes and Backgrounds.</Text>
+        </Document>
+        <Document ID="0A8DB365-16A7-4311-9668-BD01718D792B">
+            <Title>Chapter: Personality</Title>
+            <Text>Pro wrestling is about so much more than what goes on in the ring.  Wrestlers spend time in the locker room, at backstage interview areas and at outside areas such as gyms, dojos and even late-night talk shows.  These events shape, and are shaped by, the wrestler’s personality.  This chapter covers the personality traits of a wrestler, how those traits are determined and their effect within the game.</Text>
+        </Document>
+        <Document ID="33CEBCB3-6C7A-45DB-B0DD-78392D1F122B">
+            <Title>Fighting: Striking Techniques</Title>
+            <Text>Home Run Swing
+
+One striking move in the wrestler’s move set (player’s choice) may be given a 5% likelihood of causing +12 stun points and +3 damage.
+
+Requirements: Adept or better at Arm Strikes/Punching or Leg Strikes/Punching.
+
+
+Knockout Artist
+
+Two striking moves in the wrestler’s move set (player’s choice) may be given an 7% likelihood of causing +14 stun points and +5 damage.
+
+Requirements: Expert or better at Arm Strikes/Punching or Leg Strikes/Punching.
+
+
+Knockout Master
+
+Three striking moves in the wrestler’s move set (player’s choice) may be given a 10% likelihood of causing +14 stun points and +7 damage.
+
+Requirements: Master at Arm Strikes/Punching or Leg Strikes/Punching.
+
+
+Strike Combo
+
+Ranks: 3
+Requirements: 
+	Adept or better at Arm Strikes/Punching or Leg Strikes/Punching for Rank 1.
+	Expert or better at Arm Strikes/Punching or Leg Strikes/Punching for Rank 2.
+	Master or better at Arm Strikes/Punching or Leg Strikes/Punching for Rank 3.
+
+Allows the wrestler to put together a flurry of strikes.  If the first strike is evaded or countered, the combo is broken.  If it connects, all subsequent strikes will automatically connect until the final strike in the combo, which can be countered.  The number of strikes in the combo is equal to 2 + the wrestler’s Rank in the skill.  So a Rank 1 can only do a 3-strike combo whereas a Rank 3 can execute up to a 5-strike combo.
+
+Rank is determined by overall mastery for this skill.  Mastery 1-70 is Rank 1.  Mastery 71-100 is Rank 2.  Mastery 101+ is Rank 3.</Text>
+        </Document>
+        <Document ID="0CFBA6CF-2C7A-4BCA-B5EB-51EA981DFB85">
+            <Title>Techniques</Title>
+            <Text>Techniques are actions made possible through skills.  A technique can be taught by a trainer or acquired automatically through skill progression and experience.  A technique’s effectiveness is affected by talent, skill level and experience.  The main measure of a wrestler’s effectiveness with a technique is his mastery score for that technique. The mastery score values range from 0-120.  The values can be divided into the following tiers:
+
+0-20: 	Tier 6: Incompetent
+21-40: 	Tier 5: Novice
+41-60: 	Tier 4: Intermediate
+61-80: 	Tier 3: Adept
+81-100: 	Tier 2: Expert
+100+: 	Tier 1: Master</Text>
+        </Document>
+        <Document ID="B4C76C60-BD34-4729-B7E3-A50BF25ACAAF">
+            <Title>Grounds for Disqualification</Title>
+        </Document>
+        <Document ID="3BA6907A-5C3D-4767-868B-968B228BBDCA">
+            <Title>Quick-list of classes</Title>
+            <Text>Hero Types:
+	Patriot Hero
+	Clean-Cut Hero
+	Blue-Collar Hero
+	Ultimate Competitor
+	Anti-Hero
+	Reckless Warrior
+
+Athlete Types:
+	Wrestling Machine
+	MMA Fighter
+	Martial Artist
+	Pro Athlete
+
+Chaotic Types:
+	Wildman
+	Animalistic
+	Kamikaze
+	Monster
+	Nihilist
+	Eccentric
+
+Performer Types:
+	Daredevil
+	Hollywood
+	Pretty Boy
+	Rock Star
+	Show Stealer
+	Slick Talker
+
+Brawler Types:
+	Bar-Room Brawler
+	Street Fighter
+	Thug
+
+Villain Types:
+	Weasel
+	Egomaniac
+	Sadist
+	Manipulator
+	Slimeball
+	Assassin
+
+Specialist Types:
+	Powerhouse
+	Aerial Dynamo
+	Extremist
+	Mastermind
+	Shot-Caller
+	Team Player
+	Move Type Specialist
+	Striker
+	Submission Machine
+	Knockout King
+</Text>
+        </Document>
+        <Document ID="6F92A3BF-EE2B-40EE-824D-4E6EBFE8493E">
+            <Title>Class: Part-Time Wrestler</Title>
+        </Document>
+        <Document ID="ABC04043-4AEC-408C-B20E-845EC2B050F4">
+            <Title>Selecting Character Move Set</Title>
+            <Text>[FILL THIS OUT]
+
+Very unofficially the method is something like:
+
+Start with [i] number of move points to spend within [Primary Fighting Style] 101 the move set and the option to use any leftover points towards one move in [Primary Fighting Style] 102.
+
+Start with [j] number of move points to spend within [Secondary Fighting Style] 101.
+
+Start with [k] number of move points to spend within Basics 101 &amp; 102 move sets.
+
+Start with [l] number of move points to spend within any one other 101-level move set.</Text>
+        </Document>
+        <Document ID="ABDD78C3-8950-4841-BF6C-A45A21226C4C">
+            <Title>Class: Scumbag</Title>
+            <Text>The Scumbag is a truly disgusting human being.  He is a liar, a cheater and a pig.  He possesses a sort of mesmerizing anti-charisma.  He radiates a powerful personality  that angers fans and wrestlers alike.  A Scumbag has no loyalty and will sometimes turn on a partner or attack a stranger for no reason but the fun of it.  The Scumbag is a sociopathic strategist.
+
+Class Effects
+Charisma: +15
+Heart: -20
+Adrenaline: +10
+Illegal Tactics: +20
+Intelligence: +10
+Scouting: -10
+Toughness: -15
+
+Personality Effects
+Loyalty: Petty
+Empathy: Sociopathic
+Honesty: Pathological Liar
+Courage: Spineless
+Character: Despicable
+
+Class Bonuses
+Skill: Fueled by Hatred
+- The more the crowd boos and taunts this wrestler, the more power he draws from it.
+Skill: False Front
+- A member of this class can choose to present as another class.  Other wrestlers will see him as the false class until his true nature is exposed.</Text>
+        </Document>
+        <Document ID="1AF34D10-CFBC-4F28-90D9-C099CB760D89">
+            <Title>Class: Valet</Title>
+            <Text>Valets are largely there for show or for inspiration.  They tend to be eye-pleasers who provide moral support, pageantry and sometimes distraction.  Most do not have extensive connections with trainers but they are generally well-liked by those in power within promotions which helps their political favor.  Valets often inspire great efforts from their clients, especially when the odds are against them.  On top of that, they often inspire crowd support on behalf of wrestlers who otherwise might not garner much attention.
+
+Managerial Skills
+Training: 	C-
+Interference: 	B
+Business: 	B
+Charisma:	A+
+Politics:		A-
+Connections:	B-
+Inspiration:	A+</Text>
+        </Document>
+        <Document ID="01E34042-466F-47DF-8BE1-20AC997C4BCF">
+            <Title>Chapter: Trainers</Title>
+        </Document>
+        <Document ID="10590681-75AC-49CD-9AE6-3E71363F9BB2">
+            <Title>Video Study</Title>
+        </Document>
+        <Document ID="759FA09A-C777-4E64-BA24-70D7297BB476">
+            <Title>Chapter: Timelines</Title>
+            <Text>NPW’s reality is divided into timelines.  A timeline can be thought of as a universe that contains a set of promotions, wrestlers, trainers and managers.  Different timelines begin at different times (It may be 1965 or 2028) and proceed at different paces (A timeline may advance a week for each day of real time or it may proceed only when its owner advances a day.)  </Text>
+        </Document>
+        <Document ID="E45BC75A-70AF-4EE9-B786-7AEE2B37CB5A">
+            <Title>Part 1: New Power Wrestling</Title>
+        </Document>
+        <Document ID="6C049B46-8046-4D07-8FDC-977E60160976">
+            <Title>Sequences</Title>
+            <Text>Sequences tell the main story of a wrestling match.  A sequence begins with both wrestlers attempting a move or technique, with the winner of an initiative roll getting to make his attempt.  The sequence continues through that attempt and any subsequent blocks, counters, chains, escapes and/or follow-ups until either:
+
+1) a move is successfully executed with no chains and no follow-ups
+2) the match ends for any reason
+3) a wrestler is knocked unconscious
+4) a stalemate is reached
+</Text>
+        </Document>
+        <Document ID="9D42C6C1-11A2-4705-AD0A-5FD131CD66A2">
+            <Title>Showroom</Title>
+            <Text>In the showroom, trainees showcase their charisma, and enhance their mic skills.</Text>
+        </Document>
+        <Document ID="1EC24FF4-CE26-494A-AC83-F5307D342A35">
+            <Title>Part 5: Skills</Title>
+            <Text>Cheating Skills
+	- Trunk Pulling
+	— Pinfall Aid
+	— Leverage Throw
+	- Interference
+	— Stealth
+	— Distraction
+Grappling Skills
+	- Suplex Mastery
+	— Rolling Suplexes
+	— Pinfall Bridge
+Fighting Skills
+	- Striking
+	— Arm Strikes/Punches
+	— Leg Strikes/Kicks
+	— Striking Combos
+	— Brawling
+	- Defense
+	- Resilience
+Athletic Skills
+Personality Skills
+	- Charm
+	- Intimidation
+	- Mystique
+	- Discipline
+	- Perception
+	- Manipulation
+	- Deception
+	- Encouragement
+	- Leadership
+</Text>
+        </Document>
+        <Document ID="056FD70D-3301-4D5A-92D8-A6715191C6AF">
+            <Title>Class: Patriot</Title>
+            <Text>The Patriot Hero proudly waves the flag (always metaphorically, sometimes literally) of their home land, everywhere they go.  This plays to some audiences much better than others.</Text>
+        </Document>
+        <Document ID="781AFE85-6E08-4053-B421-2B0614481D6A">
+            <Title> a</Title>
+        </Document>
+        <Document ID="AED3C35A-21BA-495D-91AF-3760FB29918B">
+            <Title>Chapter: Character Relationships</Title>
+            <Text>In wrestling, a great many teams and friendships are formed, and an even greater number of enemies and rivalries.  The other wrestlers, managers, trainers and other characters are the people you’ll spend 99% of your time with.  Some may be entangled in blood feuds while others may become teammates and best friends for decades at a time.
+
+This chapter will cover how these relationships are formed and altered, and how they affect other areas of the game.</Text>
+        </Document>
+        <Document ID="4694E23D-76E1-4701-81D1-FA384E53CF60">
+            <Title>Fighting Skills</Title>
+        </Document>
+        <Document ID="217FAA93-E090-4AB3-9DDA-E9143ED535BF">
+            <Title>Difficulty</Title>
+            <Text>All moves have a base difficulty, ranging from 0-30.  It is a basic measure of how hard it is to execute the move successfully.  The difficulty rating is modified on a move-to-move basis by factors such as opponent weight and attacker injury.  Difficulty ratings are divided into the following tiers:
+
+Tier
+Description
+Value Range
+10
+Routine
+0-2
+9
+Easy
+3-5
+8
+Normal
+6-8
+7
+Difficult
+9-11
+6
+Challenging
+12-14
+5
+Daunting
+15-17
+4
+Long Shot
+18-20
+3
+Extraordinary
+21-23
+2
+Herculean
+24-26
+1
+Legendary
+27-29
+0
+Impossible
+30
+
+</Text>
+        </Document>
+        <Document ID="18BA91C0-3BEF-49DD-9912-8BFF34E878A8">
+            <Title>Chapter 4: Wrestler Classes and Backgrounds</Title>
+        </Document>
+        <Document ID="A8B9B83B-2723-4250-A0C6-220734DABD23">
+            <Title>Chapter: Shows</Title>
+        </Document>
+        <Document ID="EB21C303-A2F3-46FA-91C8-10425DF4D065">
+            <Title>Quickness</Title>
+            <Text>A move has a quickness rank of 1-7.  The ranks are as follow:
+
+Rank
+Description
+1
+Lightning
+The quickest strikes such as jabs and low kicks.
+2
+Rapid 
+Quick strikes and moves such as leg sweeps.
+3
+Fast
+Medium strikes such as elbow smashes.
+4
+Normal
+ Strikes with some windup, or with a running start.  Some takedowns and throws.
+5
+Involved
+Moves that require a bit of set-up, most suplexes and throws, slingshot moves
+6
+Long
+Moves with complicated set-ups, moves from the top rope, springboard moves, moves with long running starts.
+7
+Methodical
+Moves and techniques that require an exceptional amount of set-up.  Moves off of cages, moves with environmental set-up, running moves from the inside to the floor
+
+</Text>
+        </Document>
+        <Document ID="1AD54FA6-31BD-4E82-A324-C410F24008A0">
+            <Title>Selecting Character Fighting Styles</Title>
+            <Text>After selecting a build, class and background, a character must be given a primary and secondary fighting style.  Any two styles can be selected.  It is also possible to select the same style twice, doubling down on a narrow set of tactics but with a faster learning curve.  More fighting styles can be learned later on as your character develops.  For more detail, read the chapter on Fighting Styles.</Text>
+        </Document>
+        <Document ID="C76DD236-3E50-4735-849E-81FAFA9F4606">
+            <Title>Chapter: Non-Player Characters</Title>
+        </Document>
+        <Document ID="4587777B-FE36-4BA9-BC5A-086DA11356CF">
+            <Title>Sparring</Title>
+        </Document>
+        <Document ID="73CCE6E6-9E29-403D-89BC-B8A1A84179B8">
+            <Title>Untitled</Title>
+        </Document>
+        <Document ID="6A1CDE35-E54E-4303-BACA-878BA9367162">
+            <Title>Part 2: Characters</Title>
+        </Document>
+        <Document ID="41803922-CC09-42C9-BED4-B896EF3DFF6A">
+            <Title>Class: Reckless Warrior</Title>
+            <Text>The indomitable Reckless Warrior is a force of unstoppable spirit. Off-the-charts energy and charisma and a deep connection with the fans fuel the Reckless Warrior.  Their vulnerability lies in a lack of focus and tendency toward risk.</Text>
+        </Document>
+        <Document ID="2F1F22C1-2F87-4CC7-A365-8797A6701C14">
+            <Title>Execution Score Examples</Title>
+            <Text>Here are examples ranging from cases where you get a high roll on a move you’ve mastered in an opportune situation (resulting in a great score) to cases where you get a disastrous roll on a move that was already going to be a big risk (resulting in, well, disaster).
+
+Example: Your wrestler’s mastery score [MS] for German Suplex is 80.  German Suplex’s difficulty rating [DR] (given the current match situation) is 13.  You roll a 15.
+
+80 / 4 = 20
+20 - 13 = 7
+7 + 15 = 22
+
+Your execution score is 22 (Good).
+Example: Your wrestler’s mastery score [MS] for backbreaker is 120.  Backbreaker’s difficulty rating [DR] (given the current match situation) is 8.  You roll a 19.
+
+120 / 4 = 30
+30 - 8 = 22
+22 + 19 = 43
+
+Your execution score is 43 (Superb).  Your opponent is unable to defend.  Backbreaker’s Superb effect triggers.  Your wrestler delivers a devastating backbreaker (+5 damage to back, +10 stun) leaving your opponent writhing in pain.  The crowd responds strongly depending on crowd sentiment.
+
+Example: Your wrestler’s mastery score [MS] for dropkick is 56.  Dropkick’s difficulty rating [DR] (given the current match situation) is 5.  You roll a 1.
+
+56 / 4 = 14
+14 - 5 = 9
+9 - 10 = -1
+
+Your execution score is -1 (Failed).  Your dropkick is miscalculated, leaving you easy prey for a counter.  In this case, your opponent lets you fall to the mat.  The dropkick’s failed attempt effect triggers.  You fall awkwardly to the mat.  +5 stun.
+
+Example: Your wrestler’s mastery score [MS] for twisting moonsault is 40.  Twisting moonsault’s difficulty rating [DR] (given the current match situation) is 18.  You roll a 1.
+
+40 / 4 = 10
+10 - 18 = -8
+-8 -10 = -18
+
+Your execution score is -18 (Disastrous).  Your disastrous execution results in a head-first landing.  -20 Head HP, -20 Neck HP.  +30 Stun.
+
+Example: Your wrestler’s mastery score [MS] for twisting moonsault is 40.  Twisting moonsault’s difficulty rating [DR] (given the current match situation) is 18.  You roll a 20.
+
+40 / 4 = 10
+10 - 18 = -8
+-8 + 30 = 22
+
+Your execution score is 22 (Good).</Text>
+        </Document>
+        <Document ID="57E61309-8EE8-482E-B707-BB28E3A9FB78">
+            <Title>Specialist Types</Title>
+        </Document>
+        <Document ID="D5153B00-1074-45BB-97AA-6D9659E19069">
+            <Title>Untitled</Title>
+        </Document>
+    </Documents>
+</SearchIndexes>

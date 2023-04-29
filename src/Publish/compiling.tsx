@@ -1,4 +1,4 @@
-// Publish/publishing.ts
+// Publish/compiling.ts
 
 import { BrowserItem } from "../redux/filesSlice";
 import { EditorFont } from "../Editor/EditorFonts";
@@ -21,7 +21,14 @@ export const compileHtml = (options: PublishingOptions) => {
         node.children.forEach((child) => traverse(child, false));
       }
     } else if (node.subType === 'document') {
-      compiledContent.push(node.content || '');
+      // compiledContent.push(<section id={node.path}>{node.content || ''}</section>);
+      const id = node.path.replace(/\//g, '_').replace(/\s/g, '-').toLowerCase().trim();
+      const prefix = `<section id="${id}">`;
+      const suffix = '</section>';
+      const content = node.content || '';
+
+      compiledContent.push(`${prefix}${content}${suffix}`);
+
       if (options.pageBreaks.includes('Between Documents')) {
         compiledContent.push({ text: '', pageBreak: 'after' });
       }
@@ -29,7 +36,7 @@ export const compileHtml = (options: PublishingOptions) => {
   };
 
   options.items.forEach((item) => traverse(item, true));
-
+  console.log('compiled', compiledContent);
   return compiledContent;
 };
 
