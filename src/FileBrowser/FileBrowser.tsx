@@ -30,7 +30,7 @@ const FileBrowser: React.FC<FileBrowserProps> = ({ onDocumentClick }) => {
   };
 
   return (
-    <Box width="100%" sx={{ backgroundColor: theme.palette.secondary[theme.palette.mode], minHeight: 'calc(100vh - 40px)' }}>
+    <Box width="100%" sx={{ backgroundColor: theme.palette.secondary[theme.palette.mode], minHeight: 'calc(100vh - 40px)', maxHeight: 'calc(100% - 40px)', overflowY: 'scroll' }}>
       <Sticky top={64} innerZ={1}>
         <Box overflow={"scroll"} maxHeight="calc(100% - 40px)" sx={{ color: 'rgba(232, 232, 232, .9)' }}>
           {items.map((item) => renderItem(item))}
