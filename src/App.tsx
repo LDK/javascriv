@@ -4,11 +4,10 @@ import { Box, Button, Container, CssBaseline, Grid, ThemeProvider } from '@mui/m
 import Header from './Header';
 import FileBrowser from './FileBrowser/FileBrowser';
 import { useDispatch, useSelector } from 'react-redux';
-import { BrowserItem, findItemByPath, setContent, setFiles, setOpenFilePath } from './redux/filesSlice';
+import { findItemByPath, setContent } from './redux/filesSlice';
 import TinyEditor from './Editor/Editor';
 import { darkTheme, lightTheme } from './theme/theme';
 import { RootState } from './redux/store';
-import { handleTest } from './Convert/scrivener/scrivener';
 import useProject from './Project/useProject';
 import useFileBrowser from './FileBrowser/useFileBrowser';
 import usePublishing from './Publish/usePublishing';
@@ -38,7 +37,7 @@ const App: React.FC = () => {
     setEditorContent(content);
   };
 
-  const { ExportDialog, setExportDialogOpen, importProject } = useProject(handleEditorChange);
+  const { ExportDialog, setExportDialogOpen, handleUpload, importProjectFromJson: importProject } = useProject(handleEditorChange);
 
   const activeTheme = useSelector((state:RootState) => state.theme.active);
 
@@ -89,15 +88,6 @@ const App: React.FC = () => {
                 <TinyEditor content={editorContent} initial={initial || ''} onEditorChange={handleEditorChange} />
 
                 <Box pt={2} className="actions" position="absolute" bottom="2rem" width="100%" right="0" textAlign="right">
-                  <Button variant="contained" color="primary" onClick={() => { handleTest((tree:BrowserItem[]) => {
-                    if (tree && tree[0]) {
-                      dispatch(setFiles(tree));
-                      dispatch(setOpenFilePath(tree[0].path));
-                    }
-                  }) }}>
-                    Scrivener Import Test
-                  </Button>
-
                   <Button variant="contained" color="primary" onClick={handleSubmit}>
                     Submit
                   </Button>
@@ -113,9 +103,9 @@ const App: React.FC = () => {
                     Export Project
                   </Button>
 
-                  <input type="file" accept=".json" 
+                  <input type="file" accept=".zip, .json"
                     ref={setFileInputRef}
-                    onChange={importProject}
+                    onChange={handleUpload}
                     style={{ display: 'none' }} />
 
                   <Button

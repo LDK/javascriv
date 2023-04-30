@@ -66,3 +66,15 @@ export async function loadSearchIndexesFileAndParse(): Promise<{ [id: string]: S
   }
 }
 
+export function parseSearchIndexes(searchIndexesXml:string) {
+  const searchIndexes = searchIndexesToObject(searchIndexesXml);
+  console.log(searchIndexes);
+
+  // Transform the searchIndexes.Documents array into an object keyed by ID
+  const documentsById: { [id: string]: ScrivenerDocument } = {};
+  searchIndexes.Documents.forEach(document => {
+    documentsById[document.ID] = document;
+  });
+
+  return documentsById;
+}
