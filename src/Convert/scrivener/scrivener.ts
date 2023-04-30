@@ -33,8 +33,6 @@ export function crossReferenceBinderWithIndexes(
 export function scrivenerBinderToBrowserItems(binder: ScrivenerBinder, basePath: string = ''): BrowserItem[] {
   const browserItems: BrowserItem[] = [];
 
-  console.log('scriv', binder);
-
   function nl2br(str:string):string {
     return (str + '').replace(/(\r\n|\n\r|\r|\n)/g, '<br>');
   }
@@ -64,7 +62,7 @@ export function scrivenerBinderToBrowserItems(binder: ScrivenerBinder, basePath:
         if (item.Children) {
           newBrowserItem.children = traverseAndConvert(item.Children, newPath);
         }
-        console.log('new item', newBrowserItem);
+
         return newBrowserItem;
       });
     // end of filtering
@@ -95,9 +93,7 @@ export const getFullTree = async (scrivxXml:string, indexesXml:string) => {
 
   if (binder && indexes) {
     const fullTree = crossReferenceBinderWithIndexes(binder, indexes);
-    console.log('interim tree', fullTree);
     const newTree = scrivenerBinderToBrowserItems(fullTree);
-    console.log('new tree', newTree);
     return newTree;
   }  
 

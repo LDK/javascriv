@@ -47,7 +47,6 @@ export async function loadSearchIndexesFileAndParse(): Promise<{ [id: string]: S
     if (response.ok) {
       const searchIndexesText = await response.text();
       const searchIndexes = searchIndexesToObject(searchIndexesText);
-      console.log(searchIndexes);
 
       // Transform the searchIndexes.Documents array into an object keyed by ID
       const documentsById: { [id: string]: ScrivenerDocument } = {};
@@ -68,7 +67,6 @@ export async function loadSearchIndexesFileAndParse(): Promise<{ [id: string]: S
 
 export function parseSearchIndexes(searchIndexesXml:string) {
   const searchIndexes = searchIndexesToObject(searchIndexesXml);
-  console.log(searchIndexes);
 
   // Transform the searchIndexes.Documents array into an object keyed by ID
   const documentsById: { [id: string]: ScrivenerDocument } = {};
