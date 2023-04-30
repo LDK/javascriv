@@ -3,10 +3,14 @@
 import { BrowserItem } from "../redux/filesSlice";
 import { EditorFont } from "../Editor/EditorFonts";
 
+export type Binary = 0 | 1;
+
 export interface PublishingOptions {
   items: BrowserItem[];
   pageBreaks: string;
   pageNumbers: string;
+  includeToC: Binary;
+  displayDocumentTitles: Binary;
 }
 
 export const compileHtml = (options: PublishingOptions) => {
@@ -17,6 +21,21 @@ export const compileHtml = (options: PublishingOptions) => {
       if (options.pageBreaks.includes('Between Folders') && !isTopLevel) {
         compiledContent.push({ text: '', pageBreak: 'after' });
       }
+
+      const content = node.content || '';
+
+      if (content.length) {
+        const id = node.path.replace(/\//g, '_').replace(/\s/g, '-').toLowerCase().trim();
+        const prefix = `<section id="${id}" data-title="${node.name}" tocItem="true">`;
+        const suffix = '</section>';
+
+        compiledContent.push(`${prefix}${content}${suffix}`);
+      
+        if (options.pageBreaks.includes('Between Documents')) {
+          compiledContent.push({ text: '', pageBreak: 'after' });
+        }
+      }
+
       if (node.children) {
         node.children.forEach((child) => traverse(child, false));
       }

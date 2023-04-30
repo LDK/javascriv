@@ -1,7 +1,7 @@
 // Convert/scrivener/scrivener.ts
 import { BrowserItem } from '../../redux/filesSlice';
 import { loadSearchIndexesFileAndParse, parseSearchIndexes, ScrivenerDocument } from './scrivenerIndexes';
-import { loadScrivxFileAndParse, ScrivenerBinder, ScrivenerBinderItem, scrivxToObject } from './scrivenerTree';
+import { ScrivenerBinder, ScrivenerBinderItem, scrivxToObject } from './scrivenerTree';
 
 export function crossReferenceBinderWithIndexes(
   binder: ScrivenerBinder,
@@ -60,6 +60,10 @@ export function scrivenerBinderToBrowserItems(binder: ScrivenerBinder, basePath:
         }
 
         if (item.Children) {
+          console.log('item with children', item);
+          if (item.Content) {
+            newBrowserItem.content = nl2br(item.Content as string);
+          }
           newBrowserItem.children = traverseAndConvert(item.Children, newPath);
         }
 
@@ -72,20 +76,6 @@ export function scrivenerBinderToBrowserItems(binder: ScrivenerBinder, basePath:
 
   return browserItems;
 }
-
-export const handleTest = async (callback:((tree:BrowserItem[]) => void)) => {
-  // loadScrivxFileAndParse();
-  const binder = await loadScrivxFileAndParse();
-  const indexes = await loadSearchIndexesFileAndParse();
-
-  if (binder && indexes) {
-    const fullTree = crossReferenceBinderWithIndexes(binder, indexes);
-    const newTree = scrivenerBinderToBrowserItems(fullTree);
-    if (callback) {
-      callback(newTree);
-    }
-  }  
-};
 
 export const getFullTree = async (scrivxXml:string, indexesXml:string) => {
   const binder = scrivxToObject(scrivxXml);

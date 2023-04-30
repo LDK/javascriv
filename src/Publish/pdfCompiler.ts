@@ -54,8 +54,17 @@ const generateToc = (html: string): TocItem[] => {
   return tocItems;
 };
 
-// This will eventually be made a PublishingOptions boolean attribute rather than hardcoded
-const displayDocumentTitles = true;
+const addToC = (docDef: TDocumentDefinitions) => {
+  const tocElement = {
+    toc: {
+      title: { text: 'Table of Contents', style: 'header' },
+      textStyle: { fontSize: 12, color: 'blue' },
+    },
+  };
+  docDef.content = [tocElement, ...(Array.isArray(docDef.content) ? docDef.content : [docDef.content])];
+
+  return docDef;
+};
 
 const convertHtmlToPdf = async (contentArray: any[], options: PublishingOptions) => {
   const htmlArray = contentArray.map((contentItem) => {
@@ -67,6 +76,8 @@ const convertHtmlToPdf = async (contentArray: any[], options: PublishingOptions)
   });
   const joinedHtml = htmlArray.join('');
   const tocItems = generateToc(joinedHtml);
+
+  const displayDocumentTitles = options.displayDocumentTitles || false;
 
   const pdfContent = contentArray.map((contentItem) => {
     if (contentItem.type === 'string') {
@@ -94,13 +105,6 @@ const convertHtmlToPdf = async (contentArray: any[], options: PublishingOptions)
 
   let documentDefinition: TDocumentDefinitions = {
     content: [
-      {
-        toc: {
-          title: { text: 'Table of Contents', style: 'header' },
-          textStyle: { fontSize: 12, color: 'blue' },
-          hyperlinkColor: 'blue',
-        },
-      },
       ...pdfContent.flat(),
     ],
     styles: {
@@ -122,6 +126,10 @@ const convertHtmlToPdf = async (contentArray: any[], options: PublishingOptions)
     },
   };
 
+  if (options.includeToC) {
+    documentDefinition = addToC(documentDefinition);
+  }
+
   documentDefinition = addFontStyles(documentDefinition, pdfMake.fonts);
 
   if (options.pageNumbers) {
@@ -134,6 +142,8 @@ const convertHtmlToPdf = async (contentArray: any[], options: PublishingOptions)
 const publishToPdf = async (options: PublishingOptions) => {
   const compiledHtml = compileHtml(options);
   const joinedHtml = compiledHtml.join('');
+
+  console.log('compiled html', compiledHtml);
 
   const usedFonts = extractUsedFonts(joinedHtml, editorFonts);
   const filteredFonts = editorFonts.filter((font) => usedFonts.includes(font.value));

@@ -85,35 +85,3 @@ export function scrivxToObject(scrivx: string): ScrivenerBinder {
 
   return { items };
 }
-
-export function scrivxToObjectOld(scrivx: string): ScrivenerBinder {
-  const parser = new DOMParser();
-  const xmlDoc = parser.parseFromString(scrivx, 'application/xml');
-  const binderElement = xmlDoc.getElementsByTagName('Binder')[0];
-  const binderItems = binderElement.getElementsByTagName('BinderItem');
-
-  const items: ScrivenerBinderItem[] = [];
-
-  for (let i = 0; i < binderItems.length; i++) {
-    items.push(parseBinderItem(binderItems[i]));
-  }
-
-  return { items };
-}
-
-export async function loadScrivxFileAndParse() {
-  try {
-    const response = await fetch('/sample.scrivx');
-    if (response.ok) {
-      const scrivxText = await response.text();
-      const scrivenerBinder = scrivxToObject(scrivxText);
-      return scrivenerBinder;
-    } else {
-      console.error('Error fetching .scrivx file:', response.status, response.statusText);
-    }
-  } catch (error:any) {
-    console.error('Error fetching .scrivx file:', error.message);
-  }
-}
-
-
