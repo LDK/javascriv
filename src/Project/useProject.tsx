@@ -26,8 +26,6 @@ const useProject = (handleEditorChange:((content: string) => void)) => {
     // Load the zip file content
     const loadedZip = await zip.loadAsync(fileData);
   
-    console.log('loaded zip', loadedZip);
-  
     let isScrivener = false;
     let keyFiles: XmlIndex = {};
   
@@ -35,7 +33,6 @@ const useProject = (handleEditorChange:((content: string) => void)) => {
 
     // Iterate through the files inside the zip
     for (const [relativePath, zipEntry] of Object.entries(loadedZip.files)) {
-      // console.log(`File path: ${relativePath}`);
       const pathArr = relativePath.split('/').filter((item) => item.length);
       const fileName = pathArr[pathArr.length - 1];
   
@@ -50,7 +47,6 @@ const useProject = (handleEditorChange:((content: string) => void)) => {
       i++;
 
       if (isScrivener) {
-        console.log('file name', fileName);
         if (fileName.endsWith('.scrivx')) {
           const content = await zipEntry.async('text');
           keyFiles['scrivx'] = content;
@@ -63,7 +59,6 @@ const useProject = (handleEditorChange:((content: string) => void)) => {
     }
   
     if (isScrivener) {
-      console.log('Oh, it was Scrivener all right.', keyFiles);
       return keyFiles;
     } else {
       return {} as XmlIndex;
@@ -75,8 +70,6 @@ const useProject = (handleEditorChange:((content: string) => void)) => {
   
     if (!file) return;
   
-    console.log('file', file.type, file);
-
     switch (file.type) {
       case 'application/zip':
         const keyFiles = await parseZipFile(file);

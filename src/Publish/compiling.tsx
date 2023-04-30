@@ -21,9 +21,8 @@ export const compileHtml = (options: PublishingOptions) => {
         node.children.forEach((child) => traverse(child, false));
       }
     } else if (node.subType === 'document') {
-      // compiledContent.push(<section id={node.path}>{node.content || ''}</section>);
       const id = node.path.replace(/\//g, '_').replace(/\s/g, '-').toLowerCase().trim();
-      const prefix = `<section id="${id}">`;
+      const prefix = `<section id="${id}" data-title="${node.name}" tocItem="true">`;
       const suffix = '</section>';
       const content = node.content || '';
 
@@ -36,7 +35,6 @@ export const compileHtml = (options: PublishingOptions) => {
   };
 
   options.items.forEach((item) => traverse(item, true));
-  console.log('compiled', compiledContent);
   return compiledContent;
 };
 
