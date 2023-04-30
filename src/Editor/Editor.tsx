@@ -29,7 +29,6 @@ const TinyEditor: React.FC<TinyEditorProps> = ({ content, initial, onEditorChang
   };
   
   useEffect(() => {
-    console.log('content useEffect', content, editorRef);
     if (editorRef.current && content !== null) {
       const bookmark = editorRef.current.selection.getBookmark(2, true);
       editorRef.current.undoManager.transact(() => {
