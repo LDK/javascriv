@@ -55,7 +55,7 @@ const fetchFontAsDataUrl = async (url: string): Promise<string> => {
 
 // Helper function to generate the pdfMake font configuration object for ttf/otf fonts.
 export const generateFontConfig = async (fonts: EditorFont[], pdfFonts:TFontDictionary, vfs:VFS) => {
-  const apiUrl = 'https://d451p6a2yse39.cloudfront.net';
+  const apiUrl = '';
 
   // Fetch the JSON file containing font variants information
   const response = await fetch(`${apiUrl}/javascriv-fonts.json`);

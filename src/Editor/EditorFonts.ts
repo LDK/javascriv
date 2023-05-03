@@ -48,5 +48,5 @@ const generateFontFamilyFormats = (fonts: EditorFont[]) => {
 export const familyFonts = generateFontFamilyFormats(editorFonts);
 
 export const getFontsCSS = () => {
-  return 'https://d451p6a2yse39.cloudfront.net/javascriv-fonts.css';
+  return '/javascriv-fonts.css';
 };
