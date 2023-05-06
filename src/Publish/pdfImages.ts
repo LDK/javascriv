@@ -16,6 +16,7 @@ export const fetchImageAsDataURL = async (url: string) => {
 };
 
 export const replaceRemoteImagesWithDataURLs = async (contentArray: any[]): Promise<any[]> => {
+  console.log('replaceRemoteImages');
   const updatedContentArray = await Promise.all(
     contentArray.map(async (content) => {
       if (typeof content === 'string') {

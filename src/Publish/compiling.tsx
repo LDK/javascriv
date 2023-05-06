@@ -16,6 +16,11 @@ export interface PublishingOptions {
 export const compileHtml = (options: PublishingOptions) => {
   let compiledContent: any[] = [];
 
+  // if table of contents is included, start with a blank page
+  if (options.includeToC) {
+    compiledContent.push({ text: '', pageBreak: 'after' });
+  }
+
   const traverse = (node: BrowserItem, isTopLevel: boolean) => {
     if (node.type === 'folder') {
       if (options.pageBreaks.includes('Between Folders') && !isTopLevel) {

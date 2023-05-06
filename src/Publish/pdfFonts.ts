@@ -55,7 +55,7 @@ const fetchFontAsDataUrl = async (url: string): Promise<string> => {
 
 // Helper function to generate the pdfMake font configuration object for ttf/otf fonts.
 export const generateFontConfig = async (fonts: EditorFont[], pdfFonts:TFontDictionary, vfs:VFS) => {
-  const apiUrl = '';
+  const apiUrl = '/fonts';
 
   // Fetch the JSON file containing font variants information
   const response = await fetch(`${apiUrl}/javascriv-fonts.json`);
@@ -79,6 +79,11 @@ export const generateFontConfig = async (fonts: EditorFont[], pdfFonts:TFontDict
     const italicsFontFileUrl = `${apiUrl}/${fontId}/${italicsFontFileName}`;
     const boldItalicsFontFileUrl = `${apiUrl}/${fontId}/${boldItalicsFontFileName}`;
 
+    if (!fontVariants[sanitizedFontName]) {
+      console.log('no variants for', sanitizedFontName, baseFontFileName, fontId, ext, fontVariants);
+      continue;
+    }
+
     const normalFontDataUrl = !fontVariants[sanitizedFontName].includes('regular') ? '' : await fetchFontAsDataUrl(normalFontFileUrl);
     const boldFontDataUrl = !fontVariants[sanitizedFontName].includes('bold') ? '' : await fetchFontAsDataUrl(boldFontFileUrl);
     const italicsFontDataUrl = !fontVariants[sanitizedFontName].includes('italic') ? '' : await fetchFontAsDataUrl(italicsFontFileUrl);
@@ -93,6 +98,10 @@ export const generateFontConfig = async (fonts: EditorFont[], pdfFonts:TFontDict
     if (boldExists) vfs[boldFontFileName] = boldFontDataUrl.split(',')[1];
     if (italicsExists) vfs[italicsFontFileName] = italicsFontDataUrl.split(',')[1];
     if (boldItalicsExists) vfs[boldItalicsFontFileName] = boldItalicsFontDataUrl.split(',')[1];
+
+    if (!normalExists) {
+      console.log('normal not found', normalFontFileName, normalFontFileUrl);
+    }
 
     const fontVariations = (normalExists) ? {
       normal: normalFontFileName,

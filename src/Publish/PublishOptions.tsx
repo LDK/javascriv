@@ -37,6 +37,7 @@ const PublishOptions: React.FC<PublishOptionsProps> = ({ optionsOpen, onClose })
       includeToC,
       pageNumbers: pageNumberPosition
     };
+    console.log('options', options);
     publishToPdf(options);
   };
   
@@ -113,7 +114,7 @@ const PublishOptions: React.FC<PublishOptionsProps> = ({ optionsOpen, onClose })
           <Select
             value={displayDocumentTitles}
             onChange={(event) => setDisplayDocumentTitles(event.target.value as Binary)}
-            label="Display Document Titles"
+            label="Display Document Titles as Headers?"
             inputProps={{ id: 'display-document-titles-select' }}
           >
             <MenuItem value={1}>Yes</MenuItem>
@@ -122,7 +123,7 @@ const PublishOptions: React.FC<PublishOptionsProps> = ({ optionsOpen, onClose })
         </FormControl>
 
         <FormControl fullWidth variant="outlined" sx={{ mt: 2 }}>
-          <InputLabel htmlFor="include-toc-select">Include Table of Contents</InputLabel>
+          <InputLabel htmlFor="include-toc-select">Include Table of Contents?</InputLabel>
           <Select
 
             value={includeToC}

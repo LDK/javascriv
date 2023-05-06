@@ -30,7 +30,7 @@ export const customFonts: EditorFont[] = [
   { name: 'Courier New', value: 'Courier New' },
   { name: 'Didot', value: 'Didot' },
   { name: 'Futura', value: 'Futura' },
-  { name: 'Gill Sans', value: 'Gill Sans', extension: 'otf' },
+  { name: 'Gill Sans', value: 'Gill Sans' },
   { name: 'Helvetica', value: 'Helvetica' },
   { name: 'Liberation Serif', value: 'Liberation Serif' },
 ];
@@ -48,5 +48,5 @@ const generateFontFamilyFormats = (fonts: EditorFont[]) => {
 export const familyFonts = generateFontFamilyFormats(editorFonts);
 
 export const getFontsCSS = () => {
-  return '/javascriv-fonts.css';
+  return '/css/javascriv-fonts.css';
 };

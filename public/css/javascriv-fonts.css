@@ -1,0 +1,671 @@
+@font-face {
+	font-family: "Amiri";
+	src: url("/fonts/Amiri/Amiri-Regular.ttf");
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: "Amiri";
+  src: url("/fonts/Amiri/Amiri-Bold.ttf");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+	font-family: "Amiri";
+  src: url("/fonts/Amiri/Amiri-Italic.ttf");
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+	font-family: "Amiri";
+  src: url("/fonts/Amiri/Amiri-BoldItalic.ttf");
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+	font-family: "Arial";
+  src: url("/fonts/Arial/Arial-Regular.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+	font-family: "Arial";
+  src: url("/fonts/Arial/Arial-Bold.ttf");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+	font-family: "Arial";
+  src: url("/fonts/Arial/Arial-Italic.ttf");
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+	font-family: "Arial";
+  src: url("/fonts/Arial/Arial-BoldItalic.ttf");
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+	font-family: "Libre Baskerville";
+  src: url("/fonts/Libre Baskerville/LibreBaskerville-Regular.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+	font-family: "Libre Baskerville";
+  src: url("/fonts/Libre Baskerville/LibreBaskerville-Bold.ttf");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+	font-family: "Libre Baskerville";
+  src: url("/fonts/Libre Baskerville/LibreBaskerville-Italic.ttf");
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+	font-family: "Libre Baskerville";
+  src: url("/fonts/Libre Baskerville/LibreBaskerville-Italic.ttf");
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+	font-family: "Caslon";
+  src: url("/fonts/Caslon/Caslon-Regular.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+	font-family: "Caslon";
+  src: url("/fonts/Caslon/Caslon-Bold.ttf");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+	font-family: "Caslon";
+  src: url("/fonts/Caslon/Caslon-Italic.ttf");
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+	font-family: "Caslon";
+  src: url("/fonts/Caslon/Caslon-BoldItalic.ttf");
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+	font-family: "Courier New";
+  src: url("/fonts/Courier New/CourierNew-Regular.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+	font-family: "Courier New";
+  src: url("/fonts/Courier New/CourierNew-Bold.ttf");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+	font-family: "Courier New";
+  src: url("/fonts/Courier New/CourierNew-Italic.ttf");
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+	font-family: "Courier New";
+  src: url("/fonts/Courier New/CourierNew-BoldItalic.ttf");
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+	font-family: "Didot";
+  src: url("/fonts/Didot/Didot-Regular.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+	font-family: "Didot";
+  src: url("/fonts/Didot/Didot-Bold.ttf");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+	font-family: "Didot";
+  src: url("/fonts/Didot/Didot-Italic.ttf");
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+	font-family: "Didot";
+  src: url("/fonts/Didot/Didot-BoldItalic.ttf");
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+	font-family: "Futura";
+  src: url("/fonts/Futura/Futura-Regular.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+	font-family: "Futura";
+  src: url("/fonts/Futura/Futura-Bold.ttf");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+	font-family: "Futura";
+  src: url("/fonts/Futura/Futura-Italic.ttf");
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+	font-family: "Futura";
+  src: url("/fonts/Futura/Futura-BoldItalic.ttf");
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+	font-family: "EB Garamond";
+  src: url("/fonts/EB Garamond/EBGaramond-Regular.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+	font-family: "EB Garamond";
+  src: url("/fonts/EB Garamond/EBGaramond-Bold.ttf");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+	font-family: "EB Garamond";
+  src: url("/fonts/EB Garamond/EBGaramond-Italic.ttf");
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+	font-family: "EB Garamond";
+  src: url("/fonts/EB Garamond/EBGaramond-BoldItalic.ttf");
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+	font-family: "Gill Sans";
+  src: url("/fonts/Gill Sans/GillSans-Regular.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+	font-family: "Gill Sans";
+  src: url("/fonts/Gill Sans/GillSans-Bold.ttf");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+	font-family: "Gill Sans";
+  src: url("/fonts/Gill Sans/GillSans-Italic.ttf");
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+	font-family: "Gill Sans";
+  src: url("/fonts/Gill Sans/GillSans-BoldItalic.ttf");
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+	font-family: "Helvetica";
+  src: url("/fonts/Helvetica/Helvetica-Regular.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+	font-family: "Helvetica";
+  src: url("/fonts/Helvetica/Helvetica-Bold.ttf");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+	font-family: "Helvetica";
+  src: url("/fonts/Helvetica/Helvetica-Italic.ttf");
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+	font-family: "Helvetica";
+  src: url("/fonts/Helvetica/Helvetica-BoldItalic.ttf");
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+	font-family: "Lato";
+  src: url("/fonts/Lato/Lato-Regular.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+	font-family: "Lato";
+  src: url("/fonts/Lato/Lato-Bold.ttf");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+	font-family: "Lato";
+  src: url("/fonts/Lato/Lato-Italic.ttf");
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+	font-family: "Lato";
+  src: url("/fonts/Lato/Lato-BoldItalic.ttf");
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+	font-family: "Liberation Serif";
+  src: url("/fonts/Liberation Serif/LiberationSerif-Regular.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+	font-family: "Liberation Serif";
+  src: url("/fonts/Liberation Serif/LiberationSerif-Bold.ttf");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+	font-family: "Liberation Serif";
+  src: url("/fonts/Liberation Serif/LiberationSerif-Italic.ttf");
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+	font-family: "Liberation Serif";
+  src: url("/fonts/Liberation Serif/LiberationSerif-BoldItalic.ttf");
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+	font-family: "Merriweather";
+  src: url("/fonts/Merriweather/Merriweather-Regular.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+	font-family: "Merriweather";
+  src: url("/fonts/Merriweather/Merriweather-Bold.ttf");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+	font-family: "Merriweather";
+  src: url("/fonts/Merriweather/Merriweather-Italic.ttf");
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+	font-family: "Merriweather";
+  src: url("/fonts/Merriweather/Merriweather-BoldItalic.ttf");
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+	font-family: "Montserrat";
+  src: url("/fonts/Montserrat/Montserrat-Regular.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+	font-family: "Montserrat";
+  src: url("/fonts/Montserrat/Montserrat-Bold.ttf");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+	font-family: "Montserrat";
+  src: url("/fonts/Montserrat/Montserrat-Italic.ttf");
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+	font-family: "Montserrat";
+  src: url("/fonts/Montserrat/Montserrat-BoldItalic.ttf");
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+	font-family: "Noto Sans";
+  src: url("/fonts/Noto Sans/NotoSans-Regular.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+	font-family: "Noto Sans";
+  src: url("/fonts/Noto Sans/NotoSans-Bold.ttf");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+	font-family: "Noto Sans";
+  src: url("/fonts/Noto Sans/NotoSans-Italic.ttf");
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+	font-family: "Noto Sans";
+  src: url("/fonts/Noto Sans/NotoSans-BoldItalic.ttf");
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+	font-family: "Noto Serif";
+  src: url("/fonts/Noto Serif/NotoSerif-Regular.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+	font-family: "Noto Serif";
+  src: url("/fonts/Noto Serif/NotoSerif-Bold.ttf");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+	font-family: "Noto Serif";
+  src: url("/fonts/Noto Serif/NotoSerif-Italic.ttf");
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+	font-family: "Noto Serif";
+  src: url("/fonts/Noto Serif/NotoSerif-BoldItalic.ttf");
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+	font-family: "Open Sans";
+  src: url("/fonts/Open Sans/OpenSans-Regular.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+	font-family: "Open Sans";
+  src: url("/fonts/Open Sans/OpenSans-Bold.ttf");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+	font-family: "Open Sans";
+  src: url("/fonts/Open Sans/OpenSans-Italic.ttf");
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+	font-family: "Open Sans";
+  src: url("/fonts/Open Sans/OpenSans-BoldItalic.ttf");
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+	font-family: "Oswald";
+  src: url("/fonts/Oswald/Oswald-Regular.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+	font-family: "Oswald";
+  src: url("/fonts/Oswald/Oswald-Bold.ttf");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+	font-family: "Oswald";
+  src: url("/fonts/Oswald/Oswald-Regular.ttf");
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+	font-family: "Oswald";
+  src: url("/fonts/Oswald/Oswald-Bold.ttf");
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+	font-family: "PT Sans";
+  src: url("/fonts/PT Sans/PTSans-Regular.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+	font-family: "PT Sans";
+  src: url("/fonts/PT Sans/PTSans-Bold.ttf");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+	font-family: "PT Sans";
+  src: url("/fonts/PT Sans/PTSans-Italic.ttf");
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+	font-family: "PT Sans";
+  src: url("/fonts/PT Sans/PTSans-BoldItalic.ttf");
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+	font-family: "Raleway";
+  src: url("/fonts/Raleway/Raleway-Regular.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+	font-family: "Raleway";
+  src: url("/fonts/Raleway/Raleway-Bold.ttf");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+	font-family: "Raleway";
+  src: url("/fonts/Raleway/Raleway-Italic.ttf");
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+	font-family: "Raleway";
+  src: url("/fonts/Raleway/Raleway-BoldItalic.ttf");
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+	font-family: "Roboto";
+  src: url("/fonts/Roboto/Roboto-Regular.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+	font-family: "Roboto";
+  src: url("/fonts/Roboto/Roboto-Bold.ttf");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+	font-family: "Roboto";
+  src: url("/fonts/Roboto/Roboto-Italic.ttf");
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+	font-family: "Roboto";
+  src: url("/fonts/Roboto/Roboto-BoldItalic.ttf");
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+	font-family: "Rubik";
+  src: url("/fonts/Rubik/Rubik-Regular.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+	font-family: "Rubik";
+  src: url("/fonts/Rubik/Rubik-Bold.ttf");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+	font-family: "Rubik";
+  src: url("/fonts/Rubik/Rubik-Italic.ttf");
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+	font-family: "Rubik";
+  src: url("/fonts/Rubik/Rubik-BoldItalic.ttf");
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+	font-family: "Slabo 27px";
+  src: url("/fonts/Slabo 27px/Slabo27px-Regular.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+	font-family: "Slabo 27px";
+  src: url("/fonts/Slabo 27px/Slabo27px-Bold.ttf");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+	font-family: "Slabo 27px";
+  src: url("/fonts/Slabo 27px/Slabo27px-Italic.ttf");
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+	font-family: "Slabo 27px";
+  src: url("/fonts/Slabo 27px/Slabo27px-BoldItalic.ttf");
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+	font-family: "Source Sans Pro";
+  src: url("/fonts/Source Sans Pro/SourceSansPro-Regular.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+	font-family: "Source Sans Pro";
+  src: url("/fonts/Source Sans Pro/SourceSansPro-Bold.ttf");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+	font-family: "Source Sans Pro";
+  src: url("/fonts/Source Sans Pro/SourceSansPro-Italic.ttf");
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+	font-family: "Source Sans Pro";
+  src: url("/fonts/Source Sans Pro/SourceSansPro-BoldItalic.ttf");
+  font-weight: bold;
+  font-style: italic;
+}

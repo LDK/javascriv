@@ -146,12 +146,19 @@ const publishToPdf = async (options: PublishingOptions) => {
   console.log('compiled html', compiledHtml);
 
   const usedFonts = extractUsedFonts(joinedHtml, editorFonts);
+  console.log('used fonts', usedFonts);
   const filteredFonts = editorFonts.filter((font) => usedFonts.includes(font.value));
+  console.log('filtered fonts', filteredFonts);
   const { vfs, fonts } = await generateFontConfig(filteredFonts, pdfMake.fonts || {}, pdfFonts.pdfMake.vfs);
+
+  console.log('font config', fonts);
+  console.log('vfs config', vfs);
+
   pdfMake.vfs = vfs;
   pdfMake.fonts = fonts;
 
   const contentWithDataURLs = await replaceRemoteImagesWithDataURLs(compiledHtml);
+  console.log('contnt with', contentWithDataURLs);
   await convertHtmlToPdf(contentWithDataURLs, options);
 };
 
