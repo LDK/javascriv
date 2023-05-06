@@ -110,7 +110,7 @@ const PublishOptions: React.FC<PublishOptionsProps> = ({ optionsOpen, onClose })
         </FormControl>
 
         <FormControl fullWidth variant="outlined" sx={{ mt: 2 }}>
-          <InputLabel htmlFor="display-document-titles-select">Display Document Titles</InputLabel>
+          <InputLabel htmlFor="display-document-titles-select">Display Document Titles as Headers?</InputLabel>
           <Select
             value={displayDocumentTitles}
             onChange={(event) => setDisplayDocumentTitles(event.target.value as Binary)}
