@@ -114,6 +114,22 @@ export const findItemByPath = (items: BrowserItem[], path: string[]): BrowserIte
   }
 };
 
+export const findFolderByPath = (items: BrowserItem[], path: string[]): BrowserItem | undefined => {
+  const filteredPath = path.filter(p => p !== '');
+  if (!filteredPath.length) return undefined;
+
+  const [head, ...tail] = filteredPath;
+  const item = items.find((i) => i.name === head);
+
+  if (!item || item.type === 'file') {
+    return undefined;
+  } else if (!tail.length) {
+    return item;
+  } else {
+    return findFolderByPath(item.children || [], tail);
+  }
+}
+
 const filesSlice = createSlice({
   name: 'files',
   initialState,
@@ -173,7 +189,7 @@ const filesSlice = createSlice({
       const path = rawPath.split('/');
 
       const parentPath = path.slice(0,-1);
-      const parent = parentPath.length ? findItemByPath(state.files, parentPath) : { children: state.files } as BrowserItem;
+      const parent = parentPath.length ? findFolderByPath(state.files, parentPath) : { children: state.files } as BrowserItem;
 
       if (parent && parent.type === 'folder' && parent.children) {
         parent.children = parent.children.filter((item) => item.path !== action.payload);
@@ -194,8 +210,13 @@ const filesSlice = createSlice({
       state,
       action: PayloadAction<{ path: string; item: Omit<BrowserItem, 'children'> }>
     ) => {
-      const { path, item } = action.payload;
-      const parent = path.length ? findItemByPath(state.files, path.split('/')) : { children: state.files } as BrowserItem;
+      const rawPath = action.payload.path.startsWith('/') ? action.payload.path.slice(1) : action.payload.path;
+      const path = rawPath.split('/');
+
+      const parentPath = path.slice(0,-1);
+      const parent = parentPath.length ? findFolderByPath(state.files, parentPath) : { children: state.files } as BrowserItem;
+
+      const { item } = action.payload;
 
       if (parent && parent.type && parent.children) {
         parent.children.push({ ...item, children: item.type === 'folder' ? [] : undefined });

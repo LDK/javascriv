@@ -15,9 +15,10 @@ type FileBrowserItemProps = {
   path?: string[];
   openFilePath: string | null;
   onDocumentClick: (documentContent: string | null, changed: boolean) => void;
+  onFolderClick: (folder: BrowserItem) => void;
 };
 
-const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, path = [], onDocumentClick, openFilePath}) => {
+const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, path = [], onDocumentClick, onFolderClick, openFilePath}) => {
 
   const isFolder = item.type === 'folder';
   const fullPath = [...path, item.name].join('/');
@@ -47,6 +48,7 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, path 
   const handleItemClick = () => {
     if (isFolder) {
       setOpen(!open);
+      onFolderClick(item);
     } else if (item.subType === 'document') {
       if (fullPath !== openFilePath) {
         dispatch(setOpenFilePath(fullPath));
@@ -150,7 +152,7 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, path 
         <Collapse in={open} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             {item.children?.map((child: BrowserItem, index: number) => (
-              <FileBrowserItem {...{ openFilePath, onDocumentClick }} key={index} item={child} level={level + 1} path={[...path, item.name]} />
+              <FileBrowserItem {...{ openFilePath, onDocumentClick, onFolderClick }} key={index} item={child} level={level + 1} path={[...path, item.name]} />
             ))}
           </List>
         </Collapse>
