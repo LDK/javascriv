@@ -22,8 +22,6 @@ const generateToc = (html: string): TocItem[] => {
   const doc = parser.parseFromString(html, 'text/html');
   const sections = doc.querySelectorAll('section[id]');
 
-  console.log('sections', sections);
-
   const tocItems: TocItem[] = [];
 
   sections.forEach((section) => {
@@ -48,8 +46,6 @@ const generateToc = (html: string): TocItem[] => {
       }
     }
   });
-
-  console.log('toc items', tocItems);
 
   return tocItems;
 };
@@ -96,7 +92,6 @@ const convertHtmlToPdf = async (contentArray: any[], options: PublishingOptions)
         }
       }
 
-      console.log('parsed', parsedContent);
       return parsedContent;
     } else {
       return contentItem;
@@ -143,22 +138,14 @@ const publishToPdf = async (options: PublishingOptions) => {
   const compiledHtml = compileHtml(options);
   const joinedHtml = compiledHtml.join('');
 
-  console.log('compiled html', compiledHtml);
-
   const usedFonts = extractUsedFonts(joinedHtml, editorFonts);
-  console.log('used fonts', usedFonts);
   const filteredFonts = editorFonts.filter((font) => usedFonts.includes(font.value));
-  console.log('filtered fonts', filteredFonts);
   const { vfs, fonts } = await generateFontConfig(filteredFonts, pdfMake.fonts || {}, pdfFonts.pdfMake.vfs);
-
-  console.log('font config', fonts);
-  console.log('vfs config', vfs);
 
   pdfMake.vfs = vfs;
   pdfMake.fonts = fonts;
 
   const contentWithDataURLs = await replaceRemoteImagesWithDataURLs(compiledHtml);
-  console.log('contnt with', contentWithDataURLs);
   await convertHtmlToPdf(contentWithDataURLs, options);
 };
 

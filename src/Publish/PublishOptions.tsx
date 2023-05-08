@@ -37,7 +37,6 @@ const PublishOptions: React.FC<PublishOptionsProps> = ({ optionsOpen, onClose })
       includeToC,
       pageNumbers: pageNumberPosition
     };
-    console.log('options', options);
     publishToPdf(options);
   };
   

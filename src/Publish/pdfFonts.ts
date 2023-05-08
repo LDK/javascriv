@@ -80,7 +80,6 @@ export const generateFontConfig = async (fonts: EditorFont[], pdfFonts:TFontDict
     const boldItalicsFontFileUrl = `${apiUrl}/${fontId}/${boldItalicsFontFileName}`;
 
     if (!fontVariants[sanitizedFontName]) {
-      console.log('no variants for', sanitizedFontName, baseFontFileName, fontId, ext, fontVariants);
       continue;
     }
 
@@ -98,10 +97,6 @@ export const generateFontConfig = async (fonts: EditorFont[], pdfFonts:TFontDict
     if (boldExists) vfs[boldFontFileName] = boldFontDataUrl.split(',')[1];
     if (italicsExists) vfs[italicsFontFileName] = italicsFontDataUrl.split(',')[1];
     if (boldItalicsExists) vfs[boldItalicsFontFileName] = boldItalicsFontDataUrl.split(',')[1];
-
-    if (!normalExists) {
-      console.log('normal not found', normalFontFileName, normalFontFileUrl);
-    }
 
     const fontVariations = (normalExists) ? {
       normal: normalFontFileName,

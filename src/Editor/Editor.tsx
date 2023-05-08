@@ -11,7 +11,7 @@ interface TinyEditorProps {
   onEditorChange: (content: string) => void;
 }
 
-const apiKey = 'nvkvn50rzrstv9udik5clmd6ee0f8y92o1glls8m9tr7hp1l';
+const apiKey = process.env.REACT_APP_TINYMCE_API_KEY;
 
 const TinyEditor: React.FC<TinyEditorProps> = ({ content, initial, onEditorChange }) => {
   const editorRef = useRef<MyEditor | null>(null);

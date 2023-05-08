@@ -60,7 +60,6 @@ export function scrivenerBinderToBrowserItems(binder: ScrivenerBinder, basePath:
         }
 
         if (item.Children) {
-          console.log('item with children', item);
           if (item.Content) {
             newBrowserItem.content = nl2br(item.Content as string);
           }
