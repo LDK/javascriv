@@ -41,30 +41,6 @@ export function searchIndexesToObject(searchIndexesText: string): ScrivenerSearc
   return searchIndexes;
 }
 
-export async function loadSearchIndexesFileAndParse(): Promise<{ [id: string]: ScrivenerDocument }> {
-  try {
-    const response = await fetch('/search.indexes');
-    if (response.ok) {
-      const searchIndexesText = await response.text();
-      const searchIndexes = searchIndexesToObject(searchIndexesText);
-
-      // Transform the searchIndexes.Documents array into an object keyed by ID
-      const documentsById: { [id: string]: ScrivenerDocument } = {};
-      searchIndexes.Documents.forEach(document => {
-        documentsById[document.ID] = document;
-      });
-
-      return documentsById;
-    } else {
-      console.error('Error fetching search.indexes file:', response.status, response.statusText);
-      return {};
-    }
-  } catch (error: any) {
-    console.error('Error fetching search.indexes file:', error.message);
-    return {};
-  }
-}
-
 export function parseSearchIndexes(searchIndexesXml:string) {
   const searchIndexes = searchIndexesToObject(searchIndexesXml);
 

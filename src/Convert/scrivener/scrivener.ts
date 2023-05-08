@@ -1,6 +1,6 @@
 // Convert/scrivener/scrivener.ts
 import { BrowserItem } from '../../redux/filesSlice';
-import { loadSearchIndexesFileAndParse, parseSearchIndexes, ScrivenerDocument } from './scrivenerIndexes';
+import { parseSearchIndexes, ScrivenerDocument } from './scrivenerIndexes';
 import { ScrivenerBinder, ScrivenerBinderItem, scrivxToObject } from './scrivenerTree';
 
 export function crossReferenceBinderWithIndexes(

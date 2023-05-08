@@ -1,9 +1,9 @@
-// Publish/PublishTreeItem.tsx
+// FileTree/FileTreeItem.tsx
 import { TransitionProps } from '@mui/material/transitions';
 import { TreeItem, treeItemClasses, TreeItemProps } from "@mui/lab";
 import { alpha, Checkbox, Collapse, styled, Typography, useTheme } from "@mui/material";
 import { animated, useSpring } from '@react-spring/web';
-import { PublishItem } from './PublishTree';
+import { FileTreeItem } from './FileTree';
 
 function TransitionComponent(props: TransitionProps) {
   const style = useSpring({
@@ -40,33 +40,33 @@ const StyledTreeItem = styled((props: TreeItemProps) => (
 }));
 
 export type FileTreeItemProps = {
-  item: PublishItem;
+  item: FileTreeItem;
   isGreyed: boolean;
-  onCheck: (updatedItems: PublishItem[]) => void;
-  publishItems: PublishItem[];
-  setPublishItems: (items: PublishItem[]) => void;
+  onCheck: (updatedItems: FileTreeItem[]) => void;
+  treeItems: FileTreeItem[];
+  setTreeItems: (items: FileTreeItem[]) => void;
 };
 
-const PublishTreeItem: React.FC<FileTreeItemProps> = ({ item, isGreyed, onCheck, publishItems, setPublishItems }) => {
+const CheckboxTreeItem: React.FC<FileTreeItemProps> = ({ item, isGreyed, onCheck, treeItems, setTreeItems }) => {
   const theme = useTheme();
   const mode = theme.palette.mode;
 
   const handleCheck = (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
-    const updatedItems = updatePublishItems(publishItems, item.path, checked);
-    setPublishItems(updatedItems);
+    const updatedItems = updateTreeItems(treeItems, item.path, checked);
+    setTreeItems(updatedItems);
     onCheck(updatedItems);
   };
 
-  const updatePublishItems = (
-    items: PublishItem[],
+  const updateTreeItems = (
+    items: FileTreeItem[],
     targetPath: string,
     included: boolean
-  ): PublishItem[] => {
+  ): FileTreeItem[] => {
     return items.map((i) => {
       if (i.path === targetPath) {
-        return { ...i, included, children: updatePublishItems(i.children, targetPath, included) };
+        return { ...i, included, children: updateTreeItems(i.children, targetPath, included) };
       } else {
-        return { ...i, children: updatePublishItems(i.children, targetPath, included) };
+        return { ...i, children: updateTreeItems(i.children, targetPath, included) };
       }
     });
   };
@@ -89,17 +89,15 @@ const PublishTreeItem: React.FC<FileTreeItemProps> = ({ item, isGreyed, onCheck,
       }
     >
       {item.children.map((child) => (
-        <PublishTreeItem
+        <CheckboxTreeItem
           key={child.path}
           item={child}
           isGreyed={isGreyed || !item.included}
-          onCheck={onCheck}
-          publishItems={publishItems}
-          setPublishItems={setPublishItems}
+          {...{ onCheck, treeItems, setTreeItems }}
         />
       ))}
     </StyledTreeItem>
   );
 };
 
-export default PublishTreeItem;
+export default CheckboxTreeItem;

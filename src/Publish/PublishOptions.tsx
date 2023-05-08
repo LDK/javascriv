@@ -3,10 +3,11 @@ import React, { useEffect, useState } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Select, MenuItem, FormControl, InputLabel, useTheme } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { selectFiles, BrowserItem } from '../redux/filesSlice';
-import PublishTree, { PublishItem } from './PublishTree';
+import PublishTree from './PublishTree';
 import { SelectChangeEvent } from '@mui/material/Select';
 import publishToPdf from './pdfCompiler';
 import { Binary, PublishingOptions } from './compiling';
+import { FileTreeItem } from '../FileTree/FileTree';
 
 export interface PublishOptionsProps {
   optionsOpen: boolean;
@@ -48,8 +49,8 @@ const PublishOptions: React.FC<PublishOptionsProps> = ({ optionsOpen, onClose })
     setPageNumberPosition(event.target.value as string);
   };
 
-  const handleCheck = (updatedItems: PublishItem[]) => {
-    const filterIncludedItems = (items: PublishItem[]): BrowserItem[] => {
+  const handleCheck = (updatedItems: FileTreeItem[]) => {
+    const filterIncludedItems = (items: FileTreeItem[]): BrowserItem[] => {
       return items.flatMap((item) => {
         if (item.included) {
           const newItem: BrowserItem = { ...item, children: item.children ? filterIncludedItems(item.children) : undefined };
@@ -89,7 +90,6 @@ const PublishOptions: React.FC<PublishOptionsProps> = ({ optionsOpen, onClose })
           </Select>
         </FormControl>
 
-        {/* Add this FormControl for Page Numbers */}
         <FormControl fullWidth variant="outlined" sx={{ mt: 2 }}>
           <InputLabel htmlFor="page-numbers-select">Page Numbers</InputLabel>
           <Select
