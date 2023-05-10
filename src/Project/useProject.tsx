@@ -3,10 +3,11 @@
 import { Box, Button, Dialog, DialogContent, DialogContentText, DialogTitle, TextField } from "@mui/material";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { FileTreeState, findItemByPath, setFiles, setOpenFilePath } from "../redux/filesSlice";
+import { BrowserItem, FileTreeState, findItemByPath, setFiles, setOpenFilePath } from "../redux/filesSlice";
 import { store } from "../redux/store";
 import JSZip from 'jszip';
 import { getFullTree } from "../Convert/scrivener/scrivener";
+import ImportOptions, { ImportingOptions } from "./ImportOptions";
 
 export interface XmlIndex {
   [id:string]: string;
@@ -15,6 +16,10 @@ export interface XmlIndex {
 const useProject = (handleEditorChange:((content: string) => void)) => {
   const dispatch = useDispatch();
   const [exportDialogOpen, setExportDialogOpen] = useState(false);
+  const [importOptionsOpen, setImportOptionsOpen] = useState(false);
+  const [importingPath, setImportingPath] = useState<string[] | null>(null);
+  const [importingFiles, setImportingFiles] = useState<BrowserItem[] | false>(false);
+  const [importingContent, setImportingContent] = useState<string | null>(null);
 
   const parseZipFile = async (file: File) => {
     // Create a new instance of JSZip
@@ -65,6 +70,23 @@ const useProject = (handleEditorChange:((content: string) => void)) => {
     }
   };
   
+  const importProjectFromScrivenerZip = async (file: File) => {
+    const keyFiles = await parseZipFile(file);
+
+    if (keyFiles['indexes'] && keyFiles['scrivx']) {
+      const fullTree = await getFullTree(keyFiles['scrivx'], keyFiles['indexes']);
+      const newPath = fullTree[0]?.path.split('/').filter((item) => item.length) || [];
+      setImportingPath(newPath);
+      setImportingFiles(fullTree);
+      const newItem = findItemByPath(fullTree, newPath);
+
+      if (newItem && newItem.content) {
+        setImportingContent(newItem.content);
+      }
+
+    }
+  }
+
   const handleUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target ? event.target.files?.[0] : null;
   
@@ -72,13 +94,7 @@ const useProject = (handleEditorChange:((content: string) => void)) => {
   
     switch (file.type) {
       case 'application/zip':
-        const keyFiles = await parseZipFile(file);
-
-        if (keyFiles['indexes'] && keyFiles['scrivx']) {
-          const fullTree = await getFullTree(keyFiles['scrivx'], keyFiles['indexes']);
-          dispatch(setOpenFilePath(fullTree[0]?.path));
-          dispatch(setFiles(fullTree));
-        }
+        importProjectFromScrivenerZip(file);
       break;
 
       case 'application/json':
@@ -145,19 +161,23 @@ const useProject = (handleEditorChange:((content: string) => void)) => {
 
           if (importedProject) {
             if (importedProject.openFilePath && importedProject.files) {
-              dispatch(setOpenFilePath(importedProject.openFilePath));
-              dispatch(setFiles(importedProject.files));
+              setImportingPath(importedProject.openFilePath.split('/'));
+              setImportingFiles(importedProject.files);
 
               const newItem = findItemByPath(importedProject.files, importedProject.openFilePath.split('/'));
 
               if (newItem && newItem.content) {
-                handleEditorChange(newItem.content);
+                setImportingContent(newItem.content);
               }
             }
           }
 
         }
       } catch (error) {
+        setImportingPath(null);
+        setImportingFiles(false);
+        setImportingContent(null);
+
         console.error('Error importing project:', error);
       }
     };
@@ -193,7 +213,48 @@ const useProject = (handleEditorChange:((content: string) => void)) => {
     document.body.removeChild(downloadLink);
   };
 
-  return { importProjectFromJson, handleUpload, ExportDialog, setExportDialogOpen };
+  const ImportButton = ({callback}: {callback: () => void}) => (
+    <Button onClick={() => {
+      callback();
+      setImportOptionsOpen(true);
+    }} color="primary" variant="contained">
+      Import Project
+    </Button>
+  );
+
+  const handleImportClose = () => {
+    setImportOptionsOpen(false);
+    setImportingContent(null);
+    setImportingFiles(false);
+    setImportingPath(null);
+  };
+
+  const handleImportReady = (options:ImportingOptions) => {
+    if (options.items) {
+      dispatch(setFiles(options.items));
+
+      if (importingPath) {
+        const openItem = findItemByPath(options.items, importingPath);
+        if (openItem) {
+          dispatch(setOpenFilePath(importingPath.join('/')));
+          if (importingContent) {
+            handleEditorChange(importingContent);
+          }
+        } else {
+          dispatch(setOpenFilePath(''));
+          handleEditorChange('');
+        }
+      }
+    }
+
+    handleImportClose();
+  }
+
+  const ImportDialog = () => (
+    <ImportOptions files={importingFiles || []} onReady={handleImportReady} optionsOpen={Boolean(importOptionsOpen && importingFiles)} onClose={handleImportClose} />
+  );
+
+  return { importProjectFromJson, handleUpload, ExportDialog, setExportDialogOpen, ImportButton, ImportOptions: ImportDialog  };
 };
 
 export default useProject;

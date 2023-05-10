@@ -12,6 +12,7 @@ import useProject from './Project/useProject';
 import useFileBrowser from './FileBrowser/useFileBrowser';
 import usePublishing from './Publish/usePublishing';
 
+
 const App: React.FC = () => {  
   const [editorContent, setEditorContent] = useState<string | null>(null);
   const [initial, setInitial] = useState<string | null | false>(null);
@@ -37,7 +38,7 @@ const App: React.FC = () => {
     setEditorContent(content);
   };
 
-  const { ExportDialog, setExportDialogOpen, handleUpload, importProjectFromJson: importProject } = useProject(handleEditorChange);
+  const { ImportButton, ImportOptions, ExportDialog, setExportDialogOpen, handleUpload } = useProject(handleEditorChange);
 
   const activeTheme = useSelector((state:RootState) => state.theme.active);
 
@@ -108,13 +109,8 @@ const App: React.FC = () => {
                     onChange={handleUpload}
                     style={{ display: 'none' }} />
 
-                  <Button
-                    onClick={() => { fileInputRef?.click();}}
-                    color="primary"
-                    variant="contained"
-                  >
-                    Import Project
-                  </Button>
+                  <ImportButton callback={() => { fileInputRef?.click();}} />
+                  <ImportOptions />
 
                   <PublishButton />
                   <PublishOptions />
