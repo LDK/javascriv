@@ -42,14 +42,33 @@ export function scrivenerBinderToBrowserItems(binder: ScrivenerBinder, basePath:
     const textTypes = ['Document', 'Text'];
     const allowedTypes = [...folderTypes, ...textTypes];
 
+    const processedPaths:string[] = [];
+
     return items
       .filter((item) => allowedTypes.includes(item.Type))
       .map((item) => {
-        const newPath = currentPath + '/' + item.Title;
+        const defaultItemName = item.Title || 'Untitled';
+        let itemName = defaultItemName;
+        let newPath = currentPath + '/' + itemName;
+
+        if (!processedPaths.includes(newPath)) {
+          processedPaths.push(newPath);
+        } else {
+          // We need to add a suffix such as (1), (2), etc. to the path and name.
+          let suffix = 1;
+
+          while (processedPaths.includes(newPath)) {
+            itemName = defaultItemName + ' (' + suffix + ')';
+            newPath = currentPath + '/' + itemName;
+            suffix++;
+          }
+
+          processedPaths.push(newPath);
+        }
 
         let newBrowserItem: BrowserItem = {
           type: folderTypes.includes(item.Type) ? 'folder' : 'file',
-          name: item.Title as string,
+          name: itemName,
           path: newPath,
         };
 
