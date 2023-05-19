@@ -1,5 +1,5 @@
 // Browser/FileBrowserItem.tsx
-import { KeyboardEventHandler, useCallback, useEffect, useRef } from "react";
+import { Dispatch, KeyboardEventHandler, SetStateAction, useCallback, useEffect, useRef } from "react";
 import { SxProps, Box, PaletteMode, ListItem, ListItemIcon, ListItemText, Collapse, List, useTheme } from "@mui/material";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -8,6 +8,8 @@ import { ExtendedPalette } from "../theme/theme";
 
 import { Folder, Description as DocIcon, Image as ImageIcon, ExpandMore, ExpandLess, InsertDriveFile } from '@mui/icons-material';
 import ItemActionBar from "./ItemActionBar";
+import DuplicateDialog from "./DuplicateDialog";
+import { FileType, SubType } from "./FileBrowser";
 
 type FileBrowserItemProps = {
   item: BrowserItem;
@@ -16,13 +18,16 @@ type FileBrowserItemProps = {
   openFilePath: string | null;
   onDocumentClick: (documentContent: string | null, changed: boolean) => void;
   onFolderClick: (folder: BrowserItem) => void;
+  setOpenFolder: Dispatch<SetStateAction<string | null>>;
+  openFolder: string | null;
 };
 
-const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, path = [], onDocumentClick, onFolderClick, openFilePath}) => {
+const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, path = [], onDocumentClick, onFolderClick, openFilePath, setOpenFolder, openFolder}) => {
 
   const isFolder = item.type === 'folder';
   const fullPath = [...path, item.name].join('/');
   const [open, setOpen] = useState<boolean>(Boolean(isFolder && openFilePath && openFilePath.startsWith(fullPath)));
+  const [duplicating, setDuplicating] = useState<{ fileType: FileType, subType: SubType } | false>(false);
 
   const [renaming, setRenaming] = useState(false);
   const renameInputRef = useRef<HTMLInputElement>(null);
@@ -67,6 +72,10 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, path 
   const handleEditClick = useCallback(() => {
     setRenaming(true);
   }, []);
+
+  const handleDuplicate = useCallback(() => {
+    setDuplicating({ fileType: item.type, subType: item.subType || null });
+  }, [item]);
 
   const handleItemRename = () => {
     // Call your renaming function here
@@ -143,7 +152,8 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, path 
               style: { color: item.changed ? palette.warning[isOpenPath ? 'main' : opposite] : 'inherit' },
             }}
           />
-          <ItemActionBar {...{ item }} onEditClick={handleEditClick} />
+
+          <ItemActionBar {...{ item }} onEditClick={handleEditClick} onDuplicate={handleDuplicate} />
         </Box>
       </ListItem>
 
@@ -152,11 +162,22 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, path 
         <Collapse in={open} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             {item.children?.map((child: BrowserItem, index: number) => (
-              <FileBrowserItem {...{ openFilePath, onDocumentClick, onFolderClick }} key={index} item={child} level={level + 1} path={[...path, item.name]} />
+              <FileBrowserItem {...{ openFolder, setOpenFolder, openFilePath, onDocumentClick, onFolderClick }} key={index} item={child} level={level + 1} path={[...path, item.name]} />
             ))}
           </List>
         </Collapse>
       )}
+
+      <DuplicateDialog {...{ 
+        open: Boolean(duplicating), 
+        setOpen: setDuplicating, 
+        onClose: () => setDuplicating(false),
+        sourceFilePath: openFilePath as string,
+        fileType: duplicating ? duplicating.fileType : null,
+        subType: duplicating ? duplicating.subType : null,
+        setOpenFolder, openFolder }}
+      />
+
     </>
   );
 };

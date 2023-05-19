@@ -3,40 +3,19 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addItem, BrowserItem, selectFiles } from "../redux/filesSlice";
 import { FileType, findParentFolder, ROOTFOLDER, SubType } from "./FileBrowser";
+import { getFolders } from "./useBrowserDialog";
 
 type NewFileDialogProps = {
   open: boolean;
   onClose: () => void;
   openFilePath: string;
-  openFolder: string;
-  fileType: "file" | "folder" | null;
-  subType: "document" | "image" | null;
+  openFolder: string | null;
+  fileType: FileType;
+  subType: SubType;
   setOpen : React.Dispatch<React.SetStateAction<{ fileType: FileType; subType: SubType; } | false>>;
-  setOpenFolder: React.Dispatch<React.SetStateAction<string>>;
+  setOpenFolder: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
-// Recursively iterate through all items and add folders to the itemsFolders array, 
-// as well as their children folders and grand-children folders, etc.
-// Handles any level of folder depth, recursively.
-
-const getFolders = (itemPool: BrowserItem[], level?: number) => {
-  let itemsFolders:BrowserItem[] = [];
-
-  const lvl = level || 1;
-
-  for (let item of itemPool) {
-    if (item.type === 'folder') {
-      const prefix = lvl > 0 ? "—".repeat(lvl) : '';
-      itemsFolders.push({...item, name: `${prefix}${item.name}`});
-      if (item.children) {
-        itemsFolders = [...itemsFolders, ...getFolders(item.children, lvl + 1)];
-      }
-    }
-  }
-
-  return itemsFolders;
-}
-  
 const NewFileDialog = ({ 
     open, setOpen, onClose, fileType, subType, openFilePath, openFolder, setOpenFolder 
   }: NewFileDialogProps) => {
@@ -44,7 +23,7 @@ const NewFileDialog = ({
   const items = useSelector(selectFiles);
   const itemName = fileType === 'file' ? subType as string : 'folder';
   const [newItemName, setNewItemName] = useState('');
-  const [parentFolder, setParentFolder] = useState(openFolder);
+  const [parentFolder, setParentFolder] = useState<string | null>(openFolder);
 
   const dispatch = useDispatch();
   

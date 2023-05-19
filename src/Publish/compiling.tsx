@@ -34,10 +34,25 @@ export const compileHtml = (options: PublishingOptions) => {
         const prefix = `<section id="${id}" data-title="${node.name}" tocItem="true">`;
         const suffix = '</section>';
 
-        compiledContent.push(`${prefix}${content}${suffix}`);
+        // Find instances of <p><!-- pagebreak --></p> and replace with page break
+        const pageBreakRegex = /<p><!-- pagebreak --><\/p>/g;
+        const pageBreaks = content.match(pageBreakRegex);
+
+        console.log('page br eaks: ', pageBreaks);
+        if (pageBreaks) {
+          const splitContent = content.split('<p><!-- pagebreak --></p>');
+          splitContent.forEach((content, index) => {
+            compiledContent.push(`${prefix}${content}${suffix}`);
+            if (index < splitContent.length - 1) {
+              compiledContent.push({ text: '', pageBreak: 'after' });
+            }
+          });
+        } else {
+          compiledContent.push(`${prefix}${content}${suffix}`);
       
-        if (options.pageBreaks.includes('Between Documents')) {
-          compiledContent.push({ text: '', pageBreak: 'after' });
+          if (options.pageBreaks.includes('Between Documents')) {
+            compiledContent.push({ text: '', pageBreak: 'after' });
+          }
         }
       }
 
@@ -50,15 +65,36 @@ export const compileHtml = (options: PublishingOptions) => {
       const suffix = '</section>';
       const content = node.content || '';
 
-      compiledContent.push(`${prefix}${content}${suffix}`);
+      // Find instances of <p><!-- pagebreak --></p> and replace with page break
+      const pageBreakRegex = /<p><!-- pagebreak --><\/p>/g;
+      const pageBreaks = content.match(pageBreakRegex);
 
-      if (options.pageBreaks.includes('Between Documents')) {
-        compiledContent.push({ text: '', pageBreak: 'after' });
+      console.log('page breaks: ', pageBreaks);
+      if (pageBreaks) {
+        const splitContent = content.split('<p><!-- pagebreak --></p>');
+        compiledContent.push(`${prefix}`);
+
+        splitContent.forEach((content, index) => {
+          console.log('content', content);
+          compiledContent.push(`${content}`);
+          if (index < splitContent.length - 1) {
+            compiledContent.push({ text: '', pageBreak: 'after' });
+          }
+        });
+
+        compiledContent.push(`${suffix}`);
+      } else {
+        compiledContent.push(`${prefix}${content}${suffix}`);
+    
+        if (options.pageBreaks.includes('Between Documents')) {
+          compiledContent.push({ text: '', pageBreak: 'after' });
+        }
       }
     }
   };
 
   options.items.forEach((item) => traverse(item, true));
+  console.log('compiledContent: ', compiledContent);
   return compiledContent;
 };
 

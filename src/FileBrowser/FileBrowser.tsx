@@ -7,7 +7,7 @@ import Sticky from 'react-stickynode';
 import FileBrowserItem from './FileBrowserItem';
 import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder';
 import NoteAddIcon from '@mui/icons-material/NoteAdd';
-import NewFileDialog from './FileBrowserDialog';
+import NewFileDialog from './NewFileDialog';
 
 interface FileBrowserProps {
   onDocumentClick: (documentContent: string | null, changed: boolean) => void;
@@ -31,14 +31,14 @@ export const findParentFolder = (items: BrowserItem[], path: string[]) => {
 }
 
 export type FileType = 'file' | 'folder' | null;
-export type SubType = 'document' | 'image' | null;
+export type SubType = 'document' | 'image' | 'other' | null;
 
 const FileBrowser: React.FC<FileBrowserProps> = ({ onDocumentClick }) => {
   const items = useSelector(selectFiles);
   const openFilePath = useSelector(selectOpenFilePath);
   const theme = useTheme();
 
-  const [openFolder, setOpenFolder] = useState(findParentFolder(items, openFilePath?.split('/') || []));
+  const [openFolder, setOpenFolder] = useState<string | null>(findParentFolder(items, openFilePath?.split('/') || []));
   const [adding, setAdding] = useState<{ fileType: FileType, subType: SubType } | false>(false);
 
   const handleFolderClick = (folder: BrowserItem) => {
@@ -50,8 +50,7 @@ const FileBrowser: React.FC<FileBrowserProps> = ({ onDocumentClick }) => {
       <FileBrowserItem
         key={item.name}
         onFolderClick={handleFolderClick}
-        onDocumentClick={onDocumentClick}
-        {...{ item, path, openFilePath }}
+        {...{ setOpenFolder, onDocumentClick, openFolder, item, path, openFilePath } }
       />
     );
   };
@@ -113,6 +112,7 @@ const FileBrowser: React.FC<FileBrowserProps> = ({ onDocumentClick }) => {
           {items.map((item) => renderItem(item))}
         </Box>
       </Sticky>
+
       <NewFileDialog {...{ 
         open: Boolean(adding), 
         fileType: adding ? adding.fileType : null,
@@ -120,7 +120,9 @@ const FileBrowser: React.FC<FileBrowserProps> = ({ onDocumentClick }) => {
         setOpen: setAdding, 
         openFilePath: openFilePath as string,
         onClose: () => setAdding(false),
-        setOpenFolder, openFolder }}  />
+        setOpenFolder, openFolder }}
+      />
+
     </Box>
   );
 };

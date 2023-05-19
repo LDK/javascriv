@@ -6,7 +6,13 @@ import { useDispatch } from "react-redux";
 import { BrowserItem, deleteItem } from "../redux/filesSlice";
 import { EditButton, UpButton, DownButton, DeleteButton, MoreButton } from "./ItemActionButtons";
 
-const ItemActionBar = ({ item, onEditClick }: { item: BrowserItem; onEditClick: () => void }) => {
+type ItemActionBarProps = {
+  item: BrowserItem;
+  onEditClick: () => void;
+  onDuplicate: () => void;
+};
+
+const ItemActionBar = ({ item, onEditClick, onDuplicate }: ItemActionBarProps) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [deleting, setDeleting] = useState(false);
 
@@ -24,7 +30,7 @@ const ItemActionBar = ({ item, onEditClick }: { item: BrowserItem; onEditClick: 
   const handleDuplicate = (event: React.MouseEvent) => {
     event.stopPropagation();
     handleMenuClose();
-    // Handle duplicate action here
+    onDuplicate();
   };
 
   const handleMoveTo = (event: React.MouseEvent) => {

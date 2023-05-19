@@ -7,7 +7,7 @@ export type BrowserItem = {
   name: string;
   path: string;
   children?: BrowserItem[];
-  subType?: 'document' | 'image' | 'other';
+  subType?: 'document' | 'image' | 'other' | null;
   attachment?: string;
   content?: string;
   initialContent?: string;
