@@ -26,7 +26,9 @@ const DuplicateDialog = ({ open, setOpen, onClose, sourceFilePath, openFolder }:
   const [itemName, setItemName] = useState<string>(suggestedFilename(sourceFilePath));
   const initialParent:string = findParentFolder(items, sourceFilePath.split('/'));
 
-  const sourceContent = findItemByPath(items, sourceFilePath.split('/'))?.content;
+  const item = findItemByPath(items, sourceFilePath.split('/'));
+  const sourceContent = item?.content;
+  const sourceChildren = item?.children;
 
   const [parentFolder, setParentFolder] = useState<string | null>(initialParent);
 
@@ -88,7 +90,7 @@ const DuplicateDialog = ({ open, setOpen, onClose, sourceFilePath, openFolder }:
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>Cancel</Button>
-        <Button onClick={() => handleCreateNewFile(parentFolder, itemName, sourceContent)} 
+        <Button onClick={() => handleCreateNewFile(parentFolder, itemName, sourceContent, sourceChildren)} 
         disabled={!itemName || !parentFolder}>
           Create Duplicate
         </Button>

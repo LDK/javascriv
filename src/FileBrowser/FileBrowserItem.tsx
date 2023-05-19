@@ -9,7 +9,6 @@ import { ExtendedPalette } from "../theme/theme";
 import { Folder, Description as DocIcon, Image as ImageIcon, ExpandMore, ExpandLess, InsertDriveFile } from '@mui/icons-material';
 import ItemActionBar from "./ItemActionBar";
 import DuplicateDialog from "./DuplicateDialog";
-import { SubType } from "./FileBrowser";
 import { SetOpenFunction } from "./useBrowserDialog";
 
 type FileBrowserItemProps = {
@@ -173,9 +172,9 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, path 
         open: Boolean(duplicating), 
         setOpen: setDuplicating as SetOpenFunction, 
         onClose: () => setDuplicating(false),
-        sourceFilePath: openFilePath as string,
-        fileType: duplicating ? duplicating.type : null,
-        subType: duplicating ? duplicating.subType as SubType : null,
+        sourceFilePath: item.path,
+        fileType: item.type || 'file',
+        subType: item.subType || null,
         setOpenFolder, openFolder }}
       />
 

@@ -37,10 +37,8 @@ export default function useBrowserDialog(openFilePath: string, setOpen: SetOpenF
 
   const dispatch = useDispatch();
 
-  const handleCreateNewFile = (parentFolder: string | null, itemName: string, content?: string) => {
+  const handleCreateNewFile = (parentFolder: string | null, itemName: string, content?: string, children?: BrowserItem[]) => {
     const newPath = `${parentFolder}/${itemName}`.replace('<root>','');
-    
-    console.log('creating new file', newPath, fileType, subType, content);
 
     const newItem:BrowserItem = {
       name: itemName,
@@ -48,6 +46,7 @@ export default function useBrowserDialog(openFilePath: string, setOpen: SetOpenF
       type: fileType as 'file' | 'folder',
       content: content || undefined,
       subType: subType || undefined,
+      children: children || undefined
     };
 
     dispatch(addItem({path: newPath, item: newItem}));

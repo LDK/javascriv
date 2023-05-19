@@ -20,7 +20,6 @@ const TinyEditor: React.FC<TinyEditorProps> = ({ content, initial, onEditorChang
   const theme = useTheme();
 
   const handleInit = (_event: any, editor: MyEditor) => {
-    console.log('render editor', editor);
     editorRef.current = editor;
 
     if (fullScreen) {
@@ -51,7 +50,6 @@ const TinyEditor: React.FC<TinyEditorProps> = ({ content, initial, onEditorChang
     // const isFullscreen = editor.execCommand('mceFullScreen', false);
 
     if (event.command) {
-      console.log('command:', event.command);
       switch (event.command) {
         case 'mceFullScreen':
           setFullScreen(editor.plugins.fullscreen.isFullscreen());
@@ -74,11 +72,6 @@ const TinyEditor: React.FC<TinyEditorProps> = ({ content, initial, onEditorChang
       editorRef.current.selection.moveToBookmark(bookmark);
     }
   }, [content]);
-
-  // eslint-disable-next-line
-  function myCustomOnChangeHandler(inst:Editor) {
-    console.log('new inst', inst);
-  }
 
   return (
     <Box width="100%" sx={{ backgroundColor: 'rgba(10, 25, 60)', minHeight: 'calc(100vh - 40px)' }} mt={0}>

@@ -208,7 +208,7 @@ const filesSlice = createSlice({
     },
     addItem: (
       state,
-      action: PayloadAction<{ path: string; item: Omit<BrowserItem, 'children'> }>
+      action: PayloadAction<{ path: string; item: BrowserItem }>
     ) => {
       const rawPath = action.payload.path.startsWith('/') ? action.payload.path.slice(1) : action.payload.path;
       const path = rawPath.split('/');
@@ -219,10 +219,10 @@ const filesSlice = createSlice({
       const { item } = action.payload;
 
       if (parent && parent.type && parent.children) {
-        parent.children.push({ ...item, children: item.type === 'folder' ? [] : undefined });
+        parent.children.push({ ...item, children: item.children || (item.type === 'folder' ? [] : undefined) });
       } else if (!parent || !parent.type) {
         // Add at root of file tree.
-        state.files.push({ ...item, children: item.type === 'folder' ? [] : undefined });
+        state.files.push({ ...item, children: item.children || (item.type === 'folder' ? [] : undefined) });
       }
     },
   },

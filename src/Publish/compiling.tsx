@@ -38,7 +38,6 @@ export const compileHtml = (options: PublishingOptions) => {
         const pageBreakRegex = /<p><!-- pagebreak --><\/p>/g;
         const pageBreaks = content.match(pageBreakRegex);
 
-        console.log('page br eaks: ', pageBreaks);
         if (pageBreaks) {
           const splitContent = content.split('<p><!-- pagebreak --></p>');
           splitContent.forEach((content, index) => {
@@ -69,13 +68,11 @@ export const compileHtml = (options: PublishingOptions) => {
       const pageBreakRegex = /<p><!-- pagebreak --><\/p>/g;
       const pageBreaks = content.match(pageBreakRegex);
 
-      console.log('page breaks: ', pageBreaks);
       if (pageBreaks) {
         const splitContent = content.split('<p><!-- pagebreak --></p>');
         compiledContent.push(`${prefix}`);
 
         splitContent.forEach((content, index) => {
-          console.log('content', content);
           compiledContent.push(`${content}`);
           if (index < splitContent.length - 1) {
             compiledContent.push({ text: '', pageBreak: 'after' });
@@ -94,7 +91,6 @@ export const compileHtml = (options: PublishingOptions) => {
   };
 
   options.items.forEach((item) => traverse(item, true));
-  console.log('compiledContent: ', compiledContent);
   return compiledContent;
 };
 

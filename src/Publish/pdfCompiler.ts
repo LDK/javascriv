@@ -24,8 +24,6 @@ const generateToc = (html: string): TocItem[] => {
 
   const tocItems: TocItem[] = [];
 
-  console.log('sections', sections);
-
   sections.forEach((section) => {
     const sectionTitle = section.getAttribute('data-title');
     if (sectionTitle || section.textContent) {
@@ -138,7 +136,6 @@ const convertHtmlToPdf = async (contentArray: any[], options: PublishingOptions)
 
 const publishToPdf = async (options: PublishingOptions) => {
   const compiledHtml = compileHtml(options);
-  console.log('compiledHtml', compiledHtml);
   const joinedHtml = compiledHtml.join('');
 
   const usedFonts = extractUsedFonts(joinedHtml, editorFonts);
