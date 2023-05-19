@@ -8,7 +8,6 @@ import { ExtendedPalette } from "../theme/theme";
 
 import { Folder, Description as DocIcon, Image as ImageIcon, ExpandMore, ExpandLess, InsertDriveFile } from '@mui/icons-material';
 import ItemActionBar from "./ItemActionBar";
-import DuplicateDialog from "./DuplicateDialog";
 import { SetOpenFunction } from "./useBrowserDialog";
 
 type FileBrowserItemProps = {
@@ -19,15 +18,15 @@ type FileBrowserItemProps = {
   onDocumentClick: (documentContent: string | null, changed: boolean) => void;
   onFolderClick: (folder: BrowserItem) => void;
   setOpenFolder: Dispatch<SetStateAction<string | null>>;
+  setDialogItem: SetOpenFunction;
   openFolder: string | null;
 };
 
-const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, path = [], onDocumentClick, onFolderClick, openFilePath, setOpenFolder, openFolder}) => {
+const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, path = [], onDocumentClick, onFolderClick, openFilePath, setOpenFolder, openFolder, setDialogItem }) => {
 
   const isFolder = item.type === 'folder';
   const fullPath = [...path, item.name].join('/');
   const [open, setOpen] = useState<boolean>(Boolean(isFolder && openFilePath && openFilePath.startsWith(fullPath)));
-  const [duplicating, setDuplicating] = useState<BrowserItem | false>(false);
 
   const [renaming, setRenaming] = useState(false);
   const renameInputRef = useRef<HTMLInputElement>(null);
@@ -74,7 +73,7 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, path 
   }, []);
 
   const handleDuplicate = useCallback(() => {
-    setDuplicating(item || false);
+    setDialogItem(item || false);
   }, [item]);
 
   const handleItemRename = () => {
@@ -162,21 +161,11 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, path 
         <Collapse in={open} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             {item.children?.map((child: BrowserItem, index: number) => (
-              <FileBrowserItem {...{ openFolder, setOpenFolder, openFilePath, onDocumentClick, onFolderClick }} key={index} item={child} level={level + 1} path={[...path, item.name]} />
+              <FileBrowserItem {...{ openFolder, setDialogItem, setOpenFolder, openFilePath, onDocumentClick, onFolderClick }} key={index} item={child} level={level + 1} path={[...path, item.name]} />
             ))}
           </List>
         </Collapse>
       )}
-
-      <DuplicateDialog {...{ 
-        open: Boolean(duplicating), 
-        setOpen: setDuplicating as SetOpenFunction, 
-        onClose: () => setDuplicating(false),
-        sourceFilePath: item.path,
-        fileType: item.type || 'file',
-        subType: item.subType || null,
-        setOpenFolder, openFolder }}
-      />
 
     </>
   );

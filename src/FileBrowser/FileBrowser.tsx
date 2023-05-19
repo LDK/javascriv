@@ -8,7 +8,8 @@ import FileBrowserItem from './FileBrowserItem';
 import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder';
 import NoteAddIcon from '@mui/icons-material/NoteAdd';
 import NewFileDialog from './NewFileDialog';
-import { NewBrowserItem } from './useBrowserDialog';
+import { NewBrowserItem, SetOpenFunction } from './useBrowserDialog';
+import DuplicateDialog from './DuplicateDialog';
 
 interface FileBrowserProps {
   onDocumentClick: (documentContent: string | null, changed: boolean) => void;
@@ -17,10 +18,15 @@ interface FileBrowserProps {
 export const ROOTFOLDER = '<root>';
 
 export const findParentFolder = (items: BrowserItem[], path: string[]) => {
-  const openFile = findItemByPath(items, path);
+  const filteredPath = path.filter(p => p !== '');
+  const openFile = findItemByPath(items, filteredPath);
+
+  
+
   let openFolder = '';
 
   if (openFile && openFile.type !== 'folder') {
+    console.log('openFile', openFile, items, filteredPath);
     openFolder = openFile.path.split('/').slice(0, -1).join('/');
   }
 
@@ -40,6 +46,7 @@ const FileBrowser: React.FC<FileBrowserProps> = ({ onDocumentClick }) => {
   const theme = useTheme();
 
   const [openFolder, setOpenFolder] = useState<string | null>(findParentFolder(items, openFilePath?.split('/') || []));
+  const [duplicating, setDuplicating] = useState<BrowserItem | false>(false);
 
   const [adding, setAdding] = useState<NewBrowserItem | false>(false);
 
@@ -52,6 +59,7 @@ const FileBrowser: React.FC<FileBrowserProps> = ({ onDocumentClick }) => {
       <FileBrowserItem
         key={item.name}
         onFolderClick={handleFolderClick}
+        setDialogItem={setDuplicating as SetOpenFunction}
         {...{ setOpenFolder, onDocumentClick, openFolder, item, path, openFilePath } }
       />
     );
@@ -124,6 +132,18 @@ const FileBrowser: React.FC<FileBrowserProps> = ({ onDocumentClick }) => {
         onClose: () => setAdding(false),
         setOpenFolder, openFolder }}
       />
+
+      {Boolean(duplicating) &&
+        <DuplicateDialog {...{ 
+          open: Boolean(duplicating), 
+          setOpen: setDuplicating as SetOpenFunction, 
+          onClose: () => setDuplicating(false),
+          sourceFilePath: duplicating ? duplicating.path : '',
+          fileType: duplicating ? duplicating.type : 'file',
+          subType: duplicating ? (duplicating.subType || null) : null,
+          setOpenFolder, openFolder }}
+        />
+      }
 
     </Box>
   );
