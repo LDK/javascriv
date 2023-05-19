@@ -9,7 +9,8 @@ import { ExtendedPalette } from "../theme/theme";
 import { Folder, Description as DocIcon, Image as ImageIcon, ExpandMore, ExpandLess, InsertDriveFile } from '@mui/icons-material';
 import ItemActionBar from "./ItemActionBar";
 import DuplicateDialog from "./DuplicateDialog";
-import { FileType, SubType } from "./FileBrowser";
+import { SubType } from "./FileBrowser";
+import { SetOpenFunction } from "./useBrowserDialog";
 
 type FileBrowserItemProps = {
   item: BrowserItem;
@@ -27,7 +28,7 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, path 
   const isFolder = item.type === 'folder';
   const fullPath = [...path, item.name].join('/');
   const [open, setOpen] = useState<boolean>(Boolean(isFolder && openFilePath && openFilePath.startsWith(fullPath)));
-  const [duplicating, setDuplicating] = useState<{ fileType: FileType, subType: SubType } | false>(false);
+  const [duplicating, setDuplicating] = useState<BrowserItem | false>(false);
 
   const [renaming, setRenaming] = useState(false);
   const renameInputRef = useRef<HTMLInputElement>(null);
@@ -74,7 +75,7 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, path 
   }, []);
 
   const handleDuplicate = useCallback(() => {
-    setDuplicating({ fileType: item.type, subType: item.subType || null });
+    setDuplicating(item || false);
   }, [item]);
 
   const handleItemRename = () => {
@@ -170,11 +171,11 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, path 
 
       <DuplicateDialog {...{ 
         open: Boolean(duplicating), 
-        setOpen: setDuplicating, 
+        setOpen: setDuplicating as SetOpenFunction, 
         onClose: () => setDuplicating(false),
         sourceFilePath: openFilePath as string,
-        fileType: duplicating ? duplicating.fileType : null,
-        subType: duplicating ? duplicating.subType : null,
+        fileType: duplicating ? duplicating.type : null,
+        subType: duplicating ? duplicating.subType as SubType : null,
         setOpenFolder, openFolder }}
       />
 

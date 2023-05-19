@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addItem, BrowserItem, selectFiles } from "../redux/filesSlice";
 import { FileType, findParentFolder, ROOTFOLDER, SubType } from "./FileBrowser";
-import { getFolders } from "./useBrowserDialog";
+import { getFolders, SetOpenFunction } from "./useBrowserDialog";
 
 type NewFileDialogProps = {
   open: boolean;
@@ -12,7 +12,7 @@ type NewFileDialogProps = {
   openFolder: string | null;
   fileType: FileType;
   subType: SubType;
-  setOpen : React.Dispatch<React.SetStateAction<{ fileType: FileType; subType: SubType; } | false>>;
+  setOpen : SetOpenFunction;
   setOpenFolder: React.Dispatch<React.SetStateAction<string | null>>;
 }
 

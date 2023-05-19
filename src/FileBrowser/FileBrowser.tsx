@@ -8,6 +8,7 @@ import FileBrowserItem from './FileBrowserItem';
 import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder';
 import NoteAddIcon from '@mui/icons-material/NoteAdd';
 import NewFileDialog from './NewFileDialog';
+import { NewBrowserItem } from './useBrowserDialog';
 
 interface FileBrowserProps {
   onDocumentClick: (documentContent: string | null, changed: boolean) => void;
@@ -39,7 +40,8 @@ const FileBrowser: React.FC<FileBrowserProps> = ({ onDocumentClick }) => {
   const theme = useTheme();
 
   const [openFolder, setOpenFolder] = useState<string | null>(findParentFolder(items, openFilePath?.split('/') || []));
-  const [adding, setAdding] = useState<{ fileType: FileType, subType: SubType } | false>(false);
+
+  const [adding, setAdding] = useState<NewBrowserItem | false>(false);
 
   const handleFolderClick = (folder: BrowserItem) => {
     setOpenFolder(folder.path);
@@ -96,7 +98,7 @@ const FileBrowser: React.FC<FileBrowserProps> = ({ onDocumentClick }) => {
             <IconButton
               aria-label="Add a New File"
               component="label"
-              onClick={() => setAdding({ fileType: 'file', subType: 'document' })}
+              onClick={() => setAdding({ type: 'file', subType: 'document' })}
             >
               <NoteAddIcon />
             </IconButton>
@@ -104,7 +106,7 @@ const FileBrowser: React.FC<FileBrowserProps> = ({ onDocumentClick }) => {
             <IconButton
               aria-label="Add a New Folder"
               component="label"
-              onClick={() => setAdding({ fileType: 'folder', subType: null })}
+              onClick={() => setAdding({ type: 'folder', subType: null })}
             >
               <CreateNewFolderIcon />
             </IconButton>
@@ -115,8 +117,8 @@ const FileBrowser: React.FC<FileBrowserProps> = ({ onDocumentClick }) => {
 
       <NewFileDialog {...{ 
         open: Boolean(adding), 
-        fileType: adding ? adding.fileType : null,
-        subType: adding ? adding.subType : null,
+        fileType: adding ? adding.type : null,
+        subType: adding ? adding.subType as SubType : null,
         setOpen: setAdding, 
         openFilePath: openFilePath as string,
         onClose: () => setAdding(false),
