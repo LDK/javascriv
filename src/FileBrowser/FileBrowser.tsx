@@ -57,6 +57,7 @@ const FileBrowser: React.FC<FileBrowserProps> = ({ onDocumentClick }) => {
       <FileBrowserItem
         key={item.name}
         onFolderClick={handleFolderClick}
+        setDeleting={setDeleting as SetOpenFunction}
         setDuplicating={setDuplicating as SetOpenFunction}
         {...{ setOpenFolder, onDocumentClick, openFolder, item, path, openFilePath } }
       />

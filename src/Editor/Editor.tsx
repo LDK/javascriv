@@ -33,9 +33,8 @@ const TinyEditor: React.FC<TinyEditorProps> = ({ content, initial, onEditorChang
     // when esc key is pressed..
     document.addEventListener('keydown', (event) => {
       if (event.key === 'Escape') {
-        alert(33);
-        // setFullScreen(false);
-        // editor.plugins.fullscreen.isFullscreen(false);
+        setFullScreen(false);
+        editor.plugins.fullscreen.isFullscreen(false);
       }
     });
   };

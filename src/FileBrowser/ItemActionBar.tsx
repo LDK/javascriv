@@ -1,22 +1,19 @@
 // Browser/ItemActionBar.tsx
-import { Box, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from "@mui/material";
+import { Box } from "@mui/material";
 import { Menu, MenuItem } from '@mui/material';
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { BrowserItem, deleteItem } from "../redux/filesSlice";
+import { BrowserItem } from "../redux/filesSlice";
 import { EditButton, UpButton, DownButton, DeleteButton, MoreButton } from "./ItemActionButtons";
 
 type ItemActionBarProps = {
   item: BrowserItem;
   onEditClick: () => void;
   onDuplicate: () => void;
+  onDelete: () => void;
 };
 
-const ItemActionBar = ({ item, onEditClick, onDuplicate }: ItemActionBarProps) => {
+const ItemActionBar = ({ item, onEditClick, onDuplicate, onDelete }: ItemActionBarProps) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [deleting, setDeleting] = useState(false);
-
-  const dispatch = useDispatch();
 
   const handleMoreClick = (event: React.MouseEvent) => {
     event.stopPropagation();
@@ -49,18 +46,9 @@ const ItemActionBar = ({ item, onEditClick, onDuplicate }: ItemActionBarProps) =
     onEditClick();
   };
 
-  const handleDeleteConfirm = () => {
-    dispatch(deleteItem(item.path));
-    setDeleting(false);
-  };
-
   const handleDeleteClick = (event: React.MouseEvent) => {
     event.stopPropagation();
-    setDeleting(true);
-  };
-
-  const handleDeleteCancel = () => {
-    setDeleting(false);
+    onDelete();
   };
 
   return (
@@ -71,7 +59,6 @@ const ItemActionBar = ({ item, onEditClick, onDuplicate }: ItemActionBarProps) =
         <DownButton action={handleIconClick} />
         <DeleteButton action={handleDeleteClick} />
         <MoreButton action={handleMoreClick} />
-
 
         <Menu
           anchorEl={anchorEl}
@@ -111,28 +98,6 @@ const ItemActionBar = ({ item, onEditClick, onDuplicate }: ItemActionBarProps) =
           <MenuItem onClick={handleMoveTo}>Move to...</MenuItem>
         </Menu>
       </Box>
-
-      <Dialog
-        open={deleting}
-        onClose={handleDeleteCancel}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">{"Confirm Deletion"}</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Do you really want to delete {item.path}?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleDeleteCancel} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={handleDeleteConfirm} color="primary" autoFocus>
-            Delete
-          </Button>
-        </DialogActions>
-      </Dialog>
     </>
   );
 };
