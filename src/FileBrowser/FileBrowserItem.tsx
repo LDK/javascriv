@@ -70,11 +70,11 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, path 
 
   const handleEditClick = useCallback(() => {
     setRenaming(true);
-  }, []);
+  }, [setRenaming]);
 
   const handleDuplicate = useCallback(() => {
     setDialogItem(item || false);
-  }, [item]);
+  }, [item, setDialogItem]);
 
   const handleItemRename = () => {
     // Call your renaming function here

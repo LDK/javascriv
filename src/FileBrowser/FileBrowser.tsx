@@ -17,22 +17,11 @@ interface FileBrowserProps {
 
 export const ROOTFOLDER = '<root>';
 
-export const findParentFolder = (items: BrowserItem[], path: string[]) => {
+export const findParentFolder = (path: string[]) => {
   const filteredPath = path.filter(p => p !== '');
-  const openFile = findItemByPath(items, filteredPath);
+  const parentPath = filteredPath.slice(0, -1);
 
-  
-
-  let openFolder = '';
-
-  if (openFile && openFile.type !== 'folder') {
-    console.log('openFile', openFile, items, filteredPath);
-    openFolder = openFile.path.split('/').slice(0, -1).join('/');
-  }
-
-  if (!openFolder.length) {
-    openFolder = ROOTFOLDER;
-  }
+  const openFolder = parentPath.length ? `/${parentPath.join('/')}` : ROOTFOLDER;
 
   return openFolder;
 }
@@ -45,7 +34,14 @@ const FileBrowser: React.FC<FileBrowserProps> = ({ onDocumentClick }) => {
   const openFilePath = useSelector(selectOpenFilePath);
   const theme = useTheme();
 
-  const [openFolder, setOpenFolder] = useState<string | null>(findParentFolder(items, openFilePath?.split('/') || []));
+  const openItem = findItemByPath(items, openFilePath?.split('/') || []);
+  let initialFolder = openFilePath;
+
+  if (openItem && openItem.type !== 'folder') {
+    initialFolder = findParentFolder(openItem.path.split('/'));
+  }
+
+  const [openFolder, setOpenFolder] = useState<string | null>(initialFolder);
   const [duplicating, setDuplicating] = useState<BrowserItem | false>(false);
 
   const [adding, setAdding] = useState<NewBrowserItem | false>(false);

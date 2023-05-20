@@ -43,7 +43,7 @@ const NewFileDialog = ({
   };
 
   useEffect(() => {
-    const newFolder = findParentFolder(items, openFilePath?.split('/') || []);
+    const newFolder = findParentFolder(openFilePath?.split('/') || []);
     if (newFolder !== openFolder) {
       setOpenFolder(newFolder);
       if (!open) {

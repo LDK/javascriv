@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { selectFiles, BrowserItem, addItem, findItemByPath } from "../redux/filesSlice";
+import { selectFiles, BrowserItem, addItem, findItemByPath, deleteItem } from "../redux/filesSlice";
 
 export type NewBrowserItem = Omit<BrowserItem, 'path' | 'name'>;
 export type SetOpenFunction = React.Dispatch<React.SetStateAction<BrowserItem | NewBrowserItem | false>>;
@@ -54,7 +54,14 @@ export default function useBrowserDialog(openFilePath: string, setOpen: SetOpenF
     setOpen(false);
   };
 
+  const handleDeleteFile = (path: string) => {
+    console.log('deleting', path);
+    dispatch(deleteItem(path));
+
+    setOpen(false);
+  };
+
   return {
-    items, itemType, handleCreateNewFile
+    items, itemType, handleCreateNewFile, handleDeleteFile
   };
 }
