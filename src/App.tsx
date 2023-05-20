@@ -53,6 +53,9 @@ const App: React.FC = () => {
           setInitial(false);
         }
       }
+    } else if (!openFilePath) {
+      setEditorContent(null);
+      setInitial(null);
     }
     // eslint-disable-next-line
   }, [openFilePath]);

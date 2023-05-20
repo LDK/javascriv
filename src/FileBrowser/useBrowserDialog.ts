@@ -1,5 +1,7 @@
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { selectFiles, BrowserItem, addItem, findItemByPath, deleteItem } from "../redux/filesSlice";
+import { selectFiles, BrowserItem, addItem, findItemByPath, deleteItem, setOpenFilePath } from "../redux/filesSlice";
+import { RootState } from "../redux/store";
 
 export type NewBrowserItem = Omit<BrowserItem, 'path' | 'name'>;
 export type SetOpenFunction = React.Dispatch<React.SetStateAction<BrowserItem | NewBrowserItem | false>>;
@@ -26,11 +28,19 @@ export const getFolders = (itemPool: BrowserItem[], level?: number) => {
   return itemsFolders;
 };
 
-export default function useBrowserDialog(openFilePath: string, setOpen: SetOpenFunction) {
+export default function useBrowserDialog(sourceFilePath: string, setOpen: SetOpenFunction) {
   const items = useSelector(selectFiles);
+  const openFilePath = useSelector((state:RootState) => state.files.openFilePath);
+
   // const item = items.find((item) => item.path === openFilePath);
 
-  const item = findItemByPath(items, openFilePath.split('/'));
+  useEffect(() => {
+    if (openFilePath) {
+      console.log('useBrowserDialog: openFilePath changed to', openFilePath);
+    }
+  }, [openFilePath]);
+
+  const item = findItemByPath(items, sourceFilePath.split('/'));
 
   const { type: fileType, subType } = item || { fileType: null, subType: null };
   const itemType = fileType === 'file' ? subType as string : 'folder';
@@ -55,9 +65,27 @@ export default function useBrowserDialog(openFilePath: string, setOpen: SetOpenF
   };
 
   const handleDeleteFile = (path: string) => {
-    console.log('deleting', path);
     dispatch(deleteItem(path));
 
+    if (openFilePath) {
+      // Both of these should remove any preceding slash
+      let checkOpenPath = openFilePath.replace('<root>','');
+      let checkDeletedPath = path.replace('<root>','');
+
+      // remove preceding slash from both paths
+      if (checkOpenPath[0] === '/') {
+        checkOpenPath = checkOpenPath.slice(1);
+      }
+      if (checkDeletedPath[0] === '/') {
+        checkDeletedPath = checkDeletedPath.slice(1);
+      }
+
+
+      if (isDescendant(checkDeletedPath, checkOpenPath)) {
+        console.log('Now clearing out openFilePath', openFilePath);
+        dispatch(setOpenFilePath(''));
+      }
+    }
     setOpen(false);
   };
 
@@ -65,3 +93,29 @@ export default function useBrowserDialog(openFilePath: string, setOpen: SetOpenF
     items, itemType, handleCreateNewFile, handleDeleteFile
   };
 }
+function isDescendant(bigPath: string, littlePath: string) {
+  console.log('isDescendant', bigPath, littlePath);
+  // returns true if littlePath is a descendant of big path
+  // e.g. isDescendant('a/b/c', 'a/b/c/d/e') === true
+  // e.g. isDescendant('a/b/c', 'a/b') === false
+  // e.g. isDescendant('a/b/c', 'a/b/c') === false
+  // e.g. isDescendant('a/b/c', 'a/b/f/g') === false
+
+  const bigPathArray = bigPath.split('/');
+  const littlePathArray = littlePath.split('/');
+
+  if (bigPathArray.length >= littlePathArray.length) {
+    console.log('false because bigPathArray.length >= littlePathArray.length');
+    return false;
+  }
+
+  for (let i = 0; i < bigPathArray.length; i++) {
+    if (bigPathArray[i] !== littlePathArray[i]) {
+      console.log('false because bigPathArray[i] !== littlePathArray[i]', bigPathArray[i], littlePathArray[i]);
+      return false;
+    }
+  }
+  
+  return true;
+}
+
