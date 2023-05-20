@@ -80,7 +80,8 @@ const NewFileDialog = ({
     if (parentItem) {
       setSiblings(parentItem.children || []);
     }
-  }, [parentFolder, items]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [parentFolder]);
 
   useEffect(() => {
     if (siblings.length) {  

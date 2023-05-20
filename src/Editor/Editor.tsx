@@ -60,18 +60,6 @@ const TinyEditor: React.FC<TinyEditorProps> = ({ content, initial, onEditorChang
     }
   }
   
-  useEffect(() => {
-    if (editorRef.current && content !== null) {
-      const bookmark = editorRef.current.selection.getBookmark(2, true);
-      editorRef.current.undoManager.transact(() => {
-        if (editorRef.current) {
-          editorRef.current.setContent(content);
-        }
-      });
-      editorRef.current.selection.moveToBookmark(bookmark);
-    }
-  }, [content]);
-
   return (
     <Box width="100%" sx={{ backgroundColor: 'rgba(10, 25, 60)', minHeight: 'calc(100vh - 40px)' }} mt={0}>
       <Editor
