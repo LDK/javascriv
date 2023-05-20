@@ -1,5 +1,6 @@
 import { Dialog, DialogContent, DialogContentText, TextField, DialogActions, Button, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { renameChildrenPaths } from "../Project/projectUtils";
 import { findItemByPath } from "../redux/filesSlice";
 import { FileType, findParentFolder, ROOTFOLDER, SubType } from "./FileBrowser";
 import useBrowserDialog, { getFolders, SetOpenFunction } from "./useBrowserDialog";
@@ -23,14 +24,12 @@ const DuplicateDialog = ({ open, setOpen, onClose, sourceFilePath, openFolder }:
     return `Copy of ${srcName}`;
   }
 
-  console.log('sourceFilePath', sourceFilePath);
-
+  const initialName = sourceFilePath.split('/').pop();
   const [itemName, setItemName] = useState<string>(suggestedFilename(sourceFilePath));
   const initialParent:string = findParentFolder(sourceFilePath.split('/'));
 
   const item = findItemByPath(items, sourceFilePath.split('/'));
   const sourceContent = item?.content;
-  const sourceChildren = item?.children;
 
   const [parentFolder, setParentFolder] = useState<string | null>(initialParent);
 
@@ -38,7 +37,6 @@ const DuplicateDialog = ({ open, setOpen, onClose, sourceFilePath, openFolder }:
     const newFolder = findParentFolder(sourceFilePath?.split('/') || []);
     setParentFolder(newFolder);
     setItemName(suggestedFilename(sourceFilePath));
-    console.log('newFolder', newFolder);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sourceFilePath]);
 
@@ -49,6 +47,16 @@ const DuplicateDialog = ({ open, setOpen, onClose, sourceFilePath, openFolder }:
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [openFolder]);
   
+  const handleDuplicateClick = () => {
+    let sourceChildren = item?.children;
+
+    if (itemName !== initialName) {
+      const itemPath = `${parentFolder}/${itemName}`;
+      sourceChildren = renameChildrenPaths(sourceChildren, itemPath);
+    }
+
+    handleCreateNewFile(parentFolder, itemName, sourceContent, sourceChildren)
+  };
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogContent>
@@ -93,7 +101,7 @@ const DuplicateDialog = ({ open, setOpen, onClose, sourceFilePath, openFolder }:
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>Cancel</Button>
-        <Button onClick={() => handleCreateNewFile(parentFolder, itemName, sourceContent, sourceChildren)} 
+        <Button onClick={handleDuplicateClick} 
         disabled={!itemName || !parentFolder}>
           Create Duplicate
         </Button>

@@ -18,11 +18,11 @@ type FileBrowserItemProps = {
   onDocumentClick: (documentContent: string | null, changed: boolean) => void;
   onFolderClick: (folder: BrowserItem) => void;
   setOpenFolder: Dispatch<SetStateAction<string | null>>;
-  setDialogItem: SetOpenFunction;
+  setDuplicating: SetOpenFunction;
   openFolder: string | null;
 };
 
-const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, path = [], onDocumentClick, onFolderClick, openFilePath, setOpenFolder, openFolder, setDialogItem }) => {
+const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, path = [], onDocumentClick, onFolderClick, openFilePath, setOpenFolder, openFolder, setDuplicating }) => {
 
   const isFolder = item.type === 'folder';
   const fullPath = [...path, item.name].join('/');
@@ -73,8 +73,8 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, path 
   }, [setRenaming]);
 
   const handleDuplicate = useCallback(() => {
-    setDialogItem(item || false);
-  }, [item, setDialogItem]);
+    setDuplicating(item || false);
+  }, [item, setDuplicating]);
 
   const handleItemRename = () => {
     // Call your renaming function here
@@ -161,7 +161,7 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, path 
         <Collapse in={open} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             {item.children?.map((child: BrowserItem, index: number) => (
-              <FileBrowserItem {...{ openFolder, setDialogItem, setOpenFolder, openFilePath, onDocumentClick, onFolderClick }} key={index} item={child} level={level + 1} path={[...path, item.name]} />
+              <FileBrowserItem {...{ openFolder, setDuplicating, setOpenFolder, openFilePath, onDocumentClick, onFolderClick }} key={index} item={child} level={level + 1} path={[...path, item.name]} />
             ))}
           </List>
         </Collapse>

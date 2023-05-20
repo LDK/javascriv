@@ -10,6 +10,7 @@ import NoteAddIcon from '@mui/icons-material/NoteAdd';
 import NewFileDialog from './NewFileDialog';
 import { NewBrowserItem, SetOpenFunction } from './useBrowserDialog';
 import DuplicateDialog from './DuplicateDialog';
+import DeleteDialog from './DeleteDialog';
 
 interface FileBrowserProps {
   onDocumentClick: (documentContent: string | null, changed: boolean) => void;
@@ -43,6 +44,7 @@ const FileBrowser: React.FC<FileBrowserProps> = ({ onDocumentClick }) => {
 
   const [openFolder, setOpenFolder] = useState<string | null>(initialFolder);
   const [duplicating, setDuplicating] = useState<BrowserItem | false>(false);
+  const [deleting, setDeleting] = useState<BrowserItem | false>(false);
 
   const [adding, setAdding] = useState<NewBrowserItem | false>(false);
 
@@ -55,7 +57,7 @@ const FileBrowser: React.FC<FileBrowserProps> = ({ onDocumentClick }) => {
       <FileBrowserItem
         key={item.name}
         onFolderClick={handleFolderClick}
-        setDialogItem={setDuplicating as SetOpenFunction}
+        setDuplicating={setDuplicating as SetOpenFunction}
         {...{ setOpenFolder, onDocumentClick, openFolder, item, path, openFilePath } }
       />
     );
@@ -137,6 +139,16 @@ const FileBrowser: React.FC<FileBrowserProps> = ({ onDocumentClick }) => {
           sourceFilePath: duplicating ? duplicating.path : '',
           fileType: duplicating ? duplicating.type : 'file',
           subType: duplicating ? (duplicating.subType || null) : null,
+          setOpenFolder, openFolder }}
+        />
+      }
+
+      {Boolean(deleting) &&
+        <DeleteDialog {...{ 
+          open: Boolean(deleting), 
+          setOpen: setDeleting as SetOpenFunction, 
+          onClose: () => setDeleting(false),
+          sourceFilePath: deleting ? deleting.path : '',
           setOpenFolder, openFolder }}
         />
       }

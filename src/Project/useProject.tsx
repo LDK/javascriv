@@ -8,6 +8,7 @@ import { store } from "../redux/store";
 import JSZip from 'jszip';
 import { getFullTree } from "../Convert/scrivener/scrivener";
 import ImportOptions, { ImportingOptions } from "./ImportOptions";
+import { renameTwins } from "./projectUtils";
 
 export interface XmlIndex {
   [id:string]: string;
@@ -72,8 +73,6 @@ const useProject = (handleEditorChange:((content: string) => void)) => {
   
   const importProjectFromScrivenerZip = async (file: File) => {
     const keyFiles = await parseZipFile(file);
-
-    console.log('key files',keyFiles);
 
     if (keyFiles['indexes'] && keyFiles['scrivx']) {
       const fullTree = await getFullTree(keyFiles['scrivx'], keyFiles['indexes']);
@@ -151,53 +150,6 @@ const useProject = (handleEditorChange:((content: string) => void)) => {
   </Dialog>
   );
 
-  // Iterate through all items, recursively, and find any siblings with the same path and/or same name
-  // If any are found, rename them with a number appended to the end
-  const renameTwins = (items:BrowserItem[]) => {
-    const processedPaths:string[] = [];
-
-    return items.map((item) => {
-      const defaultItemName = item.name || 'Untitled';
-      let itemName = defaultItemName;
-      let newPath = item.path;
-
-      if (!processedPaths.includes(newPath)) {
-        processedPaths.push(newPath);
-      } else {
-        // We need to add a suffix such as (1), (2), etc. to the path and name.
-        let suffix = 1;
-
-        while (processedPaths.includes(newPath)) {
-          itemName = defaultItemName + ' (' + suffix + ')';
-          newPath = item.path + ' (' + suffix + ')';
-          suffix++;
-        }
-
-        processedPaths.push(newPath);
-      }
-
-      console.log('processedPaths', processedPaths);
-
-      let newItem: BrowserItem = {
-        type: item.type,
-        name: itemName,
-        path: newPath,
-      };
-
-      if (item.subType === 'document') {
-        newItem.subType = 'document';
-        newItem.content = item.content;
-        newItem.initialContent = item.initialContent;
-      }
-
-      if (item.children) {
-        newItem.children = renameTwins(item.children);
-      }
-
-      return newItem;
-    });
-  }
-
   const importProjectFromJson = (file:File) => {
     const reader = new FileReader();
 
@@ -211,7 +163,6 @@ const useProject = (handleEditorChange:((content: string) => void)) => {
           if (importedProject) {
             const projectFiles = renameTwins(importedProject.files);
             // const projectFiles = importedProject.files;
-            console.log('projectFiles', projectFiles);
 
             if (importedProject.openFilePath && projectFiles) {
               setImportingPath(importedProject.openFilePath.split('/'));
