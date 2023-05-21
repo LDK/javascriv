@@ -2,8 +2,8 @@
 import { Dispatch, KeyboardEventHandler, SetStateAction, useCallback, useEffect, useRef } from "react";
 import { SxProps, Box, PaletteMode, ListItem, ListItemIcon, ListItemText, Collapse, List, useTheme } from "@mui/material";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { BrowserItem, findItemByPath, reorderItem, selectFiles, setName, setOpenFilePath } from "../redux/filesSlice";
+import { useDispatch } from "react-redux";
+import { BrowserItem, reorderItem, setName } from "../redux/filesSlice";
 import { ExtendedPalette } from "../theme/theme";
 
 import { Folder, Description as DocIcon, Image as ImageIcon, ExpandMore, ExpandLess, InsertDriveFile } from '@mui/icons-material';
@@ -17,7 +17,7 @@ type FileBrowserItemProps = {
   count: number;
   path?: string[];
   openFilePath: string | null;
-  onDocumentClick: (documentContent: string | null, changed: boolean) => void;
+  onDocumentClick: (item: BrowserItem) => void;
   onFolderClick: (folder: BrowserItem) => void;
   setOpenFolder: Dispatch<SetStateAction<string | null>>;
   setDuplicating: SetOpenFunction;
@@ -30,8 +30,6 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, count
   const isFolder = item.type === 'folder';
   const fullPath = [...path, item.name].join('/');
   const [open, setOpen] = useState<boolean>(Boolean(isFolder && openFilePath && openFilePath.startsWith(fullPath)));
-
-  const items = useSelector(selectFiles);
 
   const [renaming, setRenaming] = useState(false);
   const renameInputRef = useRef<HTMLInputElement>(null);
@@ -60,15 +58,13 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, count
       onFolderClick(item);
     } else if (item.subType === 'document') {
       if (fullPath !== openFilePath) {
-        dispatch(setOpenFilePath(fullPath));
-  
         if (onDocumentClick) {
-          onDocumentClick(item.content || '', item.changed || false);
+          onDocumentClick(item);
         }
       }
     } else if (item.subType === 'image') {
       if (item.content) {
-        onDocumentClick(null, true);
+        onDocumentClick(item);
       }
     }
   };  
@@ -91,11 +87,11 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, count
 
   const handleMoveUp = useCallback(() => {
     dispatch(reorderItem({ path: item.path, oldIndex: index, newIndex: index - 1 }));
-  }, [item]);
+  }, [item, index, dispatch]);
 
   const handleMoveDown = useCallback(() => {
     dispatch(reorderItem({ path: item.path, oldIndex: index, newIndex: index + 1 }));
-  }, [item]);
+  }, [item, index, dispatch]);
 
 
   const handleItemRename = () => {

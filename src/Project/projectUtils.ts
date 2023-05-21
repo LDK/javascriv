@@ -34,7 +34,10 @@ export const renameTwins = (items: BrowserItem[]): BrowserItem[] => {
   return items.map((item) => {
     const defaultItemName = item.name || 'Untitled';
     let itemName = defaultItemName;
-    let newPath = item.path;
+
+    const pathRoot = item.path.startsWith('/') ? item.path.slice(1) : item.path;
+    let newPath = pathRoot;
+
     let itemChildren = item.children ? renameTwins(item.children) : undefined;
 
     if (!processedPaths.includes(newPath)) {
@@ -42,10 +45,10 @@ export const renameTwins = (items: BrowserItem[]): BrowserItem[] => {
     } else {
       // We need to add a suffix such as (1), (2), etc. to the path and name.
       let suffix = 1;
-
+      
       while (processedPaths.includes(newPath)) {
         itemName = defaultItemName + ' (' + suffix + ')';
-        newPath = item.path + ' (' + suffix + ')';
+        newPath = pathRoot + ' (' + suffix + ')';
         suffix++;
       }
 

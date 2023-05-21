@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { selectFiles, BrowserItem, addItem, findItemByPath, deleteItem, setOpenFilePath } from "../redux/filesSlice";
 import { RootState } from "../redux/store";

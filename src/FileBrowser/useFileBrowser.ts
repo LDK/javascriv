@@ -3,11 +3,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { selectOpenFilePath, BrowserItem, saveItem, addItem, findItemByPath, selectFiles, setContent, setOpenFilePath } from "../redux/filesSlice";
 
 interface FileBrowserProps {
-  contentCallback?: (content:string) => void;
+  contentCallback?: (item: BrowserItem) => void;
 };
 
 const useFileBrowser = ({ contentCallback }:FileBrowserProps) => {
-  const [, setHasContentChanged] = useState(false);
+  const [hasContentChanged, setHasContentChanged] = useState(false);
   const openFilePath = useSelector(selectOpenFilePath);
   const dispatch = useDispatch();
 
@@ -32,11 +32,11 @@ const useFileBrowser = ({ contentCallback }:FileBrowserProps) => {
     }
   };
 
-  const documentClick = (documentContent: string | null, changed: boolean) => {
+  const documentClick = (item:BrowserItem) => {
     if (contentCallback) {
-      contentCallback(documentContent || '');
+      contentCallback(item);
     }
-    setHasContentChanged(changed);
+    setHasContentChanged(item.changed || false);
   };
 
   const saveFile = (htmlContent:string) => {
@@ -56,7 +56,7 @@ const useFileBrowser = ({ contentCallback }:FileBrowserProps) => {
       }
     }
   };
-  return { saveFile, getUniqueNewDocumentName, handleFileSave, documentClick, setHasContentChanged, openFilePath, items: browserItems };
+  return { saveFile, getUniqueNewDocumentName, handleFileSave, documentClick, hasContentChanged, setHasContentChanged, openFilePath, items: browserItems };
 }
 
 export default useFileBrowser;
