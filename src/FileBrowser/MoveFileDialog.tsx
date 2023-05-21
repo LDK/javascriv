@@ -1,7 +1,8 @@
-import { Dialog, DialogContent, DialogContentText, TextField, DialogActions, Button, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { Dialog, DialogContent, DialogActions, Button, FormControl, InputLabel, MenuItem, Select, DialogTitle } from "@mui/material";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { renameChildrenPaths } from "../Project/projectUtils";
 import { findItemByPath } from "../redux/filesSlice";
-import { FileType, findParentFolder, ROOTFOLDER, SubType } from "./FileBrowser";
+import { findParentFolder, ROOTFOLDER } from "./FileBrowser";
 import useBrowserDialog, { getFolders, SetOpenFunction } from "./useBrowserDialog";
 
 type MoveFileDialogProps = {
@@ -9,19 +10,17 @@ type MoveFileDialogProps = {
   setOpen : SetOpenFunction;
   onClose: () => void;
   sourceFilePath: string;
-  fileType: FileType;
-  subType: SubType;
   openFolder: string | null;
   setOpenFolder: Dispatch<SetStateAction<string | null>>;
 }
   
 const MoveFileDialog = ({ open, setOpen, onClose, sourceFilePath, openFolder }: MoveFileDialogProps) => {
-  const { items, itemType, handleCreateNewFile } = useBrowserDialog(sourceFilePath, setOpen);
+  const { items, handleCreateNewFile, handleDeleteFile } = useBrowserDialog(sourceFilePath, setOpen);
  
-  const [itemName, setItemName] = useState<string>(sourceFilePath);
   const initialParent:string = findParentFolder(sourceFilePath.split('/'));
 
   const item = findItemByPath(items, sourceFilePath.split('/'));
+  const [itemName, setItemName] = useState<string>(item?.name || '');
   const sourceContent = item?.content;
   const sourceChildren = item?.children;
 
@@ -30,7 +29,7 @@ const MoveFileDialog = ({ open, setOpen, onClose, sourceFilePath, openFolder }: 
   useEffect(() => {
     const newFolder = findParentFolder(sourceFilePath?.split('/') || []);
     setParentFolder(newFolder);
-    setItemName(sourceFilePath);
+    setItemName(item?.name || '');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sourceFilePath]);
 
@@ -41,25 +40,16 @@ const MoveFileDialog = ({ open, setOpen, onClose, sourceFilePath, openFolder }: 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [openFolder]);
   
+  if (!item) {
+    return <></>;
+  }
+
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogContent>
-        <DialogContentText>
-          Please enter the name of the new {itemType} and select the parent folder.
-        </DialogContentText>
-
-        <TextField
-          autoFocus
-          margin="dense"
-          label="Name"
-          type="text"
-          fullWidth
-          value={itemName}
-          onChange={(e) => setItemName(e.target.value)}
-        />
-
+        <DialogTitle>Move File {item.name}?</DialogTitle>
         <FormControl fullWidth margin="dense">
-          <InputLabel id="parent-folder-label">Parent Folder</InputLabel>
+          <InputLabel id="parent-folder-label">New Parent Folder</InputLabel>
           <Select
             labelId="parent-folder-label"
             value={parentFolder}
@@ -85,9 +75,15 @@ const MoveFileDialog = ({ open, setOpen, onClose, sourceFilePath, openFolder }: 
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>Cancel</Button>
-        <Button onClick={() => handleCreateNewFile(parentFolder, itemName, sourceContent, sourceChildren)} 
-        disabled={!itemName || !parentFolder}>
-          Create Duplicate
+        <Button onClick={() => {
+          handleDeleteFile(sourceFilePath);
+          const newChildren = renameChildrenPaths(sourceChildren, `${parentFolder}/${itemName}`);
+          handleCreateNewFile(parentFolder, itemName, sourceContent, newChildren);
+        }}
+        variant="contained"
+        color="primary"
+        disabled={!itemName || !parentFolder || parentFolder === sourceFilePath}>
+          Move File
         </Button>
 
       </DialogActions>

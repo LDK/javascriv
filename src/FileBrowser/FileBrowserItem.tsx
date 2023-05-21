@@ -20,10 +20,11 @@ type FileBrowserItemProps = {
   setOpenFolder: Dispatch<SetStateAction<string | null>>;
   setDuplicating: SetOpenFunction;
   setDeleting: SetOpenFunction;
+  setMoving: SetOpenFunction;
   openFolder: string | null;
 };
 
-const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, path = [], onDocumentClick, onFolderClick, openFilePath, setOpenFolder, openFolder, setDuplicating, setDeleting }) => {
+const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, path = [], onDocumentClick, onFolderClick, openFilePath, setOpenFolder, setMoving, openFolder, setDuplicating, setDeleting }) => {
 
   const isFolder = item.type === 'folder';
   const fullPath = [...path, item.name].join('/');
@@ -80,6 +81,10 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, path 
   const handleDelete = useCallback(() => {
     setDeleting(item || false);
   }, [item, setDeleting]);
+
+  const handleMoving = useCallback(() => {
+    setMoving(item || false);
+  }, [item, setMoving]);
 
   const handleItemRename = () => {
     // Call your renaming function here
@@ -157,7 +162,13 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, path 
             }}
           />
 
-          <ItemActionBar {...{ item }} onEditClick={handleEditClick} onDelete={handleDelete} onDuplicate={handleDuplicate} />
+          <ItemActionBar
+            {...{ item }}
+            onEditClick={handleEditClick}
+            onDelete={handleDelete}
+            onDuplicate={handleDuplicate}
+            onMoveTo={handleMoving}
+          />
         </Box>
       </ListItem>
 
@@ -166,7 +177,7 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, path 
         <Collapse in={open} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             {item.children?.map((child: BrowserItem, index: number) => (
-              <FileBrowserItem {...{ openFolder, setDuplicating, setDeleting, setOpenFolder, openFilePath, onDocumentClick, onFolderClick }} key={index} item={child} level={level + 1} path={[...path, item.name]} />
+              <FileBrowserItem {...{ openFolder, setDuplicating, setDeleting, setMoving, setOpenFolder, openFilePath, onDocumentClick, onFolderClick }} key={index} item={child} level={level + 1} path={[...path, item.name]} />
             ))}
           </List>
         </Collapse>

@@ -10,9 +10,10 @@ type ItemActionBarProps = {
   onEditClick: () => void;
   onDuplicate: () => void;
   onDelete: () => void;
+  onMoveTo: () => void;
 };
 
-const ItemActionBar = ({ item, onEditClick, onDuplicate, onDelete }: ItemActionBarProps) => {
+const ItemActionBar = ({ item, onEditClick, onDuplicate, onDelete, onMoveTo }: ItemActionBarProps) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleMoreClick = (event: React.MouseEvent) => {
@@ -31,9 +32,10 @@ const ItemActionBar = ({ item, onEditClick, onDuplicate, onDelete }: ItemActionB
   };
 
   const handleMoveTo = (event: React.MouseEvent) => {
+    console.log('handleMoveTo');
     event.stopPropagation();
     handleMenuClose();
-    // Handle move to action here
+    onMoveTo();
   };
 
   const handleIconClick = (event: React.MouseEvent) => {

@@ -11,6 +11,7 @@ import NewFileDialog from './NewFileDialog';
 import { NewBrowserItem, SetOpenFunction } from './useBrowserDialog';
 import DuplicateDialog from './DuplicateDialog';
 import DeleteDialog from './DeleteDialog';
+import MoveFileDialog from './MoveFileDialog';
 
 interface FileBrowserProps {
   onDocumentClick: (documentContent: string | null, changed: boolean) => void;
@@ -45,6 +46,7 @@ const FileBrowser: React.FC<FileBrowserProps> = ({ onDocumentClick }) => {
   const [openFolder, setOpenFolder] = useState<string | null>(initialFolder);
   const [duplicating, setDuplicating] = useState<BrowserItem | false>(false);
   const [deleting, setDeleting] = useState<BrowserItem | false>(false);
+  const [moving, setMoving] = useState<BrowserItem | false>(false);
 
   const [adding, setAdding] = useState<NewBrowserItem | false>(false);
 
@@ -57,6 +59,7 @@ const FileBrowser: React.FC<FileBrowserProps> = ({ onDocumentClick }) => {
       <FileBrowserItem
         key={item.name}
         onFolderClick={handleFolderClick}
+        setMoving={setMoving as SetOpenFunction}
         setDeleting={setDeleting as SetOpenFunction}
         setDuplicating={setDuplicating as SetOpenFunction}
         {...{ setOpenFolder, onDocumentClick, openFolder, item, path, openFilePath } }
@@ -150,6 +153,16 @@ const FileBrowser: React.FC<FileBrowserProps> = ({ onDocumentClick }) => {
           setOpen: setDeleting as SetOpenFunction, 
           onClose: () => setDeleting(false),
           sourceFilePath: deleting ? deleting.path : '',
+          setOpenFolder, openFolder }}
+        />
+      }
+
+      {Boolean(moving) &&
+        <MoveFileDialog {...{
+          open: Boolean(moving),
+          setOpen: setMoving as SetOpenFunction,
+          onClose: () => setMoving(false),
+          sourceFilePath: moving ? moving.path : '',
           setOpenFolder, openFolder }}
         />
       }
