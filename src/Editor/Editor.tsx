@@ -7,13 +7,14 @@ import { familyFonts, getFontsCSS } from './EditorFonts';
 
 interface TinyEditorProps {
   content: string | null;
-  initial: string | null;
-  onEditorChange: (content: string) => void;
+  setEditor: (editor: MyEditor) => void;
+  handleEditorChange: (content: string) => void;
+  lastRevert: number;
 }
 
 const apiKey = process.env.REACT_APP_TINYMCE_API_KEY;
 
-const TinyEditor: React.FC<TinyEditorProps> = ({ content, initial, onEditorChange }) => {
+const TinyEditor: React.FC<TinyEditorProps> = ({ content, setEditor, handleEditorChange, lastRevert }) => {
   const editorRef = useRef<MyEditor | null>(null);
   const [fullScreen, setFullScreen] = useState(false);
   const height="500";
@@ -21,6 +22,7 @@ const TinyEditor: React.FC<TinyEditorProps> = ({ content, initial, onEditorChang
 
   const handleInit = (_event: any, editor: MyEditor) => {
     editorRef.current = editor;
+    setEditor(editor);
 
     if (fullScreen) {
       editor.execCommand('mceFullScreen');
@@ -39,19 +41,6 @@ const TinyEditor: React.FC<TinyEditorProps> = ({ content, initial, onEditorChang
     });
   };
     
-  const handleEditorChange = (content: string, editor: MyEditor) => {
-    if (onEditorChange) {
-      onEditorChange(content);
-    }
-  };
-  
-  useEffect(() => {
-    if (onEditorChange) {
-      onEditorChange(content || '<p> </p>');
-    }
-  }, [content]);
-
-
   const handleExecCommand = (event:EditorEvent<any>, editor: MyEditor) => {
     // const isFullscreen = editor.execCommand('mceFullScreen', false);
 
@@ -67,12 +56,18 @@ const TinyEditor: React.FC<TinyEditorProps> = ({ content, initial, onEditorChang
     }
   }
   
+  useEffect(() => {
+    if (editorRef.current) {
+      editorRef.current.setContent(content || '');
+    }
+  }, [content, lastRevert]);
+
   return (
     <Box width="100%" sx={{ backgroundColor: 'rgba(10, 25, 60)', minHeight: 'calc(100vh - 40px)' }} mt={0}>
       <Editor
         key={`editor-${theme.palette.mode}-${fullScreen ? 'full' : 'normal'}`}
         apiKey={apiKey}
-        initialValue={initial || ''}
+        initialValue={content || ''}
         onInit={handleInit}
         init={{
           height: height,

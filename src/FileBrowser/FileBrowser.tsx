@@ -14,7 +14,7 @@ import DeleteDialog from './DeleteDialog';
 import MoveFileDialog from './MoveFileDialog';
 
 interface FileBrowserProps {
-  onDocumentClick: (documentContent: string | null, changed: boolean) => void;
+  onDocumentClick: (item: BrowserItem) => void;
 }
 
 export const ROOTFOLDER = '<root>';

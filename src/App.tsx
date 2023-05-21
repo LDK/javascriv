@@ -4,38 +4,38 @@ import { Box, Button, Container, CssBaseline, Grid, ThemeProvider } from '@mui/m
 import Header from './Header';
 import FileBrowser from './FileBrowser/FileBrowser';
 import { useDispatch, useSelector } from 'react-redux';
-import { findItemByPath, setContent } from './redux/filesSlice';
+import { BrowserItem, findItemByPath, setChanged, setContent, setOpenFilePath } from './redux/filesSlice';
 import TinyEditor from './Editor/Editor';
 import { darkTheme, lightTheme } from './theme/theme';
 import { RootState } from './redux/store';
 import useProject from './Project/useProject';
 import useFileBrowser from './FileBrowser/useFileBrowser';
 import usePublishing from './Publish/usePublishing';
+import { Editor } from 'tinymce';
 
 
 const App: React.FC = () => {  
-  const [editorContent, setEditorContent] = useState<string | null>(null);
-  const [initial, setInitial] = useState<string | null | false>(null);
+  const [editorContent, setEditorContent] = useState<string | null | false>(null);
   const [fileInputRef, setFileInputRef] = useState<HTMLInputElement | null>(null);
+  const [editor, setEditor] = useState<Editor | null>(null);
+  const [initial, setInitial] = useState<string | null>(null);
+  const [lastRevertTs, setLastRevertTs] = useState<number>(0);
 
   const dispatch = useDispatch();
 
-  const { saveFile, documentClick, setHasContentChanged, openFilePath, items } = useFileBrowser({ contentCallback: setEditorContent });
+  const handleDocumentClick = (item: BrowserItem) => {
+    if (openFilePath && editor) {
+      dispatch(setContent({path: openFilePath, content: editor.getContent()}));
+    }
+    setInitial(item.initialContent as string);
+    dispatch(setOpenFilePath(item.path));
+  }
+
+  const { saveFile, documentClick, setHasContentChanged, hasContentChanged, openFilePath, items } = useFileBrowser({ contentCallback: handleDocumentClick });
   const { PublishButton, PublishOptions } = usePublishing();
 
   const handleEditorChange = (content: string) => {
-    if (editorContent !== null) {
-      const cleanInitialContent = editorContent?.replace(/[\n\r]+/g, '').trim() || '';
-      const cleanCurrentHtmlContent = content.replace(/[\n\r]+/g, '').trim();
-
-      setHasContentChanged(Boolean(cleanInitialContent !== cleanCurrentHtmlContent));
-
-      if (openFilePath) {
-        dispatch(setContent({ path: openFilePath, content }));
-      }
-    }
-    
-    setEditorContent(content);
+    setHasContentChanged(content !== initial);
   };
 
   const { ImportButton, ImportOptions, ExportDialog, setExportDialogOpen, handleUpload } = useProject(handleEditorChange);
@@ -43,14 +43,19 @@ const App: React.FC = () => {
   const activeTheme = useSelector((state:RootState) => state.theme.active);
 
   useEffect(() => {
+    dispatch(setChanged({path: openFilePath || '', changed: hasContentChanged}));
+  }, [hasContentChanged, openFilePath, dispatch]);
+
+  useEffect(() => {
     if (openFilePath && items) {
       const existing = findItemByPath(items, openFilePath.split('/'));
       if (existing && existing.content) {
-        setEditorContent(existing.content);
-        setInitial(existing.content as string);
+        // setEditorContent(existing.content);
+        setEditorContent(existing.content as string);
+        setInitial(existing.initialContent as string);
       } else {
-        if (initial === null) {
-          setInitial(false);
+        if (editorContent === null) {
+          setEditorContent(false);
         }
       }
     } else if (!openFilePath) {
@@ -64,14 +69,23 @@ const App: React.FC = () => {
     if (openFilePath && items) {
       const existing = findItemByPath(items, openFilePath.split('/'));
       if (existing && existing.content) {
-        setInitial(existing.content as string)
+        setEditorContent(existing.content as string)
       }
     }
     // eslint-disable-next-line
-  }, [activeTheme])
+  }, [activeTheme]);
 
-  const handleSubmit = async () => {
-    saveFile(editorContent || '');
+  const handleSave = async () => {
+    if (!editor) return;
+
+    const content = editor.getContent() || '';
+    saveFile(content);
+    setInitial(content);
+  };
+
+  const handleRevert = async () => {
+    setLastRevertTs(Date.now());
+    setEditorContent(initial);
   };
 
   return (
@@ -89,11 +103,15 @@ const App: React.FC = () => {
             </Grid>
             <Grid item xs={12} md={8} lg={9} xl={10}>
               <Box px={0}>
-                <TinyEditor content={editorContent} initial={initial || ''} onEditorChange={handleEditorChange} />
+                <TinyEditor {...{ setEditor, handleEditorChange }} lastRevert={lastRevertTs} content={editorContent || ''} />
 
                 <Box pt={2} className="actions" position="absolute" bottom="2rem" width="100%" right="0" textAlign="right">
-                  <Button variant="contained" color="primary" onClick={handleSubmit}>
-                    Submit
+                  <Button variant="contained" color="primary" onClick={handleSave} disabled={!hasContentChanged}>
+                    Save
+                  </Button>
+
+                  <Button variant="contained" color="primary" onClick={handleRevert} disabled={!hasContentChanged}>
+                    Revert
                   </Button>
 
 

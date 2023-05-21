@@ -77,6 +77,13 @@ const filesSlice = createSlice({
         item.changed = cleanInitialContent !== cleanContent;
       }
     },
+    setChanged: (state, action: PayloadAction<{ path: string; changed: boolean }>) => {
+      const { path, changed } = action.payload;
+      const item = findItemByPath(state.files, path.split('/'));
+      if (item) {
+        item.changed = changed;
+      }
+    },
     setName: (state, action: PayloadAction<{ path: string; newName: string }>) => {
       const { path, newName } = action.payload;
       const item = findItemByPath(state.files, path.split('/'));
@@ -160,7 +167,8 @@ const filesSlice = createSlice({
       const parentPath = path.slice(0,-1);
       const parent = parentPath.length ? findFolderByPath(state.files, parentPath) : { children: state.files } as BrowserItem;
 
-      const { item } = action.payload;
+      // const { item } = action.payload;
+      const item = { ...action.payload.item, path: path.join('/') };
 
       if (parent && parent.type && parent.children) {
         parent.children.push({ ...item, children: item.children || (item.type === 'folder' ? [] : undefined) });
@@ -172,7 +180,7 @@ const filesSlice = createSlice({
   },
 });
 
-export const { setContent, setOpenFilePath, deleteItem, addItem, saveItem, reorderItem, setName, setFiles } = filesSlice.actions;
+export const { setContent, setChanged, setOpenFilePath, deleteItem, addItem, saveItem, reorderItem, setName, setFiles } = filesSlice.actions;
 
 export const selectFiles = (state: RootState) => state.files.files;
 export const selectOpenFilePath = (state: RootState) => state.files.openFilePath;
