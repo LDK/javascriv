@@ -32,14 +32,6 @@ export default function useBrowserDialog(sourceFilePath: string, setOpen: SetOpe
   const items = useSelector(selectFiles);
   const openFilePath = useSelector((state:RootState) => state.files.openFilePath);
 
-  // const item = items.find((item) => item.path === openFilePath);
-
-  useEffect(() => {
-    if (openFilePath) {
-      console.log('useBrowserDialog: openFilePath changed to', openFilePath);
-    }
-  }, [openFilePath]);
-
   const item = findItemByPath(items, sourceFilePath.split('/'));
 
   const { type: fileType, subType } = item || { fileType: null, subType: null };
@@ -82,7 +74,6 @@ export default function useBrowserDialog(sourceFilePath: string, setOpen: SetOpe
 
 
       if (isDescendant(checkDeletedPath, checkOpenPath)) {
-        console.log('Now clearing out openFilePath', openFilePath);
         dispatch(setOpenFilePath(''));
       }
     }
@@ -94,7 +85,6 @@ export default function useBrowserDialog(sourceFilePath: string, setOpen: SetOpe
   };
 }
 function isDescendant(bigPath: string, littlePath: string) {
-  console.log('isDescendant', bigPath, littlePath);
   // returns true if littlePath is a descendant of big path
   // e.g. isDescendant('a/b/c', 'a/b/c/d/e') === true
   // e.g. isDescendant('a/b/c', 'a/b') === false
@@ -105,13 +95,11 @@ function isDescendant(bigPath: string, littlePath: string) {
   const littlePathArray = littlePath.split('/');
 
   if (bigPathArray.length >= littlePathArray.length) {
-    console.log('false because bigPathArray.length >= littlePathArray.length');
     return false;
   }
 
   for (let i = 0; i < bigPathArray.length; i++) {
     if (bigPathArray[i] !== littlePathArray[i]) {
-      console.log('false because bigPathArray[i] !== littlePathArray[i]', bigPathArray[i], littlePathArray[i]);
       return false;
     }
   }

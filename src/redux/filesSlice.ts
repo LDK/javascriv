@@ -112,6 +112,22 @@ const filesSlice = createSlice({
     setFiles: (state, action: PayloadAction<BrowserItem[]>) => {
       state.files = action.payload;
     },
+    reorderItem: (state, action: PayloadAction<{ path: string, oldIndex: number, newIndex: number }>) => {
+      const { path, newIndex, oldIndex } = action.payload;
+
+      const parent = findFolderByPath(state.files, path.split('/').slice(0,-1));
+
+      if (parent && parent.children) {
+        const item = findItemByPath(state.files, path.split('/'));
+
+        if (item && newIndex !== oldIndex && newIndex >= 0 && newIndex < parent.children.length) {
+          let newChildren = [...parent.children];
+          newChildren.splice(oldIndex, 1);
+          newChildren.splice(newIndex, 0, item);
+          parent.children = newChildren;
+        }
+      }
+    },
     deleteItem: (state, action: PayloadAction<string>) => {
       const rawPath = action.payload.startsWith('/') ? action.payload.slice(1) : action.payload;
       const path = rawPath.split('/');
@@ -156,7 +172,7 @@ const filesSlice = createSlice({
   },
 });
 
-export const { setContent, setOpenFilePath, deleteItem, addItem, saveItem, setName, setFiles } = filesSlice.actions;
+export const { setContent, setOpenFilePath, deleteItem, addItem, saveItem, reorderItem, setName, setFiles } = filesSlice.actions;
 
 export const selectFiles = (state: RootState) => state.files.files;
 export const selectOpenFilePath = (state: RootState) => state.files.openFilePath;

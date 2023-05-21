@@ -2,8 +2,8 @@
 import { Dispatch, KeyboardEventHandler, SetStateAction, useCallback, useEffect, useRef } from "react";
 import { SxProps, Box, PaletteMode, ListItem, ListItemIcon, ListItemText, Collapse, List, useTheme } from "@mui/material";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { BrowserItem, setName, setOpenFilePath } from "../redux/filesSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { BrowserItem, findItemByPath, reorderItem, selectFiles, setName, setOpenFilePath } from "../redux/filesSlice";
 import { ExtendedPalette } from "../theme/theme";
 
 import { Folder, Description as DocIcon, Image as ImageIcon, ExpandMore, ExpandLess, InsertDriveFile } from '@mui/icons-material';
@@ -13,6 +13,8 @@ import { SetOpenFunction } from "./useBrowserDialog";
 type FileBrowserItemProps = {
   item: BrowserItem;
   level?: number;
+  index: number;
+  count: number;
   path?: string[];
   openFilePath: string | null;
   onDocumentClick: (documentContent: string | null, changed: boolean) => void;
@@ -24,11 +26,12 @@ type FileBrowserItemProps = {
   openFolder: string | null;
 };
 
-const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, path = [], onDocumentClick, onFolderClick, openFilePath, setOpenFolder, setMoving, openFolder, setDuplicating, setDeleting }) => {
-
+const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, count, index, path = [], onDocumentClick, onFolderClick, openFilePath, setOpenFolder, setMoving, openFolder, setDuplicating, setDeleting }) => {
   const isFolder = item.type === 'folder';
   const fullPath = [...path, item.name].join('/');
   const [open, setOpen] = useState<boolean>(Boolean(isFolder && openFilePath && openFilePath.startsWith(fullPath)));
+
+  const items = useSelector(selectFiles);
 
   const [renaming, setRenaming] = useState(false);
   const renameInputRef = useRef<HTMLInputElement>(null);
@@ -59,8 +62,7 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, path 
       if (fullPath !== openFilePath) {
         dispatch(setOpenFilePath(fullPath));
   
-        if (onDocumentClick)  {
-          console.log('onDocumentClick', item.content, item.changed);
+        if (onDocumentClick) {
           onDocumentClick(item.content || '', item.changed || false);
         }
       }
@@ -86,6 +88,15 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, path 
   const handleMoving = useCallback(() => {
     setMoving(item || false);
   }, [item, setMoving]);
+
+  const handleMoveUp = useCallback(() => {
+    dispatch(reorderItem({ path: item.path, oldIndex: index, newIndex: index - 1 }));
+  }, [item]);
+
+  const handleMoveDown = useCallback(() => {
+    dispatch(reorderItem({ path: item.path, oldIndex: index, newIndex: index + 1 }));
+  }, [item]);
+
 
   const handleItemRename = () => {
     // Call your renaming function here
@@ -164,11 +175,13 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, path 
           />
 
           <ItemActionBar
-            {...{ item }}
+            {...{ index, count }}
             onEditClick={handleEditClick}
             onDelete={handleDelete}
             onDuplicate={handleDuplicate}
             onMoveTo={handleMoving}
+            onMoveUp={handleMoveUp}
+            onMoveDown={handleMoveDown}
           />
         </Box>
       </ListItem>
@@ -178,7 +191,7 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, path 
         <Collapse in={open} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             {item.children?.map((child: BrowserItem, index: number) => (
-              <FileBrowserItem {...{ openFolder, setDuplicating, setDeleting, setMoving, setOpenFolder, openFilePath, onDocumentClick, onFolderClick }} key={index} item={child} level={level + 1} path={[...path, item.name]} />
+              <FileBrowserItem {...{ openFolder, setDuplicating, setDeleting, setMoving, setOpenFolder, openFilePath, onDocumentClick, onFolderClick, index }} key={index} item={child} level={level + 1} path={[...path, item.name]} count={item.children?.length || 0} />
             ))}
           </List>
         </Collapse>

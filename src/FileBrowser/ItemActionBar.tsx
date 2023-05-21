@@ -2,18 +2,20 @@
 import { Box } from "@mui/material";
 import { Menu, MenuItem } from '@mui/material';
 import React, { useState } from "react";
-import { BrowserItem } from "../redux/filesSlice";
 import { EditButton, UpButton, DownButton, DeleteButton, MoreButton } from "./ItemActionButtons";
 
 type ItemActionBarProps = {
-  item: BrowserItem;
+  index: number;
+  count: number;
   onEditClick: () => void;
   onDuplicate: () => void;
   onDelete: () => void;
   onMoveTo: () => void;
+  onMoveUp: () => void;
+  onMoveDown: () => void;
 };
 
-const ItemActionBar = ({ item, onEditClick, onDuplicate, onDelete, onMoveTo }: ItemActionBarProps) => {
+const ItemActionBar = ({ index, count, onEditClick, onDuplicate, onDelete, onMoveTo, onMoveUp, onMoveDown }: ItemActionBarProps) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleMoreClick = (event: React.MouseEvent) => {
@@ -32,11 +34,20 @@ const ItemActionBar = ({ item, onEditClick, onDuplicate, onDelete, onMoveTo }: I
   };
 
   const handleMoveTo = (event: React.MouseEvent) => {
-    console.log('handleMoveTo');
     event.stopPropagation();
     handleMenuClose();
     onMoveTo();
   };
+
+  const handleMoveUp = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    onMoveUp();
+  }
+
+  const handleMoveDown = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    onMoveDown();
+  }
 
   const handleIconClick = (event: React.MouseEvent) => {
     event.stopPropagation();
@@ -55,10 +66,10 @@ const ItemActionBar = ({ item, onEditClick, onDuplicate, onDelete, onMoveTo }: I
 
   return (
     <>
-      <Box sx={{ marginLeft: "auto", display: "flex", alignItems: "center", visibility: "hidden" }}>
+      <Box onClick={handleIconClick} sx={{ marginLeft: "auto", display: "flex", alignItems: "center", visibility: "hidden" }}>
         <EditButton action={handleEditClick} />
-        <UpButton action={handleIconClick} />
-        <DownButton action={handleIconClick} />
+        <UpButton action={handleMoveUp} disabled={index < 1} />
+        <DownButton action={handleMoveDown} disabled={index >= count - 1} />
         <DeleteButton action={handleDeleteClick} />
         <MoreButton action={handleMoreClick} />
 

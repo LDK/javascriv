@@ -54,9 +54,11 @@ const FileBrowser: React.FC<FileBrowserProps> = ({ onDocumentClick }) => {
     setOpenFolder(folder.path);
   }
 
-  const renderItem = (item: BrowserItem, path: string[] = []) => {
+  const renderItem = (item: BrowserItem, path: string[] = [], idx:number) => {
     return (
       <FileBrowserItem
+        index={idx}
+        count={items.length}
         key={item.name}
         onFolderClick={handleFolderClick}
         setMoving={setMoving as SetOpenFunction}
@@ -121,7 +123,7 @@ const FileBrowser: React.FC<FileBrowserProps> = ({ onDocumentClick }) => {
               <CreateNewFolderIcon />
             </IconButton>
           </Box>
-          {items.map((item) => renderItem(item))}
+          {items.map((item, idx) => renderItem(item, [], idx))}
         </Box>
       </Sticky>
 
