@@ -16,6 +16,8 @@ tinymce.PluginManager.add('writermode', (editor) => {
           const matchingElement = document.evaluate(`//*[contains(text(),'${btnLabel}')]`, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
           const btn = matchingElement?.closest('button');
 
+          if (!btn) return;
+
           const isActive = document.querySelector('body').classList.contains('tox-fullscreen');
 
           if (isActive && !btn.classList.contains('tox-tbtn--enabled')) {
