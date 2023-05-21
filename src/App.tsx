@@ -49,7 +49,7 @@ const App: React.FC = () => {
   useEffect(() => {
     if (openFilePath && items) {
       const existing = findItemByPath(items, openFilePath.split('/'));
-      if (existing && existing.content) {
+      if (existing && existing.path) {
         // setEditorContent(existing.content);
         setEditorContent(existing.content as string);
         setInitial(existing.initialContent as string);

@@ -1,7 +1,7 @@
 import { Dialog, DialogContent, DialogContentText, TextField, FormControl, InputLabel, Select, MenuItem, DialogActions, Button, Tooltip } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addItem, BrowserItem, findItemByPath, selectFiles } from "../redux/filesSlice";
+import { addItem, BrowserItem, findItemByPath, selectFiles, setOpenFilePath } from "../redux/filesSlice";
 import { FileType, findParentFolder, ROOTFOLDER, SubType } from "./FileBrowser";
 import { getFolders, SetOpenFunction } from "./useBrowserDialog";
 
@@ -43,7 +43,7 @@ const NewFileDialog = ({
     };
 
     dispatch(addItem({path: newPath, item: newItem}));
-
+    dispatch(setOpenFilePath(newPath));
     setOpen(false);
   };
 
@@ -60,7 +60,12 @@ const NewFileDialog = ({
   }, [hasTwin, itemName, newItemName, submitDisabled]);
 
   useEffect(() => {
-    const newFolder = findParentFolder(openFilePath?.split('/') || []);
+    let newFolder = findParentFolder(openFilePath?.split('/') || []);
+
+    if (newFolder.startsWith('/')) {
+      newFolder = newFolder.slice(1);
+    }
+
     if (newFolder !== openFolder) {
       setOpenFolder(newFolder);
       if (!open) {

@@ -17,7 +17,13 @@ export const getFolders = (itemPool: BrowserItem[], level?: number) => {
   for (let item of itemPool) {
     if (item.type === 'folder') {
       const prefix = lvl > 0 ? "—".repeat(lvl) : '';
-      itemsFolders.push({...item, name: `${prefix}${item.name}`});
+
+      let newItem = {...item};
+      newItem.path = item.path.startsWith('/') ? item.path.slice(1) : item.path;
+      newItem.name = `${prefix}${item.name}`;
+      
+      itemsFolders.push(newItem);
+
       if (item.children) {
         itemsFolders = [...itemsFolders, ...getFolders(item.children, lvl + 1)];
       }

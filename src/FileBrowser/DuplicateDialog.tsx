@@ -26,7 +26,12 @@ const DuplicateDialog = ({ open, setOpen, onClose, sourceFilePath, openFolder }:
 
   const initialName = sourceFilePath.split('/').pop();
   const [itemName, setItemName] = useState<string>(suggestedFilename(sourceFilePath));
-  const initialParent:string = findParentFolder(sourceFilePath.split('/'));
+
+  let initialParent:string = findParentFolder(sourceFilePath.split('/'));
+
+  if (initialParent.startsWith('/')) {
+    initialParent = initialParent.slice(1);
+  }
 
   const item = findItemByPath(items, sourceFilePath.split('/'));
   const sourceContent = item?.content;
@@ -34,15 +39,19 @@ const DuplicateDialog = ({ open, setOpen, onClose, sourceFilePath, openFolder }:
   const [parentFolder, setParentFolder] = useState<string | null>(initialParent);
 
   useEffect(() => {
-    const newFolder = findParentFolder(sourceFilePath?.split('/') || []);
-    setParentFolder(newFolder);
     setItemName(suggestedFilename(sourceFilePath));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sourceFilePath]);
 
   useEffect(() => {
     if (!open && openFolder) {
-      setParentFolder(openFolder);
+      let newFolder = openFolder;
+
+      if (newFolder.startsWith('/')) {
+        newFolder = newFolder.slice(1);
+      }
+  
+      setParentFolder(newFolder);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [openFolder]);
