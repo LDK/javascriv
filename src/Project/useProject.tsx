@@ -18,6 +18,7 @@ const useProject = (handleEditorChange:((content: string) => void)) => {
   const dispatch = useDispatch();
   const [exportDialogOpen, setExportDialogOpen] = useState(false);
   const [importOptionsOpen, setImportOptionsOpen] = useState(false);
+  const [newProjectOpen, setNewProjectOpen] = useState(false);
   const [importingPath, setImportingPath] = useState<string[] | null>(null);
   const [importingFiles, setImportingFiles] = useState<BrowserItem[] | false>(false);
   const [importingContent, setImportingContent] = useState<string | null>(null);
@@ -222,7 +223,7 @@ const useProject = (handleEditorChange:((content: string) => void)) => {
       callback();
       setImportOptionsOpen(true);
     }} color="primary" variant="contained">
-      Import Project
+      Import...
     </Button>
   );
 
@@ -258,7 +259,7 @@ const useProject = (handleEditorChange:((content: string) => void)) => {
     <ImportOptions files={importingFiles || []} onReady={handleImportReady} optionsOpen={Boolean(importOptionsOpen && importingFiles)} onClose={handleImportClose} />
   );
 
-  return { importProjectFromJson, handleUpload, ExportDialog, setExportDialogOpen, ImportButton, ImportOptions: ImportDialog  };
+  return { importProjectFromJson, handleUpload, ExportDialog, setExportDialogOpen, ImportButton, ImportOptions: ImportDialog, setNewProjectOpen, newProjectOpen }
 };
 
 export default useProject;

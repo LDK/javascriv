@@ -62,10 +62,12 @@ const TinyEditor: React.FC<TinyEditorProps> = ({ content, setEditor, handleEdito
     }
   }, [content, lastRevert]);
 
+  const themeMode = theme.palette.mode;
+
   return (
-    <Box width="100%" sx={{ backgroundColor: 'rgba(10, 25, 60)', minHeight: 'calc(100vh - 40px)' }} mt={0}>
+    <Box width="100%" sx={{ backgroundColor: themeMode === 'light' ? theme.palette.info.light : theme.palette.info.dark, minHeight: 'calc(100vh - 40px)' }} mt={0}>
       <Editor
-        key={`editor-${theme.palette.mode}-${fullScreen ? 'full' : 'normal'}`}
+        key={`editor-${themeMode}-${fullScreen ? 'full' : 'normal'}`}
         apiKey={apiKey}
         initialValue={content || ''}
         onInit={handleInit}

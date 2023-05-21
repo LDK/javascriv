@@ -12,6 +12,7 @@ import useProject from './Project/useProject';
 import useFileBrowser from './FileBrowser/useFileBrowser';
 import usePublishing from './Publish/usePublishing';
 import { Editor } from 'tinymce';
+import NewProjectDialog from './FileBrowser/NewProjectDialog';
 
 
 const App: React.FC = () => {  
@@ -38,7 +39,7 @@ const App: React.FC = () => {
     setHasContentChanged(content !== initial);
   };
 
-  const { ImportButton, ImportOptions, ExportDialog, setExportDialogOpen, handleUpload } = useProject(handleEditorChange);
+  const { ImportButton, ImportOptions, ExportDialog, setExportDialogOpen, handleUpload, setNewProjectOpen, newProjectOpen } = useProject(handleEditorChange);
 
   const activeTheme = useSelector((state:RootState) => state.theme.active);
 
@@ -122,7 +123,7 @@ const App: React.FC = () => {
                     }
                     color="primary" variant="contained"
                   >
-                    Export Project
+                    Export...
                   </Button>
 
                   <input type="file" accept=".zip, .json"
@@ -132,6 +133,16 @@ const App: React.FC = () => {
 
                   <ImportButton callback={() => { fileInputRef?.click();}} />
                   <ImportOptions />
+
+                  <Button onClick={
+                    (e) => {
+                      e.currentTarget.blur(); // Remove focus from the button
+                      setNewProjectOpen(true) }
+                    }
+                    color="primary" variant="contained"
+                  >
+                    New Project
+                  </Button>
 
                   <PublishButton />
                   <PublishOptions />
@@ -144,6 +155,7 @@ const App: React.FC = () => {
       </Box>
  
     <ExportDialog />
+    <NewProjectDialog open={newProjectOpen} onClose={() => setNewProjectOpen(false)} />
     </ThemeProvider>
   );
 };
