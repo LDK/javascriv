@@ -1,6 +1,7 @@
 import { Dialog, DialogContent, DialogContentText, TextField, FormControl, InputLabel, Select, MenuItem, DialogActions, Button, Tooltip } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { CancelButton, ConfirmButton } from "../Components/DialogButtons";
 import { addItem, BrowserItem, findItemByPath, selectFiles, setOpenFilePath } from "../redux/filesSlice";
 import { FileType, findParentFolder, ROOTFOLDER, SubType } from "./FileBrowser";
 import { getFolders, SetOpenFunction } from "./useBrowserDialog";
@@ -141,11 +142,11 @@ const NewFileDialog = ({
         </FormControl>
       </DialogContent>
       <DialogActions sx={{ px: 3, pb: 3 }}>
-        <Button onClick={onClose} variant="outlined" color="warning" sx={{ mr: 1 }}>Cancel</Button>
+        <CancelButton onClick={onClose} />
 
         <Tooltip title={disabledReason || ''}>
           <span>
-            <Button variant="contained" color="success" disabled={submitDisabled} onClick={handleCreateNewFile} type="submit">Create</Button>
+            <ConfirmButton disabled={submitDisabled} onClick={handleCreateNewFile} label="Create" />
           </span>
         </Tooltip>
       </DialogActions>

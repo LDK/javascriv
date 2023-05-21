@@ -1,6 +1,7 @@
 import { Dialog, DialogContent, DialogContentText, TextField, DialogActions, Button, Tooltip } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { CancelButton, ConfirmButton } from "../Components/DialogButtons";
 import { BrowserItem, setFiles, setOpenFilePath } from "../redux/filesSlice";
 
 type NewProjectDialogProps = {
@@ -68,11 +69,11 @@ const NewProjectDialog = ({ open, onClose }: NewProjectDialogProps) => {
 
       </DialogContent>
       <DialogActions sx={{ px: 3, pb: 3 }}>
-        <Button onClick={onClose} variant="outlined" color="warning" sx={{ mr: 1 }}>Cancel</Button>
+        <CancelButton onClick={onClose} />
 
         <Tooltip title={disabledReason || ''}>
           <span>
-            <Button variant="contained" color="success" disabled={submitDisabled} onClick={handleCreateNewProject} type="submit">Create</Button>
+            <ConfirmButton disabled={submitDisabled} onClick={handleCreateNewProject} label="Create" />
           </span>
         </Tooltip>
       </DialogActions>

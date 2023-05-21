@@ -1,6 +1,6 @@
 // Project/useProject.tsx
 
-import { Box, Button, Dialog, DialogContent, DialogContentText, DialogTitle, TextField } from "@mui/material";
+import { Box, Button, Dialog, DialogContent, DialogContentText, DialogTitle, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, TextField } from "@mui/material";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { BrowserItem, FileTreeState, findItemByPath, setFiles, setOpenFilePath } from "../redux/filesSlice";
@@ -9,6 +9,7 @@ import JSZip from 'jszip';
 import { getFullTree } from "../Convert/scrivener/scrivener";
 import ImportOptions, { ImportingOptions } from "./ImportOptions";
 import { renameTwins } from "./projectUtils";
+import { CancelButton, ConfirmButton } from "../Components/DialogButtons";
 
 export interface XmlIndex {
   [id:string]: string;
@@ -113,42 +114,53 @@ const useProject = (handleEditorChange:((content: string) => void)) => {
   
   const ExportDialog = () => (
     <Dialog open={exportDialogOpen} onClose={() => setExportDialogOpen(false)}>
-    <DialogTitle>Export Current Project</DialogTitle>
-    <DialogContent>
-      <DialogContentText>
-        Enter the file name for the exported project (the extension will be hard-coded to .json):
-      </DialogContentText>
-      <TextField
-        autoFocus
-        margin="dense"
-        id="projectFileName"
-        label="File Name"
-        type="text"
-        fullWidth
-        variant="standard"
-        onKeyDown={(e) => {
-          if (e.key === 'Enter') {
-            exportProject((e.target as HTMLInputElement).value);
-            setExportDialogOpen(false);
-          }
-        }}
-      />
-    </DialogContent>
-    <Box p={2} display="flex" justifyContent="flex-end">
-      <Button onClick={() => setExportDialogOpen(false)} color="primary">
-        Cancel
-      </Button>
-      <Button
-        onClick={() => {
+      <DialogTitle>Export Current Project</DialogTitle>
+      <DialogContent>
+        <DialogContentText sx={{ mb: 2 }}>
+          Enter the file name for the exported project (do not enter extension):
+        </DialogContentText>
+
+        <TextField
+          autoFocus
+          margin="dense"
+          id="projectFileName"
+          label="File Name"
+          color="info"
+          type="text"
+          fullWidth
+          variant="standard"
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              exportProject((e.target as HTMLInputElement).value);
+              setExportDialogOpen(false);
+            }
+          }}
+        />
+
+        <FormControl sx={{ mt: 2 }}>
+          <FormLabel id="export-format-group-label" color='info'>Format</FormLabel>
+          <RadioGroup
+            row
+            color="info"
+            aria-labelledby="export-format-group-label"
+            defaultValue="json"
+            name="export-format-group"
+          >
+            <FormControlLabel color="info" value="json" control={<Radio color="info" />} label="JSON" />
+            <FormControlLabel value="html" control={<Radio color="info" />} label="HTML" />
+          </RadioGroup>
+        </FormControl>
+
+      </DialogContent>
+      <Box p={2} display="flex" justifyContent="flex-end">
+        <CancelButton onClick={() => setExportDialogOpen(false)} />
+
+        <ConfirmButton onClick={() => {
           const input = document.getElementById('projectFileName') as HTMLInputElement;
           exportProject(input.value);
-        }}
-        color="primary"
-      >
-        Export
-      </Button>
-    </Box>
-  </Dialog>
+        }} label="Export" />
+      </Box>
+    </Dialog>
   );
 
   const importProjectFromJson = (file:File) => {

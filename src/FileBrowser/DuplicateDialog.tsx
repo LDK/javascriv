@@ -1,5 +1,6 @@
 import { Dialog, DialogContent, DialogContentText, TextField, DialogActions, Button, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { CancelButton, ConfirmButton } from "../Components/DialogButtons";
 import { renameChildrenPaths } from "../Project/projectUtils";
 import { findItemByPath } from "../redux/filesSlice";
 import { FileType, findParentFolder, ROOTFOLDER, SubType } from "./FileBrowser";
@@ -108,13 +109,10 @@ const DuplicateDialog = ({ open, setOpen, onClose, sourceFilePath, openFolder }:
         </FormControl>
 
       </DialogContent>
-      <DialogActions>
-        <Button onClick={onClose}>Cancel</Button>
-        <Button onClick={handleDuplicateClick} 
-        disabled={!itemName || !parentFolder}>
-          Create Duplicate
-        </Button>
 
+      <DialogActions>
+        <CancelButton onClick={onClose} />
+        <ConfirmButton onClick={handleDuplicateClick} disabled={!itemName || !parentFolder} label="Create Duplicate" />
       </DialogActions>
     </Dialog>
   );
