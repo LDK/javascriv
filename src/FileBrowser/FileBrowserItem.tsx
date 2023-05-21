@@ -59,8 +59,9 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, path 
       if (fullPath !== openFilePath) {
         dispatch(setOpenFilePath(fullPath));
   
-        if (item.content && onDocumentClick)  {
-          onDocumentClick(item.content || null, item.changed || false);
+        if (onDocumentClick)  {
+          console.log('onDocumentClick', item.content, item.changed);
+          onDocumentClick(item.content || '', item.changed || false);
         }
       }
     } else if (item.subType === 'image') {

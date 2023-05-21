@@ -39,6 +39,7 @@ const NewFileDialog = ({
       path: newPath,
       type: fileType as 'file' | 'folder',
       subType: subType || undefined,
+      content: fileType === 'file' ? '<p></p>' : undefined,
     };
 
     dispatch(addItem({path: newPath, item: newItem}));
@@ -81,7 +82,7 @@ const NewFileDialog = ({
       setSiblings(parentItem.children || []);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [parentFolder]);
+  }, [parentFolder, open]);
 
   useEffect(() => {
     if (siblings.length) {  
@@ -90,7 +91,7 @@ const NewFileDialog = ({
     } else {
       setHasTwin(false);
     }
-  }, [newItemName, siblings]);
+  }, [newItemName, siblings, open]);
 
   return (
     <Dialog open={open} onClose={onClose}>

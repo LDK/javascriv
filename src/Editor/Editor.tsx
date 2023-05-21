@@ -45,6 +45,13 @@ const TinyEditor: React.FC<TinyEditorProps> = ({ content, initial, onEditorChang
     }
   };
   
+  useEffect(() => {
+    if (onEditorChange) {
+      onEditorChange(content || '<p> </p>');
+    }
+  }, [content]);
+
+
   const handleExecCommand = (event:EditorEvent<any>, editor: MyEditor) => {
     // const isFullscreen = editor.execCommand('mceFullScreen', false);
 
