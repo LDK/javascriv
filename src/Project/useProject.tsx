@@ -1,6 +1,6 @@
 // Project/useProject.tsx
 
-import { Box, Button, Dialog, DialogContent, DialogContentText, DialogTitle, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, TextField } from "@mui/material";
+import { Button } from "@mui/material";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { BrowserItem, FileTreeState, findItemByPath, setFiles, setOpenFilePath } from "../redux/filesSlice";
@@ -9,7 +9,7 @@ import JSZip from 'jszip';
 import { getFullTree } from "../Convert/scrivener/scrivener";
 import ImportOptions, { ImportingOptions } from "./ImportOptions";
 import { renameTwins } from "./projectUtils";
-import { CancelButton, ConfirmButton } from "../Components/DialogButtons";
+import ExportOptions from "./ExportOptions";
 
 export interface XmlIndex {
   [id:string]: string;
@@ -17,9 +17,10 @@ export interface XmlIndex {
 
 const useProject = (handleEditorChange:((content: string) => void)) => {
   const dispatch = useDispatch();
-  const [exportDialogOpen, setExportDialogOpen] = useState(false);
+  const [exportOptionsOpen, setExportOptionsOpen] = useState(false);
   const [importOptionsOpen, setImportOptionsOpen] = useState(false);
   const [newProjectOpen, setNewProjectOpen] = useState(false);
+
   const [importingPath, setImportingPath] = useState<string[] | null>(null);
   const [importingFiles, setImportingFiles] = useState<BrowserItem[] | false>(false);
   const [importingContent, setImportingContent] = useState<string | null>(null);
@@ -112,57 +113,6 @@ const useProject = (handleEditorChange:((content: string) => void)) => {
 
   };
   
-  const ExportDialog = () => (
-    <Dialog open={exportDialogOpen} onClose={() => setExportDialogOpen(false)}>
-      <DialogTitle>Export Current Project</DialogTitle>
-      <DialogContent>
-        <DialogContentText sx={{ mb: 2 }}>
-          Enter the file name for the exported project (do not enter extension):
-        </DialogContentText>
-
-        <TextField
-          autoFocus
-          margin="dense"
-          id="projectFileName"
-          label="File Name"
-          color="info"
-          type="text"
-          fullWidth
-          variant="standard"
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') {
-              exportProject((e.target as HTMLInputElement).value);
-              setExportDialogOpen(false);
-            }
-          }}
-        />
-
-        <FormControl sx={{ mt: 2 }}>
-          <FormLabel id="export-format-group-label" color='info'>Format</FormLabel>
-          <RadioGroup
-            row
-            color="info"
-            aria-labelledby="export-format-group-label"
-            defaultValue="json"
-            name="export-format-group"
-          >
-            <FormControlLabel color="info" value="json" control={<Radio color="info" />} label="JSON" />
-            <FormControlLabel value="html" control={<Radio color="info" />} label="HTML" />
-          </RadioGroup>
-        </FormControl>
-
-      </DialogContent>
-      <Box p={2} display="flex" justifyContent="flex-end">
-        <CancelButton onClick={() => setExportDialogOpen(false)} />
-
-        <ConfirmButton onClick={() => {
-          const input = document.getElementById('projectFileName') as HTMLInputElement;
-          exportProject(input.value);
-        }} label="Export" />
-      </Box>
-    </Dialog>
-  );
-
   const importProjectFromJson = (file:File) => {
     const reader = new FileReader();
 
@@ -230,20 +180,15 @@ const useProject = (handleEditorChange:((content: string) => void)) => {
     document.body.removeChild(downloadLink);
   };
 
-  const ImportButton = ({callback}: {callback: () => void}) => (
-    <Button onClick={() => {
-      callback();
-      setImportOptionsOpen(true);
-    }} color="primary" variant="contained">
-      Import...
-    </Button>
-  );
-
   const handleImportClose = () => {
     setImportOptionsOpen(false);
     setImportingContent(null);
     setImportingFiles(false);
     setImportingPath(null);
+  };
+
+  const handleExportClose = () => {
+    setExportOptionsOpen(false);
   };
 
   const handleImportReady = (options:ImportingOptions) => {
@@ -267,11 +212,45 @@ const useProject = (handleEditorChange:((content: string) => void)) => {
     handleImportClose();
   }
 
-  const ImportDialog = () => (
-    <ImportOptions files={importingFiles || []} onReady={handleImportReady} optionsOpen={Boolean(importOptionsOpen && importingFiles)} onClose={handleImportClose} />
+  const handleExportReady = (value:string) => {
+    exportProject(value);
+  }
+
+  const ImportButton = ({callback}: {callback: () => void}) => (
+    <Button onClick={() => {
+      callback();
+      setImportOptionsOpen(true);
+    }} color="primary" variant="contained">
+      Import...
+    </Button>
   );
 
-  return { importProjectFromJson, handleUpload, ExportDialog, setExportDialogOpen, ImportButton, ImportOptions: ImportDialog, setNewProjectOpen, newProjectOpen }
+  const ExportButton = () => (
+    <Button onClick={() => {
+      setExportOptionsOpen(true);
+    }} color="primary" variant="contained">
+      Export...
+    </Button>
+  );
+
+  const ImportDialog = () => (
+    <ImportOptions 
+      files={importingFiles || []} 
+      onReady={handleImportReady}
+      optionsOpen={Boolean(importOptionsOpen && importingFiles)}
+      onClose={handleImportClose}
+     />
+  );
+
+  const ExportDialog = () => (
+    <ExportOptions 
+      onReady={handleExportReady}
+      optionsOpen={Boolean(exportOptionsOpen)}
+      onClose={handleExportClose}
+     />
+  );
+
+  return { importProjectFromJson, handleUpload, ExportOptions: ExportDialog, setExportOptionsOpen, ImportButton, ExportButton, ImportOptions: ImportDialog, setNewProjectOpen, newProjectOpen }
 };
 
 export default useProject;

@@ -39,7 +39,7 @@ const App: React.FC = () => {
     setHasContentChanged(content !== initial);
   };
 
-  const { ImportButton, ImportOptions, ExportDialog, setExportDialogOpen, handleUpload, setNewProjectOpen, newProjectOpen } = useProject(handleEditorChange);
+  const { ImportButton, ExportButton, ImportOptions, ExportOptions, handleUpload, setNewProjectOpen, newProjectOpen } = useProject(handleEditorChange);
 
   const activeTheme = useSelector((state:RootState) => state.theme.active);
 
@@ -115,16 +115,8 @@ const App: React.FC = () => {
                     Revert
                   </Button>
 
-
-                  <Button onClick={
-                    (e) => {
-                      e.currentTarget.blur(); // Remove focus from the button
-                      setExportDialogOpen(true) }
-                    }
-                    color="primary" variant="contained"
-                  >
-                    Export...
-                  </Button>
+                  <ExportButton />
+                  <ExportOptions />
 
                   <input type="file" accept=".zip, .json"
                     ref={setFileInputRef}
@@ -154,7 +146,6 @@ const App: React.FC = () => {
         </Container>
       </Box>
  
-    <ExportDialog />
     <NewProjectDialog open={newProjectOpen} onClose={() => setNewProjectOpen(false)} />
     </ThemeProvider>
   );

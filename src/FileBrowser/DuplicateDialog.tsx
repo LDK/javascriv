@@ -1,4 +1,4 @@
-import { Dialog, DialogContent, DialogContentText, TextField, DialogActions, Button, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { Dialog, DialogContent, DialogContentText, TextField, DialogActions, FormControl, InputLabel, MenuItem, Select, useTheme } from "@mui/material";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { CancelButton, ConfirmButton } from "../Components/DialogButtons";
 import { renameChildrenPaths } from "../Project/projectUtils";
@@ -20,6 +20,8 @@ type DuplicateDialogProps = {
 const DuplicateDialog = ({ open, setOpen, onClose, sourceFilePath, openFolder }: DuplicateDialogProps) => {
   const { items, itemType, handleCreateNewFile } = useBrowserDialog(sourceFilePath, setOpen);
  
+  const theme = useTheme();
+
   const suggestedFilename = (srcPath:string) => {
     const srcName = srcPath.split('/').pop();
     return `Copy of ${srcName}`;
@@ -67,6 +69,9 @@ const DuplicateDialog = ({ open, setOpen, onClose, sourceFilePath, openFolder }:
 
     handleCreateNewFile(parentFolder, itemName, sourceContent, sourceChildren)
   };
+
+  const mode = theme.palette.mode;
+
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogContent>
@@ -111,8 +116,8 @@ const DuplicateDialog = ({ open, setOpen, onClose, sourceFilePath, openFolder }:
       </DialogContent>
 
       <DialogActions>
-        <CancelButton onClick={onClose} />
-        <ConfirmButton onClick={handleDuplicateClick} disabled={!itemName || !parentFolder} label="Create Duplicate" />
+        <CancelButton onClick={onClose} {...{ mode }} />
+        <ConfirmButton onClick={handleDuplicateClick} {...{ mode }} disabled={!itemName || !parentFolder} label="Create Duplicate" />
       </DialogActions>
     </Dialog>
   );

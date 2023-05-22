@@ -39,7 +39,9 @@ const Header: React.FC<any> = () => {
   const isDarkMode = (activeTheme === 'dark');
 
   const toggleTheme = (event:React.ChangeEvent<HTMLInputElement>, checked:boolean) => {
-    dispatch(setTheme(checked ? 'light' : 'dark'));
+    
+    const mode = checked ? 'light' : 'dark';
+    dispatch(setTheme(mode));
   }
 
   return (

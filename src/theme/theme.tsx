@@ -95,7 +95,7 @@ const lightThemeOptions:ExtendedThemeOptions = {
     },
     info: {
       // Blue color, adjusted for dark mode readability.
-      main: '#d9e4ff',
+      main: '#eafaff',
     },
   },
 };
