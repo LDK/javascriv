@@ -1,5 +1,5 @@
 // Import/ImportOptions.tsx
-import React from 'react';
+import React, { useState } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogContentText, TextField } from '@mui/material';
 import { BrowserItem } from '../redux/filesSlice';
 import useDialogUI from '../theme/useDialogUI';
@@ -7,7 +7,7 @@ import useDialogUI from '../theme/useDialogUI';
 export interface ExportOptionsProps {
   optionsOpen: boolean;
   onClose: () => void;
-  onReady: (value: string) => void;
+  onReady: (base: string, extension: string) => void;
 }
 
 export interface ExportingOptions {
@@ -15,10 +15,12 @@ export interface ExportingOptions {
 }
 
 const ExportOptions: React.FC<ExportOptionsProps> = ({ optionsOpen, onClose, onReady }) => {
+  const [fileFormat, setFileFormat] = useState('json');
+
   const handleReady = () => {
     if (onReady) {
       const input = document.getElementById('projectFileName') as HTMLInputElement;
-      onReady(input.value);
+      onReady(input.value, fileFormat);
     }
   };
 
@@ -53,7 +55,8 @@ const ExportOptions: React.FC<ExportOptionsProps> = ({ optionsOpen, onClose, onR
         <MuiRadioGroup radioGroup={{
           name: 'export-format-group',
           label: 'Format',
-          defaultValue: 'json',
+          defaultValue: fileFormat,
+          onChange: (value) => setFileFormat(value),
           options: [
             { label: 'JSON', value: 'json' },
             { label: 'HTML', value: 'html' },

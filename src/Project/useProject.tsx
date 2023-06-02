@@ -151,7 +151,7 @@ const useProject = (handleEditorChange:((content: string) => void)) => {
     reader.readAsText(file);
   };
   
-  const exportProject = (fileName:string) => {
+  const exportProjectToJson = (fileName:string) => {
     // Add the .json extension if it's not already present
     if (!fileName.endsWith('.json')) {
       fileName += '.json';
@@ -180,6 +180,57 @@ const useProject = (handleEditorChange:((content: string) => void)) => {
     document.body.removeChild(downloadLink);
   };
 
+  const exportProjectToHtml = (fileName: string) => {
+    // Add the .html extension if it's not already present
+    if (!fileName.endsWith('.html')) {
+      fileName += '.html';
+    }
+  
+    // Use getState to grab `files` from files state
+    const projectData = store.getState().files;
+  
+    // Recursive function to generate HTML from files
+    const generateHtml = (items: BrowserItem[], depth = 1): string => {
+      let html = '';
+      items.forEach(item => {
+        let headingLevel = depth < 6 ? depth : 6; // Heading level doesn't go beyond h6
+  
+        if (item.type === 'folder') {
+          html += `<h${headingLevel}>${item.name}</h${headingLevel}>\n`;
+          if (item.children) {
+            html += generateHtml(item.children, depth + 1); // Increase depth for children
+          }
+        } else if (item.type === 'file' && item.subType === 'document') {
+          html += `<section>\n<h${headingLevel}>${item.name}</h${headingLevel}>\n`;
+          if (item.content) {
+            html += item.content;
+          }
+          html += `</section>\n`;
+        }
+      });
+      return html;
+    };
+  
+    // Generate HTML content
+    const htmlContent = generateHtml(projectData.files);
+  
+    // Create a new Blob object containing the HTML content, with the MIME type set to 'text/html'
+    const blob = new Blob([htmlContent], { type: 'text/html' });
+  
+    // Create a new URL for the Blob
+    const url = URL.createObjectURL(blob);
+  
+    // Create and configure a temporary anchor element to initiate the download
+    const downloadLink = document.createElement('a');
+    downloadLink.href = url;
+    downloadLink.download = fileName;
+  
+    // Add the anchor to the document, initiate the download, and remove the anchor
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+  };
+    
   const handleImportClose = () => {
     setImportOptionsOpen(false);
     setImportingContent(null);
@@ -212,8 +263,15 @@ const useProject = (handleEditorChange:((content: string) => void)) => {
     handleImportClose();
   }
 
-  const handleExportReady = (value:string) => {
-    exportProject(value);
+  const handleExportReady = (name:string, extension: string) => {
+    switch (extension) {
+      case 'json':
+        exportProjectToJson(name);
+      break;
+      case 'html':
+        exportProjectToHtml(name);
+      break;
+    }
   }
 
   const ImportButton = ({callback}: {callback: () => void}) => (

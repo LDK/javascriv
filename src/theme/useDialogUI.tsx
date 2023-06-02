@@ -43,6 +43,7 @@ export default function useDialogUI() {
     name: string;
     label: string;
     defaultValue?: string;
+    onChange: (value: string) => void;
     options: { label: string; value: string }[];
   }
 
@@ -55,6 +56,11 @@ export default function useDialogUI() {
         aria-labelledby={radioGroup.name+'-label'}
         defaultValue={radioGroup.defaultValue}
         name={radioGroup.name}
+        onChange={(e) => {
+          if (radioGroup.onChange) {
+            radioGroup.onChange(e.target.value);
+          }
+        }}
       >
         {
           radioGroup.options.map((option) => (
