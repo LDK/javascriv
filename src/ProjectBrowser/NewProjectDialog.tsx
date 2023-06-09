@@ -2,7 +2,8 @@ import { Dialog, DialogContent, DialogContentText, TextField, DialogActions, Too
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { CancelButton, ConfirmButton } from "../Components/DialogButtons";
-import { BrowserItem, setFiles, setOpenFilePath } from "../redux/filesSlice";
+import { ProjectFile } from "../Project/ProjectTypes";
+import { setFiles, setOpenFilePath } from "../redux/projectSlice";
 
 type NewProjectDialogProps = {
   open: boolean;
@@ -21,7 +22,7 @@ const NewProjectDialog = ({ open, onClose }: NewProjectDialogProps) => {
 
     const newPath = "Untitled";
 
-    const newItem:BrowserItem = {
+    const newItem:ProjectFile = {
       type: 'file',
       subType: 'document',
       name: newPath,

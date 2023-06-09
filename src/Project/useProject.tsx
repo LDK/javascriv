@@ -3,13 +3,14 @@
 import { Button } from "@mui/material";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { BrowserItem, FileTreeState, findItemByPath, setFiles, setOpenFilePath } from "../redux/filesSlice";
+import { findItemByPath, setFiles, setOpenFilePath } from "../redux/projectSlice";
 import { store } from "../redux/store";
 import JSZip from 'jszip';
 import { getFullTree } from "../Convert/scrivener/scrivener";
 import ImportOptions, { ImportingOptions } from "./ImportOptions";
 import { renameTwins } from "./projectUtils";
 import ExportOptions from "./ExportOptions";
+import { ProjectFile, ProjectState } from "./ProjectTypes";
 
 export interface XmlIndex {
   [id:string]: string;
@@ -22,7 +23,7 @@ const useProject = (handleEditorChange:((content: string) => void)) => {
   const [newProjectOpen, setNewProjectOpen] = useState(false);
 
   const [importingPath, setImportingPath] = useState<string[] | null>(null);
-  const [importingFiles, setImportingFiles] = useState<BrowserItem[] | false>(false);
+  const [importingFiles, setImportingFiles] = useState<ProjectFile[] | false>(false);
   const [importingContent, setImportingContent] = useState<string | null>(null);
 
   const parseZipFile = async (file: File) => {
@@ -121,7 +122,7 @@ const useProject = (handleEditorChange:((content: string) => void)) => {
         const content = e.target?.result;
 
         if (typeof content === 'string') {
-          const importedProject:FileTreeState = JSON.parse(content);
+          const importedProject:ProjectState = JSON.parse(content);
 
           if (importedProject) {
             const projectFiles = renameTwins(importedProject.files);
@@ -158,7 +159,7 @@ const useProject = (handleEditorChange:((content: string) => void)) => {
     }
   
     // Use getState to grab `files` and `openFilePath` from files state
-    const projectData = store.getState().files;
+    const projectData = store.getState().project;
   
     // Convert the project data object into a JSON-formatted string
     const jsonString = JSON.stringify(projectData, null, 2);
@@ -187,10 +188,10 @@ const useProject = (handleEditorChange:((content: string) => void)) => {
     }
   
     // Use getState to grab `files` from files state
-    const projectData = store.getState().files;
+    const projectData = store.getState().project;
   
     // Recursive function to generate HTML from files
-    const generateHtml = (items: BrowserItem[], depth = 1): string => {
+    const generateHtml = (items: ProjectFile[], depth = 1): string => {
       let html = '';
       items.forEach(item => {
         let headingLevel = depth < 6 ? depth : 6; // Heading level doesn't go beyond h6

@@ -1,16 +1,16 @@
 // FileTree/FileTree.tsx
 import { TreeView } from "@mui/lab";
 import React, { useEffect, useState } from "react";
+import { ProjectFile } from "../Project/ProjectTypes";
 import { MinusSquare, PlusSquare } from "../Publish/IconFunctions";
-import { BrowserItem } from "../redux/filesSlice";
 
-export interface FileTreeItem extends Omit<BrowserItem, 'children'> {
+export interface FileTreeItem extends Omit<ProjectFile, 'children'> {
   included: boolean;
   children: FileTreeItem[];
 }
 
 export interface FilteredFileTreeProps {
-  items: BrowserItem[];
+  items: ProjectFile[];
   onCheck: (updatedItems: FileTreeItem[]) => void;
 }
 
@@ -25,8 +25,8 @@ export const FileTreeView = ({ children, defaultExpanded }: { children: React.Re
   </TreeView>
 );
 
-function useFileTree(browserItems: BrowserItem[]) {
-  const convertToTreeItems = (items: BrowserItem[]): FileTreeItem[] => {
+function useFileTree(browserItems: ProjectFile[]) {
+  const convertToTreeItems = (items: ProjectFile[]): FileTreeItem[] => {
     return items
       .filter((child) => child.subType !== 'image' && child.subType !== 'other')
       .map((item) => {

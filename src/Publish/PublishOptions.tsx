@@ -2,26 +2,116 @@
 import React, { useEffect, useState } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Select, MenuItem, FormControl, InputLabel, useTheme } from '@mui/material';
 import { useSelector } from 'react-redux';
-import { selectFiles, BrowserItem } from '../redux/filesSlice';
+import { selectFiles } from '../redux/projectSlice';
 import PublishTree from './PublishTree';
-import { SelectChangeEvent } from '@mui/material/Select';
 import publishToPdf from './pdfCompiler';
 import { Binary, PublishingOptions } from './compiling';
 import { FileTreeItem } from '../FileTree/FileTree';
+import { ProjectFile } from '../Project/ProjectTypes';
 
 export interface PublishOptionsProps {
   optionsOpen: boolean;
   onClose: () => void;
 }
 
-const PublishOptions: React.FC<PublishOptionsProps> = ({ optionsOpen, onClose }) => {
-  const items = useSelector(selectFiles);
-
+export function usePublishingOptions () {
   const [pageBreaks, setPageBreaks] = useState<string>('Nowhere');
-  const [publishedItems, setPublishedItems] = useState<BrowserItem[]>(items);
   const [pageNumberPosition, setPageNumberPosition] = useState<string>('Top Left');
   const [displayDocumentTitles, setDisplayDocumentTitles] = useState<Binary>(1);
   const [includeToC, setIncludeToC] = useState<Binary>(1);
+
+  const PageBreaksSelect = () => (
+    <FormControl fullWidth variant="outlined" sx={{ mt: 2 }}>
+    <InputLabel htmlFor="page-breaks-select">Insert Page Breaks...</InputLabel>
+    <Select
+      value={pageBreaks}
+      onChange={(e) => setPageBreaks(e.target.value as string)}
+      label="Insert Page Breaks..."
+      inputProps={{ id: 'page-breaks-select' }}
+    >
+      <MenuItem value="Nowhere">Nowhere</MenuItem>
+      <MenuItem value="Between Documents">Between Documents</MenuItem>
+      <MenuItem value="Between Folders">Between Folders</MenuItem>
+      <MenuItem value="Between Folders and Between Documents">Between Folders and Between Documents</MenuItem>
+    </Select>
+  </FormControl>
+  );
+  
+  const PageNumberPositionSelect = () => (
+    <FormControl fullWidth variant="outlined" sx={{ mt: 2 }}>
+      <InputLabel htmlFor="page-numbers-select">Page Numbers</InputLabel>
+      <Select
+        value={pageNumberPosition}
+        onChange={(e) => setPageNumberPosition(e.target.value as string)}
+        label="Page Numbers"
+        inputProps={{ id: 'page-numbers-select' }}
+      >
+        <MenuItem value={0}>Nowhere</MenuItem>
+        <MenuItem value="Top Left">Top Left</MenuItem>
+        <MenuItem value="Top Middle">Top Middle</MenuItem>
+        <MenuItem value="Top Right">Top Right</MenuItem>
+        <MenuItem value="Bottom Left">Bottom Left</MenuItem>
+        <MenuItem value="Bottom Middle">Bottom Middle</MenuItem>
+        <MenuItem value="Bottom Right">Bottom Right</MenuItem>
+      </Select>
+    </FormControl>
+  );
+  
+  const DisplayDocumentTitlesSelect = () => (
+    <FormControl fullWidth variant="outlined" sx={{ mt: 2 }}>
+      <InputLabel htmlFor="display-document-titles-select">Display Document Titles as Headers?</InputLabel>
+      <Select
+        value={displayDocumentTitles}
+        onChange={(e) => setDisplayDocumentTitles(e.target.value as Binary)}
+        label="Display Document Titles as Headers?"
+        inputProps={{ id: 'display-document-titles-select' }}
+      >
+        <MenuItem value={1}>Yes</MenuItem>
+        <MenuItem value={0}>No</MenuItem>
+      </Select>
+    </FormControl>
+  );
+  
+  const IncludeToCSelect = () => (
+    <FormControl fullWidth variant="outlined" sx={{ mt: 2 }}>
+      <InputLabel htmlFor="include-toc-select">Include Table of Contents?</InputLabel>
+      <Select
+        value={includeToC}
+        onChange={(e) => setIncludeToC(e.target.value as Binary)}
+        label="Include Table of Contents"
+        inputProps={{ id: 'include-toc-select' }}
+      >
+        <MenuItem value={1}>Yes</MenuItem>
+        <MenuItem value={0}>No</MenuItem>
+      </Select>
+    </FormControl>
+  );
+
+  return {
+    PageBreaksSelect,
+    PageNumberPositionSelect,
+    DisplayDocumentTitlesSelect,
+    IncludeToCSelect,
+    setPageBreaks,
+    setPageNumberPosition,
+    setDisplayDocumentTitles,
+    setIncludeToC,
+    pageBreaks,
+    pageNumberPosition,
+    displayDocumentTitles,
+    includeToC
+  };
+}
+
+const PublishOptions: React.FC<PublishOptionsProps> = ({ optionsOpen, onClose }) => {
+  const items = useSelector(selectFiles);
+
+  const [publishedItems, setPublishedItems] = useState<ProjectFile[]>(items);
+
+  const { 
+    PageBreaksSelect, PageNumberPositionSelect, DisplayDocumentTitlesSelect, IncludeToCSelect,
+    pageBreaks, pageNumberPosition, displayDocumentTitles, includeToC
+  } = usePublishingOptions();
 
   const theme = useTheme();
   const dark = theme.palette.mode === 'dark';
@@ -40,20 +130,12 @@ const PublishOptions: React.FC<PublishOptionsProps> = ({ optionsOpen, onClose })
     };
     publishToPdf(options);
   };
-  
-  const handlePageBreaksChange = (event: SelectChangeEvent) => {
-    setPageBreaks(event.target.value as string);
-  };
-
-  const handlePageNumberPositionChange = (event: SelectChangeEvent) => {
-    setPageNumberPosition(event.target.value as string);
-  };
 
   const handleCheck = (updatedItems: FileTreeItem[]) => {
-    const filterIncludedItems = (items: FileTreeItem[]): BrowserItem[] => {
+    const filterIncludedItems = (items: FileTreeItem[]): ProjectFile[] => {
       return items.flatMap((item) => {
         if (item.included) {
-          const newItem: BrowserItem = { ...item, children: item.children ? filterIncludedItems(item.children) : undefined };
+          const newItem: ProjectFile = { ...item, children: item.children ? filterIncludedItems(item.children) : undefined };
           return [newItem];
         }
         return [];
@@ -75,65 +157,10 @@ const PublishOptions: React.FC<PublishOptionsProps> = ({ optionsOpen, onClose })
       <DialogContent>
         <PublishTree items={items} onCheck={handleCheck} />
 
-        <FormControl fullWidth variant="outlined" sx={{ mt: 2 }}>
-          <InputLabel htmlFor="page-breaks-select">Insert Page Breaks...</InputLabel>
-          <Select
-            value={pageBreaks}
-            onChange={handlePageBreaksChange}
-            label="Insert Page Breaks..."
-            inputProps={{ id: 'page-breaks-select' }}
-          >
-            <MenuItem value="Nowhere">Nowhere</MenuItem>
-            <MenuItem value="Between Documents">Between Documents</MenuItem>
-            <MenuItem value="Between Folders">Between Folders</MenuItem>
-            <MenuItem value="Between Folders and Between Documents">Between Folders and Between Documents</MenuItem>
-          </Select>
-        </FormControl>
-
-        <FormControl fullWidth variant="outlined" sx={{ mt: 2 }}>
-          <InputLabel htmlFor="page-numbers-select">Page Numbers</InputLabel>
-          <Select
-            value={pageNumberPosition}
-            onChange={handlePageNumberPositionChange}
-            label="Page Numbers"
-            inputProps={{ id: 'page-numbers-select' }}
-          >
-            <MenuItem value={0}>Nowhere</MenuItem>
-            <MenuItem value="Top Left">Top Left</MenuItem>
-            <MenuItem value="Top Middle">Top Middle</MenuItem>
-            <MenuItem value="Top Right">Top Right</MenuItem>
-            <MenuItem value="Bottom Left">Bottom Left</MenuItem>
-            <MenuItem value="Bottom Middle">Bottom Middle</MenuItem>
-            <MenuItem value="Bottom Right">Bottom Right</MenuItem>
-          </Select>
-        </FormControl>
-
-        <FormControl fullWidth variant="outlined" sx={{ mt: 2 }}>
-          <InputLabel htmlFor="display-document-titles-select">Display Document Titles as Headers?</InputLabel>
-          <Select
-            value={displayDocumentTitles}
-            onChange={(event) => setDisplayDocumentTitles(event.target.value as Binary)}
-            label="Display Document Titles as Headers?"
-            inputProps={{ id: 'display-document-titles-select' }}
-          >
-            <MenuItem value={1}>Yes</MenuItem>
-            <MenuItem value={0}>No</MenuItem>
-          </Select>
-        </FormControl>
-
-        <FormControl fullWidth variant="outlined" sx={{ mt: 2 }}>
-          <InputLabel htmlFor="include-toc-select">Include Table of Contents?</InputLabel>
-          <Select
-
-            value={includeToC}
-            onChange={(event) => setIncludeToC(event.target.value as Binary)}
-            label="Include Table of Contents"
-            inputProps={{ id: 'include-toc-select' }}
-          >
-            <MenuItem value={1}>Yes</MenuItem>
-            <MenuItem value={0}>No</MenuItem>
-          </Select>
-        </FormControl>
+        <PageBreaksSelect />
+        <PageNumberPositionSelect />
+        <DisplayDocumentTitlesSelect />
+        <IncludeToCSelect />
 
       </DialogContent>
       <DialogActions sx={{ px: 3, pb: 2, pt:0 }}>

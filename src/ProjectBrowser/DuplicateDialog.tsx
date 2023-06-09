@@ -2,8 +2,8 @@ import { Dialog, DialogContent, DialogContentText, TextField, DialogActions, For
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { CancelButton, ConfirmButton } from "../Components/DialogButtons";
 import { renameChildrenPaths } from "../Project/projectUtils";
-import { findItemByPath } from "../redux/filesSlice";
-import { FileType, findParentFolder, ROOTFOLDER, SubType } from "./FileBrowser";
+import { findItemByPath } from "../redux/projectSlice";
+import { FileType, findParentFolder, ROOTFOLDER, SubType } from "./ProjectBrowser";
 import useBrowserDialog, { getFolders, SetOpenFunction } from "./useBrowserDialog";
 
 type DuplicateDialogProps = {

@@ -1,5 +1,5 @@
 // Convert/scrivener/scrivener.ts
-import { BrowserItem } from '../../redux/filesSlice';
+import { ProjectFile } from '../../Project/ProjectTypes';
 import { parseSearchIndexes, ScrivenerDocument } from './scrivenerIndexes';
 import { ScrivenerBinder, ScrivenerBinderItem, scrivxToObject } from './scrivenerTree';
 
@@ -30,14 +30,14 @@ export function crossReferenceBinderWithIndexes(
   return crossReferencedBinder;
 }
 
-export function scrivenerBinderToBrowserItems(binder: ScrivenerBinder, basePath: string = ''): BrowserItem[] {
-  const browserItems: BrowserItem[] = [];
+export function scrivenerBinderToBrowserItems(binder: ScrivenerBinder, basePath: string = ''): ProjectFile[] {
+  const browserItems: ProjectFile[] = [];
 
   function nl2br(str:string):string {
     return (str + '').replace(/(\r\n|\n\r|\r|\n)/g, '<br>');
   }
   
-  const traverseAndConvert = (items: ScrivenerBinderItem[], currentPath: string): BrowserItem[] => {
+  const traverseAndConvert = (items: ScrivenerBinderItem[], currentPath: string): ProjectFile[] => {
     const folderTypes = ['DraftFolder', 'Folder'];
     const textTypes = ['Document', 'Text'];
     const allowedTypes = [...folderTypes, ...textTypes];
@@ -66,7 +66,7 @@ export function scrivenerBinderToBrowserItems(binder: ScrivenerBinder, basePath:
           processedPaths.push(newPath);
         }
 
-        let newBrowserItem: BrowserItem = {
+        let newBrowserItem: ProjectFile = {
           type: folderTypes.includes(item.Type) ? 'folder' : 'file',
           name: itemName,
           path: newPath,
@@ -105,5 +105,5 @@ export const getFullTree = async (scrivxXml:string, indexesXml:string) => {
     return newTree;
   }  
 
-  return [] as BrowserItem[];
+  return [] as ProjectFile[];
 };

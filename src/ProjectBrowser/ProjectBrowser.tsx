@@ -1,20 +1,23 @@
-// Browser/FileBrowser.tsx
+// Browser/ProjectBrowser.tsx
 import React, { useState } from 'react';
 import { Box, IconButton, useTheme, PaletteColor, PaletteMode } from '@mui/material';
-import { BrowserItem, findItemByPath, selectFiles, selectOpenFilePath } from '../redux/filesSlice';
+import { findItemByPath, selectFiles, selectOpenFilePath } from '../redux/projectSlice';
 import { useSelector } from 'react-redux';
 import Sticky from 'react-stickynode';
 import FileBrowserItem from './FileBrowserItem';
 import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder';
 import NoteAddIcon from '@mui/icons-material/NoteAdd';
+import SettingsIcon from '@mui/icons-material/Settings';
 import NewFileDialog from './NewFileDialog';
 import { NewBrowserItem, SetOpenFunction } from './useBrowserDialog';
 import DuplicateDialog from './DuplicateDialog';
 import DeleteDialog from './DeleteDialog';
 import MoveFileDialog from './MoveFileDialog';
+import { ProjectFile } from '../Project/ProjectTypes';
 
-interface FileBrowserProps {
-  onDocumentClick: (item: BrowserItem) => void;
+interface ProjectBrowserProps {
+  onDocumentClick: (item: ProjectFile) => void;
+  setProjectSettingsOpen: (open: boolean) => void;
 }
 
 export const ROOTFOLDER = '<root>';
@@ -31,7 +34,7 @@ export const findParentFolder = (path: string[]) => {
 export type FileType = 'file' | 'folder' | null;
 export type SubType = 'document' | 'image' | 'other' | null;
 
-const FileBrowser: React.FC<FileBrowserProps> = ({ onDocumentClick }) => {
+const ProjectBrowser: React.FC<ProjectBrowserProps> = ({ onDocumentClick, setProjectSettingsOpen }) => {
   const items = useSelector(selectFiles);
   const openFilePath = useSelector(selectOpenFilePath);
   const theme = useTheme();
@@ -44,17 +47,17 @@ const FileBrowser: React.FC<FileBrowserProps> = ({ onDocumentClick }) => {
   }
 
   const [openFolder, setOpenFolder] = useState<string | null>(initialFolder);
-  const [duplicating, setDuplicating] = useState<BrowserItem | false>(false);
-  const [deleting, setDeleting] = useState<BrowserItem | false>(false);
-  const [moving, setMoving] = useState<BrowserItem | false>(false);
+  const [duplicating, setDuplicating] = useState<ProjectFile | false>(false);
+  const [deleting, setDeleting] = useState<ProjectFile | false>(false);
+  const [moving, setMoving] = useState<ProjectFile | false>(false);
 
   const [adding, setAdding] = useState<NewBrowserItem | false>(false);
 
-  const handleFolderClick = (folder: BrowserItem) => {
+  const handleFolderClick = (folder: ProjectFile) => {
     setOpenFolder(folder.path);
   }
 
-  const renderItem = (item: BrowserItem, path: string[] = [], idx:number) => {
+  const renderItem = (item: ProjectFile, path: string[] = [], idx:number) => {
     return (
       <FileBrowserItem
         index={idx}
@@ -102,11 +105,22 @@ const FileBrowser: React.FC<FileBrowserProps> = ({ onDocumentClick }) => {
             textAlign="right"
             display="block"
             sx={{ 
-              backgroundColor: paletteRGBA(theme.palette.primary, .5, theme.palette.mode),
-              // blur anything that scrolls behind this element
+              backgroundColor: paletteRGBA(theme.palette.primary, .6, theme.palette.mode),
               backdropFilter: 'blur(3px)',
             }}
           >
+            <IconButton
+              aria-label="Project Settings"
+              component="label"
+              sx={{
+                position: 'absolute',
+                left: '.5rem'
+              }}
+              onClick={() => setProjectSettingsOpen(true)}
+            >
+              <SettingsIcon />
+            </IconButton>
+
             <IconButton
               aria-label="Add a New File"
               component="label"
@@ -173,4 +187,4 @@ const FileBrowser: React.FC<FileBrowserProps> = ({ onDocumentClick }) => {
   );
 };
 
-export default FileBrowser;
+export default ProjectBrowser;

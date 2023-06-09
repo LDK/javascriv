@@ -1,13 +1,14 @@
-import { BrowserItem } from "../redux/filesSlice";
 
 // Subroutine that iterates through children, children's children, etc.
 // It updates each item's path so that it begins with the content of `parentPath`
 // and then adds the rest of the path to the end of it.
 
+import { ProjectFile } from "./ProjectTypes";
+
 // For example, if the parentPath is '/srcRenamed' and the child's path is '/src/components/MyComponent',
 // then the child's path will be updated to '/srcRenamed/components/MyComponent'
 
-export const renameChildrenPaths = (children: BrowserItem[] | undefined, parentPath: string): BrowserItem[] | undefined => {
+export const renameChildrenPaths = (children: ProjectFile[] | undefined, parentPath: string): ProjectFile[] | undefined => {
   const parentLevel = parentPath.split('/').length;
 
   return children?.map(child => {
@@ -28,7 +29,7 @@ export const renameChildrenPaths = (children: BrowserItem[] | undefined, parentP
 
 // Iterate through all items, recursively, and find any siblings with the same path and/or same name
 // If any are found, rename them with a number appended to the end
-export const renameTwins = (items: BrowserItem[]): BrowserItem[] => {
+export const renameTwins = (items: ProjectFile[]): ProjectFile[] => {
   const processedPaths: string[] = [];
 
   return items.map((item) => {
@@ -56,7 +57,7 @@ export const renameTwins = (items: BrowserItem[]): BrowserItem[] => {
       itemChildren = renameChildrenPaths(itemChildren, newPath);
     }
 
-    let newItem: BrowserItem = {
+    let newItem: ProjectFile = {
       type: item.type,
       name: itemName,
       path: newPath,

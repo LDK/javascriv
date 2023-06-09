@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { selectOpenFilePath, BrowserItem, saveItem, addItem, findItemByPath, selectFiles, setContent, setOpenFilePath } from "../redux/filesSlice";
+import { ProjectFile } from "../Project/ProjectTypes";
+import { selectOpenFilePath, saveItem, addItem, findItemByPath, selectFiles, setContent, setOpenFilePath } from "../redux/projectSlice";
 
 interface FileBrowserProps {
-  contentCallback?: (item: BrowserItem) => void;
+  contentCallback?: (item: ProjectFile) => void;
 };
 
 const useFileBrowser = ({ contentCallback }:FileBrowserProps) => {
@@ -13,7 +14,7 @@ const useFileBrowser = ({ contentCallback }:FileBrowserProps) => {
 
   const browserItems = useSelector(selectFiles);
 
-  const getUniqueNewDocumentName = (items: BrowserItem[]) => {
+  const getUniqueNewDocumentName = (items: ProjectFile[]) => {
     let index = 0;
     let newName = 'New Document';
 
@@ -25,14 +26,14 @@ const useFileBrowser = ({ contentCallback }:FileBrowserProps) => {
     return `${newName}${index > 0 ? ` ${index}` : ''}`;
   };
 
-  const handleFileSave = (item: BrowserItem) => {
+  const handleFileSave = (item: ProjectFile) => {
     setHasContentChanged(false);
     if (openFilePath) {
       dispatch(saveItem({ path: openFilePath }));
     }
   };
 
-  const documentClick = (item:BrowserItem) => {
+  const documentClick = (item:ProjectFile) => {
     if (contentCallback) {
       contentCallback(item);
     }
@@ -42,7 +43,7 @@ const useFileBrowser = ({ contentCallback }:FileBrowserProps) => {
   const saveFile = (htmlContent:string) => {
     if (!openFilePath) {
       const newName = getUniqueNewDocumentName(browserItems);
-      const newItem: BrowserItem = { name: newName, type: 'file', subType: 'document', content: htmlContent, path: `/${newName}` };
+      const newItem: ProjectFile = { name: newName, type: 'file', subType: 'document', content: htmlContent, path: `/${newName}` };
 
       dispatch(addItem({ path: '', item: newItem }));
       dispatch(setOpenFilePath(newName));

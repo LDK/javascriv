@@ -1,8 +1,8 @@
 import { Dialog, DialogContent, DialogActions, Button, FormControl, InputLabel, MenuItem, Select, DialogTitle } from "@mui/material";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { renameChildrenPaths } from "../Project/projectUtils";
-import { findItemByPath } from "../redux/filesSlice";
-import { findParentFolder, ROOTFOLDER } from "./FileBrowser";
+import { findItemByPath } from "../redux/projectSlice";
+import { findParentFolder, ROOTFOLDER } from "./ProjectBrowser";
 import useBrowserDialog, { getFolders, SetOpenFunction } from "./useBrowserDialog";
 
 type MoveFileDialogProps = {

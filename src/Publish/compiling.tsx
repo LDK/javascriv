@@ -1,12 +1,12 @@
 // Publish/compiling.ts
 
-import { BrowserItem } from "../redux/filesSlice";
 import { EditorFont } from "../Editor/EditorFonts";
+import { ProjectFile } from "../Project/ProjectTypes";
 
 export type Binary = 0 | 1;
 
 export interface PublishingOptions {
-  items: BrowserItem[];
+  items: ProjectFile[];
   pageBreaks: string;
   pageNumbers: string;
   includeToC: Binary;
@@ -21,7 +21,7 @@ export const compileHtml = (options: PublishingOptions) => {
     compiledContent.push({ text: '', pageBreak: 'after' });
   }
 
-  const traverse = (node: BrowserItem, isTopLevel: boolean) => {
+  const traverse = (node: ProjectFile, isTopLevel: boolean) => {
     if (node.type === 'folder') {
       if (options.pageBreaks.includes('Between Folders') && !isTopLevel) {
         compiledContent.push({ text: '', pageBreak: 'after' });

@@ -1,34 +1,21 @@
-// redux/filesSlice.ts
+// redux/projectSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { EditorFont } from '../Editor/EditorFonts';
+import { ProjectFile, ProjectState } from '../Project/ProjectTypes';
 import { RootState } from './store';
 
-export type BrowserItem = {
-  type: 'folder' | 'file';
-  name: string;
-  path: string;
-  children?: BrowserItem[];
-  subType?: 'document' | 'image' | 'other' | null;
-  attachment?: string;
-  content?: string;
-  initialContent?: string;
-  changed?: boolean;
-};
-
-export type FileTreeState = {
-  files: BrowserItem[];
-  openFilePath: string | null;
-};
-
-const initialItems: BrowserItem[] = [
+const initialItems: ProjectFile[] = [
 
 ];
 
-const initialState:FileTreeState = {
+const initialState:ProjectState = {
   files: initialItems,
   openFilePath: null,
+  settings: {},
+  title: 'New Project'
 };
 
-export const findItemByPath = (items: BrowserItem[], path: string[]): BrowserItem | undefined => {
+export const findItemByPath = (items: ProjectFile[], path: string[]): ProjectFile | undefined => {
   const filteredPath = path.filter(p => p !== '');
   if (!filteredPath.length) return undefined;
 
@@ -42,7 +29,7 @@ export const findItemByPath = (items: BrowserItem[], path: string[]): BrowserIte
   }
 };
 
-export const findFolderByPath = (items: BrowserItem[], path: string[]): BrowserItem | undefined => {
+export const findFolderByPath = (items: ProjectFile[], path: string[]): ProjectFile | undefined => {
   const filteredPath = path.filter(p => p !== '');
   if (!filteredPath.length) return undefined;
 
@@ -58,10 +45,18 @@ export const findFolderByPath = (items: BrowserItem[], path: string[]): BrowserI
   }
 }
 
-const filesSlice = createSlice({
-  name: 'files',
+const projectSlice = createSlice({
+  name: 'project',
   initialState,
   reducers: {
+    saveSetting: (state, action: PayloadAction<{ settingKey: string; value: string | number | boolean }>) => {
+      const { settingKey, value } = action.payload;
+      if (state.settings) {
+        state.settings[settingKey] = value;
+      } else {
+        state.settings = { [settingKey]: value };
+      }
+    },
     setContent: (state, action: PayloadAction<{ path: string; content: string }>) => {
       const { path, content } = action.payload;
       const item = findItemByPath(state.files, path.split('/'));
@@ -96,7 +91,7 @@ const filesSlice = createSlice({
         pathParts[pathParts.length - 1] = newName;
         item.path = pathParts.join('/');
     
-        const updateChildPaths = (children: BrowserItem[], level: number) => {
+        const updateChildPaths = (children: ProjectFile[], level: number) => {
           children.forEach(child => {
             const childPathParts = child.path.split('/');
             childPathParts[childPathParts.length - level - 1] = newName;
@@ -116,7 +111,7 @@ const filesSlice = createSlice({
     setOpenFilePath: (state, action: PayloadAction<string>) => {
       state.openFilePath = action.payload;
     },
-    setFiles: (state, action: PayloadAction<BrowserItem[]>) => {
+    setFiles: (state, action: PayloadAction<ProjectFile[]>) => {
       state.files = action.payload;
     },
     reorderItem: (state, action: PayloadAction<{ path: string, oldIndex: number, newIndex: number }>) => {
@@ -140,7 +135,7 @@ const filesSlice = createSlice({
       const path = rawPath.split('/');
 
       const parentPath = path.slice(0,-1);
-      const parent = parentPath.length ? findFolderByPath(state.files, parentPath) : { children: state.files } as BrowserItem;
+      const parent = parentPath.length ? findFolderByPath(state.files, parentPath) : { children: state.files } as ProjectFile;
 
       if (parent && parent.type === 'folder' && parent.children) {
         parent.children = parent.children.filter((item) => item.path !== action.payload);
@@ -159,13 +154,13 @@ const filesSlice = createSlice({
     },
     addItem: (
       state,
-      action: PayloadAction<{ path: string; item: BrowserItem }>
+      action: PayloadAction<{ path: string; item: ProjectFile }>
     ) => {
       const rawPath = action.payload.path.startsWith('/') ? action.payload.path.slice(1) : action.payload.path;
       const path = rawPath.split('/');
 
       const parentPath = path.slice(0,-1);
-      const parent = parentPath.length ? findFolderByPath(state.files, parentPath) : { children: state.files } as BrowserItem;
+      const parent = parentPath.length ? findFolderByPath(state.files, parentPath) : { children: state.files } as ProjectFile;
 
       // const { item } = action.payload;
       const item = { ...action.payload.item, path: path.join('/') };
@@ -180,15 +175,16 @@ const filesSlice = createSlice({
   },
 });
 
-export const { setContent, setChanged, setOpenFilePath, deleteItem, addItem, saveItem, reorderItem, setName, setFiles } = filesSlice.actions;
+export const { setContent, setChanged, setOpenFilePath, deleteItem, addItem, saveItem, reorderItem, setName, setFiles } = projectSlice.actions;
 
-export const selectFiles = (state: RootState) => state.files.files;
-export const selectOpenFilePath = (state: RootState) => state.files.openFilePath;
+export const selectFiles = (state: RootState) => state.project.files;
+export const selectOpenFilePath = (state: RootState) => state.project.openFilePath;
+export const getProjectSettings = (state: RootState) => state.project.settings;
 
 // getContent selector function
 export const getContent = (state: RootState, path: string) => {
-  const item = findItemByPath(state.files.files, path.split('/'));
+  const item = findItemByPath(state.project.files, path.split('/'));
   return item && item.content;
 };
 
-export default filesSlice.reducer;
+export default projectSlice.reducer;

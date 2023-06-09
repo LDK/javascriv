@@ -2,8 +2,9 @@ import { Dialog, DialogContent, DialogContentText, TextField, FormControl, Input
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CancelButton, ConfirmButton } from "../Components/DialogButtons";
-import { addItem, BrowserItem, findItemByPath, selectFiles, setOpenFilePath } from "../redux/filesSlice";
-import { FileType, findParentFolder, ROOTFOLDER, SubType } from "./FileBrowser";
+import { ProjectFile } from "../Project/ProjectTypes";
+import { addItem, findItemByPath, selectFiles, setOpenFilePath } from "../redux/projectSlice";
+import { FileType, findParentFolder, ROOTFOLDER, SubType } from "./ProjectBrowser";
 import { getFolders, SetOpenFunction } from "./useBrowserDialog";
 
 type NewFileDialogProps = {
@@ -25,7 +26,7 @@ const NewFileDialog = ({
   const itemName = fileType === 'file' ? subType as string : 'folder';
   const [newItemName, setNewItemName] = useState('');
   const [parentFolder, setParentFolder] = useState<string | null>(openFolder);
-  const [siblings, setSiblings] = useState<BrowserItem[]>([]);
+  const [siblings, setSiblings] = useState<ProjectFile[]>([]);
   const [hasTwin, setHasTwin] = useState(false);
   const [disabledReason, setDisabledReason] = useState<string>('');
   const submitDisabled = !newItemName || hasTwin;
@@ -35,7 +36,7 @@ const NewFileDialog = ({
   const handleCreateNewFile = () => {
     const newPath = `${parentFolder}/${newItemName}`.replace('<root>','');
     
-    const newItem:BrowserItem = {
+    const newItem:ProjectFile = {
       name: newItemName,
       path: newPath,
       type: fileType as 'file' | 'folder',

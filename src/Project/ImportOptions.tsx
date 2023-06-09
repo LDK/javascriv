@@ -1,7 +1,7 @@
 // Import/ImportOptions.tsx
 import React, { useEffect, useState } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, useTheme } from '@mui/material';
-import { BrowserItem } from '../redux/filesSlice';
+import { ProjectFile } from "../Project/ProjectTypes";
 
 import { FileTreeItem } from '../FileTree/FileTree';
 import ImportTree from './ImportTree';
@@ -10,15 +10,15 @@ export interface ImportOptionsProps {
   optionsOpen: boolean;
   onClose: () => void;
   onReady: (options: ImportingOptions) => void;
-  files: BrowserItem[];
+  files: ProjectFile[];
 }
 
 export interface ImportingOptions {
-  items: BrowserItem[];
+  items: ProjectFile[];
 }
 
 const ImportOptions: React.FC<ImportOptionsProps> = ({ optionsOpen, onClose, onReady, files: items }) => {
-  const [importingItems, setImportingItems] = useState<BrowserItem[]>(items);
+  const [importingItems, setImportingItems] = useState<ProjectFile[]>(items);
 
   const theme = useTheme();
   const dark = theme.palette.mode === 'dark';
@@ -38,10 +38,10 @@ const ImportOptions: React.FC<ImportOptionsProps> = ({ optionsOpen, onClose, onR
   };
 
   const handleCheck = (updatedItems: FileTreeItem[]) => {
-    const filterIncludedItems = (items: FileTreeItem[]): BrowserItem[] => {
+    const filterIncludedItems = (items: FileTreeItem[]): ProjectFile[] => {
       return items.flatMap((item) => {
         if (item.included) {
-          const newItem: BrowserItem = { ...item, children: item.children ? filterIncludedItems(item.children) : undefined };
+          const newItem: ProjectFile = { ...item, children: item.children ? filterIncludedItems(item.children) : undefined };
           return [newItem];
         }
         return [];

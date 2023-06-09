@@ -1,16 +1,17 @@
 import { useSelector, useDispatch } from "react-redux";
-import { selectFiles, BrowserItem, addItem, findItemByPath, deleteItem, setOpenFilePath } from "../redux/filesSlice";
+import { ProjectFile } from "../Project/ProjectTypes";
+import { selectFiles, addItem, findItemByPath, deleteItem, setOpenFilePath } from "../redux/projectSlice";
 import { RootState } from "../redux/store";
 
-export type NewBrowserItem = Omit<BrowserItem, 'path' | 'name'>;
-export type SetOpenFunction = React.Dispatch<React.SetStateAction<BrowserItem | NewBrowserItem | false>>;
+export type NewBrowserItem = Omit<ProjectFile, 'path' | 'name'>;
+export type SetOpenFunction = React.Dispatch<React.SetStateAction<ProjectFile | NewBrowserItem | false>>;
 
 // Recursively iterate through all items and add folders to the itemsFolders array, 
 // as well as their children folders and grand-children folders, etc.
 // Handles any level of folder depth, recursively.
 
-export const getFolders = (itemPool: BrowserItem[], level?: number) => {
-  let itemsFolders:BrowserItem[] = [];
+export const getFolders = (itemPool: ProjectFile[], level?: number) => {
+  let itemsFolders:ProjectFile[] = [];
 
   const lvl = level || 1;
 
@@ -35,7 +36,7 @@ export const getFolders = (itemPool: BrowserItem[], level?: number) => {
 
 export default function useBrowserDialog(sourceFilePath: string, setOpen: SetOpenFunction) {
   const items = useSelector(selectFiles);
-  const openFilePath = useSelector((state:RootState) => state.files.openFilePath);
+  const openFilePath = useSelector((state:RootState) => state.project.openFilePath);
 
   const item = findItemByPath(items, sourceFilePath.split('/'));
 
@@ -44,10 +45,10 @@ export default function useBrowserDialog(sourceFilePath: string, setOpen: SetOpe
 
   const dispatch = useDispatch();
 
-  const handleCreateNewFile = (parentFolder: string | null, itemName: string, content?: string, children?: BrowserItem[]) => {
+  const handleCreateNewFile = (parentFolder: string | null, itemName: string, content?: string, children?: ProjectFile[]) => {
     const newPath = `${parentFolder}/${itemName}`.replace('<root>','');
 
-    const newItem:BrowserItem = {
+    const newItem:ProjectFile = {
       name: itemName,
       path: newPath,
       type: fileType as 'file' | 'folder',

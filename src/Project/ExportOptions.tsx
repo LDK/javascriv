@@ -1,8 +1,8 @@
 // Import/ImportOptions.tsx
 import React, { useState } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogContentText, TextField } from '@mui/material';
-import { BrowserItem } from '../redux/filesSlice';
 import useDialogUI from '../theme/useDialogUI';
+import { ProjectFile } from './ProjectTypes';
 
 export interface ExportOptionsProps {
   optionsOpen: boolean;
@@ -11,7 +11,7 @@ export interface ExportOptionsProps {
 }
 
 export interface ExportingOptions {
-  items: BrowserItem[];
+  items: ProjectFile[];
 }
 
 const ExportOptions: React.FC<ExportOptionsProps> = ({ optionsOpen, onClose, onReady }) => {

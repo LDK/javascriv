@@ -3,22 +3,23 @@ import { Dispatch, KeyboardEventHandler, SetStateAction, useCallback, useEffect,
 import { SxProps, Box, PaletteMode, ListItem, ListItemIcon, ListItemText, Collapse, List, useTheme } from "@mui/material";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { BrowserItem, reorderItem, setName } from "../redux/filesSlice";
+import { reorderItem, setName } from "../redux/projectSlice";
 import { ExtendedPalette } from "../theme/theme";
 
 import { Folder, Description as DocIcon, Image as ImageIcon, ExpandMore, ExpandLess, InsertDriveFile } from '@mui/icons-material';
 import ItemActionBar from "./ItemActionBar";
 import { SetOpenFunction } from "./useBrowserDialog";
+import { ProjectFile } from "../Project/ProjectTypes";
 
 type FileBrowserItemProps = {
-  item: BrowserItem;
+  item: ProjectFile;
   level?: number;
   index: number;
   count: number;
   path?: string[];
   openFilePath: string | null;
-  onDocumentClick: (item: BrowserItem) => void;
-  onFolderClick: (folder: BrowserItem) => void;
+  onDocumentClick: (item: ProjectFile) => void;
+  onFolderClick: (folder: ProjectFile) => void;
   setOpenFolder: Dispatch<SetStateAction<string | null>>;
   setDuplicating: SetOpenFunction;
   setDeleting: SetOpenFunction;
@@ -186,7 +187,7 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, count
       {isFolder && (
         <Collapse in={open} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-            {item.children?.map((child: BrowserItem, index: number) => (
+            {item.children?.map((child: ProjectFile, index: number) => (
               <FileBrowserItem {...{ openFolder, setDuplicating, setDeleting, setMoving, setOpenFolder, openFilePath, onDocumentClick, onFolderClick, index }} key={index} item={child} level={level + 1} path={[...path, item.name]} count={item.children?.length || 0} />
             ))}
           </List>

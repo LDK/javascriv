@@ -1,7 +1,7 @@
 import { Dialog, DialogContent, DialogContentText, DialogActions, Button, DialogTitle } from "@mui/material";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { findItemByPath } from "../redux/filesSlice";
-import { findParentFolder } from "./FileBrowser";
+import { findItemByPath } from "../redux/projectSlice";
+import { findParentFolder } from "./ProjectBrowser";
 import useBrowserDialog, { SetOpenFunction } from "./useBrowserDialog";
 
 type DeleteDialogProps = {

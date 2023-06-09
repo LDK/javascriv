@@ -2,17 +2,19 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Button, Container, CssBaseline, Grid, ThemeProvider } from '@mui/material';
 import Header from './Header';
-import FileBrowser from './FileBrowser/FileBrowser';
+import ProjectBrowser from './ProjectBrowser/ProjectBrowser';
 import { useDispatch, useSelector } from 'react-redux';
-import { BrowserItem, findItemByPath, setChanged, setContent, setOpenFilePath } from './redux/filesSlice';
+import { findItemByPath, setChanged, setContent, setOpenFilePath } from './redux/projectSlice';
 import TinyEditor from './Editor/Editor';
 import { darkTheme, lightTheme } from './theme/theme';
 import { RootState } from './redux/store';
 import useProject from './Project/useProject';
-import useFileBrowser from './FileBrowser/useFileBrowser';
+import useFileBrowser from './ProjectBrowser/useFileBrowser';
 import usePublishing from './Publish/usePublishing';
 import { Editor } from 'tinymce';
-import NewProjectDialog from './FileBrowser/NewProjectDialog';
+import NewProjectDialog from './ProjectBrowser/NewProjectDialog';
+import ProjectSettingsDialog from './Project/ProjectSettingsDialog';
+import { ProjectFile } from './Project/ProjectTypes';
 
 
 const App: React.FC = () => {  
@@ -21,10 +23,11 @@ const App: React.FC = () => {
   const [editor, setEditor] = useState<Editor | null>(null);
   const [initial, setInitial] = useState<string | null>(null);
   const [lastRevertTs, setLastRevertTs] = useState<number>(0);
+  const [projectSettingsOpen, setProjectSettingsOpen] = useState(false);
 
   const dispatch = useDispatch();
 
-  const handleDocumentClick = (item: BrowserItem) => {
+  const handleDocumentClick = (item: ProjectFile) => {
     if (openFilePath && editor) {
       dispatch(setContent({path: openFilePath, content: editor.getContent()}));
     }
@@ -98,8 +101,9 @@ const App: React.FC = () => {
         <Container maxWidth="xl" sx={{ px: "0 !important" }}>
           <Grid container spacing={0}>
             <Grid item xs={12} md={4} lg={3} xl={2} px={0} mx={0}>
-                <FileBrowser
+                <ProjectBrowser
                   onDocumentClick={documentClick}
+                  setProjectSettingsOpen={setProjectSettingsOpen}
                 />
             </Grid>
             <Grid item xs={12} md={8} lg={9} xl={10}>
@@ -146,7 +150,8 @@ const App: React.FC = () => {
         </Container>
       </Box>
  
-    <NewProjectDialog open={newProjectOpen} onClose={() => setNewProjectOpen(false)} />
+      <NewProjectDialog open={newProjectOpen} onClose={() => setNewProjectOpen(false)} />
+      <ProjectSettingsDialog open={projectSettingsOpen} onClose={() => setProjectSettingsOpen(false)} />
     </ThemeProvider>
   );
 };

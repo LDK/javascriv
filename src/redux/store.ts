@@ -1,8 +1,7 @@
 // redux/store.ts
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import filesSlice from './filesSlice';
+import projectSlice from './projectSlice';
 import themeSlice from './themeSlice';
-import workspacesSlice from './workspacesSlice';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
 
@@ -12,9 +11,8 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
-  files: filesSlice,
-  theme: themeSlice,
-  workspaces: workspacesSlice,
+  project: projectSlice,
+  theme: themeSlice
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

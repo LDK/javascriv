@@ -61,9 +61,15 @@
     ]
   },
   "devDependencies": {
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
     "@types/html-to-pdfmake": "^2.4.0",
     "@types/pdfmake": "^0.2.2",
     "@types/react-stickynode": "^4.0.0",
     "@types/xmldom": "^0.1.31"
+  },
+  "bit": {
+    "env": {},
+    "componentsDefaultDirectory": "components/{name}",
+    "packageManager": "npm"
   }
 }
