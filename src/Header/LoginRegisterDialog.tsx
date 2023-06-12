@@ -77,6 +77,8 @@ const LoginRegisterDialog: React.FC<LoginRegisterDialogProps> = ({ open, onClose
     .catch((err) => {
       setLoading(false);
       console.log(err);
+      console.log('env', process.env);
+      console.log('process', process);
     })
   };
 
