@@ -1,6 +1,5 @@
 // redux/projectSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { EditorFont } from '../Editor/EditorFonts';
 import { ProjectFile, ProjectState } from '../Project/ProjectTypes';
 import { RootState } from './store';
 

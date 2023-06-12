@@ -1,7 +1,7 @@
 // App.tsx
 import React, { useEffect, useState } from 'react';
 import { Box, Button, Container, CssBaseline, Grid, ThemeProvider } from '@mui/material';
-import Header from './Header';
+import Header from './Header/Header';
 import ProjectBrowser from './ProjectBrowser/ProjectBrowser';
 import { useDispatch, useSelector } from 'react-redux';
 import { findItemByPath, setChanged, setContent, setOpenFilePath } from './redux/projectSlice';

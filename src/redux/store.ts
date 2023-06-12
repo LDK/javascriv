@@ -2,6 +2,7 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import projectSlice from './projectSlice';
 import themeSlice from './themeSlice';
+import userSlice from './userSlice';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
 
@@ -12,7 +13,8 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   project: projectSlice,
-  theme: themeSlice
+  theme: themeSlice,
+  user: userSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

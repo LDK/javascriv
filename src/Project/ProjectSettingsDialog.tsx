@@ -1,6 +1,6 @@
 // Project/ProjectSettingsDialog.tsx
 import React, { useState } from 'react';
-import { Autocomplete, Box, Dialog, DialogContent, DialogTitle, Divider, Grid, Select, TextField, Typography } from '@mui/material';
+import { Autocomplete, Box, Dialog, DialogContent, DialogTitle, Divider, Grid, TextField, Typography } from '@mui/material';
 import useDialogUI from '../theme/useDialogUI';
 import { EditorFont, editorFonts } from '../Editor/EditorFonts';
 import { getProjectSettings } from '../redux/projectSlice';
