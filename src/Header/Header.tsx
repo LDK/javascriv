@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { AppBar, Box, Divider, Menu, MenuItem, Switch, Toolbar, Typography, useTheme } from '@mui/material';
+import React, { useState } from 'react';
+import { AppBar, Box, Divider, FormControl, InputLabel, ListSubheader, MenuItem, Select, Switch, Toolbar, Typography, useTheme } from '@mui/material';
 import Sticky from 'react-stickynode';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTheme } from '../redux/themeSlice';
@@ -9,7 +9,10 @@ import SunIcon from '@mui/icons-material/Brightness7';
 import LoginIcon from '@mui/icons-material/AccountCircleOutlined';
 import ProfileIcon from '@mui/icons-material/AccountCircle';
 import LoginRegisterDialog from './LoginRegisterDialog';
-import { clearUser } from '../redux/userSlice';
+import useUser from '../User/useUser';
+import { ProjectListing } from '../Project/ProjectTypes';
+import axios from 'axios';
+import { UserState } from '../redux/userSlice';
 
 type IconButtonProps = {
   clickAction: (e:React.MouseEvent) => void;
@@ -38,27 +41,47 @@ const ThemeToggleSwitch: React.FC<{ isDarkMode: boolean; toggleTheme: (event: Re
   );
 };
 
+const ProjectSelector:React.FC<any> = ({ user }: { user: UserState }) => {
+  const { projects, token } = user;
+
+  // This will be moved to the useProject hook, but for now it's here out of convenience
+  const loadProject = (project:ProjectListing) => {
+    console.log('load project', project);
+    const AuthStr = 'Bearer ' + token;
+    axios.get(`${process.env.REACT_APP_API_URL}/project/${project.id}`, { headers: { Authorization: AuthStr } });
+  };
+
+  return (
+    <FormControl sx={{ my: 0, mr: 2, p:0, minWidth: 120 }}>
+    <InputLabel htmlFor="grouped-select">Projects</InputLabel>
+    <Select defaultValue="" id="grouped-select" label="Grouping" variant="outlined">
+      {projects && Object.keys(projects).map((group) => {
+        if (!projects[group as keyof typeof projects].length) {
+          return null;
+        }
+        return (
+          <div key={group}>
+            <ListSubheader>{group} Projects</ListSubheader>
+            {projects[group as keyof typeof projects].map((project) => (
+              <MenuItem key={project.id} onClick={() => loadProject(project)}>{project.title}</MenuItem>
+            ))}
+          </div>
+        );
+      })}
+
+      <Divider />
+      <MenuItem onClick={() => console.log('new project')}>New Project</MenuItem>
+      <MenuItem onClick={() => console.log('import project')}>Import Project</MenuItem>        
+    </Select>
+  </FormControl>
+  )
+};
+
 const Header: React.FC<any> = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
-  const user = useSelector((state:RootState) => state.user);
 
   const [loginOpen, setLoginOpen] = useState(false);
-  const [anchorElUser, setAnchorElUser] = useState<HTMLElement | null>(null);
-
-  const handleOpenUserMenu = (event:React.MouseEvent) => {
-    setAnchorElUser(event.currentTarget as HTMLElement);
-  };
-
-  useEffect(() => {
-    if (anchorElUser) {
-      console.log('anchorElUser', anchorElUser);
-    }
-  }, [anchorElUser]);
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
 
   const activeTheme = useSelector((state:RootState) => state.theme.active);
   const isDarkMode = (activeTheme === 'dark');
@@ -68,45 +91,20 @@ const Header: React.FC<any> = () => {
     dispatch(setTheme(mode));
   }
 
-  const handleLogout = () => {
-    dispatch(clearUser());
-    handleCloseUserMenu();
-  }
+  const { user, UserMenu, handleOpenUserMenu } = useUser();
 
   return (
     <Sticky innerZ={2}>
       <AppBar sx={{ backgroundColor: theme.palette.primary.main, textAlign: 'right', alignItems: 'flex-end' }}>
         <Typography pl={3} pt={1} component="h1" variant="h4" position="absolute" top={0} left={0} color={theme.palette.text.primary}>javaScriv</Typography>
+
         <Toolbar>
+          {!user ? null : <ProjectSelector {...{ user }} />}
+
           <ThemeToggleSwitch {...{ isDarkMode, toggleTheme }} />
           {!user.id && <IconButton icon={<LoginIcon />} clickAction={() => setLoginOpen(true)} />}
           {user.id && <IconButton title={`Logged in as ${user.username}`} icon={<ProfileIcon />} clickAction={handleOpenUserMenu} />}
-          <Menu
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-              sx={{
-                display: { xs: 'block' },
-                py: 0
-              }}
-            >
-              <Typography variant="body2" sx={{ px: 2, py: 1, color: theme.palette.text.primary }}>Hello {user.username}!</Typography>
-
-              <Divider sx={{ my: 1 }} />
-
-              <MenuItem onClick={handleLogout}>Sign out</MenuItem>
-          </Menu>
-
+          <UserMenu />
         </Toolbar>
         {!user.id && <LoginRegisterDialog open={loginOpen} onClose={() => setLoginOpen(false)} />}
       </AppBar>
