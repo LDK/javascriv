@@ -1,6 +1,6 @@
 // Browser/ProjectBrowser.tsx
 import React, { useState } from 'react';
-import { Box, IconButton, useTheme, PaletteColor, PaletteMode } from '@mui/material';
+import { Box, IconButton, useTheme, PaletteColor, PaletteMode, Typography } from '@mui/material';
 import { findItemByPath, selectFiles, selectOpenFilePath } from '../redux/projectSlice';
 import { useSelector } from 'react-redux';
 import Sticky from 'react-stickynode';
@@ -14,6 +14,8 @@ import DuplicateDialog from './DuplicateDialog';
 import DeleteDialog from './DeleteDialog';
 import MoveFileDialog from './MoveFileDialog';
 import { ProjectFile } from '../Project/ProjectTypes';
+import ProjectActionBar from './ProjectActionBar';
+import useProjectRename from './useProjectRename';
 
 interface ProjectBrowserProps {
   onDocumentClick: (item: ProjectFile) => void;
@@ -36,6 +38,7 @@ export type SubType = 'document' | 'image' | 'other' | null;
 
 const ProjectBrowser: React.FC<ProjectBrowserProps> = ({ onDocumentClick, setProjectSettingsOpen }) => {
   const items = useSelector(selectFiles);
+
   const openFilePath = useSelector(selectOpenFilePath);
   const theme = useTheme();
 
@@ -76,6 +79,8 @@ const ProjectBrowser: React.FC<ProjectBrowserProps> = ({ onDocumentClick, setPro
     return `rgba(${color[mode].replace('rgb(', '').replace(')', '')}, ${opacity})`;
   }
 
+  const { renaming, title, renameInputRef, handleEditClick, handleRenameBlur, handleRenameKeyPress } = useProjectRename();
+
   return (
     <Box
       width="100%"
@@ -87,9 +92,29 @@ const ProjectBrowser: React.FC<ProjectBrowserProps> = ({ onDocumentClick, setPro
       }}
     >
       <Sticky top={64} innerZ={1}>
+        <Box px={3} py={1} position="relative">
+          {renaming ? (
+            <input
+              ref={renameInputRef}
+              defaultValue={title}
+              onBlur={handleRenameBlur}
+              onKeyPress={handleRenameKeyPress}
+              style={{ border: "none", outline: "none", background: "transparent", color: "inherit" }}
+            />
+          ) : (
+            <>
+              <Typography variant="h6" component="h2" sx={{ color: theme.palette.primary.contrastText }}>
+                { title }
+              </Typography>
+            </>
+          )}
+
+          <ProjectActionBar onEditClick={handleEditClick}
+          />
+        </Box>
         <Box
           overflow={{ overflowY: "scroll" }}
-          maxHeight="calc(100vh - 60px)"
+          maxHeight="calc(100vh - 108px)"
           pb={8}
           sx={{ color: theme.palette.text.primary }}
           height="100vh"

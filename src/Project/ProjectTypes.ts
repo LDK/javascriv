@@ -22,3 +22,15 @@ export type ProjectState = {
   settings?: ProjectSettings;
   title?: string;
 };
+
+export type ProjectListing = {
+  id: number;
+  title: string;
+}
+
+export type Project = ProjectState & {
+  creator: number;
+  id: number;
+  title: string;
+}
+

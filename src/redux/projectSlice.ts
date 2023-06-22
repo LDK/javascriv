@@ -1,6 +1,6 @@
 // redux/projectSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ProjectFile, ProjectState } from '../Project/ProjectTypes';
+import { ProjectFile, ProjectSettings, ProjectState } from '../Project/ProjectTypes';
 import { RootState } from './store';
 
 const initialItems: ProjectFile[] = [
@@ -48,6 +48,12 @@ const projectSlice = createSlice({
   name: 'project',
   initialState,
   reducers: {
+    setProjectTitle: (state, action: PayloadAction<string>) => {
+      state.title = action.payload;
+    },
+    setProjectSettings: (state, action: PayloadAction<ProjectSettings>) => {
+      state.settings = action.payload;
+    },
     saveSetting: (state, action: PayloadAction<{ settingKey: string; value: string | number | boolean }>) => {
       const { settingKey, value } = action.payload;
       if (state.settings) {
@@ -174,10 +180,11 @@ const projectSlice = createSlice({
   },
 });
 
-export const { setContent, setChanged, setOpenFilePath, deleteItem, addItem, saveItem, reorderItem, setName, setFiles } = projectSlice.actions;
+export const { setContent, setChanged, setOpenFilePath, deleteItem, addItem, saveItem, reorderItem, setName, setFiles, saveSetting, setProjectTitle, setProjectSettings } = projectSlice.actions;
 
 export const selectFiles = (state: RootState) => state.project.files;
 export const selectOpenFilePath = (state: RootState) => state.project.openFilePath;
+export const selectProjectTitle = (state: RootState) => state.project.title || 'Untitled Project';
 export const getProjectSettings = (state: RootState) => state.project.settings;
 
 // getContent selector function

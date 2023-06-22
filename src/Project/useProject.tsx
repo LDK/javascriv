@@ -3,14 +3,14 @@
 import { Button } from "@mui/material";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { findItemByPath, setFiles, setOpenFilePath } from "../redux/projectSlice";
+import { findItemByPath, setFiles, setOpenFilePath, setProjectSettings, setProjectTitle } from "../redux/projectSlice";
 import { store } from "../redux/store";
 import JSZip from 'jszip';
 import { getFullTree } from "../Convert/scrivener/scrivener";
 import ImportOptions, { ImportingOptions } from "./ImportOptions";
 import { renameTwins } from "./projectUtils";
 import ExportOptions from "./ExportOptions";
-import { ProjectFile, ProjectState } from "./ProjectTypes";
+import { ProjectFile, ProjectSettings, ProjectState } from "./ProjectTypes";
 
 export interface XmlIndex {
   [id:string]: string;
@@ -24,7 +24,9 @@ const useProject = (handleEditorChange:((content: string) => void)) => {
 
   const [importingPath, setImportingPath] = useState<string[] | null>(null);
   const [importingFiles, setImportingFiles] = useState<ProjectFile[] | false>(false);
+  const [importingTitle, setImportingTitle] = useState<string>('');
   const [importingContent, setImportingContent] = useState<string | null>(null);
+  const [importingSettings, setImportingSettings] = useState<ProjectSettings>({});
 
   const parseZipFile = async (file: File) => {
     // Create a new instance of JSZip
@@ -83,6 +85,7 @@ const useProject = (handleEditorChange:((content: string) => void)) => {
       const newPath = fullTree[0]?.path.split('/').filter((item) => item.length) || [];
       setImportingPath(newPath);
       setImportingFiles(fullTree);
+      setImportingSettings({});
       const newItem = findItemByPath(fullTree, newPath);
 
       if (newItem && newItem.content) {
@@ -137,6 +140,16 @@ const useProject = (handleEditorChange:((content: string) => void)) => {
               if (newItem && newItem.content) {
                 setImportingContent(newItem.content);
               }
+
+              if (importedProject.settings) {
+                setImportingSettings(importedProject.settings);
+              }
+
+              if (importedProject.title) {
+                setImportingTitle(importedProject.title);
+              } else {
+                setImportingTitle('New Project');
+              }
             }
           }
 
@@ -145,6 +158,7 @@ const useProject = (handleEditorChange:((content: string) => void)) => {
         setImportingPath(null);
         setImportingFiles(false);
         setImportingContent(null);
+        setImportingTitle('');
 
         console.error('Error importing project:', error);
       }
@@ -259,6 +273,12 @@ const useProject = (handleEditorChange:((content: string) => void)) => {
           handleEditorChange('');
         }
       }
+
+      if (importingTitle) {
+        dispatch(setProjectTitle(importingTitle));
+      } else {
+        dispatch(setProjectTitle('New Project'));
+      }
     }
 
     handleImportClose();
@@ -294,7 +314,8 @@ const useProject = (handleEditorChange:((content: string) => void)) => {
 
   const ImportDialog = () => (
     <ImportOptions 
-      files={importingFiles || []} 
+      files={importingFiles || []}
+      title={importingTitle || 'New Project'}
       onReady={handleImportReady}
       optionsOpen={Boolean(importOptionsOpen && importingFiles)}
       onClose={handleImportClose}

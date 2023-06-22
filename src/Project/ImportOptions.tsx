@@ -1,6 +1,6 @@
 // Import/ImportOptions.tsx
 import React, { useEffect, useState } from 'react';
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, useTheme } from '@mui/material';
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button, useTheme, TextField } from '@mui/material';
 import { ProjectFile } from "../Project/ProjectTypes";
 
 import { FileTreeItem } from '../FileTree/FileTree';
@@ -9,6 +9,7 @@ import ImportTree from './ImportTree';
 export interface ImportOptionsProps {
   optionsOpen: boolean;
   onClose: () => void;
+  title?: string;
   onReady: (options: ImportingOptions) => void;
   files: ProjectFile[];
 }
@@ -17,7 +18,7 @@ export interface ImportingOptions {
   items: ProjectFile[];
 }
 
-const ImportOptions: React.FC<ImportOptionsProps> = ({ optionsOpen, onClose, onReady, files: items }) => {
+const ImportOptions: React.FC<ImportOptionsProps> = ({ optionsOpen, onClose, title, onReady, files: items }) => {
   const [importingItems, setImportingItems] = useState<ProjectFile[]>(items);
 
   const theme = useTheme();
@@ -62,8 +63,11 @@ const ImportOptions: React.FC<ImportOptionsProps> = ({ optionsOpen, onClose, onR
       <DialogTitle>Import Options</DialogTitle>
 
       <DialogContent>
+        <TextField fullWidth label="Title" value={title} />
+
         <ImportTree items={items} onCheck={handleCheck} />
       </DialogContent>
+
       <DialogActions sx={{ px: 3, pb: 2, pt:0 }}>
         <Button onClick={handleClose} color="error" variant={dark ? 'outlined' : 'contained'} sx={{ fontWeight: 700 }}>
           Cancel
