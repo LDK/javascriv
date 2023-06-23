@@ -15,6 +15,7 @@ import { Editor } from 'tinymce';
 import NewProjectDialog from './ProjectBrowser/NewProjectDialog';
 import ProjectSettingsDialog from './Project/ProjectSettingsDialog';
 import { ProjectFile } from './Project/ProjectTypes';
+import OpenProjectDialog from './ProjectBrowser/OpenProjectDialog';
 
 
 const App: React.FC = () => {  
@@ -42,7 +43,7 @@ const App: React.FC = () => {
     setHasContentChanged(content !== initial);
   };
 
-  const { ImportButton, ExportButton, ImportOptions, ExportOptions, handleUpload, setNewProjectOpen, newProjectOpen } = useProject(handleEditorChange);
+  const { opening, setOpening, ImportButton, ExportButton, ImportOptions, ExportOptions, handleUpload, setNewProjectOpen, newProjectOpen, loadProject } = useProject(handleEditorChange);
 
   const activeTheme = useSelector((state:RootState) => state.theme.active);
 
@@ -51,6 +52,7 @@ const App: React.FC = () => {
   }, [hasContentChanged, openFilePath, dispatch]);
 
   useEffect(() => {
+    console.log('items', items);
     if (openFilePath && items) {
       const existing = findItemByPath(items, openFilePath.split('/'));
       if (existing && existing.path) {
@@ -92,9 +94,33 @@ const App: React.FC = () => {
     setEditorContent(initial);
   };
 
+  const handleOpenProjectClose = () => {
+    setOpening(undefined);
+  };
+
+  const SaveButton = () => <Button variant="text" color="primary" onClick={handleSave} disabled={!hasContentChanged}>Save</Button>;
+  const RevertButton = () => <Button variant="text" color="primary" onClick={handleRevert} disabled={!hasContentChanged}>Revert</Button>;
+  const NewProjectButton = () => <Button onClick={(e) => {
+    e.currentTarget.blur(); // Remove focus from the button
+    setNewProjectOpen(true);
+  } }
+    color="primary" variant="text"
+  >
+    New Project
+  </Button>;
+
+  const appMenuButtons = [
+    <SaveButton />,
+    <RevertButton />,
+    <ExportButton />,
+    <ImportButton callback={() => { fileInputRef?.click();}} />,
+    <NewProjectButton />,
+    <PublishButton />,
+  ];
+
   return (
     <ThemeProvider theme={activeTheme === 'light' ? lightTheme : darkTheme}>
-      <Header />
+      <Header {...{ loadProject, appMenuButtons }} />
       <CssBaseline />
 
       <Box pt={8} flexGrow={1} display="flex">
@@ -111,36 +137,14 @@ const App: React.FC = () => {
                 <TinyEditor {...{ setEditor, handleEditorChange }} lastRevert={lastRevertTs} content={editorContent || ''} />
 
                 <Box pt={2} className="actions" position="absolute" bottom="2rem" width="100%" right="0" textAlign="right">
-                  <Button variant="contained" color="primary" onClick={handleSave} disabled={!hasContentChanged}>
-                    Save
-                  </Button>
-
-                  <Button variant="contained" color="primary" onClick={handleRevert} disabled={!hasContentChanged}>
-                    Revert
-                  </Button>
-
-                  <ExportButton />
-                  <ExportOptions />
-
-                  <input type="file" accept=".zip, .json"
+                <input type="file" accept=".zip, .json"
                     ref={setFileInputRef}
                     onChange={handleUpload}
                     style={{ display: 'none' }} />
 
-                  <ImportButton callback={() => { fileInputRef?.click();}} />
+                  <ExportOptions />
+
                   <ImportOptions />
-
-                  <Button onClick={
-                    (e) => {
-                      e.currentTarget.blur(); // Remove focus from the button
-                      setNewProjectOpen(true) }
-                    }
-                    color="primary" variant="contained"
-                  >
-                    New Project
-                  </Button>
-
-                  <PublishButton />
                   <PublishOptions />
                 </Box>
 
@@ -151,6 +155,7 @@ const App: React.FC = () => {
       </Box>
  
       <NewProjectDialog open={newProjectOpen} onClose={() => setNewProjectOpen(false)} />
+      <OpenProjectDialog onClose={handleOpenProjectClose} project={opening} />
       <ProjectSettingsDialog open={projectSettingsOpen} onClose={() => setProjectSettingsOpen(false)} />
     </ThemeProvider>
   );

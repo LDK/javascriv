@@ -17,7 +17,7 @@ const apiKey = process.env.REACT_APP_TINYMCE_API_KEY;
 const TinyEditor: React.FC<TinyEditorProps> = ({ content, setEditor, handleEditorChange, lastRevert }) => {
   const editorRef = useRef<MyEditor | null>(null);
   const [fullScreen, setFullScreen] = useState(false);
-  const height="500";
+  const height="calc(100vh - 64px)";
   const theme = useTheme();
 
   const handleInit = (_event: any, editor: MyEditor) => {

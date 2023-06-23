@@ -5,8 +5,8 @@ import PublishOptions from "./PublishOptions";
 const usePublishing = () => {
   const [publishOptionsOpen, setPublishOptionsOpen] = useState(false);
 
-  const PublishButton = () => (
-    <Button onClick={() => { setPublishOptionsOpen(true) }} color="primary" variant="contained">
+  const PublishButton = ({ variant }: { variant?: 'text' | 'outlined' | 'contained' }) => (
+    <Button onClick={() => { setPublishOptionsOpen(true) }} color="primary" variant={variant || "text"}>
       Publish
     </Button>
   );

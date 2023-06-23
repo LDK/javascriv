@@ -8,11 +8,13 @@ import MoonIcon from '@mui/icons-material/Brightness2';
 import SunIcon from '@mui/icons-material/Brightness7';
 import LoginIcon from '@mui/icons-material/AccountCircleOutlined';
 import ProfileIcon from '@mui/icons-material/AccountCircle';
+import MenuRounded from '@mui/icons-material/MenuRounded';
+
 import LoginRegisterDialog from './LoginRegisterDialog';
 import useUser from '../User/useUser';
-import { ProjectListing } from '../Project/ProjectTypes';
-import axios from 'axios';
+import { ProjectListing, ProjectState } from '../Project/ProjectTypes';
 import { UserState } from '../redux/userSlice';
+import useAppMenu from '../useAppMenu';
 
 type IconButtonProps = {
   clickAction: (e:React.MouseEvent) => void;
@@ -41,15 +43,12 @@ const ThemeToggleSwitch: React.FC<{ isDarkMode: boolean; toggleTheme: (event: Re
   );
 };
 
-const ProjectSelector:React.FC<any> = ({ user }: { user: UserState }) => {
+const ProjectSelector:React.FC<any> = ({ user, callback }: { user: UserState, callback: (arg:ProjectListing, token: string) => void }) => {
   const { projects, token } = user;
-
-  // This will be moved to the useProject hook, but for now it's here out of convenience
-  const loadProject = (project:ProjectListing) => {
-    console.log('load project', project);
-    const AuthStr = 'Bearer ' + token;
-    axios.get(`${process.env.REACT_APP_API_URL}/project/${project.id}`, { headers: { Authorization: AuthStr } });
-  };
+  
+  if (!projects || !token) {
+    return null;
+  }
 
   return (
     <FormControl sx={{ my: 0, mr: 2, p:0, minWidth: 120 }}>
@@ -63,13 +62,14 @@ const ProjectSelector:React.FC<any> = ({ user }: { user: UserState }) => {
           <div key={group}>
             <ListSubheader>{group} Projects</ListSubheader>
             {projects[group as keyof typeof projects].map((project) => (
-              <MenuItem key={project.id} onClick={() => loadProject(project)}>{project.title}</MenuItem>
+              <MenuItem key={project.id} onClick={() => callback(project, token)}>{project.title}</MenuItem>
             ))}
           </div>
         );
       })}
 
       <Divider />
+
       <MenuItem onClick={() => console.log('new project')}>New Project</MenuItem>
       <MenuItem onClick={() => console.log('import project')}>Import Project</MenuItem>        
     </Select>
@@ -77,7 +77,12 @@ const ProjectSelector:React.FC<any> = ({ user }: { user: UserState }) => {
   )
 };
 
-const Header: React.FC<any> = () => {
+type HeaderProps = { 
+  loadProject: (arg:ProjectState, token: string) => void;
+  appMenuButtons: JSX.Element[];
+};
+
+const Header: React.FC<any> = ({ loadProject, appMenuButtons }:HeaderProps) => {
   const theme = useTheme();
   const dispatch = useDispatch();
 
@@ -92,6 +97,7 @@ const Header: React.FC<any> = () => {
   }
 
   const { user, UserMenu, handleOpenUserMenu } = useUser();
+  const { AppMenu, handleOpenAppMenu } = useAppMenu({ buttons: appMenuButtons });
 
   return (
     <Sticky innerZ={2}>
@@ -99,9 +105,15 @@ const Header: React.FC<any> = () => {
         <Typography pl={3} pt={1} component="h1" variant="h4" position="absolute" top={0} left={0} color={theme.palette.text.primary}>javaScriv</Typography>
 
         <Toolbar>
-          {!user ? null : <ProjectSelector {...{ user }} />}
+          {!user ? null : <ProjectSelector {...{ user }} callback={loadProject} />}
 
           <ThemeToggleSwitch {...{ isDarkMode, toggleTheme }} />
+
+          <Box p={0} m={0} alignItems="center" display="flex" mr={1}>
+            <IconButton title={`Main Menu`} icon={<MenuRounded />} clickAction={handleOpenAppMenu} />
+            <AppMenu buttons={appMenuButtons} />
+          </Box>
+
           {!user.id && <IconButton icon={<LoginIcon />} clickAction={() => setLoginOpen(true)} />}
           {user.id && <IconButton title={`Logged in as ${user.username}`} icon={<ProfileIcon />} clickAction={handleOpenUserMenu} />}
           <UserMenu />

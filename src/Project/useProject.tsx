@@ -10,7 +10,8 @@ import { getFullTree } from "../Convert/scrivener/scrivener";
 import ImportOptions, { ImportingOptions } from "./ImportOptions";
 import { renameTwins } from "./projectUtils";
 import ExportOptions from "./ExportOptions";
-import { ProjectFile, ProjectSettings, ProjectState } from "./ProjectTypes";
+import { ProjectFile, ProjectListing, ProjectSettings, ProjectState } from "./ProjectTypes";
+import axios from "axios";
 
 export interface XmlIndex {
   [id:string]: string;
@@ -27,6 +28,8 @@ const useProject = (handleEditorChange:((content: string) => void)) => {
   const [importingTitle, setImportingTitle] = useState<string>('');
   const [importingContent, setImportingContent] = useState<string | null>(null);
   const [importingSettings, setImportingSettings] = useState<ProjectSettings>({});
+
+  const [opening, setOpening] = useState<ProjectState | undefined>(undefined);
 
   const parseZipFile = async (file: File) => {
     // Create a new instance of JSZip
@@ -128,6 +131,7 @@ const useProject = (handleEditorChange:((content: string) => void)) => {
           const importedProject:ProjectState = JSON.parse(content);
 
           if (importedProject) {
+            console.log('importedProject', importedProject);
             const projectFiles = renameTwins(importedProject.files);
             // const projectFiles = importedProject.files;
 
@@ -174,7 +178,7 @@ const useProject = (handleEditorChange:((content: string) => void)) => {
   
     // Use getState to grab `files` and `openFilePath` from files state
     const projectData = store.getState().project;
-  
+
     // Convert the project data object into a JSON-formatted string
     const jsonString = JSON.stringify(projectData, null, 2);
   
@@ -279,6 +283,12 @@ const useProject = (handleEditorChange:((content: string) => void)) => {
       } else {
         dispatch(setProjectTitle('New Project'));
       }
+
+      if (importingSettings) {
+        dispatch(setProjectSettings(importingSettings));
+      } else {
+        dispatch(setProjectSettings({}));
+      }
     }
 
     handleImportClose();
@@ -295,19 +305,19 @@ const useProject = (handleEditorChange:((content: string) => void)) => {
     }
   }
 
-  const ImportButton = ({callback}: {callback: () => void}) => (
+  const ImportButton = ({callback, variant}: {callback: () => void, variant?: 'text' | 'outlined' | 'contained'}) => (
     <Button onClick={() => {
       callback();
       setImportOptionsOpen(true);
-    }} color="primary" variant="contained">
+    }} color="primary" variant={variant || 'text'}>
       Import...
     </Button>
   );
 
-  const ExportButton = () => (
+  const ExportButton = ({variant}: {variant?: 'text' | 'outlined' | 'contained'}) => (
     <Button onClick={() => {
       setExportOptionsOpen(true);
-    }} color="primary" variant="contained">
+    }} color="primary" variant={variant || 'text'}>
       Export...
     </Button>
   );
@@ -330,7 +340,20 @@ const useProject = (handleEditorChange:((content: string) => void)) => {
      />
   );
 
-  return { importProjectFromJson, handleUpload, ExportOptions: ExportDialog, setExportOptionsOpen, ImportButton, ExportButton, ImportOptions: ImportDialog, setNewProjectOpen, newProjectOpen }
+  const loadProject = (project:ProjectListing, token:string) => {
+    const AuthStr = 'Bearer ' + token;
+    axios.get(`${process.env.REACT_APP_API_URL}/project/${project.id}`, { headers: { Authorization: AuthStr } })
+      .then((response) => {
+        console.log('response', response);
+        setOpening(response.data);
+      })
+      .catch((error) => {
+        console.log('error', error);
+      }
+    );
+  };
+
+  return { opening, setOpening, importProjectFromJson, handleUpload, ExportOptions: ExportDialog, setExportOptionsOpen, ImportButton, ExportButton, ImportOptions: ImportDialog, setNewProjectOpen, newProjectOpen, loadProject }
 };
 
 export default useProject;
