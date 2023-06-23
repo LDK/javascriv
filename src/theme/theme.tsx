@@ -100,7 +100,20 @@ const lightThemeOptions:ExtendedThemeOptions = {
   },
 };
 
-export const lightTheme = createTheme(lightThemeOptions);
-export const darkTheme = createTheme(darkThemeOptions);
+const baseThemeOptions:ExtendedThemeOptions = {
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          textTransform: 'none',
+          justifyContent: 'start',
+        },
+      },
+    },
+  },
+};
+
+export const lightTheme = createTheme({ ...baseThemeOptions, ...lightThemeOptions });
+export const darkTheme = createTheme({ ...baseThemeOptions, ...darkThemeOptions });
 export type ExtendedPalette = Palette & { tray: PaletteColor };
 
