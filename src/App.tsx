@@ -110,8 +110,8 @@ const App: React.FC = () => {
   </Button>;
 
   const appMenuButtons = [
-    <RevertButton />,
     <SaveButton />,
+    <RevertButton />,
     <ExportButton />,
     <ImportButton callback={() => { fileInputRef?.click();}} />,
     <NewProjectButton />,

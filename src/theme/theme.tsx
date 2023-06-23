@@ -107,6 +107,10 @@ const baseThemeOptions:ExtendedThemeOptions = {
         root: {
           textTransform: 'none',
           justifyContent: 'start',
+          paddingTop: '0.25rem',
+          paddingBottom: '0.25rem',
+          fontWeight: 600,
+          fontSize: '.9rem',
         },
       },
     },

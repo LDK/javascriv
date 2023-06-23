@@ -17,7 +17,7 @@ export default function useAppMenu({ buttons }:AppMenuProps) {
   };
   
   const menuItems = buttons.map((button:JSX.Element, index) => (
-    <MenuItem key={index} onClick={handleCloseAppMenu}>
+    <MenuItem key={index} onClick={handleCloseAppMenu} sx={{ py: 0 }}>
       {button}
     </MenuItem>
   ));
