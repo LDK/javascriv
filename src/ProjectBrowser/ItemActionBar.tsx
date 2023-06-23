@@ -66,7 +66,7 @@ const ItemActionBar = ({ index, count, onEditClick, onDuplicate, onDelete, onMov
 
   return (
     <>
-      <Box onClick={handleIconClick} sx={{ marginLeft: "auto", display: "flex", alignItems: "center", visibility: "hidden" }}>
+      <Box position="absolute" right={0} onClick={handleIconClick} sx={{ marginLeft: "auto", display: "flex", alignItems: "center", visibility: "hidden", backdropFilter: "blur(10px)", backgroundColor: "rgba(255,255,255,.2)" }}>
         <EditButton action={handleEditClick} />
         <UpButton action={handleMoveUp} disabled={index < 1} />
         <DownButton action={handleMoveDown} disabled={index >= count - 1} />
