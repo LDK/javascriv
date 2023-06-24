@@ -1,6 +1,6 @@
 // Browser/ProjectActionBar.tsx
 import { Box } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 import { EditButton } from "./ItemActionButtons";
 
 type ProjectActionBarProps = {

@@ -16,6 +16,7 @@ import NewProjectDialog from './ProjectBrowser/NewProjectDialog';
 import ProjectSettingsDialog from './Project/ProjectSettingsDialog';
 import { ProjectFile } from './Project/ProjectTypes';
 import OpenProjectDialog from './ProjectBrowser/OpenProjectDialog';
+import useUser from './User/useUser';
 
 
 const App: React.FC = () => {  
@@ -25,6 +26,7 @@ const App: React.FC = () => {
   const [initial, setInitial] = useState<string | null>(null);
   const [lastRevertTs, setLastRevertTs] = useState<number>(0);
   const [projectSettingsOpen, setProjectSettingsOpen] = useState(false);
+  const { user, getProjectListings } = useUser();
 
   const dispatch = useDispatch();
 
@@ -43,7 +45,10 @@ const App: React.FC = () => {
     setHasContentChanged(content !== initial);
   };
 
-  const { opening, setOpening, ImportButton, ExportButton, ImportOptions, ExportOptions, handleUpload, setNewProjectOpen, newProjectOpen, loadProject } = useProject(handleEditorChange);
+  const { 
+    opening, setOpening, ImportButton, ExportButton, ImportOptions, ExportOptions, 
+    handleUpload, setNewProjectOpen, newProjectOpen, loadProject, saveProject 
+  } = useProject({ handleEditorChange, saveCallback: () => { getProjectListings(true) } });
 
   const activeTheme = useSelector((state:RootState) => state.theme.active);
 
@@ -87,6 +92,7 @@ const App: React.FC = () => {
     const content = editor.getContent() || '';
     saveFile(content);
     setInitial(content);
+    saveProject({ user });
   };
 
   const handleRevert = async () => {

@@ -3,12 +3,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ProjectFile, ProjectSettings, ProjectState } from '../Project/ProjectTypes';
 import { RootState } from './store';
 
-const initialItems: ProjectFile[] = [
-
-];
-
 const initialState:ProjectState = {
-  files: initialItems,
+  files: [],
   openFilePath: null,
   settings: {},
   title: 'New Project'
@@ -51,6 +47,9 @@ const projectSlice = createSlice({
     setProjectTitle: (state, action: PayloadAction<string>) => {
       state.title = action.payload;
     },
+    setProjectCreator: (state, action: PayloadAction<number>) => {
+      state.creator = action.payload;
+    },
     setProjectSettings: (state, action: PayloadAction<ProjectSettings>) => {
       state.settings = action.payload;
     },
@@ -83,6 +82,9 @@ const projectSlice = createSlice({
       if (item) {
         item.changed = changed;
       }
+    },
+    setProjectId: (state, action: PayloadAction<number | undefined>) => {
+      state.id = action.payload;
     },
     setName: (state, action: PayloadAction<{ path: string; newName: string }>) => {
       const { path, newName } = action.payload;
@@ -180,12 +182,13 @@ const projectSlice = createSlice({
   },
 });
 
-export const { setContent, setChanged, setOpenFilePath, deleteItem, addItem, saveItem, reorderItem, setName, setFiles, saveSetting, setProjectTitle, setProjectSettings } = projectSlice.actions;
+export const { setProjectId, setProjectCreator, setContent, setChanged, setOpenFilePath, deleteItem, addItem, saveItem, reorderItem, setName, setFiles, saveSetting, setProjectTitle, setProjectSettings } = projectSlice.actions;
 
 export const selectFiles = (state: RootState) => state.project.files;
 export const selectOpenFilePath = (state: RootState) => state.project.openFilePath;
 export const selectProjectTitle = (state: RootState) => state.project.title || 'Untitled Project';
 export const getProjectSettings = (state: RootState) => state.project.settings;
+export const getCurrentProject = (state: RootState) => state.project;
 
 // getContent selector function
 export const getContent = (state: RootState, path: string) => {

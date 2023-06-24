@@ -2,7 +2,9 @@ import { Dialog, DialogContent, DialogActions, Typography } from "@mui/material"
 import { useDispatch, useSelector } from "react-redux";
 import { CancelButton, ConfirmButton } from "../Components/DialogButtons";
 import { ProjectState } from "../Project/ProjectTypes";
+import useProject from "../Project/useProject";
 import { selectProjectTitle, setFiles, setOpenFilePath, setProjectSettings, setProjectTitle } from "../redux/projectSlice";
+import useUser from "../User/useUser";
 
 type OpenProjectDialogProps = {
   onClose: () => void;
@@ -13,11 +15,16 @@ const OpenProjectDialog = ({ onClose, project }: OpenProjectDialogProps) => {
   const dispatch = useDispatch();
   const currentTitle = useSelector(selectProjectTitle);
 
+  const { user } = useUser();
+  const { saveProject } = useProject({});
+
   if (!project) {
     return null;
   }
 
   console.log('opening project', project);
+
+
 
   const handleOpenProject = () => {
     dispatch(setFiles(project.files));
@@ -28,7 +35,7 @@ const OpenProjectDialog = ({ onClose, project }: OpenProjectDialogProps) => {
   };
 
   const handleSaveAndOpenProject = () => {
-    // TODO: call "save current project to cloud" method when implemented
+    saveProject({ user });
     dispatch(setFiles(project.files));
     dispatch(setOpenFilePath(project.openFilePath || '/'));
     dispatch(setProjectTitle(project.title || 'Untitled'));

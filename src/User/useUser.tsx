@@ -10,16 +10,6 @@ export default function useUser () {
   const theme = useTheme();
   const [anchorElUser, setAnchorElUser] = useState<HTMLElement | null>(null);
 
-  useEffect(() => {
-    getProjectListings();
-   // TODO eventually: if user logs out while working as collaborator, load empty project
-  }, [user]);
-
-  useEffect(() => {
-    getProjectListings(true);
-   // TODO eventually: if user logs out while working as collaborator, load empty project
-  }, []);
-
   const getProjectListings = (force?:boolean) => {
     if (user && user.token && (!user.projects || force)) {
       const AuthStr = 'Bearer ' + user.token;
@@ -39,6 +29,18 @@ export default function useUser () {
   
     }
   }
+
+  useEffect(() => {
+    getProjectListings();
+   // TODO eventually: if user logs out while working as collaborator, load empty project
+   // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
+
+  useEffect(() => {
+    getProjectListings(true);
+   // TODO eventually: if user logs out while working as collaborator, load empty project
+   // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleOpenUserMenu = (event:React.MouseEvent) => {
     setAnchorElUser(event.currentTarget as HTMLElement);

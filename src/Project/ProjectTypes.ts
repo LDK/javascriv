@@ -21,6 +21,8 @@ export type ProjectState = {
   openFilePath: string | null;
   settings?: ProjectSettings;
   title?: string;
+  id?: number;
+  creator?: number;
 };
 
 export type ProjectListing = {

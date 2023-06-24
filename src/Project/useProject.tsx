@@ -2,8 +2,8 @@
 
 import { Button } from "@mui/material";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { findItemByPath, setFiles, setOpenFilePath, setProjectSettings, setProjectTitle } from "../redux/projectSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { findItemByPath, getCurrentProject, setFiles, setOpenFilePath, setProjectCreator, setProjectId, setProjectSettings, setProjectTitle } from "../redux/projectSlice";
 import { store } from "../redux/store";
 import JSZip from 'jszip';
 import { getFullTree } from "../Convert/scrivener/scrivener";
@@ -12,12 +12,18 @@ import { renameTwins } from "./projectUtils";
 import ExportOptions from "./ExportOptions";
 import { ProjectFile, ProjectListing, ProjectSettings, ProjectState } from "./ProjectTypes";
 import axios from "axios";
+import { UserState } from "../redux/userSlice";
 
 export interface XmlIndex {
   [id:string]: string;
 }
 
-const useProject = (handleEditorChange:((content: string) => void)) => {
+type UseProjectProps = {
+  handleEditorChange?:((content: string) => void)
+  saveCallback?: () => void;
+};
+
+const useProject = ({ handleEditorChange, saveCallback }: UseProjectProps) => {
   const dispatch = useDispatch();
   const [exportOptionsOpen, setExportOptionsOpen] = useState(false);
   const [importOptionsOpen, setImportOptionsOpen] = useState(false);
@@ -28,8 +34,11 @@ const useProject = (handleEditorChange:((content: string) => void)) => {
   const [importingTitle, setImportingTitle] = useState<string>('');
   const [importingContent, setImportingContent] = useState<string | null>(null);
   const [importingSettings, setImportingSettings] = useState<ProjectSettings>({});
+  const [importingId, setImportingId] = useState<number | undefined>(undefined);
 
   const [opening, setOpening] = useState<ProjectState | undefined>(undefined);
+
+  const currentProject = useSelector(getCurrentProject);
 
   const parseZipFile = async (file: File) => {
     // Create a new instance of JSZip
@@ -144,17 +153,24 @@ const useProject = (handleEditorChange:((content: string) => void)) => {
               if (newItem && newItem.content) {
                 setImportingContent(newItem.content);
               }
-
-              if (importedProject.settings) {
-                setImportingSettings(importedProject.settings);
-              }
-
-              if (importedProject.title) {
-                setImportingTitle(importedProject.title);
-              } else {
-                setImportingTitle('New Project');
-              }
             }
+
+            if (importedProject.settings) {
+              setImportingSettings(importedProject.settings);
+            }
+
+            if (importedProject.title) {
+              setImportingTitle(importedProject.title);
+            } else {
+              setImportingTitle('New Project');
+            }
+
+            if (importedProject.id) {
+              setImportingId(importedProject.id);
+            } else {
+              setImportingId(undefined);
+            }
+
           }
 
         }
@@ -163,6 +179,8 @@ const useProject = (handleEditorChange:((content: string) => void)) => {
         setImportingFiles(false);
         setImportingContent(null);
         setImportingTitle('');
+        setImportingSettings({});
+        setImportingId(undefined);
 
         console.error('Error importing project:', error);
       }
@@ -269,12 +287,17 @@ const useProject = (handleEditorChange:((content: string) => void)) => {
         const openItem = findItemByPath(options.items, importingPath);
         if (openItem) {
           dispatch(setOpenFilePath(importingPath.join('/')));
-          if (importingContent) {
+
+          if (importingContent && handleEditorChange) {
             handleEditorChange(importingContent);
           }
+
         } else {
           dispatch(setOpenFilePath(''));
-          handleEditorChange('');
+
+          if (handleEditorChange) {
+            handleEditorChange('');
+          }
         }
       }
 
@@ -288,6 +311,12 @@ const useProject = (handleEditorChange:((content: string) => void)) => {
         dispatch(setProjectSettings(importingSettings));
       } else {
         dispatch(setProjectSettings({}));
+      }
+
+      if (importingId) {
+        dispatch(setProjectId(importingId));
+      } else {
+        dispatch(setProjectId(undefined));
       }
     }
 
@@ -353,7 +382,50 @@ const useProject = (handleEditorChange:((content: string) => void)) => {
     );
   };
 
-  return { opening, setOpening, importProjectFromJson, handleUpload, ExportOptions: ExportDialog, setExportOptionsOpen, ImportButton, ExportButton, ImportOptions: ImportDialog, setNewProjectOpen, newProjectOpen, loadProject }
+  const saveProject = async ({ user }:{ user:UserState }) => {
+    if (!user || !user.token) {
+      return;
+      // Eventually we should probably prompt the user to log in or create an account
+    }
+
+    const headers = { headers: { Authorization: 'Bearer ' + user.token } };
+    const postUrl = `${process.env.REACT_APP_API_URL}/project` + (currentProject.id ? `/${currentProject.id}` : '');
+
+    const payload = {...currentProject, creator: user.id };
+
+    const saveResponse = await axios.post(postUrl, payload, headers)
+      .then((response) => {
+        console.log('response', response);
+        if (response.data && response.data.id) {
+          const savedProject = response.data as ProjectState;
+          dispatch(setProjectId(savedProject.id));
+
+          if (savedProject.creator) {
+            dispatch(setProjectCreator(savedProject.creator));
+          }
+
+          if (saveCallback) {
+            saveCallback();
+          }
+        }
+        return response;
+      })
+      .catch((error) => {
+        console.log('error', error);
+        return error;
+      }
+    );
+
+    return saveResponse;
+  };
+
+  return {
+    opening, setOpening, importProjectFromJson, handleUpload, 
+    ExportOptions: ExportDialog, setExportOptionsOpen, ExportButton, 
+    ImportOptions: ImportDialog, ImportButton, 
+    setNewProjectOpen, newProjectOpen, 
+    loadProject, saveProject 
+  };
 };
 
 export default useProject;
