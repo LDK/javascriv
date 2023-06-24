@@ -2,10 +2,19 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ProjectFile, ProjectSettings, ProjectState } from '../Project/ProjectTypes';
 import { RootState } from './store';
+import introCopy from '../editorIntro';
 
 const initialState:ProjectState = {
-  files: [],
-  openFilePath: null,
+  files: [
+    {
+      'type': 'file',
+      'subType': 'document',
+      'name': 'Document 1',
+      'path': 'Document 1',
+      'content': introCopy,
+    }
+  ],
+  openFilePath: 'Document 1',
   settings: {},
   title: 'New Project'
 };
