@@ -17,6 +17,7 @@ import ProjectSettingsDialog from './Project/ProjectSettingsDialog';
 import { ProjectFile } from './Project/ProjectTypes';
 import OpenProjectDialog from './ProjectBrowser/OpenProjectDialog';
 import useUser from './User/useUser';
+import AddCollaboratorDialog from './Project/AddCollaboratorDialog';
 
 
 const App: React.FC = () => {  
@@ -26,6 +27,7 @@ const App: React.FC = () => {
   const [initial, setInitial] = useState<string | null>(null);
   const [lastRevertTs, setLastRevertTs] = useState<number>(0);
   const [projectSettingsOpen, setProjectSettingsOpen] = useState(false);
+  const [addCollabOpen, setAddCollabOpen] = useState(false);
   const { user, getProjectListings } = useUser();
 
   const dispatch = useDispatch();
@@ -47,7 +49,7 @@ const App: React.FC = () => {
 
   const { 
     opening, setOpening, ImportButton, ExportButton, ImportOptions, ExportOptions, 
-    handleUpload, setNewProjectOpen, newProjectOpen, loadProject, saveProject 
+    handleUpload, setNewProjectOpen, newProjectOpen, loadProject, saveProject, currentProject
   } = useProject({ handleEditorChange, saveCallback: () => { getProjectListings(true) } });
 
   const activeTheme = useSelector((state:RootState) => state.theme.active);
@@ -104,8 +106,8 @@ const App: React.FC = () => {
     setOpening(undefined);
   };
 
-  const SaveButton = () => <Button variant="text" color="primary" onClick={handleSave} disabled={!hasContentChanged}>Save</Button>;
-  const RevertButton = () => <Button variant="text" color="primary" onClick={handleRevert} disabled={!hasContentChanged}>Revert</Button>;
+  const SaveButton = () => <Button variant="text" color="primary" onClick={handleSave} disabled={!hasContentChanged}>Save Project</Button>;
+  const RevertButton = () => <Button variant="text" color="primary" onClick={handleRevert} disabled={!hasContentChanged}>Revert File</Button>;
   const NewProjectButton = () => <Button onClick={(e) => {
     e.currentTarget.blur(); // Remove focus from the button
     setNewProjectOpen(true);
@@ -115,11 +117,17 @@ const App: React.FC = () => {
     New Project
   </Button>;
 
+  const AddCollaboratorButton = () => <Button onClick={(e) => {
+    e.currentTarget.blur(); // Remove focus from the button
+    setAddCollabOpen(true);
+  }}>Add Collaborator to Project</Button>;
+
   const appMenuButtons = [
     <SaveButton />,
     <RevertButton />,
     <ExportButton />,
     <ImportButton callback={() => { fileInputRef?.click();}} />,
+    <AddCollaboratorButton />,
     <NewProjectButton />,
     <PublishButton />,
   ];
@@ -163,6 +171,7 @@ const App: React.FC = () => {
       <NewProjectDialog open={newProjectOpen} onClose={() => setNewProjectOpen(false)} />
       <OpenProjectDialog onClose={handleOpenProjectClose} project={opening} />
       <ProjectSettingsDialog open={projectSettingsOpen} onClose={() => setProjectSettingsOpen(false)} />
+      <AddCollaboratorDialog {...{user, currentProject}} open={addCollabOpen} onClose={() => setAddCollabOpen(false)} />
     </ThemeProvider>
   );
 };

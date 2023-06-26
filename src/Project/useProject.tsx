@@ -424,7 +424,7 @@ const useProject = ({ handleEditorChange, saveCallback }: UseProjectProps) => {
     ExportOptions: ExportDialog, setExportOptionsOpen, ExportButton, 
     ImportOptions: ImportDialog, ImportButton, 
     setNewProjectOpen, newProjectOpen, 
-    loadProject, saveProject 
+    currentProject, loadProject, saveProject
   };
 };
 

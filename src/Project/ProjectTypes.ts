@@ -10,6 +10,10 @@ export type ProjectFile = {
   content?: string;
   initialContent?: string;
   changed?: boolean;
+  id?: number;
+  creator?: number;
+  lastEdited?: string;
+  lastEditor?: number;
 };
 
 export type ProjectSettings = {
