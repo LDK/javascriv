@@ -106,7 +106,7 @@ const App: React.FC = () => {
     setOpening(undefined);
   };
 
-  const SaveButton = () => <Button variant="text" color="primary" onClick={handleSave} disabled={!hasContentChanged}>Save Project</Button>;
+  const SaveButton = () => <Button variant="text" color="primary" onClick={handleSave}>Save Project</Button>;
   const RevertButton = () => <Button variant="text" color="primary" onClick={handleRevert} disabled={!hasContentChanged}>Revert File</Button>;
   const NewProjectButton = () => <Button onClick={(e) => {
     e.currentTarget.blur(); // Remove focus from the button
