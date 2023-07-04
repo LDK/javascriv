@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { CancelButton, ConfirmButton } from "../Components/DialogButtons";
 import { ProjectFile } from "../Project/ProjectTypes";
-import { setFiles, setOpenFilePath, setProjectTitle } from "../redux/projectSlice";
+import { setFiles, setOpenFilePath, setProjectId, setProjectTitle } from "../redux/projectSlice";
 
 type NewProjectDialogProps = {
   open: boolean;
@@ -37,6 +37,7 @@ const NewProjectDialog = ({ open, onClose }: NewProjectDialogProps) => {
     dispatch(setFiles(newTree));
     dispatch(setOpenFilePath(newPath));
     dispatch(setProjectTitle(newProjectName));
+    dispatch(setProjectId(undefined));
     onClose();
   };
 

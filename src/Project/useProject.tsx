@@ -388,6 +388,8 @@ const useProject = ({ handleEditorChange, saveCallback }: UseProjectProps) => {
       // Eventually we should probably prompt the user to log in or create an account
     }
 
+    const isCollaborator = Boolean(currentProject.creator) && currentProject.creator !== user.id;
+    
     const headers = { headers: { Authorization: 'Bearer ' + user.token } };
     const postUrl = `${process.env.REACT_APP_API_URL}/project` + (currentProject.id ? `/${currentProject.id}` : '');
 
