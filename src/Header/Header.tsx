@@ -94,6 +94,7 @@ const Header: React.FC<any> = ({ loadProject, appMenuButtons }:HeaderProps) => {
   const toggleTheme = (event:React.ChangeEvent<HTMLInputElement>, checked:boolean) => {
     const mode = checked ? 'light' : 'dark';
     dispatch(setTheme(mode));
+    document.querySelector('html')?.setAttribute('data-theme', mode);
   }
 
   const { user, UserMenu, handleOpenUserMenu } = useUser();

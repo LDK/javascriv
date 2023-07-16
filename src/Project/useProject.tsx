@@ -1,7 +1,7 @@
 // Project/useProject.tsx
 
 import { Button } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { findItemByPath, getCurrentProject, setFiles, setOpenFilePath, setProjectCreator, setProjectId, setProjectSettings, setProjectTitle } from "../redux/projectSlice";
 import { store } from "../redux/store";
@@ -21,9 +21,10 @@ export interface XmlIndex {
 type UseProjectProps = {
   handleEditorChange?:((content: string) => void)
   saveCallback?: () => void;
+  setSaving?: (saving: boolean) => void;
 };
 
-const useProject = ({ handleEditorChange, saveCallback }: UseProjectProps) => {
+const useProject = ({ handleEditorChange, saveCallback, setSaving }: UseProjectProps) => {
   const dispatch = useDispatch();
   const [exportOptionsOpen, setExportOptionsOpen] = useState(false);
   const [importOptionsOpen, setImportOptionsOpen] = useState(false);
@@ -37,6 +38,7 @@ const useProject = ({ handleEditorChange, saveCallback }: UseProjectProps) => {
   const [importingId, setImportingId] = useState<number | undefined>(undefined);
 
   const [opening, setOpening] = useState<ProjectState | undefined>(undefined);
+  const [reloading, setReloading] = useState<ProjectState | undefined>(undefined);
 
   const currentProject = useSelector(getCurrentProject);
 
@@ -140,7 +142,6 @@ const useProject = ({ handleEditorChange, saveCallback }: UseProjectProps) => {
           const importedProject:ProjectState = JSON.parse(content);
 
           if (importedProject) {
-            console.log('importedProject', importedProject);
             const projectFiles = renameTwins(importedProject.files);
             // const projectFiles = importedProject.files;
 
@@ -369,12 +370,21 @@ const useProject = ({ handleEditorChange, saveCallback }: UseProjectProps) => {
      />
   );
 
-  const loadProject = (project:ProjectListing, token:string) => {
+  const loadProject = (project:ProjectListing, token:string, immediate?:boolean) => {
     const AuthStr = 'Bearer ' + token;
+
+    if (setSaving) {
+      setSaving(false);
+    }
+
     axios.get(`${process.env.REACT_APP_API_URL}/project/${project.id}`, { headers: { Authorization: AuthStr } })
       .then((response) => {
-        console.log('response', response);
-        setOpening(response.data);
+        console.log('loadProject response', response);
+        if (!immediate) {
+          setOpening(response.data);
+        } else {
+          setReloading(response.data);
+        }
       })
       .catch((error) => {
         console.log('error', error);
@@ -382,28 +392,34 @@ const useProject = ({ handleEditorChange, saveCallback }: UseProjectProps) => {
     );
   };
 
-  const saveProject = async ({ user }:{ user:UserState }) => {
+  const saveProject = async ({ user, project }:{ user:UserState, project: ProjectState }) => {
+    console.log('save project', project);
     if (!user || !user.token) {
       return;
       // Eventually we should probably prompt the user to log in or create an account
     }
 
-    const isCollaborator = Boolean(currentProject.creator) && currentProject.creator !== user.id;
+    const isCollaborator = Boolean(project.creator) && project.creator !== user.id;
     
     const headers = { headers: { Authorization: 'Bearer ' + user.token } };
-    const postUrl = `${process.env.REACT_APP_API_URL}/project` + (currentProject.id ? `/${currentProject.id}` : '');
+    const postUrl = `${process.env.REACT_APP_API_URL}/project` + (project.id ? `/${project.id}` : '');
 
-    const payload = {...currentProject, creator: user.id };
+    const payload = {...project, creator: user.id };
 
     const saveResponse = await axios.post(postUrl, payload, headers)
       .then((response) => {
-        console.log('response', response);
+        if (setSaving) { setSaving(false); }
+        console.log('save response', response);
         if (response.data && response.data.id) {
           const savedProject = response.data as ProjectState;
           dispatch(setProjectId(savedProject.id));
 
           if (savedProject.creator) {
             dispatch(setProjectCreator(savedProject.creator));
+          }
+
+          if (savedProject.files) {
+            dispatch(setFiles(savedProject.files));
           }
 
           if (saveCallback) {
@@ -426,7 +442,8 @@ const useProject = ({ handleEditorChange, saveCallback }: UseProjectProps) => {
     ExportOptions: ExportDialog, setExportOptionsOpen, ExportButton, 
     ImportOptions: ImportDialog, ImportButton, 
     setNewProjectOpen, newProjectOpen, 
-    currentProject, loadProject, saveProject
+    currentProject, loadProject, saveProject,
+    reloading, setReloading
   };
 };
 

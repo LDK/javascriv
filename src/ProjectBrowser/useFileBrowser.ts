@@ -27,7 +27,7 @@ const useFileBrowser = ({ contentCallback }:FileBrowserProps) => {
   };
 
   const handleFileSave = (item: ProjectFile) => {
-    setHasContentChanged(false);
+    // setHasContentChanged(false);
     if (openFilePath) {
       dispatch(saveItem({ path: openFilePath }));
     }
@@ -40,7 +40,8 @@ const useFileBrowser = ({ contentCallback }:FileBrowserProps) => {
     setHasContentChanged(item.changed || false);
   };
 
-  const saveFile = (htmlContent:string) => {
+  const saveFile = async (htmlContent:string) => {
+    console.log('save file', htmlContent);
     if (!openFilePath) {
       const newName = getUniqueNewDocumentName(browserItems);
       const newItem: ProjectFile = { name: newName, type: 'file', subType: 'document', content: htmlContent, path: `/${newName}` };
@@ -57,6 +58,7 @@ const useFileBrowser = ({ contentCallback }:FileBrowserProps) => {
       }
     }
   };
+
   return { saveFile, getUniqueNewDocumentName, handleFileSave, documentClick, hasContentChanged, setHasContentChanged, openFilePath, items: browserItems };
 }
 

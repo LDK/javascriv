@@ -14,13 +14,13 @@ import usePublishing from './Publish/usePublishing';
 import { Editor } from 'tinymce';
 import NewProjectDialog from './ProjectBrowser/NewProjectDialog';
 import ProjectSettingsDialog from './Project/ProjectSettingsDialog';
-import { ProjectFile } from './Project/ProjectTypes';
+import { ProjectFile, ProjectListing } from './Project/ProjectTypes';
 import OpenProjectDialog from './ProjectBrowser/OpenProjectDialog';
 import useUser from './User/useUser';
 import AddCollaboratorDialog from './Project/AddCollaboratorDialog';
 
-
 const App: React.FC = () => {  
+  const [saving, setSaving] = useState(false);
   const [editorContent, setEditorContent] = useState<string | null | false>(null);
   const [fileInputRef, setFileInputRef] = useState<HTMLInputElement | null>(null);
   const [editor, setEditor] = useState<Editor | null>(null);
@@ -50,7 +50,9 @@ const App: React.FC = () => {
   const { 
     opening, setOpening, ImportButton, ExportButton, ImportOptions, ExportOptions, 
     handleUpload, setNewProjectOpen, newProjectOpen, loadProject, saveProject, currentProject
-  } = useProject({ handleEditorChange, saveCallback: () => { getProjectListings(true) } });
+  } = useProject({ setSaving, handleEditorChange, saveCallback: () => { getProjectListings(true) } });
+
+  const projectId = currentProject?.id || undefined;
 
   const activeTheme = useSelector((state:RootState) => state.theme.active);
 
@@ -58,8 +60,11 @@ const App: React.FC = () => {
     dispatch(setChanged({path: openFilePath || '', changed: hasContentChanged}));
   }, [hasContentChanged, openFilePath, dispatch]);
 
+  // useEffect(() => {
+  //   console.log('currentProject', currentProject);
+  // }, [currentProject]);
+
   useEffect(() => {
-    console.log('items', items);
     if (openFilePath && items) {
       const existing = findItemByPath(items, openFilePath.split('/'));
       if (existing && existing.path) {
@@ -88,13 +93,22 @@ const App: React.FC = () => {
     // eslint-disable-next-line
   }, [activeTheme]);
 
+  useEffect(() => {
+    if (saving && user && user.token && currentProject) {
+      console.log('calling save project', currentProject);
+      saveProject({ user, project: currentProject });
+    }
+    setSaving(false);
+  }, [saving, saveProject, loadProject, currentProject, user]);
+
   const handleSave = async () => {
     if (!editor) return;
 
     const content = editor.getContent() || '';
-    saveFile(content);
-    setInitial(content);
-    saveProject({ user });
+    await saveFile(content);
+    console.log('handle save content', content, currentProject.files);
+    // setInitial(content);
+    setSaving(true);
   };
 
   const handleRevert = async () => {

@@ -88,7 +88,7 @@ const ProjectBrowser: React.FC<ProjectBrowserProps> = ({ onDocumentClick, setPro
         backgroundColor: theme.palette.secondary[theme.palette.mode],
         minHeight: "calc(100vh - 40px)",
         maxHeight: "calc(100% - 40px)",
-        overflowY: "scroll",
+        overflowY: "hidden",
       }}
     >
       <Sticky top={64} innerZ={1}>
@@ -113,7 +113,7 @@ const ProjectBrowser: React.FC<ProjectBrowserProps> = ({ onDocumentClick, setPro
           />
         </Box>
         <Box
-          overflow={{ overflowY: "scroll" }}
+          overflow={{ overflowY: "auto" }}
           maxHeight="calc(100vh - 108px)"
           pb={8}
           sx={{ color: theme.palette.text.primary }}

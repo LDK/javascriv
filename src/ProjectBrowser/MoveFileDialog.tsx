@@ -44,6 +44,12 @@ const MoveFileDialog = ({ open, setOpen, onClose, sourceFilePath, openFolder }: 
     return <></>;
   }
 
+  const moveFile = () => {
+    handleDeleteFile(sourceFilePath);
+    const newChildren = renameChildrenPaths(sourceChildren, `${parentFolder}/${itemName}`);
+    handleCreateNewFile(parentFolder, itemName, sourceContent, newChildren);
+  };
+
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogContent>
@@ -75,14 +81,11 @@ const MoveFileDialog = ({ open, setOpen, onClose, sourceFilePath, openFolder }: 
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>Cancel</Button>
-        <Button onClick={() => {
-          handleDeleteFile(sourceFilePath);
-          const newChildren = renameChildrenPaths(sourceChildren, `${parentFolder}/${itemName}`);
-          handleCreateNewFile(parentFolder, itemName, sourceContent, newChildren);
-        }}
-        variant="contained"
-        color="primary"
-        disabled={!itemName || !parentFolder || parentFolder === sourceFilePath}>
+        <Button onClick={moveFile}
+          variant="contained"
+          color="primary"
+          disabled={!itemName || !parentFolder || parentFolder === sourceFilePath}
+        >
           Move File
         </Button>
 

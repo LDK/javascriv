@@ -3,7 +3,7 @@ import { Dispatch, KeyboardEventHandler, SetStateAction, useCallback, useEffect,
 import { SxProps, Box, PaletteMode, ListItem, ListItemIcon, ListItemText, Collapse, List, useTheme } from "@mui/material";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { reorderItem, setName } from "../redux/projectSlice";
+import { reorderItem, setName, setOpenFilePath, selectOpenFilePath } from "../redux/projectSlice";
 import { ExtendedPalette } from "../theme/theme";
 
 import { Folder, Description as DocIcon, Image as ImageIcon, ExpandMore, ExpandLess, InsertDriveFile } from '@mui/icons-material';
@@ -31,6 +31,8 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, count
   const isFolder = item.type === 'folder';
   const fullPath = [...path, item.name].join('/');
   const [open, setOpen] = useState<boolean>(Boolean(isFolder && openFilePath && openFilePath.startsWith(fullPath)));
+
+  const isActive = openFilePath && openFilePath.startsWith(fullPath);
 
   const [renaming, setRenaming] = useState(false);
   const renameInputRef = useRef<HTMLInputElement>(null);
@@ -99,6 +101,11 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, count
     // Call your renaming function here
     const newName = renameInputRef.current?.value || item.name;
     dispatch(setName({ path: item.path, newName: newName }));
+
+    if (newName !== item.name && item.path === openFilePath) {
+      dispatch(setOpenFilePath(item.path.split('/').slice(0, -1).concat(newName).join('/')));
+    }
+
     setRenaming(false);
   };
 

@@ -72,6 +72,7 @@ const projectSlice = createSlice({
     },
     setContent: (state, action: PayloadAction<{ path: string; content: string }>) => {
       const { path, content } = action.payload;
+      console.log('setContent', path, content);
       const item = findItemByPath(state.files, path.split('/'));
 
       if (item && item.type === 'file') {
@@ -165,7 +166,7 @@ const projectSlice = createSlice({
 
       if (item && item.content) {
         item.initialContent = item.content;
-        item.changed = false;
+        // item.changed = false;
       }
     },
     addItem: (

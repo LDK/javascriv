@@ -36,7 +36,7 @@ const OpenProjectDialog = ({ onClose, project }: OpenProjectDialogProps) => {
   };
 
   const handleSaveAndOpenProject = () => {
-    saveProject({ user });
+    saveProject({ user, project });
     handleOpenProject();
   };
 

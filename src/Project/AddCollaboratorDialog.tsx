@@ -19,8 +19,6 @@ const AddCollaboratorDialog: React.FC<AddCollaboratorDialogProps> = ({ open, onC
   const [searching, setSearching] = useState<boolean>(false);
   const [error, setError] = useState<string | false>(false);
 
-  console.log('currentProject', currentProject);
-
   if (!user || !user.token) {
     return null;
   }

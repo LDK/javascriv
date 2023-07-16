@@ -70,15 +70,11 @@ const LoginRegisterDialog: React.FC<LoginRegisterDialogProps> = ({ open, onClose
           token: res.data.token
         }));
         onClose();
-      } else {
-        console.log('res format all weird or something?', res);
       }
     })
     .catch((err) => {
       setLoading(false);
       console.log(err);
-      console.log('env', process.env);
-      console.log('process', process);
     })
   };
 
