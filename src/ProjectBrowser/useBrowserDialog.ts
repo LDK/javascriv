@@ -45,7 +45,7 @@ export default function useBrowserDialog(sourceFilePath: string, setOpen: SetOpe
 
   const dispatch = useDispatch();
 
-  const handleCreateNewFile = (parentFolder: string | null, itemName: string, content?: string, children?: ProjectFile[]) => {
+  const handleCreateNewFile = (parentFolder: string | null, itemName: string, content?: string, children?: ProjectFile[], id?: number) => {
     console.log('handleCreateNewFile', parentFolder, itemName, content, children);
     const newPath = `${parentFolder}/${itemName}`.replace('<root>','');
 
@@ -55,7 +55,8 @@ export default function useBrowserDialog(sourceFilePath: string, setOpen: SetOpe
       type: fileType as 'file' | 'folder',
       content: content || undefined,
       subType: subType || undefined,
-      children: children || undefined
+      children: children || undefined,
+      id: id
     };
 
     console.log('new item', newItem);

@@ -23,6 +23,7 @@ const MoveFileDialog = ({ open, setOpen, onClose, sourceFilePath, openFolder }: 
   const [itemName, setItemName] = useState<string>(item?.name || '');
   const sourceContent = item?.content;
   const sourceChildren = item?.children;
+  const sourceId = item?.id;
 
   const [parentFolder, setParentFolder] = useState<string | null>(initialParent);
 
@@ -47,7 +48,7 @@ const MoveFileDialog = ({ open, setOpen, onClose, sourceFilePath, openFolder }: 
   const moveFile = () => {
     handleDeleteFile(sourceFilePath);
     const newChildren = renameChildrenPaths(sourceChildren, `${parentFolder}/${itemName}`);
-    handleCreateNewFile(parentFolder, itemName, sourceContent, newChildren);
+    handleCreateNewFile(parentFolder, itemName, sourceContent, newChildren, sourceId);
   };
 
   return (
