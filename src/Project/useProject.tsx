@@ -443,7 +443,7 @@ const useProject = ({ handleEditorChange, saveCallback, setSaving }: UseProjectP
     ImportOptions: ImportDialog, ImportButton, 
     setNewProjectOpen, newProjectOpen, 
     currentProject, loadProject, saveProject,
-    reloading, setReloading
+    reloading, setReloading, importingPath
   };
 };
 

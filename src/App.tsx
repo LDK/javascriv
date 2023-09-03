@@ -44,11 +44,12 @@ const App: React.FC = () => {
   const { PublishButton, PublishOptions } = usePublishing();
 
   const handleEditorChange = (content: string) => {
+    console.log('handleEditorChange', content, 'vs', initial);
     setHasContentChanged(content !== initial);
   };
 
   const { 
-    opening, setOpening, ImportButton, ExportButton, ImportOptions, ExportOptions, 
+    opening, setOpening, ImportButton, ExportButton, ImportOptions, ExportOptions, importingPath,
     handleUpload, setNewProjectOpen, newProjectOpen, loadProject, saveProject, currentProject
   } = useProject({ setSaving, handleEditorChange, saveCallback: () => { getProjectListings(true) } });
 
@@ -81,7 +82,7 @@ const App: React.FC = () => {
       setInitial(null);
     }
     // eslint-disable-next-line
-  }, [openFilePath]);
+  }, [openFilePath, importingPath]);
 
   useEffect(() => {
     if (openFilePath && items) {
