@@ -302,8 +302,8 @@ const useProject = ({ handleEditorChange, saveCallback, setSaving }: UseProjectP
         }
       }
 
-      if (importingTitle) {
-        dispatch(setProjectTitle(importingTitle));
+      if (options.title || importingTitle) {
+        dispatch(setProjectTitle(options.title || importingTitle));
       } else {
         dispatch(setProjectTitle('New Project'));
       }

@@ -5,6 +5,7 @@ import { ProjectFile } from "../Project/ProjectTypes";
 
 import { FileTreeItem } from '../FileTree/FileTree';
 import ImportTree from './ImportTree';
+import { useDispatch } from 'react-redux';
 
 export interface ImportOptionsProps {
   optionsOpen: boolean;
@@ -16,10 +17,13 @@ export interface ImportOptionsProps {
 
 export interface ImportingOptions {
   items: ProjectFile[];
+  title: string;
 }
 
-const ImportOptions: React.FC<ImportOptionsProps> = ({ optionsOpen, onClose, title, onReady, files: items }) => {
+const ImportOptions: React.FC<ImportOptionsProps> = ({ optionsOpen, onClose, title: initTitle, onReady, files: items }) => {
   const [importingItems, setImportingItems] = useState<ProjectFile[]>(items);
+  const [title, setTitle] = useState<string>(initTitle || '');
+  const dispatch = useDispatch();
 
   const theme = useTheme();
   const dark = theme.palette.mode === 'dark';
@@ -30,7 +34,8 @@ const ImportOptions: React.FC<ImportOptionsProps> = ({ optionsOpen, onClose, tit
 
   const handleReady = () => {
     const options: ImportingOptions = {
-      items: importingItems
+      items: importingItems,
+      title
     };
 
     if (onReady) {
@@ -63,7 +68,12 @@ const ImportOptions: React.FC<ImportOptionsProps> = ({ optionsOpen, onClose, tit
       <DialogTitle>Import Options</DialogTitle>
 
       <DialogContent>
-        <TextField fullWidth label="Title" value={title} />
+        <TextField
+          fullWidth
+          label="Title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
 
         <ImportTree items={items} onCheck={handleCheck} />
       </DialogContent>
