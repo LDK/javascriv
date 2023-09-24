@@ -5,8 +5,7 @@ import { getFullTree } from "../Convert/scrivener/scrivener";
 import { findItemByPath, setFiles, setOpenFilePath, setProjectTitle, setProjectSettings, setProjectId } from "../redux/projectSlice";
 import ImportOptions, { ImportingOptions } from "./ImportOptions";
 import { ProjectFile, ProjectSettings, ProjectState } from "./ProjectTypes";
-import { parseZipFile } from "./projectHelpers";
-import { renameTwins } from "./projectUtils";
+import { parseZipFile, renameTwins } from "./projectUtils";
 import { UseProjectProps } from "./useProject";
 
 const useProjectImport = ({ handleEditorChange, saveCallback, setSaving }: UseProjectProps) => {

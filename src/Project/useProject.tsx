@@ -7,9 +7,9 @@ import { getCurrentProject, setFiles, setProjectCreator, setProjectId } from "..
 import { ProjectListing, ProjectState } from "./ProjectTypes";
 import axios from "axios";
 import { UserState } from "../redux/userSlice";
-import { exportProjectToHtml, exportProjectToJson } from "./projectHelpers";
 import useProjectImport from "./useProjectImport";
 import useProjectExport from "./useProjectExport";
+import { exportProjectToJson, exportProjectToHtml } from "./projectUtils";
 
 export interface XmlIndex {
   [id:string]: string;
