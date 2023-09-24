@@ -7,8 +7,11 @@ import ImportOptions, { ImportingOptions } from "./ImportOptions";
 import { ProjectFile, ProjectSettings, ProjectState } from "./ProjectTypes";
 import { parseZipFile, renameTwins } from "./projectUtils";
 import { UseProjectProps } from "./useProject";
+import { MenuItem } from "@mui/material";
 
-const useProjectImport = ({ handleEditorChange, saveCallback, setSaving }: UseProjectProps) => {
+type UseProjectImportProps = Omit<UseProjectProps, 'saveCallback' | 'setSaving'>;
+
+const useProjectImport = ({ handleEditorChange }: UseProjectImportProps) => {
   const dispatch = useDispatch();
 
   const [importOptionsOpen, setImportOptionsOpen] = useState(false);
@@ -22,16 +25,32 @@ const useProjectImport = ({ handleEditorChange, saveCallback, setSaving }: UsePr
   type ImportButtonProps = {
     callback: () => void;
     variant?: 'text' | 'outlined' | 'contained';
+    label?: string;
+    text?: true;
   }
 
-  const ImportButton = ({ callback, variant }: ImportButtonProps) => (
-    <Button onClick={() => {
+  const ImportButton = ({ callback, variant, label, text }: ImportButtonProps) => {
+    const handleClick = () => {
       callback();
       setImportOptionsOpen(true);
-    }} color="primary" variant={variant || 'text'}>
-      Import...
-    </Button>
-  );
+    };
+
+    // if text, use MenuItem
+    if (text) {
+      return (
+        <MenuItem onClick={handleClick}>
+          {label || 'Import'}
+        </MenuItem>
+      )
+    }
+    else {
+      return (
+        <Button onClick={handleClick} color="primary" variant={variant || 'text'}>
+          {label || 'Import'}
+        </Button>
+      )
+    }
+  };
 
   const importProjectFromJson = (file:File) => {
     const reader = new FileReader();

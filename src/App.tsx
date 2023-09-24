@@ -14,15 +14,14 @@ import usePublishing from './Publish/usePublishing';
 import { Editor } from 'tinymce';
 import NewProjectDialog from './ProjectBrowser/NewProjectDialog';
 import ProjectSettingsDialog from './Project/ProjectSettingsDialog';
-import { ProjectFile, ProjectListing } from './Project/ProjectTypes';
+import { ProjectFile } from './Project/ProjectTypes';
 import OpenProjectDialog from './ProjectBrowser/OpenProjectDialog';
 import useUser from './User/useUser';
 import AddCollaboratorDialog from './Project/AddCollaboratorDialog';
+import useFileInputRef from './useFileInputRef';
 
 const App: React.FC = () => {  
-  const [saving, setSaving] = useState(false);
   const [editorContent, setEditorContent] = useState<string | null | false>(null);
-  const [fileInputRef, setFileInputRef] = useState<HTMLInputElement | null>(null);
   const [editor, setEditor] = useState<Editor | null>(null);
   const [initial, setInitial] = useState<string | null>(null);
   const [lastRevertTs, setLastRevertTs] = useState<number>(0);
@@ -44,16 +43,16 @@ const App: React.FC = () => {
   const { PublishButton, PublishOptions } = usePublishing();
 
   const handleEditorChange = (content: string) => {
-    console.log('handleEditorChange', content, 'vs', initial);
     setHasContentChanged(content !== initial);
   };
 
   const { 
     opening, setOpening, ImportButton, ExportButton, ImportOptions, ExportOptions, importingPath,
-    handleUpload, setNewProjectOpen, newProjectOpen, loadProject, saveProject, currentProject
-  } = useProject({ setSaving, handleEditorChange, saveCallback: () => { getProjectListings(true) } });
+    handleUpload, setNewProjectOpen, newProjectOpen, loadProject, saveProject, currentProject,
+    NewProjectButton, saving, setSaving
+  } = useProject({ handleEditorChange, saveCallback: () => { getProjectListings(true) } });
 
-  const projectId = currentProject?.id || undefined;
+  const { fileInputRef, setFileInputRef } = useFileInputRef();
 
   const activeTheme = useSelector((state:RootState) => state.theme.active);
 
@@ -100,7 +99,7 @@ const App: React.FC = () => {
       saveProject({ user, project: currentProject });
     }
     setSaving(false);
-  }, [saving, saveProject, loadProject, currentProject, user]);
+  }, [saving, saveProject, loadProject, currentProject, user, setSaving]);
 
   const handleSave = async () => {
     if (!editor) return;
@@ -123,25 +122,19 @@ const App: React.FC = () => {
 
   const SaveButton = () => <Button variant="text" color="primary" onClick={handleSave}>Save Project</Button>;
   const RevertButton = () => <Button variant="text" color="primary" onClick={handleRevert} disabled={!hasContentChanged}>Revert File</Button>;
-  const NewProjectButton = () => <Button onClick={(e) => {
-    e.currentTarget.blur(); // Remove focus from the button
-    setNewProjectOpen(true);
-  } }
-    color="primary" variant="text"
-  >
-    New Project
-  </Button>;
 
   const AddCollaboratorButton = () => <Button onClick={(e) => {
     e.currentTarget.blur(); // Remove focus from the button
     setAddCollabOpen(true);
   }}>Add Collaborator to Project</Button>;
 
+  const importCallback = () => { fileInputRef?.click(); };
+
   const appMenuButtons = [
     <SaveButton />,
     <RevertButton />,
     <ExportButton />,
-    <ImportButton callback={() => { fileInputRef?.click();}} />,
+    <ImportButton callback={importCallback} />,
     <AddCollaboratorButton />,
     <NewProjectButton />,
     <PublishButton />,
@@ -149,7 +142,7 @@ const App: React.FC = () => {
 
   return (
     <ThemeProvider theme={activeTheme === 'light' ? lightTheme : darkTheme}>
-      <Header {...{ loadProject, appMenuButtons }} />
+      <Header {...{ loadProject, appMenuButtons, handleEditorChange, fileInputRef, importCallback, newCallback: () => { setNewProjectOpen(true); } }} />
       <CssBaseline />
 
       <Box pt={8} flexGrow={1} display="flex">
@@ -166,10 +159,11 @@ const App: React.FC = () => {
                 <TinyEditor {...{ setEditor, handleEditorChange }} lastRevert={lastRevertTs} content={editorContent || ''} />
 
                 <Box pt={2} className="actions" position="absolute" bottom="2rem" width="100%" right="0" textAlign="right">
+
                 <input type="file" accept=".zip, .json"
-                    ref={setFileInputRef}
-                    onChange={handleUpload}
-                    style={{ display: 'none' }} />
+                  ref={setFileInputRef}
+                  onChange={handleUpload}
+                  style={{ display: 'none' }} />
 
                   <ExportOptions />
 

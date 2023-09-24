@@ -5,7 +5,6 @@ import { ProjectFile } from "../Project/ProjectTypes";
 
 import { FileTreeItem } from '../FileTree/FileTree';
 import ImportTree from './ImportTree';
-import { useDispatch } from 'react-redux';
 
 export interface ImportOptionsProps {
   optionsOpen: boolean;
@@ -23,7 +22,6 @@ export interface ImportingOptions {
 const ImportOptions: React.FC<ImportOptionsProps> = ({ optionsOpen, onClose, title: initTitle, onReady, files: items }) => {
   const [importingItems, setImportingItems] = useState<ProjectFile[]>(items);
   const [title, setTitle] = useState<string>(initTitle || '');
-  const dispatch = useDispatch();
 
   const theme = useTheme();
   const dark = theme.palette.mode === 'dark';

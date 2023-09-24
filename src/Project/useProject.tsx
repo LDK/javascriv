@@ -3,13 +3,13 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentProject, setFiles, setProjectCreator, setProjectId } from "../redux/projectSlice";
-
 import { ProjectListing, ProjectState } from "./ProjectTypes";
 import axios from "axios";
 import { UserState } from "../redux/userSlice";
 import useProjectImport from "./useProjectImport";
 import useProjectExport from "./useProjectExport";
 import { exportProjectToJson, exportProjectToHtml } from "./projectUtils";
+import { Button, Divider, FormControl, InputLabel, ListSubheader, MenuItem, Select } from "@mui/material";
 
 export interface XmlIndex {
   [id:string]: string;
@@ -18,10 +18,11 @@ export interface XmlIndex {
 export type UseProjectProps = {
   handleEditorChange?:((content: string) => void)
   saveCallback?: () => void;
-  setSaving?: (saving: boolean) => void;
 };
 
-const useProject = ({ handleEditorChange, saveCallback, setSaving }: UseProjectProps) => {
+const useProject = ({ handleEditorChange, saveCallback }: UseProjectProps) => {
+  const [saving, setSaving] = useState(false);
+
   const dispatch = useDispatch();
   const [newProjectOpen, setNewProjectOpen] = useState(false);
 
@@ -30,7 +31,35 @@ const useProject = ({ handleEditorChange, saveCallback, setSaving }: UseProjectP
 
   const currentProject = useSelector(getCurrentProject);
 
-  const { ImportButton, ImportDialog, importProjectFromJson, importProjectFromScrivenerZip, importingPath } = useProjectImport({ handleEditorChange, saveCallback, setSaving });
+  const { ImportButton, ImportDialog, importProjectFromJson, importProjectFromScrivenerZip, importingPath } = useProjectImport({ handleEditorChange });
+
+  const NewProjectButton = ({ text, label, callback }:{ text?: true, label?: string, callback?: () => void }) => {
+    const handleClick = (e:React.MouseEvent<HTMLButtonElement | HTMLLIElement>) => {
+      e.currentTarget.blur(); // Remove focus from the button
+      if (callback) {
+        console.log('callback', callback);
+        callback();
+      } else {
+        setNewProjectOpen(true);
+      }
+    }
+
+    if (!text) {
+      return (
+        <Button onClick={handleClick}
+         color="primary" variant="text"
+        >
+          { label || 'New Project' }
+        </Button>
+      );
+    } else {
+      return (
+        <MenuItem onClick={handleClick}>
+          { label || 'New Project' }
+        </MenuItem>
+      );
+    }
+};
 
   const handleExportReady = (name:string, extension: string) => {
     switch (extension) {
@@ -95,7 +124,7 @@ const useProject = ({ handleEditorChange, saveCallback, setSaving }: UseProjectP
       // Eventually we should probably prompt the user to log in or create an account
     }
 
-    const isCollaborator = Boolean(project.creator) && project.creator !== user.id;
+    // const isCollaborator = Boolean(project.creator) && project.creator !== user.id;
     
     const headers = { headers: { Authorization: 'Bearer ' + user.token } };
     const postUrl = `${process.env.REACT_APP_API_URL}/project` + (project.id ? `/${project.id}` : '');
@@ -133,13 +162,58 @@ const useProject = ({ handleEditorChange, saveCallback, setSaving }: UseProjectP
     return saveResponse;
   };
 
+  type ProjectSelectorProps = {
+    user: UserState;
+    callback: (arg:ProjectListing, token: string) => void;
+    handleEditorChange: (content: string) => void;
+    importCallback: () => void;
+    newCallback: () => void;
+  };
+  
+  const ProjectSelector:React.FC<any> = ({ user, callback, handleEditorChange, importCallback, newCallback }:ProjectSelectorProps) => {
+    const { projects, token } = user;
+    
+    const { ImportButton } = useProjectImport({handleEditorChange});
+
+    if (!projects || !token) {
+      return null;
+    }
+  
+    return (
+      <FormControl sx={{ my: 0, mr: 2, p:0, minWidth: 120 }}>
+      <InputLabel htmlFor="grouped-select">Projects</InputLabel>
+      <Select defaultValue="" id="grouped-select" label="Grouping" variant="outlined">
+        {projects && Object.keys(projects).map((group) => {
+          if (!projects[group as keyof typeof projects].length) {
+            return null;
+          }
+          return (
+            <div key={group}>
+              <ListSubheader>{group} Projects</ListSubheader>
+              {projects[group as keyof typeof projects].map((project) => (
+                <MenuItem key={project.id} onClick={() => callback(project, token)}>{project.title}</MenuItem>
+              ))}
+            </div>
+          );
+        })}
+  
+        <Divider />
+  
+        <NewProjectButton text={true} callback={newCallback} />
+        <ImportButton callback={importCallback} text={true} label="Import Project" />
+      </Select>
+    </FormControl>
+    )
+  };
+  
   return {
-    opening, setOpening, importProjectFromJson, handleUpload, 
+    opening, setOpening, saving, setSaving, importProjectFromJson, handleUpload, 
     ExportOptions: ExportDialog, setExportOptionsOpen, ExportButton, 
     ImportOptions: ImportDialog, ImportButton, 
     setNewProjectOpen, newProjectOpen, 
     currentProject, loadProject, saveProject,
-    reloading, setReloading, importingPath
+    reloading, setReloading, importingPath,
+    NewProjectButton, ProjectSelector
   };
 };
 

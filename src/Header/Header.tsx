@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AppBar, Box, Divider, FormControl, InputLabel, ListSubheader, MenuItem, Select, Switch, Toolbar, Typography, useTheme } from '@mui/material';
+import { AppBar, Box, Switch, Toolbar, Typography, useTheme } from '@mui/material';
 import Sticky from 'react-stickynode';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTheme } from '../redux/themeSlice';
@@ -12,9 +12,9 @@ import MenuRounded from '@mui/icons-material/MenuRounded';
 
 import LoginRegisterDialog from './LoginRegisterDialog';
 import useUser from '../User/useUser';
-import { ProjectListing, ProjectState } from '../Project/ProjectTypes';
-import { UserState } from '../redux/userSlice';
+import { ProjectState } from '../Project/ProjectTypes';
 import useAppMenu from '../useAppMenu';
+import useProject from '../Project/useProject';
 
 type IconButtonProps = {
   clickAction: (e:React.MouseEvent) => void;
@@ -43,46 +43,15 @@ const ThemeToggleSwitch: React.FC<{ isDarkMode: boolean; toggleTheme: (event: Re
   );
 };
 
-const ProjectSelector:React.FC<any> = ({ user, callback }: { user: UserState, callback: (arg:ProjectListing, token: string) => void }) => {
-  const { projects, token } = user;
-  
-  if (!projects || !token) {
-    return null;
-  }
-
-  return (
-    <FormControl sx={{ my: 0, mr: 2, p:0, minWidth: 120 }}>
-    <InputLabel htmlFor="grouped-select">Projects</InputLabel>
-    <Select defaultValue="" id="grouped-select" label="Grouping" variant="outlined">
-      {projects && Object.keys(projects).map((group) => {
-        if (!projects[group as keyof typeof projects].length) {
-          return null;
-        }
-        return (
-          <div key={group}>
-            <ListSubheader>{group} Projects</ListSubheader>
-            {projects[group as keyof typeof projects].map((project) => (
-              <MenuItem key={project.id} onClick={() => callback(project, token)}>{project.title}</MenuItem>
-            ))}
-          </div>
-        );
-      })}
-
-      <Divider />
-
-      <MenuItem onClick={() => console.log('new project')}>New Project</MenuItem>
-      <MenuItem onClick={() => console.log('import project')}>Import Project</MenuItem>        
-    </Select>
-  </FormControl>
-  )
-};
-
 type HeaderProps = { 
   loadProject: (arg:ProjectState, token: string) => void;
   appMenuButtons: JSX.Element[];
+  handleEditorChange: (content: string) => void;
+  importCallback: () => void;
+  newCallback: () => void;
 };
 
-const Header: React.FC<any> = ({ loadProject, appMenuButtons }:HeaderProps) => {
+const Header: React.FC<any> = ({ loadProject, appMenuButtons, importCallback, newCallback, handleEditorChange }:HeaderProps) => {
   const theme = useTheme();
   const dispatch = useDispatch();
 
@@ -100,13 +69,15 @@ const Header: React.FC<any> = ({ loadProject, appMenuButtons }:HeaderProps) => {
   const { user, UserMenu, handleOpenUserMenu } = useUser();
   const { AppMenu, handleOpenAppMenu } = useAppMenu({ buttons: appMenuButtons });
 
+  const { ProjectSelector } = useProject({ ...handleEditorChange });
+
   return (
     <Sticky innerZ={2}>
       <AppBar sx={{ backgroundColor: theme.palette.primary.main, textAlign: 'right', alignItems: 'flex-end' }}>
         <Typography pl={3} pt={1} component="h1" variant="h4" position="absolute" top={0} left={0} color={theme.palette.text.primary}>javaScriv</Typography>
 
         <Toolbar>
-          {!user ? null : <ProjectSelector {...{ user }} callback={loadProject} />}
+          {!user ? null : <ProjectSelector {...{ user, importCallback, newCallback }} callback={loadProject} />}
 
           <ThemeToggleSwitch {...{ isDarkMode, toggleTheme }} />
 
