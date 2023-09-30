@@ -183,8 +183,12 @@ const projectSlice = createSlice({
       const item = { ...action.payload.item, path: path.join('/') };
 
       if (parent && parent.type && parent.children) {
+        // Add to existing children array if there is one.
         parent.children.push({ ...item, children: item.children || (item.type === 'folder' ? [] : undefined) });
-      } else if (!parent || !parent.type) {
+      } else if (parent && parent.type && parent.type === 'folder') {
+        // Create children array if this is the first child added.
+        parent.children = [item];
+      } else if (!parent || !parent.type || parent.type !== 'folder') {
         // Add at root of file tree.
         state.files.push({ ...item, children: item.children || (item.type === 'folder' ? [] : undefined) });
       }
