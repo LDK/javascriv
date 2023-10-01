@@ -28,7 +28,7 @@ export const findParentFolder = (path: string[]) => {
   const filteredPath = path.filter(p => p !== '');
   const parentPath = filteredPath.slice(0, -1);
 
-  const openFolder = parentPath.length ? `/${parentPath.join('/')}` : ROOTFOLDER;
+  const openFolder = parentPath.length ? `${parentPath.join('/')}` : ROOTFOLDER;
 
   return openFolder;
 }
