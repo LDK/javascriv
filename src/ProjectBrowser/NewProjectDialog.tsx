@@ -8,10 +8,10 @@ import { setFiles, setOpenFilePath, setProjectId, setProjectTitle } from "../red
 type NewProjectDialogProps = {
   open: boolean;
   onClose: () => void;
-}
+  setEditorContent: (content: string) => void;
+};
 
-const NewProjectDialog = ({ open, onClose }: NewProjectDialogProps) => {
-
+const NewProjectDialog = ({ open, onClose, setEditorContent }: NewProjectDialogProps) => {
   const [newProjectName, setNewProjectName] = useState('');
   const [disabledReason, setDisabledReason] = useState<string>('');
   const submitDisabled = !newProjectName;
@@ -38,6 +38,7 @@ const NewProjectDialog = ({ open, onClose }: NewProjectDialogProps) => {
     dispatch(setOpenFilePath(newPath));
     dispatch(setProjectTitle(newProjectName));
     dispatch(setProjectId(undefined));
+    setEditorContent('');
     onClose();
   };
 

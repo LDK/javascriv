@@ -176,8 +176,8 @@ const App: React.FC = () => {
           </Grid>
         </Container>
       </Box>
- 
-      <NewProjectDialog open={newProjectOpen} onClose={() => setNewProjectOpen(false)} />
+
+      <NewProjectDialog setEditorContent={setEditorContent} open={newProjectOpen} onClose={() => setNewProjectOpen(false)} />
       <OpenProjectDialog onClose={handleOpenProjectClose} project={opening} />
       <ProjectSettingsDialog open={projectSettingsOpen} onClose={() => setProjectSettingsOpen(false)} />
       <AddCollaboratorDialog {...{user, currentProject}} open={addCollabOpen} onClose={() => setAddCollabOpen(false)} />
