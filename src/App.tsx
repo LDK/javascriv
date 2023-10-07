@@ -149,10 +149,10 @@ const App: React.FC = () => {
         <Container maxWidth="xl" sx={{ px: "0 !important" }}>
           <Grid container spacing={0}>
             <Grid item xs={12} md={4} lg={3} xl={2} px={0} mx={0}>
-                <ProjectBrowser
+                {editor && <ProjectBrowser
+                  {...{ editor, setProjectSettingsOpen }}
                   onDocumentClick={documentClick}
-                  setProjectSettingsOpen={setProjectSettingsOpen}
-                />
+                />}
             </Grid>
             <Grid item xs={12} md={8} lg={9} xl={10}>
               <Box px={0}>

@@ -1,22 +1,28 @@
 import { Dialog, DialogContent, DialogActions, Button, FormControl, InputLabel, MenuItem, Select, DialogTitle } from "@mui/material";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { renameChildrenPaths } from "../Project/projectUtils";
-import { findItemByPath } from "../redux/projectSlice";
+import { findItemByPath, setContent } from "../redux/projectSlice";
 import { findParentFolder, ROOTFOLDER } from "./ProjectBrowser";
 import useBrowserDialog, { getFolders, SetOpenFunction } from "./useBrowserDialog";
+import { Editor } from "tinymce";
+import { useDispatch } from "react-redux";
 
 type MoveFileDialogProps = {
   open: boolean;
   setOpen : SetOpenFunction;
   onClose: () => void;
   sourceFilePath: string;
+  openFilePath: string;
   openFolder: string | null;
   setOpenFolder: Dispatch<SetStateAction<string | null>>;
+  editor: Editor;
 }
   
-const MoveFileDialog = ({ open, setOpen, onClose, sourceFilePath, openFolder }: MoveFileDialogProps) => {
+const MoveFileDialog = ({ open, setOpen, onClose, sourceFilePath, openFolder, editor, openFilePath }: MoveFileDialogProps) => {
   const { items, handleCreateNewFile, handleDeleteFile } = useBrowserDialog(sourceFilePath, setOpen);
- 
+
+  const dispatch = useDispatch();
+
   const initialParent:string = findParentFolder(sourceFilePath.split('/'));
 
   const item = findItemByPath(items, sourceFilePath.split('/'));
@@ -41,6 +47,16 @@ const MoveFileDialog = ({ open, setOpen, onClose, sourceFilePath, openFolder }: 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [openFolder]);
   
+  useEffect(() => {
+    if (open) {
+      // Update the content in the file tree of the open path
+      const existing = findItemByPath(items, openFilePath.split('/'));
+      if (existing) {
+        dispatch(setContent({path: openFilePath, content: editor.getContent()}));
+      }
+    }
+  }, [open, editor]);
+
   if (!item) {
     return <></>;
   }

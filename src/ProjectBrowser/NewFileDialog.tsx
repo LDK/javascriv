@@ -3,9 +3,10 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CancelButton, ConfirmButton } from "../Components/DialogButtons";
 import { ProjectFile } from "../Project/ProjectTypes";
-import { addItem, findItemByPath, selectFiles, setOpenFilePath } from "../redux/projectSlice";
+import { addItem, findItemByPath, selectFiles, setContent, setOpenFilePath } from "../redux/projectSlice";
 import { FileType, findParentFolder, ROOTFOLDER, SubType } from "./ProjectBrowser";
 import { getFolders, SetOpenFunction } from "./useBrowserDialog";
+import { Editor } from "tinymce";
 
 type NewFileDialogProps = {
   open: boolean;
@@ -15,11 +16,12 @@ type NewFileDialogProps = {
   fileType: FileType;
   subType: SubType;
   setOpen : SetOpenFunction;
+  editor: Editor;
   setOpenFolder: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 const NewFileDialog = ({ 
-    open, setOpen, onClose, fileType, subType, openFilePath, openFolder, setOpenFolder 
+    open, setOpen, onClose, fileType, subType, openFilePath, openFolder, setOpenFolder, editor 
   }: NewFileDialogProps) => {
 
   const items = useSelector(selectFiles);
@@ -81,6 +83,16 @@ const NewFileDialog = ({
       setParentFolder(openFolder);
     }
   }, [open, openFolder, setParentFolder]);
+
+  useEffect(() => {
+    if (open) {
+      // Update the content in the file tree of the open path
+      const existing = findItemByPath(items, openFilePath.split('/'));
+      if (existing) {
+        dispatch(setContent({path: openFilePath, content: editor.getContent()}));
+      }
+    }
+  }, [open, editor]);
 
   useEffect(() => {
     const parentItem = findItemByPath(items, parentFolder?.split('/') || []);

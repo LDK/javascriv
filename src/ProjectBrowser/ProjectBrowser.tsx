@@ -16,11 +16,13 @@ import MoveFileDialog from './MoveFileDialog';
 import { ProjectFile } from '../Project/ProjectTypes';
 import ProjectActionBar from './ProjectActionBar';
 import useProjectRename from './useProjectRename';
+import { Editor } from 'tinymce';
 
 interface ProjectBrowserProps {
   onDocumentClick: (item: ProjectFile) => void;
   setProjectSettingsOpen: (open: boolean) => void;
-}
+  editor: Editor;
+};
 
 export const ROOTFOLDER = '<root>';
 
@@ -36,7 +38,7 @@ export const findParentFolder = (path: string[]) => {
 export type FileType = 'file' | 'folder' | null;
 export type SubType = 'document' | 'image' | 'other' | null;
 
-const ProjectBrowser: React.FC<ProjectBrowserProps> = ({ onDocumentClick, setProjectSettingsOpen }) => {
+const ProjectBrowser: React.FC<ProjectBrowserProps> = ({ onDocumentClick, setProjectSettingsOpen, editor }) => {
   const items = useSelector(selectFiles);
 
   const openFilePath = useSelector(selectOpenFilePath);
@@ -166,7 +168,8 @@ const ProjectBrowser: React.FC<ProjectBrowserProps> = ({ onDocumentClick, setPro
         </Box>
       </Sticky>
 
-      <NewFileDialog {...{ 
+      <NewFileDialog {...{
+        editor,
         open: Boolean(adding), 
         fileType: adding ? adding.type : null,
         subType: adding ? adding.subType as SubType : null,
@@ -204,7 +207,8 @@ const ProjectBrowser: React.FC<ProjectBrowserProps> = ({ onDocumentClick, setPro
           setOpen: setMoving as SetOpenFunction,
           onClose: () => setMoving(false),
           sourceFilePath: moving ? moving.path : '',
-          setOpenFolder, openFolder }}
+          openFilePath: openFilePath as string,
+          setOpenFolder, openFolder, editor }}
         />
       }
 
