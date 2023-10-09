@@ -83,6 +83,7 @@ const RegistrationForm = (options: RegistrationFormOptions) => {
 
         <DialogActionButtons
           internal
+          padding
           onCancel={options.onCancel || (() => {})}
           onConfirm={() => {}}
         />

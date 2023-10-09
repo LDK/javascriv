@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { CancelButton, ConfirmButton } from "../Components/DialogButtons";
 import { ProjectFile } from "../Project/ProjectTypes";
-import { setFiles, setOpenFilePath, setProjectId, setProjectTitle } from "../redux/projectSlice";
+import { setFiles, setOpenFilePath, setProjectId, setProjectSettings, setProjectTitle } from "../redux/projectSlice";
 
 type NewProjectDialogProps = {
   open: boolean;
@@ -38,6 +38,7 @@ const NewProjectDialog = ({ open, onClose, setEditorContent }: NewProjectDialogP
     dispatch(setOpenFilePath(newPath));
     dispatch(setProjectTitle(newProjectName));
     dispatch(setProjectId(undefined));
+    dispatch(setProjectSettings({}));
     setEditorContent('');
     onClose();
   };

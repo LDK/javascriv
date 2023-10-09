@@ -64,7 +64,7 @@ const ExportOptions: React.FC<ExportOptionsProps> = ({ optionsOpen, onClose, onR
         }} />
       </DialogContent>
 
-      <DialogActionButtons onCancel={onClose} onConfirm={handleReady} confirmLabel="Ready" />
+      <DialogActionButtons padding onCancel={onClose} onConfirm={handleReady} confirmLabel="Ready" />
 
     </Dialog>
   );

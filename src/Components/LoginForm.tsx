@@ -58,6 +58,7 @@ const LoginForm = (options: LoginFormOptions) => {
 
           <DialogActionButtons
             internal
+            padding
             onCancel={options.onCancel || (() => {})}
             onConfirm={() => {}}
           />

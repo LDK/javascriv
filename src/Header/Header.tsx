@@ -14,7 +14,6 @@ import LoginRegisterDialog from './LoginRegisterDialog';
 import useUser from '../User/useUser';
 import { ProjectState } from '../Project/ProjectTypes';
 import useAppMenu from '../useAppMenu';
-import useProject from '../Project/useProject';
 
 type IconButtonProps = {
   clickAction: (e:React.MouseEvent) => void;
@@ -49,9 +48,10 @@ type HeaderProps = {
   handleEditorChange: (content: string) => void;
   importCallback: () => void;
   newCallback: () => void;
+  ProjectSelector: React.FC<any>;
 };
 
-const Header: React.FC<any> = ({ loadProject, appMenuButtons, importCallback, newCallback, handleEditorChange }:HeaderProps) => {
+const Header: React.FC<any> = ({ loadProject, appMenuButtons, importCallback, newCallback, handleEditorChange, ProjectSelector }:HeaderProps) => {
   const theme = useTheme();
   const dispatch = useDispatch();
 
@@ -68,8 +68,6 @@ const Header: React.FC<any> = ({ loadProject, appMenuButtons, importCallback, ne
 
   const { user, UserMenu, handleOpenUserMenu } = useUser();
   const { AppMenu, handleOpenAppMenu } = useAppMenu({ buttons: appMenuButtons });
-
-  const { ProjectSelector } = useProject({ ...handleEditorChange });
 
   return (
     <Sticky innerZ={2}>

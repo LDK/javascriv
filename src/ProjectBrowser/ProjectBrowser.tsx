@@ -115,7 +115,7 @@ const ProjectBrowser: React.FC<ProjectBrowserProps> = ({ onDocumentClick, setPro
           />
         </Box>
         <Box
-          overflow={{ overflowY: "auto" }}
+          overflow={{ overflowY: "auto", overflowX: "hidden" }}
           maxHeight="calc(100vh - 108px)"
           pb={8}
           sx={{ color: theme.palette.text.primary }}

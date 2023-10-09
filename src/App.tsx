@@ -13,12 +13,12 @@ import useFileBrowser from './ProjectBrowser/useFileBrowser';
 import usePublishing from './Publish/usePublishing';
 import { Editor } from 'tinymce';
 import NewProjectDialog from './ProjectBrowser/NewProjectDialog';
-import ProjectSettingsDialog from './Project/ProjectSettingsDialog';
 import { ProjectFile } from './Project/ProjectTypes';
 import OpenProjectDialog from './ProjectBrowser/OpenProjectDialog';
 import useUser from './User/useUser';
 import AddCollaboratorDialog from './Project/AddCollaboratorDialog';
 import useFileInputRef from './useFileInputRef';
+import ProjectSettingsScreen from './ProjectSettingsScreen';
 
 const App: React.FC = () => {  
   const [editorContent, setEditorContent] = useState<string | null | false>(null);
@@ -49,7 +49,7 @@ const App: React.FC = () => {
   const { 
     opening, setOpening, ImportButton, ExportButton, ImportOptions, ExportOptions, importingPath,
     handleUpload, setNewProjectOpen, newProjectOpen, loadProject, saveProject, currentProject,
-    NewProjectButton, saving, setSaving
+    NewProjectButton, saving, setSaving, ProjectSelector
   } = useProject({ handleEditorChange, saveCallback: () => { getProjectListings(true) } });
 
   const { fileInputRef, setFileInputRef } = useFileInputRef();
@@ -59,10 +59,6 @@ const App: React.FC = () => {
   useEffect(() => {
     dispatch(setChanged({path: openFilePath || '', changed: hasContentChanged}));
   }, [hasContentChanged, openFilePath, dispatch]);
-
-  // useEffect(() => {
-  //   console.log('currentProject', currentProject);
-  // }, [currentProject]);
 
   useEffect(() => {
     if (openFilePath && items) {
@@ -95,7 +91,6 @@ const App: React.FC = () => {
 
   useEffect(() => {
     if (saving && user && user.token && currentProject) {
-      console.log('calling save project', currentProject);
       saveProject({ user, project: currentProject });
     }
     setSaving(false);
@@ -106,7 +101,6 @@ const App: React.FC = () => {
 
     const content = editor.getContent() || '';
     await saveFile(content);
-    console.log('handle save content', content, currentProject.files);
     // setInitial(content);
     setSaving(true);
   };
@@ -142,7 +136,7 @@ const App: React.FC = () => {
 
   return (
     <ThemeProvider theme={activeTheme === 'light' ? lightTheme : darkTheme}>
-      <Header {...{ loadProject, appMenuButtons, handleEditorChange, fileInputRef, importCallback, newCallback: () => { setNewProjectOpen(true); } }} />
+      <Header {...{ loadProject, ProjectSelector, appMenuButtons, handleEditorChange, fileInputRef, importCallback, newCallback: () => { setNewProjectOpen(true); } }} />
       <CssBaseline />
 
       <Box pt={8} flexGrow={1} display="flex">
@@ -156,7 +150,11 @@ const App: React.FC = () => {
             </Grid>
             <Grid item xs={12} md={8} lg={9} xl={10}>
               <Box px={0}>
-                <TinyEditor {...{ setEditor, handleEditorChange }} lastRevert={lastRevertTs} content={editorContent || ''} />
+                <Box p={0} m={0} display={ projectSettingsOpen ? 'none' : 'block' }>
+                  <TinyEditor {...{ setEditor, handleEditorChange }} lastRevert={lastRevertTs} content={editorContent || ''} />
+                </Box>
+
+                <ProjectSettingsScreen open={projectSettingsOpen} onClose={() => setProjectSettingsOpen(false)} />
 
                 <Box pt={2} className="actions" position="absolute" bottom="2rem" width="100%" right="0" textAlign="right">
 
@@ -179,7 +177,6 @@ const App: React.FC = () => {
 
       <NewProjectDialog setEditorContent={setEditorContent} open={newProjectOpen} onClose={() => setNewProjectOpen(false)} />
       <OpenProjectDialog onClose={handleOpenProjectClose} project={opening} />
-      <ProjectSettingsDialog open={projectSettingsOpen} onClose={() => setProjectSettingsOpen(false)} />
       <AddCollaboratorDialog {...{user, currentProject}} open={addCollabOpen} onClose={() => setAddCollabOpen(false)} />
     </ThemeProvider>
   );

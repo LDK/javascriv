@@ -23,7 +23,7 @@ export type ProjectSettings = {
 export type ProjectState = {
   files: ProjectFile[];
   openFilePath: string | null;
-  settings?: ProjectSettings;
+  settings: ProjectSettings;
   title?: string;
   id?: number;
   creator?: number;

@@ -99,6 +99,7 @@ const AddCollaboratorDialog: React.FC<AddCollaboratorDialogProps> = ({ open, onC
       </DialogContent>
 
       <DialogActionButtons
+        padding
         onCancel={handleClose}
         onConfirm={handleConfirm}
         confirmLabel="Add Collaborator"

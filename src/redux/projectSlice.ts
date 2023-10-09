@@ -4,6 +4,14 @@ import { ProjectFile, ProjectSettings, ProjectState } from '../Project/ProjectTy
 import { RootState } from './store';
 import introCopy from '../editorIntro';
 
+const defaultSettings:ProjectSettings = {
+  pageBreaks: 'Nowhere',
+  pageNumberPosition: 'Top Left',
+  displayDocumentTitles: true,
+  includeToC: false,
+  font: { name: 'Roboto', value: 'Roboto' },
+  fontSize: 12,
+};
 const initialState:ProjectState = {
   files: [
     {
@@ -15,7 +23,7 @@ const initialState:ProjectState = {
     }
   ],
   openFilePath: 'Document 1',
-  settings: {},
+  settings: defaultSettings,
   title: 'New Project'
 };
 
@@ -60,7 +68,18 @@ const projectSlice = createSlice({
       state.creator = action.payload;
     },
     setProjectSettings: (state, action: PayloadAction<ProjectSettings>) => {
-      state.settings = action.payload;
+      let newSettings:ProjectSettings = { ...defaultSettings };
+
+      for (const key in newSettings) {
+        const value = action.payload[key];
+        if (value !== undefined) {
+          newSettings[key] = value;
+        } else {
+          newSettings[key] = defaultSettings[key as keyof typeof defaultSettings];
+        }
+      }
+
+      state.settings = newSettings;
     },
     saveSetting: (state, action: PayloadAction<{ settingKey: string; value: string | number | boolean }>) => {
       const { settingKey, value } = action.payload;
@@ -72,7 +91,7 @@ const projectSlice = createSlice({
     },
     setContent: (state, action: PayloadAction<{ path: string; content: string }>) => {
       const { path, content } = action.payload;
-      console.log('setContent', path, content);
+
       const item = findItemByPath(state.files, path.split('/'));
 
       if (item && item.type === 'file') {

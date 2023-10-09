@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Select, MenuItem, FormControl, InputLabel, useTheme } from '@mui/material';
 import { useSelector } from 'react-redux';
-import { selectFiles } from '../redux/projectSlice';
+import { getProjectSettings, selectFiles } from '../redux/projectSlice';
 import PublishTree from './PublishTree';
 import publishToPdf from './pdfCompiler';
 import { Binary, PublishingOptions } from './compiling';
@@ -15,10 +15,31 @@ export interface PublishOptionsProps {
 }
 
 export function usePublishingOptions () {
-  const [pageBreaks, setPageBreaks] = useState<string>('Nowhere');
-  const [pageNumberPosition, setPageNumberPosition] = useState<string>('Top Left');
-  const [displayDocumentTitles, setDisplayDocumentTitles] = useState<Binary>(1);
-  const [includeToC, setIncludeToC] = useState<Binary>(1);
+  const projectSettings = useSelector(getProjectSettings);
+
+  const [pageBreaks, setPageBreaks] = useState<string>(projectSettings?.pageBreaks as string || 'Nowhere');
+  const [pageNumberPosition, setPageNumberPosition] = useState<string>(projectSettings?.pageNumberPosition as string || 'Nowhere');
+  const [displayDocumentTitles, setDisplayDocumentTitles] = useState<Binary>(projectSettings?.displayDocumentTitles? 1 : 0);
+  const [includeToC, setIncludeToC] = useState<Binary>(projectSettings?.includeToC? 1 : 0);
+
+  useEffect(() => {
+    if (projectSettings.pageBreaks && projectSettings.pageBreaks !== pageBreaks) {
+      setPageBreaks(projectSettings.pageBreaks as string);
+    }
+
+    if (projectSettings.pageNumberPosition && projectSettings.pageNumberPosition !== pageNumberPosition) {
+      setPageNumberPosition(projectSettings.pageNumberPosition as string);
+    }
+
+    if (projectSettings.includeToC && projectSettings.includeToC !== includeToC) {
+      setIncludeToC(projectSettings.includeToC ? 1 : 0);
+    }
+
+    if (projectSettings.displayDocumentTitles && projectSettings.displayDocumentTitles !== displayDocumentTitles) {
+      setDisplayDocumentTitles(projectSettings.displayDocumentTitles ? 1 : 0);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [projectSettings]);
 
   const PageBreaksSelect = () => (
     <FormControl fullWidth variant="outlined" sx={{ mt: 2 }}>
@@ -61,7 +82,7 @@ export function usePublishingOptions () {
     <FormControl fullWidth variant="outlined" sx={{ mt: 2 }}>
       <InputLabel htmlFor="display-document-titles-select">Display Document Titles as Headers?</InputLabel>
       <Select
-        value={displayDocumentTitles}
+        value={displayDocumentTitles as Binary}
         onChange={(e) => setDisplayDocumentTitles(e.target.value as Binary)}
         label="Display Document Titles as Headers?"
         inputProps={{ id: 'display-document-titles-select' }}
@@ -76,7 +97,7 @@ export function usePublishingOptions () {
     <FormControl fullWidth variant="outlined" sx={{ mt: 2 }}>
       <InputLabel htmlFor="include-toc-select">Include Table of Contents?</InputLabel>
       <Select
-        value={includeToC}
+        value={includeToC as Binary}
         onChange={(e) => setIncludeToC(e.target.value as Binary)}
         label="Include Table of Contents"
         inputProps={{ id: 'include-toc-select' }}

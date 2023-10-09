@@ -17,11 +17,11 @@ export default function useDialogUI() {
   };
 
   const CancelButton = ({ onClick, label } : ButtonProps) => (
-    <Button {...{ onClick }} variant={ dark ? 'outlined' : 'contained' } color={ dark ? 'warning' : 'error' } sx={{ mr: 1 }}>{ label || 'Cancel' }</Button>
+    <Button {...{ onClick }} variant={ dark ? 'outlined' : 'contained' } color={ dark ? 'warning' : 'error' } sx={{ textAlign: 'center', display: 'block', mr: 1 }} >{ label || 'Cancel' }</Button>
   );
   
   const ConfirmButton = ({ onClick, label, disabled } : ButtonProps) => (
-    <Button variant="contained" color="success" {...{ disabled, onClick }} type="submit">{ label || 'OK' }</Button>
+    <Button sx={{ textAlign: 'center', display: 'block' }} variant="contained" color="success" {...{ disabled, onClick }} type="submit">{ label || 'OK' }</Button>
   )
   
   type DialogActionButtonsProps = {
@@ -31,10 +31,11 @@ export default function useDialogUI() {
     cancelLabel?: string;
     confirmLabel?: string;
     internal?: boolean;
+    padding?: true;
   };
 
-  const DialogActionButtons = ({ onCancel, onConfirm, confirmDisabled, cancelLabel, confirmLabel, internal } : DialogActionButtonsProps) => (
-    <DialogActions sx={{ px: 3, pb: 2, pt:0, ...( internal ? { position: 'absolute', bottom: '.5rem', right: 0 } : {} ) }}>
+  const DialogActionButtons = ({ onCancel, onConfirm, padding, confirmDisabled, cancelLabel, confirmLabel, internal } : DialogActionButtonsProps) => (
+    <DialogActions sx={{ px: padding ? 3 : 0, pb: 2, pt:0, ...( internal ? { position: 'absolute', bottom: '.5rem', right: 0 } : {} ) }}>
       <CancelButton onClick={onCancel} mode={dark ? 'dark' : 'light'} label={cancelLabel} />
       <ConfirmButton onClick={onConfirm} mode={dark ? 'dark' : 'light'} {...{ disabled: confirmDisabled }} label={confirmLabel} />
     </DialogActions>

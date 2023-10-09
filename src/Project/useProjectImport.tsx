@@ -64,7 +64,6 @@ const useProjectImport = ({ handleEditorChange }: UseProjectImportProps) => {
 
           if (importedProject) {
             const projectFiles = renameTwins(importedProject.files);
-            // const projectFiles = importedProject.files;
 
             if (importedProject.openFilePath && projectFiles) {
               setImportingPath(importedProject.openFilePath.split('/'));

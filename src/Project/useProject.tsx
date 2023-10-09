@@ -173,8 +173,6 @@ const useProject = ({ handleEditorChange, saveCallback }: UseProjectProps) => {
   const ProjectSelector:React.FC<any> = ({ user, callback, handleEditorChange, importCallback, newCallback }:ProjectSelectorProps) => {
     const { projects, token } = user;
     
-    const { ImportButton } = useProjectImport({handleEditorChange});
-
     if (!projects || !token) {
       return null;
     }

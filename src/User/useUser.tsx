@@ -15,7 +15,7 @@ export default function useUser () {
       const AuthStr = 'Bearer ' + user.token;
       axios.get(`${process.env.REACT_APP_API_URL}/user/projects`, { headers: { Authorization: AuthStr } })
         .then((response) => {
-          console.log(response.data);
+
           const payload = {
             Created: response.data.createdProjects,
             Collaborator: response.data.collaboratorProjects,
