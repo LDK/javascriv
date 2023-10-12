@@ -5,6 +5,7 @@ import { renameChildrenPaths } from "../Project/projectUtils";
 import { findItemByPath } from "../redux/projectSlice";
 import { FileType, findParentFolder, ROOTFOLDER, SubType } from "./ProjectBrowser";
 import useBrowserDialog, { getFolders, SetOpenFunction } from "./useBrowserDialog";
+import { set } from "react-hook-form";
 
 type DuplicateDialogProps = {
   open: boolean;
@@ -45,6 +46,12 @@ const DuplicateDialog = ({ open, setOpen, onClose, sourceFilePath, openFolder }:
     setItemName(suggestedFilename(sourceFilePath));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sourceFilePath]);
+
+  useEffect(() => {
+    if (open) {
+      setParentFolder(initialParent);
+    }
+  }, [open, initialParent, setParentFolder]);
 
   useEffect(() => {
     if (!open && openFolder) {

@@ -22,6 +22,12 @@ const DeleteDialog = ({ open, setOpen, onClose, sourceFilePath, openFolder }: De
   const [parentFolder, setParentFolder] = useState<string | null>(initialParent);
 
   useEffect(() => {
+    if (open) {
+      setParentFolder(initialParent);
+    }
+  }, [open, initialParent, setParentFolder]);
+
+  useEffect(() => {
     const newFolder = findParentFolder(sourceFilePath?.split('/') || []);
     setParentFolder(newFolder);
     // eslint-disable-next-line react-hooks/exhaustive-deps

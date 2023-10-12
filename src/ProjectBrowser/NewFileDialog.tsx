@@ -7,6 +7,7 @@ import { addItem, findItemByPath, selectFiles, setContent, setOpenFilePath } fro
 import { FileType, findParentFolder, ROOTFOLDER, SubType } from "./ProjectBrowser";
 import { getFolders, SetOpenFunction } from "./useBrowserDialog";
 import { Editor } from "tinymce";
+import { set } from "react-hook-form";
 
 type NewFileDialogProps = {
   open: boolean;
@@ -15,13 +16,12 @@ type NewFileDialogProps = {
   openFolder: string | null;
   fileType: FileType;
   subType: SubType;
-  setOpen : SetOpenFunction;
   editor: Editor;
   setOpenFolder: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 const NewFileDialog = ({ 
-    open, setOpen, onClose, fileType, subType, openFilePath, openFolder, setOpenFolder, editor 
+    open, onClose, fileType, subType, openFilePath, openFolder, setOpenFolder, editor 
   }: NewFileDialogProps) => {
 
   const items = useSelector(selectFiles);
@@ -48,8 +48,26 @@ const NewFileDialog = ({
 
     dispatch(addItem({path: newPath, item: newItem}));
     dispatch(setOpenFilePath(newPath));
-    setOpen(false);
+    handleClose();
   };
+
+  const handleClose = () => {
+    onClose();
+  }
+
+  const handleOpen = () => {
+    setNewItemName('');
+    setDisabledReason('');
+    setParentFolder(openFolder);
+    setHasTwin(false);
+    setSiblings([]);
+  }
+
+  useEffect(() => {
+    if (open) {
+      handleOpen();
+    }
+  }, [open]);
 
   useEffect(() => {
     if (submitDisabled) {
@@ -155,7 +173,7 @@ const NewFileDialog = ({
         </FormControl>
       </DialogContent>
       <DialogActions sx={{ px: 3, pb: 3 }}>
-        <CancelButton onClick={onClose} />
+        <CancelButton onClick={handleClose} />
 
         <Tooltip title={disabledReason || ''}>
           <span>

@@ -49,6 +49,8 @@ const MoveFileDialog = ({ open, setOpen, onClose, sourceFilePath, openFolder, ed
   
   useEffect(() => {
     if (open) {
+      setParentFolder(initialParent);
+      setItemName(item?.name || '');
       // Update the content in the file tree of the open path
       const existing = findItemByPath(items, openFilePath.split('/'));
       if (existing) {

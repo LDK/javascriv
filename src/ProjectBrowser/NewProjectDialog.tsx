@@ -40,8 +40,23 @@ const NewProjectDialog = ({ open, onClose, setEditorContent }: NewProjectDialogP
     dispatch(setProjectId(undefined));
     dispatch(setProjectSettings({}));
     setEditorContent('');
-    onClose();
+    handleClose();
   };
+
+  const handleOpen = () => {
+    setNewProjectName('');
+    setDisabledReason('');
+  }
+
+  const handleClose = () => {
+    onClose();
+  }
+
+  useEffect(() => {
+    if (open) {
+      handleOpen();
+    }
+  }, [open]);
 
   useEffect(() => {
     if (submitDisabled) {
@@ -74,7 +89,7 @@ const NewProjectDialog = ({ open, onClose, setEditorContent }: NewProjectDialogP
 
       </DialogContent>
       <DialogActions sx={{ px: 3, pb: 3 }}>
-        <CancelButton onClick={onClose} />
+        <CancelButton onClick={handleClose} />
 
         <Tooltip title={disabledReason || ''}>
           <span>

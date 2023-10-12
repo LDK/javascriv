@@ -173,7 +173,6 @@ const ProjectBrowser: React.FC<ProjectBrowserProps> = ({ onDocumentClick, setPro
         open: Boolean(adding), 
         fileType: adding ? adding.type : null,
         subType: adding ? adding.subType as SubType : null,
-        setOpen: setAdding, 
         openFilePath: openFilePath as string,
         onClose: () => setAdding(false),
         setOpenFolder, openFolder }}
