@@ -12,16 +12,19 @@ const defaultSettings:ProjectSettings = {
   font: { name: 'Roboto', value: 'Roboto' },
   fontSize: 12,
 };
+
+const defaultFiles:ProjectFile[] = [
+  {
+    'type': 'file',
+    'subType': 'document',
+    'name': 'Document 1',
+    'path': 'Document 1',
+    'content': introCopy,
+  }
+];
+
 const initialState:ProjectState = {
-  files: [
-    {
-      'type': 'file',
-      'subType': 'document',
-      'name': 'Document 1',
-      'path': 'Document 1',
-      'content': introCopy,
-    }
-  ],
+  files: defaultFiles,
   openFilePath: 'Document 1',
   settings: defaultSettings,
   title: 'New Project'
@@ -212,10 +215,17 @@ const projectSlice = createSlice({
         state.files.push({ ...item, children: item.children || (item.type === 'folder' ? [] : undefined) });
       }
     },
+    resetProject: (state) => {
+      state.settings = defaultSettings;
+      state.files = defaultFiles;
+      state.openFilePath = 'Document 1';
+      state.title = 'New Project';
+      state.id = undefined;
+    },
   },
 });
 
-export const { setProjectId, setProjectCreator, setContent, setChanged, setOpenFilePath, deleteItem, addItem, saveItem, reorderItem, setName, setFiles, saveSetting, setProjectTitle, setProjectSettings } = projectSlice.actions;
+export const { setProjectId, setProjectCreator, setContent, setChanged, setOpenFilePath, deleteItem, addItem, saveItem, reorderItem, setName, setFiles, saveSetting, setProjectTitle, setProjectSettings, resetProject } = projectSlice.actions;
 
 export const selectFiles = (state: RootState) => state.project.files;
 export const selectOpenFilePath = (state: RootState) => state.project.openFilePath;
