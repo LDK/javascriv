@@ -1,8 +1,8 @@
 // Browser/ProjectBrowser.tsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, IconButton, useTheme, PaletteColor, PaletteMode, Typography } from '@mui/material';
-import { findItemByPath, selectFiles, selectOpenFilePath } from '../redux/projectSlice';
-import { useSelector } from 'react-redux';
+import { findItemByPath, selectFiles, selectOpenFilePath, setFiles, setOpenFilePath, setProjectId, setProjectSettings, setProjectTitle } from '../redux/projectSlice';
+import { useDispatch, useSelector } from 'react-redux';
 import Sticky from 'react-stickynode';
 import FileBrowserItem from './FileBrowserItem';
 import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder';
@@ -17,11 +17,14 @@ import { ProjectFile } from '../Project/ProjectTypes';
 import ProjectActionBar from './ProjectActionBar';
 import useProjectRename from './useProjectRename';
 import { Editor } from 'tinymce';
+import useProject from '../Project/useProject';
+import useUser from '../User/useUser';
 
 interface ProjectBrowserProps {
   onDocumentClick: (item: ProjectFile) => void;
   setProjectSettingsOpen: (open: boolean) => void;
   editor: Editor;
+  setEditorContent: (content: string) => void;
 };
 
 export const ROOTFOLDER = '<root>';
@@ -38,7 +41,7 @@ export const findParentFolder = (path: string[]) => {
 export type FileType = 'file' | 'folder' | null;
 export type SubType = 'document' | 'image' | 'other' | null;
 
-const ProjectBrowser: React.FC<ProjectBrowserProps> = ({ onDocumentClick, setProjectSettingsOpen, editor }) => {
+const ProjectBrowser: React.FC<ProjectBrowserProps> = ({ onDocumentClick, setProjectSettingsOpen, editor, setEditorContent }) => {
   const items = useSelector(selectFiles);
 
   const openFilePath = useSelector(selectOpenFilePath);
@@ -82,6 +85,35 @@ const ProjectBrowser: React.FC<ProjectBrowserProps> = ({ onDocumentClick, setPro
   }
 
   const { renaming, title, renameInputRef, handleEditClick, handleRenameBlur, handleRenameKeyPress } = useProjectRename();
+  const { loadProjectById, currentProject, reloading, setReloading } = useProject({});
+  const { user } = useUser();
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (reloading) {
+      const openFile = findItemByPath(reloading.files, reloading.openFilePath?.split('/') || []);
+
+      if (openFile) {
+        setEditorContent(openFile.content as string);
+        editor.setContent(openFile.content as string);
+      }
+
+      dispatch(setFiles(reloading.files));
+      dispatch(setOpenFilePath(reloading.openFilePath || '/'));
+      dispatch(setProjectTitle(reloading.title || 'Untitled'));
+      dispatch(setProjectSettings(reloading.settings || {}));
+      dispatch(setProjectId(reloading.id));
+
+      setReloading(undefined);
+    }
+  }, [reloading, dispatch, editor, setEditorContent, setReloading]);
+
+  const handleRefreshClick = () => {
+    if (currentProject && currentProject.id && user && user.token) {
+      loadProjectById(currentProject.id, user.token, true);
+    }
+  }
 
   return (
     <Box
@@ -111,7 +143,10 @@ const ProjectBrowser: React.FC<ProjectBrowserProps> = ({ onDocumentClick, setPro
             </>
           )}
 
-          <ProjectActionBar onEditClick={handleEditClick}
+          <ProjectActionBar 
+            onEditClick={handleEditClick}
+            onRefreshClick={handleRefreshClick}
+            currentProject={currentProject}
           />
         </Box>
         <Box

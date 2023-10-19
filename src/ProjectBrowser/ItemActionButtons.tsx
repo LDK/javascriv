@@ -1,7 +1,7 @@
 // Browser/ItemActionButtons.tsx
 
 import { IconButton, SvgIconTypeMap, Tooltip } from "@mui/material";
-import { Delete, Edit, ArrowUpward, ArrowDownward, MoreVert } from "@mui/icons-material";
+import { Delete, Edit, ArrowUpward, ArrowDownward, MoreVert, Refresh } from "@mui/icons-material";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
 
 type ActionButtonProps = {
@@ -30,6 +30,10 @@ export const DeleteButton = ({ action, disabled }: ActionButtonProps) => (
 
 export const EditButton = ({ action, disabled }: ActionButtonProps) => (
   <ActionButton title="Rename"  {...{ action, disabled }} Component={Edit} />
+);
+
+export const RefreshButton = ({ action, disabled }: ActionButtonProps) => (
+  <ActionButton title="Refresh"  {...{ action, disabled }} Component={Refresh} />
 );
 
 export const UpButton = ({ action, disabled }: ActionButtonProps) => (

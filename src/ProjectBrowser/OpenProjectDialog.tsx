@@ -22,10 +22,6 @@ const OpenProjectDialog = ({ onClose, project }: OpenProjectDialogProps) => {
     return null;
   }
 
-  console.log('opening project', project);
-
-
-
   const handleOpenProject = () => {
     dispatch(setFiles(project.files));
     dispatch(setOpenFilePath(project.openFilePath || '/'));

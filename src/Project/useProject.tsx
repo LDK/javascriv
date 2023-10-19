@@ -118,6 +118,30 @@ const useProject = ({ handleEditorChange, saveCallback }: UseProjectProps) => {
     );
   };
 
+  const loadProjectById = (id:number, token:string, immediate?:boolean) => {
+    const AuthStr = 'Bearer ' + token;
+
+    if (setSaving) {
+      setSaving(false);
+    }
+
+    axios.get(`${process.env.REACT_APP_API_URL}/project/${id}`, { headers: { Authorization: AuthStr } })
+      .then((response) => {
+        console.log('loadProjectbyid response', response);
+        if (!immediate) {
+          setOpening(response.data);
+        } else {
+          console.log('setReloading', response.data);
+          setReloading(response.data);
+        }
+      })
+      .catch((error) => {
+        console.log('error', error);
+      }
+    );
+  }
+
+
   const saveProject = async ({ user, project }:{ user:UserState, project: ProjectState }) => {
     if (!user || !user.token) {
       return;
@@ -209,7 +233,7 @@ const useProject = ({ handleEditorChange, saveCallback }: UseProjectProps) => {
     ExportOptions: ExportDialog, setExportOptionsOpen, ExportButton, 
     ImportOptions: ImportDialog, ImportButton, 
     setNewProjectOpen, newProjectOpen, 
-    currentProject, loadProject, saveProject,
+    currentProject, loadProject, loadProjectById, saveProject,
     reloading, setReloading, importingPath,
     NewProjectButton, ProjectSelector
   };

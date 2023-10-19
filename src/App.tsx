@@ -47,7 +47,7 @@ const App: React.FC = () => {
   };
 
   const { 
-    opening, setOpening, ImportButton, ExportButton, ImportOptions, ExportOptions, importingPath,
+    opening, setOpening, setReloading, ImportButton, ExportButton, ImportOptions, ExportOptions, importingPath,
     handleUpload, setNewProjectOpen, newProjectOpen, loadProject, saveProject, currentProject,
     NewProjectButton, saving, setSaving, ProjectSelector
   } = useProject({ handleEditorChange, saveCallback: () => { getProjectListings(true) } });
@@ -112,6 +112,7 @@ const App: React.FC = () => {
 
   const handleOpenProjectClose = () => {
     setOpening(undefined);
+    setReloading(undefined);
   };
 
   const SaveButton = () => <Button variant="text" color="primary" onClick={handleSave}>Save Project</Button>;
@@ -144,7 +145,7 @@ const App: React.FC = () => {
           <Grid container spacing={0}>
             <Grid item xs={12} md={4} lg={3} xl={2} px={0} mx={0}>
                 {editor && <ProjectBrowser
-                  {...{ editor, setProjectSettingsOpen }}
+                  {...{ editor, setProjectSettingsOpen, setEditorContent }}
                   onDocumentClick={documentClick}
                 />}
             </Grid>
