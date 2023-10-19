@@ -37,7 +37,6 @@ const useProject = ({ handleEditorChange, saveCallback }: UseProjectProps) => {
     const handleClick = (e:React.MouseEvent<HTMLButtonElement | HTMLLIElement>) => {
       e.currentTarget.blur(); // Remove focus from the button
       if (callback) {
-        console.log('callback', callback);
         callback();
       } else {
         setNewProjectOpen(true);
@@ -105,7 +104,6 @@ const useProject = ({ handleEditorChange, saveCallback }: UseProjectProps) => {
 
     axios.get(`${process.env.REACT_APP_API_URL}/project/${project.id}`, { headers: { Authorization: AuthStr } })
       .then((response) => {
-        console.log('loadProject response', response);
         if (!immediate) {
           setOpening(response.data);
         } else {
@@ -127,11 +125,9 @@ const useProject = ({ handleEditorChange, saveCallback }: UseProjectProps) => {
 
     axios.get(`${process.env.REACT_APP_API_URL}/project/${id}`, { headers: { Authorization: AuthStr } })
       .then((response) => {
-        console.log('loadProjectbyid response', response);
         if (!immediate) {
           setOpening(response.data);
         } else {
-          console.log('setReloading', response.data);
           setReloading(response.data);
         }
       })

@@ -43,7 +43,6 @@ const AddCollaboratorDialog: React.FC<AddCollaboratorDialogProps> = ({ open, onC
 
     axios.post(postUrl, payload, { headers: { Authorization: AuthStr } })
       .then((response) => {
-        console.log(response.data);
         setSearching(false);
         
         if (response.data.success) {

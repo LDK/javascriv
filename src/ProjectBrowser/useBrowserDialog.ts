@@ -58,8 +58,6 @@ export default function useBrowserDialog(sourceFilePath: string, setOpen: SetOpe
       id: id
     };
 
-    console.log('new item', newItem);
-
     dispatch(addItem({path: newPath, item: newItem}));
 
     setOpen(false);

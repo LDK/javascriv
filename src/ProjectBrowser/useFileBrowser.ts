@@ -41,7 +41,6 @@ const useFileBrowser = ({ contentCallback }:FileBrowserProps) => {
   };
 
   const saveFile = async (htmlContent:string) => {
-    console.log('save file', htmlContent);
     if (!openFilePath) {
       const newName = getUniqueNewDocumentName(browserItems);
       const newItem: ProjectFile = { name: newName, type: 'file', subType: 'document', content: htmlContent, path: `/${newName}` };
