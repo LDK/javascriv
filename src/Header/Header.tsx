@@ -47,11 +47,12 @@ type HeaderProps = {
   appMenuButtons: JSX.Element[];
   handleEditorChange: (content: string) => void;
   importCallback: () => void;
+  manageCallback: () => void;
   newCallback: () => void;
   ProjectSelector: React.FC<any>;
 };
 
-const Header: React.FC<any> = ({ loadProject, appMenuButtons, importCallback, newCallback, handleEditorChange, ProjectSelector }:HeaderProps) => {
+const Header: React.FC<any> = ({ loadProject, appMenuButtons, importCallback, manageCallback, newCallback, handleEditorChange, ProjectSelector }:HeaderProps) => {
   const theme = useTheme();
   const dispatch = useDispatch();
 
@@ -75,7 +76,7 @@ const Header: React.FC<any> = ({ loadProject, appMenuButtons, importCallback, ne
         <Typography pl={3} pt={1} component="h1" variant="h4" position="absolute" top={0} left={0} color={theme.palette.text.primary}>javaScriv</Typography>
 
         <Toolbar>
-          {!user ? null : <ProjectSelector {...{ user, importCallback, newCallback }} callback={loadProject} />}
+          {!user ? null : <ProjectSelector {...{ user, importCallback, newCallback, manageCallback }} callback={loadProject} />}
 
           <ThemeToggleSwitch {...{ isDarkMode, toggleTheme }} />
 

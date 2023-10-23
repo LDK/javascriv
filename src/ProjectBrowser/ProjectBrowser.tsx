@@ -41,6 +41,10 @@ export const findParentFolder = (path: string[]) => {
 export type FileType = 'file' | 'folder' | null;
 export type SubType = 'document' | 'image' | 'other' | null;
 
+export const paletteRGBA = (color: PaletteColor, opacity: number, mode: PaletteMode) => {
+  return `rgba(${color[mode].replace('rgb(', '').replace(')', '')}, ${opacity})`;
+}
+
 const ProjectBrowser: React.FC<ProjectBrowserProps> = ({ onDocumentClick, setProjectSettingsOpen, editor, setEditorContent }) => {
   const items = useSelector(selectFiles);
 
@@ -79,10 +83,6 @@ const ProjectBrowser: React.FC<ProjectBrowserProps> = ({ onDocumentClick, setPro
       />
     );
   };
-
-  const paletteRGBA = (color: PaletteColor, opacity: number, mode: PaletteMode) => {
-    return `rgba(${color[mode].replace('rgb(', '').replace(')', '')}, ${opacity})`;
-  }
 
   const { renaming, title, renameInputRef, handleEditClick, handleRenameBlur, handleRenameKeyPress } = useProjectRename();
   const { loadProjectById, currentProject, reloading, setReloading } = useProject({});
@@ -149,6 +149,7 @@ const ProjectBrowser: React.FC<ProjectBrowserProps> = ({ onDocumentClick, setPro
             currentProject={currentProject}
           />
         </Box>
+
         <Box
           overflow={{ overflowY: "auto", overflowX: "hidden" }}
           maxHeight="calc(100vh - 108px)"

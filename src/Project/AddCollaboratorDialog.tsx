@@ -35,13 +35,13 @@ const AddCollaboratorDialog: React.FC<AddCollaboratorDialogProps> = ({ open, onC
     setSearching(true);
 
     const AuthStr = 'Bearer ' + user.token;
-    const postUrl = process.env.REACT_APP_API_URL + '/project/' + currentProject.id + '/addCollaborator';
+    const patchUrl = process.env.REACT_APP_API_URL + '/project/' + currentProject.id + '/collaborator';
+
     const payload = {
-      search: searchText,
-      projectId: currentProject.id,
+      search: searchText
     };
 
-    axios.post(postUrl, payload, { headers: { Authorization: AuthStr } })
+    axios.patch(patchUrl, payload, { headers: { Authorization: AuthStr } })
       .then((response) => {
         setSearching(false);
         

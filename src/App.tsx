@@ -19,6 +19,8 @@ import useUser from './User/useUser';
 import AddCollaboratorDialog from './Project/AddCollaboratorDialog';
 import useFileInputRef from './useFileInputRef';
 import ProjectSettingsScreen from './ProjectSettingsScreen';
+import { set } from 'react-hook-form';
+import ManageProjectsScreen from './ManageProjectsScreen';
 
 const App: React.FC = () => {  
   const [editorContent, setEditorContent] = useState<string | null | false>(null);
@@ -28,6 +30,7 @@ const App: React.FC = () => {
   const [projectSettingsOpen, setProjectSettingsOpen] = useState(false);
   const [addCollabOpen, setAddCollabOpen] = useState(false);
   const { user, getProjectListings } = useUser();
+  const [manageProjectsOpen, setManageProjectsOpen] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -96,6 +99,26 @@ const App: React.FC = () => {
     setSaving(false);
   }, [saving, saveProject, loadProject, currentProject, user, setSaving]);
 
+  useEffect(() => {
+    if (currentProject.id) {
+      setManageProjectsOpen(false);
+      setProjectSettingsOpen(false);
+      setAddCollabOpen(false);
+    }
+  }, [currentProject.id]);
+
+  useEffect(() => {
+    if (projectSettingsOpen && manageProjectsOpen) {
+      setProjectSettingsOpen(false);
+    }
+  }, [manageProjectsOpen]);
+
+  useEffect(() => {
+    if (projectSettingsOpen && manageProjectsOpen) {
+      setManageProjectsOpen(false);
+    }
+  }, [projectSettingsOpen]);
+
   const handleSave = async () => {
     if (!editor) return;
 
@@ -125,6 +148,8 @@ const App: React.FC = () => {
 
   const importCallback = () => { fileInputRef?.click(); };
 
+  const manageCallback = () => { setManageProjectsOpen(true); };
+
   const appMenuButtons = [
     <SaveButton />,
     <RevertButton />,
@@ -137,7 +162,7 @@ const App: React.FC = () => {
 
   return (
     <ThemeProvider theme={activeTheme === 'light' ? lightTheme : darkTheme}>
-      <Header {...{ loadProject, ProjectSelector, appMenuButtons, handleEditorChange, fileInputRef, importCallback, newCallback: () => { setNewProjectOpen(true); } }} />
+      <Header {...{ loadProject, ProjectSelector, appMenuButtons, handleEditorChange, fileInputRef, importCallback, manageCallback, newCallback: () => { setNewProjectOpen(true); } }} />
       <CssBaseline />
 
       <Box pt={8} flexGrow={1} display="flex">
@@ -151,11 +176,12 @@ const App: React.FC = () => {
             </Grid>
             <Grid item xs={12} md={8} lg={9} xl={10}>
               <Box px={0}>
-                <Box p={0} m={0} display={ projectSettingsOpen ? 'none' : 'block' }>
+                <Box p={0} m={0} display={ (projectSettingsOpen || manageProjectsOpen) ? 'none' : 'block' }>
                   <TinyEditor {...{ setEditor, handleEditorChange }} lastRevert={lastRevertTs} content={editorContent || ''} />
                 </Box>
 
                 <ProjectSettingsScreen open={projectSettingsOpen} onClose={() => setProjectSettingsOpen(false)} />
+                <ManageProjectsScreen {...{user}} open={manageProjectsOpen} onClose={() => setManageProjectsOpen(false)} />
 
                 <Box pt={2} className="actions" position="absolute" bottom="2rem" width="100%" right="0" textAlign="right">
 

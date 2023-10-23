@@ -31,7 +31,7 @@ const useProject = ({ handleEditorChange, saveCallback }: UseProjectProps) => {
 
   const currentProject = useSelector(getCurrentProject);
 
-  const { ImportButton, ImportDialog, importProjectFromJson, importProjectFromScrivenerZip, importingPath } = useProjectImport({ handleEditorChange });
+  const { ImportButton, ManageProjectsButton, ImportDialog, importProjectFromJson, importProjectFromScrivenerZip, importingPath } = useProjectImport({ handleEditorChange });
 
   const NewProjectButton = ({ text, label, callback }:{ text?: true, label?: string, callback?: () => void }) => {
     const handleClick = (e:React.MouseEvent<HTMLButtonElement | HTMLLIElement>) => {
@@ -151,7 +151,7 @@ const useProject = ({ handleEditorChange, saveCallback }: UseProjectProps) => {
 
     const payload = {...project, creator: user.id };
 
-    const saveResponse = await axios.post(postUrl, payload, headers)
+    const saveResponse = await axios.patch(postUrl, payload, headers)
       .then((response) => {
         if (setSaving) { setSaving(false); }
 
@@ -188,9 +188,10 @@ const useProject = ({ handleEditorChange, saveCallback }: UseProjectProps) => {
     handleEditorChange: (content: string) => void;
     importCallback: () => void;
     newCallback: () => void;
+    manageCallback: () => void;
   };
   
-  const ProjectSelector:React.FC<any> = ({ user, callback, handleEditorChange, importCallback, newCallback }:ProjectSelectorProps) => {
+  const ProjectSelector:React.FC<any> = ({ user, callback, handleEditorChange, importCallback, manageCallback, newCallback }:ProjectSelectorProps) => {
     const { projects, token } = user;
     
     if (!projects || !token) {
@@ -219,6 +220,7 @@ const useProject = ({ handleEditorChange, saveCallback }: UseProjectProps) => {
   
         <NewProjectButton text={true} callback={newCallback} />
         <ImportButton callback={importCallback} text={true} label="Import Project" />
+        <ManageProjectsButton callback={manageCallback} text={true} label="Manage Projects" />
       </Select>
     </FormControl>
     )
