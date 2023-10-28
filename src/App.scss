@@ -14,6 +14,10 @@ body {
   }
 }
 
+.MuiContainer-maxWidthXl {
+  max-width: unset !important;
+}
+
 html {
   *::-webkit-scrollbar-track
   {

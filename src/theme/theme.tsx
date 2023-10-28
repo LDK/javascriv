@@ -12,6 +12,17 @@ interface ExtendedThemeOptions extends ThemeOptions {
 
 export type ThemeName = 'light' | 'dark';
 
+declare module '@mui/material/styles' {
+  interface BreakpointOverrides {
+    xs: true;
+    sm: true;
+    md: true;
+    lg: true;
+    xl: true;
+    hd: true;
+  }
+}
+
 const darkThemeOptions:ExtendedThemeOptions = {
   palette: {
     mode: 'dark',
@@ -51,7 +62,7 @@ const darkThemeOptions:ExtendedThemeOptions = {
       // Blue color, typically associated with informational messages or neutral actions.
       main: '#2196f3',
     },
-  },
+  }
 };
 
 const lightThemeOptions:ExtendedThemeOptions = {
@@ -115,6 +126,16 @@ const baseThemeOptions:ExtendedThemeOptions = {
       },
     },
   },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 576,
+      md: 768,
+      lg: 992,
+      xl: 1200,
+      hd: 1800
+    }
+  }
 };
 
 export const lightTheme = createTheme({ ...baseThemeOptions, ...lightThemeOptions });

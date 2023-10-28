@@ -19,7 +19,6 @@ import useUser from './User/useUser';
 import AddCollaboratorDialog from './Project/AddCollaboratorDialog';
 import useFileInputRef from './useFileInputRef';
 import ProjectSettingsScreen from './ProjectSettingsScreen';
-import { set } from 'react-hook-form';
 import ManageProjectsScreen from './ManageProjectsScreen';
 
 const App: React.FC = () => {  
@@ -31,6 +30,9 @@ const App: React.FC = () => {
   const [addCollabOpen, setAddCollabOpen] = useState(false);
   const { user, getProjectListings } = useUser();
   const [manageProjectsOpen, setManageProjectsOpen] = useState(false);
+
+  const editorAreaBps = manageProjectsOpen ? { sm: 12, hd: 9 } : { md: 8, lg: 9 };
+  const browserBps = manageProjectsOpen ? { xs: 0, hd: 3 } : { xs: 12, md: 4, lg: 3 };
 
   const dispatch = useDispatch();
 
@@ -111,12 +113,14 @@ const App: React.FC = () => {
     if (projectSettingsOpen && manageProjectsOpen) {
       setProjectSettingsOpen(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [manageProjectsOpen]);
 
   useEffect(() => {
     if (projectSettingsOpen && manageProjectsOpen) {
       setManageProjectsOpen(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [projectSettingsOpen]);
 
   const handleSave = async () => {
@@ -168,13 +172,13 @@ const App: React.FC = () => {
       <Box pt={8} flexGrow={1} display="flex">
         <Container maxWidth="xl" sx={{ px: "0 !important" }}>
           <Grid container spacing={0}>
-            <Grid item xs={12} md={4} lg={3} xl={2} px={0} mx={0}>
+            <Grid item {...browserBps} px={0} mx={0} display={{ xs: manageProjectsOpen ? 'none' : 'flex', hd: 'flex'}}>
                 {editor && <ProjectBrowser
                   {...{ editor, setProjectSettingsOpen, setEditorContent }}
                   onDocumentClick={documentClick}
                 />}
             </Grid>
-            <Grid item xs={12} md={8} lg={9} xl={10}>
+            <Grid item xs={12} {...editorAreaBps}>
               <Box px={0}>
                 <Box p={0} m={0} display={ (projectSettingsOpen || manageProjectsOpen) ? 'none' : 'block' }>
                   <TinyEditor {...{ setEditor, handleEditorChange }} lastRevert={lastRevertTs} content={editorContent || ''} />
