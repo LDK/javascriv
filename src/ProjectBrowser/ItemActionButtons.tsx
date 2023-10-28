@@ -1,7 +1,7 @@
 // Browser/ItemActionButtons.tsx
 
 import { IconButton, SvgIconTypeMap, Tooltip } from "@mui/material";
-import { Delete, Edit, ArrowUpward, ArrowDownward, MoreVert, Refresh } from "@mui/icons-material";
+import { FolderSharedTwoTone as Collab, DeleteTwoTone as Delete, DriveFileRenameOutlineTwoTone as Edit, ContentCopyTwoTone as Duplicate, ArrowUpward, ArrowDownward, MoreVert, Refresh } from "@mui/icons-material";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
 
 type ActionButtonProps = {
@@ -28,8 +28,16 @@ export const DeleteButton = ({ action, disabled }: ActionButtonProps) => (
   <ActionButton title="Delete" {...{ action, disabled }} Component={Delete} />
 );
 
+export const CollabButton = ({ action, disabled }: ActionButtonProps) => (
+  <ActionButton title="Manage Collaborators" {...{ action, disabled }} Component={Collab} />
+);
+
 export const EditButton = ({ action, disabled }: ActionButtonProps) => (
   <ActionButton title="Rename"  {...{ action, disabled }} Component={Edit} />
+);
+
+export const DuplicateButton = ({ action, disabled }: ActionButtonProps) => (
+  <ActionButton title="Duplicate"  {...{ action, disabled }} Component={Duplicate} />
 );
 
 export const RefreshButton = ({ action, disabled }: ActionButtonProps) => (

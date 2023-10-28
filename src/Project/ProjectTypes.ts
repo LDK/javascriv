@@ -32,6 +32,8 @@ export type ProjectState = {
 export type ProjectListing = {
   id: number;
   title: string;
+  lastEdited?: string;
+  lastEditor?: number;
 }
 
 export type Project = ProjectState & {
