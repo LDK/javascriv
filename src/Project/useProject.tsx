@@ -151,7 +151,9 @@ const useProject = ({ handleEditorChange, saveCallback }: UseProjectProps) => {
 
     const payload = {...project, creator: user.id };
 
-    const saveResponse = await axios.patch(postUrl, payload, headers)
+    const action = project.id ? axios.patch : axios.post;
+
+    const saveResponse = await action(postUrl, payload, headers)
       .then((response) => {
         if (setSaving) { setSaving(false); }
 
@@ -197,7 +199,15 @@ const useProject = ({ handleEditorChange, saveCallback }: UseProjectProps) => {
     if (!projects || !token) {
       return null;
     }
-  
+
+    const totalProjectCount = (projects.Created?.length || 0) + (projects.Collaborator?.length || 0);
+
+    let viewAll = <></>;
+
+    if ((projects.Created && projects.Created.length > 5) || (projects.Collaborator && projects.Collaborator.length > 5)) {
+      viewAll = <ManageProjectsButton callback={manageCallback} text={true} label={`View all ${totalProjectCount} projects...`} />;
+    }
+
     return (
       <FormControl sx={{ my: 0, mr: 2, p:0, minWidth: 120 }}>
       <InputLabel htmlFor="grouped-select">Projects</InputLabel>
@@ -209,12 +219,14 @@ const useProject = ({ handleEditorChange, saveCallback }: UseProjectProps) => {
           return (
             <div key={group}>
               <ListSubheader>{group} Projects</ListSubheader>
-              {projects[group as keyof typeof projects].map((project) => (
+              {projects[group as keyof typeof projects].slice(0,5).map((project) => (
                 <MenuItem key={project.id} onClick={() => callback(project, token)}>{project.title}</MenuItem>
               ))}
             </div>
           );
         })}
+
+        {viewAll}
   
         <Divider />
   

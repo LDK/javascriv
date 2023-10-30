@@ -1,10 +1,10 @@
 import { useSelector, useDispatch } from "react-redux";
-import { ProjectFile } from "../Project/ProjectTypes";
+import { ProjectFile, ProjectListing } from "../Project/ProjectTypes";
 import { selectFiles, addItem, findItemByPath, deleteItem, setOpenFilePath } from "../redux/projectSlice";
 import { RootState } from "../redux/store";
 
 export type NewBrowserItem = Omit<ProjectFile, 'path' | 'name'>;
-export type SetOpenFunction = React.Dispatch<React.SetStateAction<ProjectFile | NewBrowserItem | false>>;
+export type SetOpenFunction = React.Dispatch<React.SetStateAction<ProjectFile | ProjectListing | NewBrowserItem | false>>;
 
 // Recursively iterate through all items and add folders to the itemsFolders array, 
 // as well as their children folders and grand-children folders, etc.
