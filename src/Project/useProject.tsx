@@ -202,7 +202,7 @@ const useProject = ({ handleEditorChange, saveCallback }: UseProjectProps) => {
 
     const totalProjectCount = (projects.Created?.length || 0) + (projects.Collaborator?.length || 0);
 
-    let viewAll = <></>;
+    let viewAll:(null | JSX.Element) = null;
 
     if ((projects.Created && projects.Created.length > 5) || (projects.Collaborator && projects.Collaborator.length > 5)) {
       viewAll = <ManageProjectsButton callback={manageCallback} text={true} label={`View all ${totalProjectCount} projects...`} />;
