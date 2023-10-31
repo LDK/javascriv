@@ -27,7 +27,8 @@ const initialState:ProjectState = {
   files: defaultFiles,
   openFilePath: 'Document 1',
   settings: defaultSettings,
-  title: 'New Project'
+  title: 'New Project',
+  collaborators: [],
 };
 
 export const findItemByPath = (items: ProjectFile[], path: string[]): ProjectFile | undefined => {

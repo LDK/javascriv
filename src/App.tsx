@@ -185,7 +185,7 @@ const App: React.FC = () => {
                 </Box>
 
                 <ProjectSettingsScreen open={projectSettingsOpen} onClose={() => setProjectSettingsOpen(false)} />
-                <ManageProjectsScreen {...{user, loadProject, getProjectListings}} open={manageProjectsOpen} onClose={() => setManageProjectsOpen(false)} />
+                <ManageProjectsScreen {...{user, loadProject, getProjectListings, addCollabOpen, setAddCollabOpen}} open={manageProjectsOpen} onClose={() => setManageProjectsOpen(false)} />
 
                 <Box pt={2} className="actions" position="absolute" bottom="2rem" width="100%" right="0" textAlign="right">
 

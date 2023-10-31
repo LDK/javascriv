@@ -1,15 +1,15 @@
 // Project/AddCollaboratorDialog.tsx
 import React, { useState } from 'react';
-import { Box, CircularProgress, Dialog, DialogContent, DialogTitle, Divider, Grid, TextField, Typography } from '@mui/material';
+import { Box, CircularProgress, Dialog, DialogContent, DialogTitle, Divider, TextField, Typography } from '@mui/material';
 import useDialogUI from '../theme/useDialogUI';
 import axios from 'axios';
-import { ProjectState } from './ProjectTypes';
+import { ProjectListing, ProjectState } from './ProjectTypes';
 import { UserState } from '../redux/userSlice';
 
 type AddCollaboratorDialogProps = {
   open: boolean;
   onClose: () => void;
-  currentProject: ProjectState;
+  currentProject?: ProjectState | ProjectListing;
   user: UserState;
 };
 
@@ -58,43 +58,24 @@ const AddCollaboratorDialog: React.FC<AddCollaboratorDialogProps> = ({ open, onC
     );
   };
 
-  const FormBox = ({ children }: { children: React.ReactNode }) => (
-    <Box
-      mb={2}
-      p={2}
-      borderRadius={'.25rem'} borderColor="primary.contrastText" sx={{
-        borderStyle: 'solid',
-        borderWidth: '1px',
-        backgroundColor: '#6A6A6A',
-      }}>
-      {children}
-    </Box>
-  );
-
   return (
-    <Dialog open={open} onClose={handleClose} fullWidth={true} maxWidth={'md'} PaperProps={{ style: { height: '80vh' }}}>
+    <Dialog open={open} onClose={handleClose} fullWidth={true} maxWidth={'sm'} PaperProps={{ style: { height: '40vh' }}}>
       <DialogTitle>Add Collaborator to Project</DialogTitle>
       <Divider />
       <DialogContent>
-        <Grid container spacing={2}>
-          <Grid item xs={12} md={6}>
-            <FormBox>
-              <Typography mb={1}>Enter the username or e-mail address of the user you wish to invite to collaborate.</Typography>
+          <Typography mb={1}>Enter the username or e-mail address of the user you wish to invite to collaborate.</Typography>
 
-              <TextField
-                autoFocus
-                margin="dense"
-                id="name"
-                label="Username or E-mail Address"
-                type="text"
-                fullWidth
-                disabled={searching}
-                value={searchText}
-                onChange={(e) => setSearchText(e.target.value)}
-              />
-            </FormBox>
-          </Grid>
-        </Grid>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Username or E-mail Address"
+            type="text"
+            fullWidth
+            disabled={searching}
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+          />
       </DialogContent>
 
       <DialogActionButtons

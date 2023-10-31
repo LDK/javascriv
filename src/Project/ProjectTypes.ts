@@ -1,4 +1,5 @@
 import { EditorFont } from "../Editor/EditorFonts";
+import { AppUser } from "../redux/userSlice";
 
 export type ProjectFile = {
   type: 'folder' | 'file';
@@ -27,6 +28,7 @@ export type ProjectState = {
   title?: string;
   id?: number;
   creator?: number;
+  collaborators?: AppUser[];
 };
 
 export type ProjectListing = {

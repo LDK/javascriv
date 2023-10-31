@@ -9,10 +9,13 @@ type ProjectCategories = {
   [key in ProjectCategory]: ProjectListing[];
 };
 
-export type UserState = {
+export type AppUser = {
   id: number | null;
   username: string | null;
   email: string | null;
+};
+
+export type UserState = AppUser & {
   token: string | null;
   projects?: {
     Created: ProjectListing[];

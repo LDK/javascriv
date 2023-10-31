@@ -2,14 +2,13 @@ import { Box, Divider, Grid, Typography, useTheme } from "@mui/material";
 import { useState } from "react";
 import { UserState } from "./redux/userSlice";
 import { DataGrid, GridColDef, GridSortModel } from "@mui/x-data-grid";
-import { ProjectListing, ProjectState } from "./Project/ProjectTypes";
+import { ProjectListing } from "./Project/ProjectTypes";
 import { CollabButton, DeleteButton, DuplicateButton, EditButton, LaunchButton } from "./ProjectBrowser/ItemActionButtons";
 import DuplicateProjectDialog from "./Project/DuplicateProjectDialog";
 import { SetOpenFunction } from "./ProjectBrowser/useBrowserDialog";
 import RenameProjectDialog from "./Project/RenameProjectDialog";
-import DeleteDialog from "./ProjectBrowser/DeleteDialog";
 import DeleteProjectDialog from "./Project/DeleteProjectDialog";
-
+import ProjectCollabsDialog from "./Project/ProjectCollabsDialog";
 
 type ManageProjectsDialogProps = {
   open: boolean;
@@ -17,6 +16,7 @@ type ManageProjectsDialogProps = {
   user: UserState;
   loadProject: (arg:ProjectListing, token: string) => void;
   getProjectListings: (arg: boolean) => void;
+
 };
 
 const ManageProjectsScreen = ({ open, onClose, user, loadProject, getProjectListings }:ManageProjectsDialogProps) => {
@@ -26,7 +26,7 @@ const ManageProjectsScreen = ({ open, onClose, user, loadProject, getProjectList
   const [renameOpen, setRenameOpen] = useState<ProjectListing | false>(false);
   const [deleteOpen, setDeleteOpen] = useState<ProjectListing | false>(false);
   const [collabOpen, setCollabOpen] = useState<ProjectListing | false>(false);
-  
+
   const [sort, setSort] = useState<GridSortModel>([{ field: 'lastEdited', sort: 'desc' }]);
 
   const theme = useTheme();
@@ -41,6 +41,11 @@ const ManageProjectsScreen = ({ open, onClose, user, loadProject, getProjectList
     setRenameOpen(project || false);
   };
 
+  const handleCollab = (id: number) => {
+    const project = findProjectListing(id);
+    setCollabOpen(project || false);
+  };
+
   const handleLaunch = (id: number) => {
     const project = findProjectListing(id);
     loadProject(project, token);
@@ -48,9 +53,7 @@ const ManageProjectsScreen = ({ open, onClose, user, loadProject, getProjectList
   }
 
   const handleDelete = (id: number) => {
-    console.log('delete', id);
     const project = findProjectListing(id);
-    console.log('have project?', id, project);
     setDeleteOpen(project || false);
   };
 
@@ -59,9 +62,7 @@ const ManageProjectsScreen = ({ open, onClose, user, loadProject, getProjectList
   }
 
   const handleDuplicate = (id: number) => {
-    console.log('duplicate', id);
     const project = findProjectListing(id);
-    console.log('have project?', id, project);
     setDuplicateOpen(project || false);
   };
 
@@ -74,33 +75,27 @@ const ManageProjectsScreen = ({ open, onClose, user, loadProject, getProjectList
   }
   
   const columns: GridColDef[] = [
-    // { field: 'id', headerName: 'ID', width: 60 },
-    { field: 'title', headerName: 'Title', width: 200,
+    { 
+      field: 'title', headerName: 'Title', width: 200,
       renderCell: (params) => (
-        // <Box p={0} m={0}>
-          <Typography fontWeight={700}>
-            {params.value}
-          </Typography>
-        // </Box>
+        <Typography fontWeight={700}>
+          {params.value}
+        </Typography>
       ) 
     },
     { field: 'lastEdited', headerName: 'Last Edited', width: 150,
       renderCell: (params) => (
-        // <Box p={0} m={0}>
-          <Typography fontWeight={700}>
-            {formatDateString(params.value as string).split(', ')[0].replace(',','')}<br />
-            {formatDateString(params.value as string).split(', ')[1]}<br />
-          </Typography>
-        // </Box>
+        <Typography fontWeight={700}>
+          {formatDateString(params.value as string).split(', ')[0].replace(',','')}<br />
+          {formatDateString(params.value as string).split(', ')[1]}<br />
+        </Typography>
       ) 
     },
     { field: 'lastEditor', headerName: 'Last Editor', width: 100,
       renderCell: (params) => (
-        // <Box p={0} m={0}>
-          <Typography fontWeight={700}>
-            {params.value.username}
-          </Typography>
-        // </Box>
+        <Typography fontWeight={700}>
+          {params.value.username}
+        </Typography>
       ) 
     },
     {
@@ -115,7 +110,7 @@ const ManageProjectsScreen = ({ open, onClose, user, loadProject, getProjectList
           <EditButton action={(e) =>{ e.stopPropagation(); handleRename(params.value)}} />
           <DeleteButton action={(e) =>{ e.stopPropagation(); handleDelete(params.value)}} />
           <DuplicateButton action={(e) =>{ e.stopPropagation(); handleDuplicate(params.value)}} />
-          <CollabButton action={(e) =>{ e.stopPropagation(); handleDelete(params.value)}} />
+          <CollabButton action={(e) =>{ e.stopPropagation(); handleCollab(params.value)}} />
         </Box>
       )
   }
@@ -187,6 +182,14 @@ const ManageProjectsScreen = ({ open, onClose, user, loadProject, getProjectList
         setOpen={setRenameOpen as SetOpenFunction}
         onClose={() => { setRenameOpen(false); }}
         callback={(() => { getProjectListings(true) })}
+      />
+
+      <ProjectCollabsDialog
+        open={Boolean(collabOpen)}
+        project={collabOpen || undefined}
+        setOpen={setCollabOpen as SetOpenFunction}
+        onClose={() => { setCollabOpen(false); getProjectListings(true); }}
+        
       />
 
       <DeleteProjectDialog
