@@ -9,10 +9,19 @@ export type ProjectsTableProps = {
   label: string;
   projectList: ProjectListing[];
   id: string;
+  emptyText?: string;
 }
 
-const ProjectsTable = ({ columns, initSort, label, projectList, id }:ProjectsTableProps) => {
+const ProjectsTable = ({ columns, initSort, label, projectList, id, emptyText }:ProjectsTableProps) => {
   const [sort, setSort] = useState<GridSortModel | undefined>(initSort || undefined);
+
+  if (!projectList || projectList.length === 0) {
+    return (
+      <Box id={id}>
+        <Typography>{emptyText || 'No projects found.'}</Typography>
+      </Box>
+    );
+  }
 
   return (
     <Box id={id}>

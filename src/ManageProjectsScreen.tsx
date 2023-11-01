@@ -12,6 +12,8 @@ import ProjectCollabsDialog from "./Project/ProjectCollabsDialog";
 import ProjectsTable from "./Project/ProjectsTable";
 import { isFunction } from "@mui/x-data-grid/internals";
 import LeaveProjectDialog from "./Project/LeaveProjectDialog";
+import useDialogUI from "./theme/useDialogUI";
+import { ConfirmButton } from "./Components/DialogButtons";
 
 type ManageProjectsDialogProps = {
   open: boolean;
@@ -89,6 +91,8 @@ const ManageProjectsScreen = ({ open, onClose, user, loadProject, getProjectList
   const [leaveOpen, setLeaveOpen] = useState<ProjectListing | false>(false);
   const [activeTab, setActiveTab] = useState<string>('created');
 
+  const { DialogActionButtons } = useDialogUI();
+  
   const theme = useTheme();
   const isDark = theme.palette.mode === 'dark';
 
@@ -191,21 +195,23 @@ const ManageProjectsScreen = ({ open, onClose, user, loadProject, getProjectList
       </Tabs>
 
       <CustomTabPanel value="created" index={0} activeValue={activeTab}>
-        {Boolean(projects.Created.length) && <ProjectsTable id="created"
-            initSort={defaultSort}
-            columns={creatorColumns}
-            label="Created Projects"
-            projectList={projects.Created} 
-          />}
+        <ProjectsTable id="created"
+          initSort={defaultSort}
+          columns={creatorColumns}
+          label="Created Projects"
+          projectList={projects.Created}
+          emptyText="You have not created any projects."
+        />
       </CustomTabPanel>
       
       <CustomTabPanel value="collab" index={1} activeValue={activeTab}>
-        {Boolean(projects.Collaborator.length) && <ProjectsTable id="collab"
+        <ProjectsTable id="collab"
           label="Collaborating Projects"
           projectList={projects.Collaborator} 
           columns={collabColumns}
           initSort={defaultSort}
-        />}
+          emptyText="You are not currently collaborating on any projects."
+        />
       </CustomTabPanel>
 
       <DuplicateProjectDialog
@@ -247,6 +253,11 @@ const ManageProjectsScreen = ({ open, onClose, user, loadProject, getProjectList
         onClose={() => { setDeleteOpen(false); }}
         callback={(() => { getProjectListings(true) })}
       />
+
+        <Box position="absolute" bottom="2rem" width="100%" right="2rem" textAlign="right">
+          <ConfirmButton onClick={onClose} {...{ mode: theme.palette.mode }} label="Done" />
+        </Box>
+
     </Box>
   );
 }
