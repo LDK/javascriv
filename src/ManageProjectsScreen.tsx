@@ -1,14 +1,17 @@
-import { Box, Divider, Grid, Typography, useTheme } from "@mui/material";
+import { Box, Divider, Tab, Tabs, Typography, useTheme } from "@mui/material";
 import { useState } from "react";
 import { UserState } from "./redux/userSlice";
-import { DataGrid, GridColDef, GridSortModel } from "@mui/x-data-grid";
+import { GridColDef, GridRenderCellParams, GridSortDirection } from "@mui/x-data-grid";
 import { ProjectListing } from "./Project/ProjectTypes";
-import { CollabButton, DeleteButton, DuplicateButton, EditButton, LaunchButton } from "./ProjectBrowser/ItemActionButtons";
+import { CollabButton, DeleteButton, DuplicateButton, EditButton, LaunchButton, LeaveButton } from "./ProjectBrowser/ItemActionButtons";
 import DuplicateProjectDialog from "./Project/DuplicateProjectDialog";
 import { SetOpenFunction } from "./ProjectBrowser/useBrowserDialog";
 import RenameProjectDialog from "./Project/RenameProjectDialog";
 import DeleteProjectDialog from "./Project/DeleteProjectDialog";
 import ProjectCollabsDialog from "./Project/ProjectCollabsDialog";
+import ProjectsTable from "./Project/ProjectsTable";
+import { isFunction } from "@mui/x-data-grid/internals";
+import LeaveProjectDialog from "./Project/LeaveProjectDialog";
 
 type ManageProjectsDialogProps = {
   open: boolean;
@@ -16,8 +19,65 @@ type ManageProjectsDialogProps = {
   user: UserState;
   loadProject: (arg:ProjectListing, token: string) => void;
   getProjectListings: (arg: boolean) => void;
-
 };
+
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: number;
+  value: string;
+  activeValue: string;
+};
+
+const CustomTabPanel = (props: TabPanelProps) => {
+  const { children, value, index, activeValue, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== activeValue}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === activeValue && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+};
+
+type ActionFieldsProps = {
+  actions: string[];
+  handleLaunch?: (id: number) => void;
+  handleRename?: (id: number) => void;
+  handleDelete?: (id: number) => void;
+  handleDuplicate?: (id: number) => void;
+  handleCollab?: (id: number) => void;
+  handleLeave?: (id: number) => void;
+}
+
+const actionField = ({ actions, handleLaunch, handleRename, handleDelete, handleDuplicate, handleCollab, handleLeave }:ActionFieldsProps) => {
+  return {
+    field: 'actions',
+    headerName: 'Actions',
+    width: 250,
+    sortable: false,
+    valueGetter: (params:GridRenderCellParams) => params.id,
+    renderCell: (params:GridRenderCellParams) => (
+      <Box display="flex" justifyContent="space-between">
+        {(actions.includes('launch') && isFunction(handleLaunch)) && <LaunchButton action={(e) =>{ e.stopPropagation(); handleLaunch(params.value) }} />}
+        {(actions.includes('rename') && isFunction(handleRename)) && <EditButton action={(e) =>{ e.stopPropagation(); handleRename(params.value)}} />}
+        {(actions.includes('delete') && isFunction(handleDelete)) && <DeleteButton action={(e) =>{ e.stopPropagation(); handleDelete(params.value)}} />}
+        {(actions.includes('duplicate') && isFunction(handleDuplicate)) && <DuplicateButton action={(e) =>{ e.stopPropagation(); handleDuplicate(params.value)}} />}
+        {(actions.includes('collab') && isFunction(handleCollab)) && <CollabButton action={(e) =>{ e.stopPropagation(); handleCollab(params.value)}} />}
+        {(actions.includes('leave') && isFunction(handleLeave)) && <LeaveButton action={(e) =>{ e.stopPropagation(); handleLeave(params.value)}} />}
+      </Box>
+    )
+  };
+
+}
 
 const ManageProjectsScreen = ({ open, onClose, user, loadProject, getProjectListings }:ManageProjectsDialogProps) => {
   const { projects, token } = user;
@@ -26,15 +86,11 @@ const ManageProjectsScreen = ({ open, onClose, user, loadProject, getProjectList
   const [renameOpen, setRenameOpen] = useState<ProjectListing | false>(false);
   const [deleteOpen, setDeleteOpen] = useState<ProjectListing | false>(false);
   const [collabOpen, setCollabOpen] = useState<ProjectListing | false>(false);
-
-  const [sort, setSort] = useState<GridSortModel>([{ field: 'lastEdited', sort: 'desc' }]);
+  const [leaveOpen, setLeaveOpen] = useState<ProjectListing | false>(false);
+  const [activeTab, setActiveTab] = useState<string>('created');
 
   const theme = useTheme();
   const isDark = theme.palette.mode === 'dark';
-
-  if (!projects || !token || !open) {
-    return null;
-  }
 
   const handleRename = (id: number) => {
     const project = findProjectListing(id);
@@ -46,9 +102,16 @@ const ManageProjectsScreen = ({ open, onClose, user, loadProject, getProjectList
     setCollabOpen(project || false);
   };
 
+  const handleLeave = (id: number) => {
+    const project = findProjectListing(id);
+    setLeaveOpen(project || false);
+  };
+
   const handleLaunch = (id: number) => {
     const project = findProjectListing(id);
-    loadProject(project, token);
+    if (project && token) {
+      loadProject(project, token);
+    }
     onClose();
   }
 
@@ -57,24 +120,12 @@ const ManageProjectsScreen = ({ open, onClose, user, loadProject, getProjectList
     setDeleteOpen(project || false);
   };
 
-  const findProjectListing = (id: number) => {
-    return (projects.Created.find((project) => project.id === id) || projects.Collaborator.find((project) => project.id === id)) as ProjectListing;
-  }
-
   const handleDuplicate = (id: number) => {
     const project = findProjectListing(id);
     setDuplicateOpen(project || false);
   };
 
-  const formatDateString = (dateString: string):string => {
-    const options: Intl.DateTimeFormatOptions = { 
-      year: 'numeric', month: '2-digit', day: '2-digit', 
-      hour: 'numeric', minute: '2-digit', hour12: true 
-    };
-    return new Intl.DateTimeFormat('en-US', options).format(new Date(dateString));
-  }
-  
-  const columns: GridColDef[] = [
+  const creatorColumns: GridColDef[] = [
     { 
       field: 'title', headerName: 'Title', width: 200,
       renderCell: (params) => (
@@ -94,70 +145,38 @@ const ManageProjectsScreen = ({ open, onClose, user, loadProject, getProjectList
     { field: 'lastEditor', headerName: 'Last Editor', width: 100,
       renderCell: (params) => (
         <Typography fontWeight={700}>
-          {params.value.username}
+          {params.value && params.value.username}
         </Typography>
       ) 
     },
-    {
-      field: 'actions',
-      headerName: 'Actions',
-      width: 250,
-      sortable: false,
-      valueGetter: (params) => params.id,
-      renderCell: (params) => (
-        <Box display="flex" justifyContent="space-between">
-          <LaunchButton action={(e) =>{ e.stopPropagation(); handleLaunch(params.value) }} />
-          <EditButton action={(e) =>{ e.stopPropagation(); handleRename(params.value)}} />
-          <DeleteButton action={(e) =>{ e.stopPropagation(); handleDelete(params.value)}} />
-          <DuplicateButton action={(e) =>{ e.stopPropagation(); handleDuplicate(params.value)}} />
-          <CollabButton action={(e) =>{ e.stopPropagation(); handleCollab(params.value)}} />
-        </Box>
-      )
-  }
+    actionField({ actions: ['launch', 'rename', 'delete', 'duplicate', 'collab'], handleLaunch, handleRename, handleDelete, handleDuplicate, handleCollab })
   ];
 
-  const ProjectsTable = ({ label, projectList }: { label: string, projectList: ProjectListing[] }) => (
-    <Box>
-      <Typography mb={1}>{label}</Typography>
-      <Grid container maxWidth="xl" spacing={2}>
-        <Grid item xs={12} key={`project-manager-created`}>
-          <DataGrid
-            onSortModelChange={(model) => {
-              setSort(model);
-            }}
-              sx={{
-                "& .MuiDataGrid-columnHeaderTitle": {
-                  whiteSpace: "normal",
-                  lineHeight: "normal"
-                },
-                "& .MuiDataGrid-columnHeader": {
-                  // Forced to use important since overriding inline styles
-                  height: "unset !important"
-                },
-                "& .MuiDataGrid-columnHeaders": {
-                  // Forced to use important since overriding inline styles
-                  maxHeight: "168px !important"
-                }
-              }}
-            checkboxSelection
-            columns={columns}
-            
-            initialState={{
-              pagination: { paginationModel: { pageSize: 5 } },
-              sorting: {
-                sortModel: sort
-              },
-            }}
-            pageSizeOptions={[5, 10, 25, 50, 100]}
-            rows={projectList.map((project) => ({ id: project.id, title: project.title, lastEdited: project.lastEdited, lastEditor: project.lastEditor }))}
-            getRowClassName={(params) =>
-              params.indexRelativeToCurrentPage % 2 === 0 ? 'Mui-even' : 'Mui-odd'
-            }
-          />
-        </Grid>
-      </Grid>
-    </Box>
-  );
+  if (!projects || !token || !open) {
+    return null;
+  }
+
+  const findProjectListing = (id: number) => {
+    return (projects.Created.find((project) => project.id === id) || projects.Collaborator.find((project) => project.id === id)) as ProjectListing;
+  }
+
+  const formatDateString = (dateString: string):string => {
+    if (!dateString) return ('');
+    const options: Intl.DateTimeFormatOptions = { 
+      year: 'numeric', month: '2-digit', day: '2-digit', 
+      hour: 'numeric', minute: '2-digit', hour12: true 
+    };
+    return new Intl.DateTimeFormat('en-US', options).format(new Date(dateString));
+  }
+  
+  const defaultSort = [{
+    field: 'lastEdited',
+    sort: 'desc' as GridSortDirection,
+  }];
+
+  // slice off the last entry (actions and replace it with a new call to actionField)
+  const collabColumns = creatorColumns.slice(0, creatorColumns.length - 1);
+  collabColumns.push(actionField({ actions: ['launch', 'leave'], handleLaunch, handleLeave }))
 
   return (
     <Box width="100%" position="relative" overflow={{ overflowY: 'scroll', overflowX: 'hidden' }} height="calc(100vh - 64px)" p={4} display={ open ? 'block' : 'none' } sx={{ backgroundColor: theme.palette.grey[isDark ? 800 : 100] }}>
@@ -165,8 +184,29 @@ const ManageProjectsScreen = ({ open, onClose, user, loadProject, getProjectList
 
       <Divider sx={{ mb: 2 }} />
 
-      {Boolean(projects.Created.length) && <ProjectsTable label="Created Projects" projectList={projects.Created} />}
-      {Boolean(projects.Collaborator.length) && <ProjectsTable label="Collaborating Projects" projectList={projects.Collaborator} />}
+      <Tabs value={activeTab} onChange={(e, newValue) => setActiveTab(newValue)} aria-label="Projects">
+        <Tab label="Created Projects" value="created" />
+
+        <Tab label="Collaborating Projects" value="collab" />
+      </Tabs>
+
+      <CustomTabPanel value="created" index={0} activeValue={activeTab}>
+        {Boolean(projects.Created.length) && <ProjectsTable id="created"
+            initSort={defaultSort}
+            columns={creatorColumns}
+            label="Created Projects"
+            projectList={projects.Created} 
+          />}
+      </CustomTabPanel>
+      
+      <CustomTabPanel value="collab" index={1} activeValue={activeTab}>
+        {Boolean(projects.Collaborator.length) && <ProjectsTable id="collab"
+          label="Collaborating Projects"
+          projectList={projects.Collaborator} 
+          columns={collabColumns}
+          initSort={defaultSort}
+        />}
+      </CustomTabPanel>
 
       <DuplicateProjectDialog
         open={Boolean(duplicateOpen)}
@@ -190,6 +230,14 @@ const ManageProjectsScreen = ({ open, onClose, user, loadProject, getProjectList
         setOpen={setCollabOpen as SetOpenFunction}
         onClose={() => { setCollabOpen(false); getProjectListings(true); }}
         
+      />
+
+      <LeaveProjectDialog
+        open={Boolean(leaveOpen)}
+        project={leaveOpen || undefined}
+        setOpen={setLeaveOpen as SetOpenFunction}
+        onClose={() => { setLeaveOpen(false); getProjectListings(true); }}
+        callback={() => { getProjectListings(true) }}
       />
 
       <DeleteProjectDialog
