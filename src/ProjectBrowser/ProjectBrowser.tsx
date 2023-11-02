@@ -95,8 +95,8 @@ const ProjectBrowser: React.FC<ProjectBrowserProps> = ({ onDocumentClick, setPro
       const openFile = findItemByPath(reloading.files, reloading.openFilePath?.split('/') || []);
 
       if (openFile) {
-        setEditorContent(openFile.content as string);
-        editor.setContent(openFile.content as string);
+        setEditorContent((openFile.content || '') as string);
+        editor.setContent((openFile.content || '') as string);
       }
 
       dispatch(setFiles(reloading.files));
