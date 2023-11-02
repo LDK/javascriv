@@ -12,7 +12,7 @@ type DeleteProjectDialogProps = {
   setOpen : SetOpenFunction;
   onClose: () => void;
   project?: ProjectListing;
-  callback?: () => void;
+  callback?: (id?: number) => void;
 }
   
 const DeleteProjectDialog = ({ open, setOpen, onClose, project, callback }: DeleteProjectDialogProps) => {
@@ -28,12 +28,11 @@ const DeleteProjectDialog = ({ open, setOpen, onClose, project, callback }: Dele
       return;
     }
 
-    const deleteUrl = `${process.env.REACT_APP_API_URL}/project/${project?.id}`;
+    const deleteUrl = `${process.env.REACT_APP_API_URL}/project/${project.id}`;
   
     axios.delete(deleteUrl, { headers: { Authorization: AuthStr } }).then(res => {
-      console.log('delete response', res);
       if (isFunction(callback)) {
-        callback();
+        callback(project.id);
       }
     });
 

@@ -2,7 +2,7 @@ import { Box, Divider, Tab, Tabs, Typography, useTheme } from "@mui/material";
 import { useState } from "react";
 import { UserState } from "./redux/userSlice";
 import { GridColDef, GridRenderCellParams, GridSortDirection } from "@mui/x-data-grid";
-import { ProjectListing } from "./Project/ProjectTypes";
+import { ProjectListing, ProjectState } from "./Project/ProjectTypes";
 import { CollabButton, DeleteButton, DuplicateButton, EditButton, LaunchButton, LeaveButton } from "./ProjectBrowser/ItemActionButtons";
 import DuplicateProjectDialog from "./Project/DuplicateProjectDialog";
 import { SetOpenFunction } from "./ProjectBrowser/useBrowserDialog";
@@ -12,8 +12,9 @@ import ProjectCollabsDialog from "./Project/ProjectCollabsDialog";
 import ProjectsTable from "./Project/ProjectsTable";
 import { isFunction } from "@mui/x-data-grid/internals";
 import LeaveProjectDialog from "./Project/LeaveProjectDialog";
-import useDialogUI from "./theme/useDialogUI";
 import { ConfirmButton } from "./Components/DialogButtons";
+import { useDispatch } from "react-redux";
+import { setProjectId } from "./redux/projectSlice";
 
 type ManageProjectsDialogProps = {
   open: boolean;
@@ -21,6 +22,7 @@ type ManageProjectsDialogProps = {
   user: UserState;
   loadProject: (arg:ProjectListing, token: string) => void;
   getProjectListings: (arg: boolean) => void;
+  currentProject?: ProjectState;
 };
 
 interface TabPanelProps {
@@ -60,7 +62,8 @@ type ActionFieldsProps = {
   handleLeave?: (id: number) => void;
 }
 
-const actionField = ({ actions, handleLaunch, handleRename, handleDelete, handleDuplicate, handleCollab, handleLeave }:ActionFieldsProps) => {
+const actionField = (params:ActionFieldsProps) => {
+  const { actions, handleLaunch, handleRename, handleDelete, handleDuplicate, handleCollab, handleLeave } = params;
   return {
     field: 'actions',
     headerName: 'Actions',
@@ -81,7 +84,7 @@ const actionField = ({ actions, handleLaunch, handleRename, handleDelete, handle
 
 }
 
-const ManageProjectsScreen = ({ open, onClose, user, loadProject, getProjectListings }:ManageProjectsDialogProps) => {
+const ManageProjectsScreen = ({ open, onClose, user, loadProject, getProjectListings, currentProject }:ManageProjectsDialogProps) => {
   const { projects, token } = user;
 
   const [duplicateOpen, setDuplicateOpen] = useState<ProjectListing | false>(false);
@@ -91,9 +94,9 @@ const ManageProjectsScreen = ({ open, onClose, user, loadProject, getProjectList
   const [leaveOpen, setLeaveOpen] = useState<ProjectListing | false>(false);
   const [activeTab, setActiveTab] = useState<string>('created');
 
-  const { DialogActionButtons } = useDialogUI();
-  
   const theme = useTheme();
+  const dispatch = useDispatch();
+
   const isDark = theme.palette.mode === 'dark';
 
   const handleRename = (id: number) => {
@@ -251,7 +254,12 @@ const ManageProjectsScreen = ({ open, onClose, user, loadProject, getProjectList
         project={deleteOpen || undefined}
         setOpen={setDeleteOpen as SetOpenFunction}
         onClose={() => { setDeleteOpen(false); }}
-        callback={(() => { getProjectListings(true) })}
+        callback={((deletedId?:number) => {
+          if (currentProject && deletedId && currentProject.id === deletedId) {
+            dispatch(setProjectId(undefined));
+          }
+          getProjectListings(true);
+        })}
       />
 
         <Box position="absolute" bottom="2rem" width="100%" right="2rem" textAlign="right">
