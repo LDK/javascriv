@@ -22,7 +22,7 @@ type ProjectCollabsDialogProps = {
 const ProjectCollabsDialog = ({ open, setOpen, onClose, project, callback }: ProjectCollabsDialogProps) => {
 
   const theme = useTheme();
-  const { user } = useUser();
+  const { user } = useUser({});
   const AuthStr = `Bearer ${user.token}`;
 
   const [projectData, setProjectData] = useState<Project | null>(null);

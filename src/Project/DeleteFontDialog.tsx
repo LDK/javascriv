@@ -2,37 +2,40 @@ import { Dialog, DialogContent, DialogContentText, TextField, DialogActions, use
 import { useEffect, useState } from "react";
 import { CancelButton, ConfirmButton } from "../Components/DialogButtons";
 import { SetOpenFunction } from "../ProjectBrowser/useBrowserDialog";
-import { Project, ProjectListing } from "./ProjectTypes";
 import axios from "axios";
 import useUser from "../User/useUser";
 import { isFunction } from "@mui/x-data-grid/internals";
+import { CustomFont } from "./CustomFontsDialog";
 
-type DeleteProjectDialogProps = {
+type DeleteFontDialogProps = {
   open: boolean;
   setOpen : SetOpenFunction;
   onClose: () => void;
-  project?: ProjectListing;
   callback?: (id?: number) => void;
+  font?: CustomFont;
 }
   
-const DeleteProjectDialog = ({ open, setOpen, onClose, project, callback }: DeleteProjectDialogProps) => {
+const DeleteFontDialog = ({ open, setOpen, onClose, callback, font }: DeleteFontDialogProps) => {
   const theme = useTheme();
   const { user } = useUser({});
   const AuthStr = `Bearer ${user.token}`;
 
-  const [projectName, setProjectName] = useState<string>(project?.title || '');
+  const [fontName, setFontName] = useState<string>(font?.name || '');
 
   const handleDeleteClick = () => {
-    // console.log('rename project', project?.id, projectName);
-    if (!project || !user || !user.token) {
+    if (!user || !user.token) {
       return;
     }
 
-    const deleteUrl = `${process.env.REACT_APP_API_URL}/project/${project.id}`;
+    if (!font || !font.id) {
+      return;
+    }
+
+    const deleteUrl = `${process.env.REACT_APP_API_URL}/font/${font.id}`;
   
     axios.delete(deleteUrl, { headers: { Authorization: AuthStr } }).then(res => {
-      if (isFunction(callback)) {
-        callback(project.id);
+      if (font && font.id && isFunction(callback)) {
+        callback(font.id);
       }
     });
 
@@ -41,14 +44,14 @@ const DeleteProjectDialog = ({ open, setOpen, onClose, project, callback }: Dele
   };
 
   useEffect(() => {
-    if (open && project) {
-      setProjectName(project.title || '');
+    if (open && font) {
+      setFontName(font.name || '');
     }
-  }, [open, project]);
+  }, [open, font]);
 
   const mode = theme.palette.mode;
 
-  if (!project) {
+  if (!font) {
     return <></>;
   }
 
@@ -58,16 +61,16 @@ const DeleteProjectDialog = ({ open, setOpen, onClose, project, callback }: Dele
 
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
-          Do you really want to delete {project.title}?
+          Do you really want to delete custom font "{font.name}"?
         </DialogContentText>
       </DialogContent>
 
       <DialogActions>
         <CancelButton onClick={onClose} {...{ mode }} />
-        <ConfirmButton onClick={handleDeleteClick} {...{ mode }} disabled={!projectName} label="Delete Project" />
+        <ConfirmButton onClick={handleDeleteClick} {...{ mode }} disabled={!fontName} label="Delete Font" />
       </DialogActions>    
     </Dialog>
   );
 }
 
-export default DeleteProjectDialog;
+export default DeleteFontDialog;

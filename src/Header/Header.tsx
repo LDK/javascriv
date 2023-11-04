@@ -10,10 +10,13 @@ import LoginIcon from '@mui/icons-material/AccountCircleOutlined';
 import ProfileIcon from '@mui/icons-material/AccountCircle';
 import MenuRounded from '@mui/icons-material/MenuRounded';
 
+import { SetOpenFunction } from "../ProjectBrowser/useBrowserDialog";
+
 import LoginRegisterDialog from './LoginRegisterDialog';
 import useUser from '../User/useUser';
 import { ProjectState } from '../Project/ProjectTypes';
 import useAppMenu from '../useAppMenu';
+import CustomFontsDialog from '../Project/CustomFontsDialog';
 
 type IconButtonProps = {
   clickAction: (e:React.MouseEvent) => void;
@@ -57,6 +60,7 @@ const Header: React.FC<any> = ({ loadProject, appMenuButtons, importCallback, ma
   const dispatch = useDispatch();
 
   const [loginOpen, setLoginOpen] = useState(false);
+  const [fontsOpen, setFontsOpen] = useState(false);
 
   const activeTheme = useSelector((state:RootState) => state.theme.active);
   const isDarkMode = (activeTheme === 'dark');
@@ -67,7 +71,7 @@ const Header: React.FC<any> = ({ loadProject, appMenuButtons, importCallback, ma
     document.querySelector('html')?.setAttribute('data-theme', mode);
   }
 
-  const { user, UserMenu, handleOpenUserMenu } = useUser();
+  const { user, UserMenu, handleOpenUserMenu } = useUser({ setFontsOpen });
   const { AppMenu, handleOpenAppMenu } = useAppMenu({ buttons: appMenuButtons });
 
   return (
@@ -90,6 +94,7 @@ const Header: React.FC<any> = ({ loadProject, appMenuButtons, importCallback, ma
           <UserMenu />
         </Toolbar>
         {!user.id && <LoginRegisterDialog open={loginOpen} onClose={() => setLoginOpen(false)} />}
+        <CustomFontsDialog open={fontsOpen} onClose={() => setFontsOpen(false)} setOpen={setFontsOpen} />
       </AppBar>
     </Sticky>
   );

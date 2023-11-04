@@ -18,7 +18,7 @@ type DuplicateProjectDialogProps = {
 const DuplicateProjectDialog = ({ open, setOpen, onClose, project }: DuplicateProjectDialogProps) => {
 
   const theme = useTheme();
-  const { user } = useUser();
+  const { user } = useUser({});
   const AuthStr = `Bearer ${user.token}`;
 
   const suggestedTitle = (projectTitle:string) => {

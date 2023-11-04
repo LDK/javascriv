@@ -17,7 +17,7 @@ type LeaveProjectDialogProps = {
   
 const LeaveProjectDialog = ({ open, setOpen, onClose, project, callback }: LeaveProjectDialogProps) => {
   const theme = useTheme();
-  const { user } = useUser();
+  const { user } = useUser({});
 
   const [projectName, setProjectName] = useState<string>(project?.title || '');
 

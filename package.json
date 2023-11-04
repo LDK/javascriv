@@ -23,6 +23,7 @@
     "@types/react-dom": "^18.0.11",
     "@types/tinymce": "^4.6.5",
     "axios": "^1.3.4",
+    "dompurify": "^3.0.6",
     "html-to-pdfmake": "^2.4.16",
     "jszip": "^3.10.1",
     "pdfmake": "^0.2.7",
@@ -67,6 +68,7 @@
   },
   "devDependencies": {
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
+    "@types/dompurify": "^3.0.4",
     "@types/html-to-pdfmake": "^2.4.0",
     "@types/pdfmake": "^0.2.2",
     "@types/react-stickynode": "^4.0.0",

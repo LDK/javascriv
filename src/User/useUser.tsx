@@ -2,10 +2,12 @@ import { Menu, Typography, Divider, MenuItem, useTheme } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { clearUser, getActiveUser, setUserProjects } from "../redux/userSlice";
+import { clearUser, getActiveUser, setUserFonts, setUserProjects } from "../redux/userSlice";
 import { resetProject, setFiles, setProjectId } from "../redux/projectSlice";
 
-export default function useUser () {
+export type UseUserProps = { setFontsOpen?: (arg: boolean) => void };
+
+export default function useUser ({ setFontsOpen }:UseUserProps) {
   const user = useSelector(getActiveUser);
   const dispatch = useDispatch();
   const theme = useTheme();
@@ -31,16 +33,31 @@ export default function useUser () {
     }
   }
 
+  const getCustomFonts = (force?:boolean) => {
+    if (user && user.token && (!user.fonts || force)) {
+      const AuthStr = 'Bearer ' + user.token;
+      axios.get(`${process.env.REACT_APP_API_URL}/user/fonts`, { headers: { Authorization: AuthStr } })
+        .then((response) => {
+          console.log('fonts', response.data);
+          dispatch(setUserFonts(response.data));
+        })
+        .catch((error) => {
+          console.log(error);
+        }
+      );
+    }
+  };
+
   useEffect(() => {
     getProjectListings();
+    getCustomFonts();
    // TODO eventually: if user logs out while working as collaborator, load empty project
    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   useEffect(() => {
     getProjectListings(true);
-   // TODO eventually: if user logs out while working as collaborator, load empty project
-   // eslint-disable-next-line react-hooks/exhaustive-deps
+    getCustomFonts(true);
   }, []);
 
   const handleOpenUserMenu = (event:React.MouseEvent) => {
@@ -54,6 +71,13 @@ export default function useUser () {
   const handleLogout = () => {
     dispatch(clearUser());
     dispatch(resetProject());
+    handleCloseUserMenu();
+  }
+
+  const handleSettings = () => {
+    if (setFontsOpen) {
+      setFontsOpen(true);
+    }
     handleCloseUserMenu();
   }
 
@@ -82,6 +106,7 @@ export default function useUser () {
     <Divider sx={{ my: 1 }} />
 
     <MenuItem onClick={handleLogout}>Sign out</MenuItem>
+    <MenuItem onClick={handleSettings}>User Settings</MenuItem>
   </Menu>
 
   );

@@ -4,6 +4,7 @@ import { Editor } from '@tinymce/tinymce-react';
 import { Editor as MyEditor, EditorEvent } from 'tinymce';
 import { Box, useTheme } from '@mui/material';
 import { familyFonts, getFontsCSS } from './EditorFonts';
+import useUser from '../User/useUser';
 
 interface TinyEditorProps {
   content: string | null;
@@ -19,6 +20,17 @@ const TinyEditor: React.FC<TinyEditorProps> = ({ content, setEditor, handleEdito
   const [fullScreen, setFullScreen] = useState(false);
   const height="calc(100vh - 64px)";
   const theme = useTheme();
+
+  const [fontsCSS, setFontsCSS] = useState<string>('');
+  const { user } = useUser({});
+
+  useEffect(() => {
+    getFontsCSS(user).then((css:string) => {
+      setFontsCSS(css);
+    }).catch((err:any) => {
+      console.log('error loading fonts css', err);
+    });
+  }, []);
 
   const handleInit = (_event: any, editor: MyEditor) => {
     editorRef.current = editor;
@@ -86,8 +98,8 @@ const TinyEditor: React.FC<TinyEditorProps> = ({ content, setEditor, handleEdito
             'fontfamily fontsize | code | pagebreak | writermode',
           ],
           skin: theme.palette.mode === 'dark' ? 'oxide-dark' : undefined,
-          font_family_formats: familyFonts,
-          content_style: `@import url('${getFontsCSS()}');`,
+          font_family_formats: familyFonts(user),
+          content_style: fontsCSS,
           onchange: "myCustomOnChangeHandler",
           external_plugins: {
             'writermode': '/tinymce/plugins/writermodePlugin.js',

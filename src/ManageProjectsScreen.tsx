@@ -262,7 +262,7 @@ const ManageProjectsScreen = ({ open, onClose, user, loadProject, getProjectList
         })}
       />
 
-        <Box position="absolute" bottom="2rem" width="100%" right="2rem" textAlign="right">
+        <Box position="absolute" bottom="4rem" width="100%" right="2rem" textAlign="right">
           <ConfirmButton onClick={onClose} {...{ mode: theme.palette.mode }} label="Done" />
         </Box>
 

@@ -25,6 +25,7 @@ interface ProjectBrowserProps {
   setProjectSettingsOpen: (open: boolean) => void;
   editor: Editor;
   setEditorContent: (content: string) => void;
+  setCorkboard: (corkboard?: ProjectFile) => void;
 };
 
 export const ROOTFOLDER = '<root>';
@@ -45,7 +46,7 @@ export const paletteRGBA = (color: PaletteColor, opacity: number, mode: PaletteM
   return `rgba(${color[mode].replace('rgb(', '').replace(')', '')}, ${opacity})`;
 }
 
-const ProjectBrowser: React.FC<ProjectBrowserProps> = ({ onDocumentClick, setProjectSettingsOpen, editor, setEditorContent }) => {
+const ProjectBrowser: React.FC<ProjectBrowserProps> = ({ onDocumentClick, setProjectSettingsOpen, editor, setEditorContent, setCorkboard }) => {
   const items = useSelector(selectFiles);
 
   const openFilePath = useSelector(selectOpenFilePath);
@@ -66,7 +67,9 @@ const ProjectBrowser: React.FC<ProjectBrowserProps> = ({ onDocumentClick, setPro
   const [adding, setAdding] = useState<NewBrowserItem | false>(false);
 
   const handleFolderClick = (folder: ProjectFile) => {
+    dispatch(setOpenFilePath(folder.path));
     setOpenFolder(folder.path);
+    setCorkboard(folder);
   }
 
   const renderItem = (item: ProjectFile, path: string[] = [], idx:number) => {
@@ -86,7 +89,7 @@ const ProjectBrowser: React.FC<ProjectBrowserProps> = ({ onDocumentClick, setPro
 
   const { renaming, title, renameInputRef, handleEditClick, handleRenameBlur, handleRenameKeyPress } = useProjectRename();
   const { loadProjectById, currentProject, reloading, setReloading } = useProject({});
-  const { user } = useUser();
+  const { user } = useUser({});
 
   const dispatch = useDispatch();
 

@@ -47,7 +47,7 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, count
       const elProps:({ width: string; sx: SxProps; }) = { width: "100%", sx: { maxWidth: '100%'} };
       const el =  open ? <ExpandLess {...elProps} /> : <ExpandMore {...elProps} />;
       return (
-        <Box width="1.25rem" top={'7px'} position="relative" display="inline-block" color={palette.secondary.contrastText}>
+        <Box onClick={(e) => { e.stopPropagation(); console.log('yo'); setOpen(!open); }} width="1.5rem" top={'7px'} position="relative" display="inline-block" color={palette.secondary.contrastText} sx={{ cursor: 'pointer' }}>
           { el }
         </Box>
       );
@@ -57,7 +57,8 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, count
   
   const handleItemClick = () => {
     if (isFolder) {
-      setOpen(!open);
+
+      setOpen(true);
       onFolderClick(item);
     } else if (item.subType === 'document') {
       if (fullPath !== openFilePath) {
@@ -139,13 +140,13 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, count
   return (
     <>
       <ListItem
-        button
         onClick={handleItemClick}
         style={{
           color: palette.secondary.contrastText,
           paddingLeft: level * 16,
           backgroundColor: isOpenPath ? palette.secondary[opposite] : 'inherit',
           display: "flex",
+          cursor: 'pointer'
         }}
         sx={{
           "&:hover > div > .MuiBox-root": {

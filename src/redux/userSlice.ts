@@ -2,6 +2,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ProjectListing } from '../Project/ProjectTypes';
 import { RootState } from './store';
+import { CustomFont } from '../Project/CustomFontsDialog';
 
 export type ProjectCategory = 'Created' | 'Collaborator';
 
@@ -21,6 +22,7 @@ export type UserState = AppUser & {
     Created: ProjectListing[];
     Collaborator: ProjectListing[];
   };
+  fonts?: CustomFont[];
 };
 
 const initialState: UserState = {
@@ -31,7 +33,8 @@ const initialState: UserState = {
   projects: {
     Created: [],
     Collaborator: []
-  }
+  },
+  fonts: undefined
 };
 
 const userSlice = createSlice({
@@ -53,11 +56,14 @@ const userSlice = createSlice({
         Created: action.payload.Created,
         Collaborator: action.payload.Collaborator
       };
-    }
+    },
+    setUserFonts: (state, action: PayloadAction<CustomFont[]>) => {
+      state.fonts = action.payload;
+    },
   },
 });
 
-export const { setUser, clearUser, setUserProjects } = userSlice.actions;
+export const { setUser, clearUser, setUserProjects, setUserFonts } = userSlice.actions;
 
 // getUser selector function
 export const getActiveUser = (state: RootState) => {

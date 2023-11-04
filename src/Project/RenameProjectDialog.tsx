@@ -18,7 +18,7 @@ type RenameProjectDialogProps = {
 const RenameProjectDialog = ({ open, setOpen, onClose, project, callback }: RenameProjectDialogProps) => {
 
   const theme = useTheme();
-  const { user } = useUser();
+  const { user } = useUser({});
   const AuthStr = `Bearer ${user.token}`;
 
   const [projectName, setProjectName] = useState<string>(project?.title || '');

@@ -15,7 +15,7 @@ const OpenProjectDialog = ({ onClose, project }: OpenProjectDialogProps) => {
   const dispatch = useDispatch();
   const currentTitle = useSelector(selectProjectTitle);
 
-  const { user } = useUser();
+  const { user } = useUser({});
   const { saveProject } = useProject({});
 
   if (!project) {

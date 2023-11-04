@@ -20,6 +20,7 @@ import AddCollaboratorDialog from './Project/AddCollaboratorDialog';
 import useFileInputRef from './useFileInputRef';
 import ProjectSettingsScreen from './ProjectSettingsScreen';
 import ManageProjectsScreen from './ManageProjectsScreen';
+import CorkboardView from './CorkboardView';
 
 const App: React.FC = () => {  
   const [editorContent, setEditorContent] = useState<string | null | false>(null);
@@ -28,8 +29,10 @@ const App: React.FC = () => {
   const [lastRevertTs, setLastRevertTs] = useState<number>(0);
   const [projectSettingsOpen, setProjectSettingsOpen] = useState(false);
   const [addCollabOpen, setAddCollabOpen] = useState(false);
-  const { user, getProjectListings } = useUser();
+  const { user, getProjectListings } = useUser({});
   const [manageProjectsOpen, setManageProjectsOpen] = useState(false);
+
+  const [corkboard, setCorkboard] = useState<ProjectFile | undefined>(undefined);
 
   const editorAreaBps = manageProjectsOpen ? { sm: 12, hd: 9 } : { md: 8, lg: 9 };
   const browserBps = manageProjectsOpen ? { xs: 0, hd: 3 } : { xs: 12, md: 4, lg: 3 };
@@ -37,6 +40,7 @@ const App: React.FC = () => {
   const dispatch = useDispatch();
 
   const handleDocumentClick = (item: ProjectFile) => {
+    setCorkboard(undefined);
     if (openFilePath && editor) {
       dispatch(setContent({path: openFilePath, content: editor.getContent()}));
     }
@@ -174,16 +178,17 @@ const App: React.FC = () => {
           <Grid container spacing={0}>
             <Grid item {...browserBps} px={0} mx={0} display={{ xs: manageProjectsOpen ? 'none' : 'flex', hd: 'flex'}}>
                 {editor && <ProjectBrowser
-                  {...{ editor, setProjectSettingsOpen, setEditorContent }}
+                  {...{ editor, setProjectSettingsOpen, setEditorContent, setCorkboard }}
                   onDocumentClick={documentClick}
                 />}
             </Grid>
             <Grid item xs={12} {...editorAreaBps}>
               <Box px={0}>
-                <Box p={0} m={0} display={ (projectSettingsOpen || manageProjectsOpen) ? 'none' : 'block' }>
+                <Box p={0} m={0} display={ (projectSettingsOpen || manageProjectsOpen || corkboard) ? 'none' : 'block' }>
                   <TinyEditor {...{ setEditor, handleEditorChange }} lastRevert={lastRevertTs} content={editorContent || ''} />
                 </Box>
 
+                <CorkboardView {...{ open: Boolean(corkboard), setCorkboard, folder: corkboard, handleDocumentClick }} />
                 <ProjectSettingsScreen open={projectSettingsOpen} onClose={() => setProjectSettingsOpen(false)} />
                 <ManageProjectsScreen {...{user, currentProject, loadProject, getProjectListings, addCollabOpen, setAddCollabOpen}} open={manageProjectsOpen} onClose={() => setManageProjectsOpen(false)} />
 
