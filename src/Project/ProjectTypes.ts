@@ -44,3 +44,9 @@ export type Project = ProjectState & {
   title: string;
 }
 
+export type PublishOptions = {
+  pageBreaks: string;
+  pageNumberPosition: string;
+  includeToC: boolean;
+  displayDocumentTitles: boolean;
+};

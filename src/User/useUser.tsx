@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { clearUser, getActiveUser, setUserProjects } from "../redux/userSlice";
 import { resetProject, setFiles, setProjectId } from "../redux/projectSlice";
+import { isFunction } from "@mui/x-data-grid/internals";
 
 export default function useUser () {
   const user = useSelector(getActiveUser);
@@ -57,7 +58,17 @@ export default function useUser () {
     handleCloseUserMenu();
   }
 
-  const UserMenu:React.FC<any> = () => (
+  const UserMenu:React.FC<any> = ({settingsCallback}:{settingsCallback?: () => void}) => {
+    
+    const handleSettings = () => {
+      handleCloseUserMenu();
+      console.log('handle settings', settingsCallback);
+      if (settingsCallback && isFunction(settingsCallback)) {
+        settingsCallback();
+      }
+    }
+  
+      return (
     <Menu
     id="menu-appbar"
     anchorEl={anchorElUser}
@@ -82,9 +93,10 @@ export default function useUser () {
     <Divider sx={{ my: 1 }} />
 
     <MenuItem onClick={handleLogout}>Sign out</MenuItem>
+    <MenuItem onClick={handleSettings}>User Settings</MenuItem>
   </Menu>
 
-  );
+  )};
 
   return { user, getProjectListings, UserMenu, handleOpenUserMenu, handleCloseUserMenu, handleLogout };
 }

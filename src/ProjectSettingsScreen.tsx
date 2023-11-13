@@ -5,7 +5,8 @@ import useDialogUI from "./theme/useDialogUI";
 import { useEffect, useState } from "react";
 import { EditorFont, editorFonts } from "./Editor/EditorFonts";
 import { usePublishingOptions } from "./Publish/PublishOptions";
-import { ProjectSettings } from "./Project/ProjectTypes";
+import { ProjectSettings, PublishOptions } from "./Project/ProjectTypes";
+import SettingBox from "./Components/SettingBox";
 
 type ProjectSettingsDialogProps = {
   open: boolean;
@@ -27,7 +28,7 @@ const ProjectSettingsScreen = ({ open, onClose }:ProjectSettingsDialogProps) => 
     PageBreaksSelect, PageNumberPositionSelect, DisplayDocumentTitlesSelect, IncludeToCSelect,
     pageBreaks, pageNumberPosition, includeToC, displayDocumentTitles,
     setPageBreaks, setPageNumberPosition, setIncludeToC, setDisplayDocumentTitles
-  } = usePublishingOptions();
+  } = usePublishingOptions(projectSettings as PublishOptions);
 
   useEffect(() => {
     if (projectSettings.font && projectSettings.font !== font.name) {
@@ -63,28 +64,15 @@ const ProjectSettingsScreen = ({ open, onClose }:ProjectSettingsDialogProps) => 
       setPageNumberPosition(projectSettings.pageNumberPosition as string);
     }
 
-    if (projectSettings.includeToC && projectSettings.includeToC !== includeToC) {
-      setIncludeToC(projectSettings.includeToC ? 1 : 0);
+    if (projectSettings.includeToC !== includeToC) {
+      setIncludeToC(Boolean(projectSettings.includeToC));
     }
 
     if (projectSettings.displayDocumentTitles && projectSettings.displayDocumentTitles !== displayDocumentTitles) {
-      setDisplayDocumentTitles(projectSettings.displayDocumentTitles ? 1 : 0);
+      setDisplayDocumentTitles(Boolean(projectSettings.displayDocumentTitles));
     }
     onClose();
   };
-
-  const SettingBox = ({ children }: { children: React.ReactNode }) => (
-    <Box
-      mb={2}
-      p={2}
-      borderRadius={'.25rem'} borderColor="primary.contrastText" sx={{
-        borderStyle: 'solid',
-        borderWidth: '1px',
-        backgroundColor: theme.palette.grey[isDark ? 600 : 300],
-      }}>
-      {children}
-    </Box>
-  );
 
   return (
     <Box width="100%" position="relative" overflow={{ overflowY: 'scroll', overflowX: 'hidden' }} height="calc(100vh - 64px)" p={4} display={ open ? 'block' : 'none' } sx={{ backgroundColor: theme.palette.grey[isDark ? 800 : 100] }}>

@@ -1,17 +1,13 @@
 // Publish/compiling.ts
 
 import { EditorFont } from "../Editor/EditorFonts";
-import { ProjectFile } from "../Project/ProjectTypes";
+import { ProjectFile, PublishOptions } from "../Project/ProjectTypes";
 
 export type Binary = 0 | 1;
 
-export interface PublishingOptions {
+export type PublishingOptions = PublishOptions & {
   items: ProjectFile[];
-  pageBreaks: string;
-  pageNumbers: string;
-  includeToC: Binary;
-  displayDocumentTitles: Binary;
-}
+};
 
 export const compileHtml = (options: PublishingOptions) => {
   let compiledContent: any[] = [];
@@ -38,7 +34,7 @@ export const compileHtml = (options: PublishingOptions) => {
         const pageBreakRegex = /<p><!-- pagebreak --><\/p>/g;
         const pageBreaks = content.match(pageBreakRegex);
 
-        if (pageBreaks) {
+        if (pageBreaks && options.pageBreaks !== 'Nowhere') {
           const splitContent = content.split('<p><!-- pagebreak --></p>');
           splitContent.forEach((content, index) => {
             compiledContent.push(`${prefix}${content}${suffix}`);
@@ -68,7 +64,7 @@ export const compileHtml = (options: PublishingOptions) => {
       const pageBreakRegex = /<p><!-- pagebreak --><\/p>/g;
       const pageBreaks = content.match(pageBreakRegex);
 
-      if (pageBreaks) {
+      if (pageBreaks && options.pageBreaks !== 'Nowhere') {
         const splitContent = content.split('<p><!-- pagebreak --></p>');
         compiledContent.push(`${prefix}`);
 

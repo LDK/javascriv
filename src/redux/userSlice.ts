@@ -1,6 +1,6 @@
 // src/userSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ProjectListing } from '../Project/ProjectTypes';
+import { ProjectListing, PublishOptions } from '../Project/ProjectTypes';
 import { RootState } from './store';
 
 export type ProjectCategory = 'Created' | 'Collaborator';
@@ -13,6 +13,7 @@ export type AppUser = {
   id: number | null;
   username: string | null;
   email: string | null;
+  publishingOptions?: PublishOptions;
 };
 
 export type UserState = AppUser & {
@@ -42,11 +43,19 @@ const userSlice = createSlice({
       state.id = action.payload.id;
       state.username = action.payload.username;
       state.token = action.payload.token;
+      if (action.payload.email) {
+        state.email = action.payload.email;
+      }
+      if (action.payload.publishingOptions) {
+        state.publishingOptions = action.payload.publishingOptions;
+      }
     },
     clearUser: (state) => {
       state.id = null;
       state.username = null;
       state.token = null;
+      state.publishingOptions = undefined;
+      state.projects = undefined;
     },
     setUserProjects: (state, action: PayloadAction<ProjectCategories>) => {
       state.projects = {

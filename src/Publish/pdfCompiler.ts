@@ -127,8 +127,8 @@ const convertHtmlToPdf = async (contentArray: any[], options: PublishingOptions)
 
   documentDefinition = addFontStyles(documentDefinition, pdfMake.fonts);
 
-  if (options.pageNumbers) {
-    documentDefinition = addPageNumbers(documentDefinition, options.pageNumbers);
+  if (options.pageNumberPosition && options.pageNumberPosition !== 'Nowhere') {
+    documentDefinition = addPageNumbers(documentDefinition, options.pageNumberPosition);
   }
 
   pdfMake.createPdf(documentDefinition).download('document.pdf');

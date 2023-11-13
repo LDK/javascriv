@@ -50,9 +50,10 @@ type HeaderProps = {
   manageCallback: () => void;
   newCallback: () => void;
   ProjectSelector: React.FC<any>;
+  settingsCallback?: () => void;
 };
 
-const Header: React.FC<any> = ({ loadProject, appMenuButtons, importCallback, manageCallback, newCallback, handleEditorChange, ProjectSelector }:HeaderProps) => {
+const Header: React.FC<any> = ({ loadProject, settingsCallback, appMenuButtons, importCallback, manageCallback, newCallback, handleEditorChange, ProjectSelector }:HeaderProps) => {
   const theme = useTheme();
   const dispatch = useDispatch();
 
@@ -87,7 +88,7 @@ const Header: React.FC<any> = ({ loadProject, appMenuButtons, importCallback, ma
 
           {!user.id && <IconButton icon={<LoginIcon />} clickAction={() => setLoginOpen(true)} />}
           {user.id && <IconButton title={`Logged in as ${user.username}`} icon={<ProfileIcon />} clickAction={handleOpenUserMenu} />}
-          <UserMenu />
+          <UserMenu {...{settingsCallback}} />
         </Toolbar>
         {!user.id && <LoginRegisterDialog open={loginOpen} onClose={() => setLoginOpen(false)} />}
       </AppBar>

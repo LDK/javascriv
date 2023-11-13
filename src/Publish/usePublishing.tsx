@@ -1,6 +1,6 @@
 import { Button } from "@mui/material";
 import { useState } from "react";
-import PublishOptions from "./PublishOptions";
+import PublishOptionsDialog from "./PublishOptions";
 
 const usePublishing = () => {
   const [publishOptionsOpen, setPublishOptionsOpen] = useState(false);
@@ -12,7 +12,7 @@ const usePublishing = () => {
   );
 
   const OptionsDialog = () => (
-    <PublishOptions optionsOpen={publishOptionsOpen} onClose={() => { setPublishOptionsOpen(false) }} />
+    <PublishOptionsDialog optionsOpen={publishOptionsOpen} onClose={() => { setPublishOptionsOpen(false) }} />
   );
 
   return { PublishButton, PublishOptions: OptionsDialog };

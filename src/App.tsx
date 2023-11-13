@@ -20,6 +20,7 @@ import AddCollaboratorDialog from './Project/AddCollaboratorDialog';
 import useFileInputRef from './useFileInputRef';
 import ProjectSettingsScreen from './ProjectSettingsScreen';
 import ManageProjectsScreen from './ManageProjectsScreen';
+import UserSettingsScreen from './ProjectBrowser/UserSettingsScreen';
 
 const App: React.FC = () => {  
   const [editorContent, setEditorContent] = useState<string | null | false>(null);
@@ -28,6 +29,7 @@ const App: React.FC = () => {
   const [lastRevertTs, setLastRevertTs] = useState<number>(0);
   const [projectSettingsOpen, setProjectSettingsOpen] = useState(false);
   const [addCollabOpen, setAddCollabOpen] = useState(false);
+  const [userSettingsOpen, setUserSettingsOpen] = useState(false);
   const { user, getProjectListings } = useUser();
   const [manageProjectsOpen, setManageProjectsOpen] = useState(false);
 
@@ -113,6 +115,9 @@ const App: React.FC = () => {
     if (projectSettingsOpen && manageProjectsOpen) {
       setProjectSettingsOpen(false);
     }
+    if (projectSettingsOpen && userSettingsOpen) {
+      setUserSettingsOpen(false);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [manageProjectsOpen]);
 
@@ -120,8 +125,21 @@ const App: React.FC = () => {
     if (projectSettingsOpen && manageProjectsOpen) {
       setManageProjectsOpen(false);
     }
+    if (projectSettingsOpen && userSettingsOpen) {
+      setUserSettingsOpen(false);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [projectSettingsOpen]);
+
+  useEffect(() => {
+    if (userSettingsOpen && manageProjectsOpen) {
+      setManageProjectsOpen(false);
+    }
+    if (userSettingsOpen && projectSettingsOpen) {
+      setProjectSettingsOpen(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userSettingsOpen]);
 
   const handleSave = async () => {
     if (!editor) return;
@@ -166,7 +184,7 @@ const App: React.FC = () => {
 
   return (
     <ThemeProvider theme={activeTheme === 'light' ? lightTheme : darkTheme}>
-      <Header {...{ loadProject, ProjectSelector, appMenuButtons, handleEditorChange, fileInputRef, importCallback, manageCallback, newCallback: () => { setNewProjectOpen(true); } }} />
+      <Header {...{ loadProject, settingsCallback: () => { setUserSettingsOpen(true); }, ProjectSelector, appMenuButtons, handleEditorChange, fileInputRef, importCallback, manageCallback, newCallback: () => { setNewProjectOpen(true); } }} />
       <CssBaseline />
 
       <Box pt={8} flexGrow={1} display="flex">
@@ -180,12 +198,15 @@ const App: React.FC = () => {
             </Grid>
             <Grid item xs={12} {...editorAreaBps}>
               <Box px={0}>
-                <Box p={0} m={0} display={ (projectSettingsOpen || manageProjectsOpen) ? 'none' : 'block' }>
+                <Box p={0} m={0} display={ (projectSettingsOpen || manageProjectsOpen || userSettingsOpen) ? 'none' : 'block' }>
                   <TinyEditor {...{ setEditor, handleEditorChange }} lastRevert={lastRevertTs} content={editorContent || ''} />
                 </Box>
 
                 <ProjectSettingsScreen open={projectSettingsOpen} onClose={() => setProjectSettingsOpen(false)} />
                 <ManageProjectsScreen {...{user, currentProject, loadProject, getProjectListings, addCollabOpen, setAddCollabOpen}} open={manageProjectsOpen} onClose={() => setManageProjectsOpen(false)} />
+                { (!user || !user.id || !userSettingsOpen) ? null :
+                  <UserSettingsScreen {...{user, userSettingsOpen, setUserSettingsOpen}} open={userSettingsOpen} onClose={() => setUserSettingsOpen(false)} />
+                }
 
                 <Box pt={2} className="actions" position="absolute" bottom="2rem" width="100%" right="0" textAlign="right">
 

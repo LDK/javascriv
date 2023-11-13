@@ -7,55 +7,53 @@ import PublishTree from './PublishTree';
 import publishToPdf from './pdfCompiler';
 import { Binary, PublishingOptions } from './compiling';
 import { FileTreeItem } from '../FileTree/FileTree';
-import { ProjectFile } from '../Project/ProjectTypes';
+import { ProjectFile, PublishOptions } from '../Project/ProjectTypes';
 
 export interface PublishOptionsProps {
   optionsOpen: boolean;
   onClose: () => void;
 }
 
-export function usePublishingOptions () {
-  const projectSettings = useSelector(getProjectSettings);
-
-  const [pageBreaks, setPageBreaks] = useState<string>(projectSettings?.pageBreaks as string || 'Nowhere');
-  const [pageNumberPosition, setPageNumberPosition] = useState<string>(projectSettings?.pageNumberPosition as string || 'Nowhere');
-  const [displayDocumentTitles, setDisplayDocumentTitles] = useState<Binary>(projectSettings?.displayDocumentTitles? 1 : 0);
-  const [includeToC, setIncludeToC] = useState<Binary>(projectSettings?.includeToC? 1 : 0);
+export function usePublishingOptions (settings?:PublishOptions) {
+  const [pageBreaks, setPageBreaks] = useState<string>(settings?.pageBreaks as string || 'Nowhere');
+  const [pageNumberPosition, setPageNumberPosition] = useState<string>(settings?.pageNumberPosition as string || 'Nowhere');
+  const [displayDocumentTitles, setDisplayDocumentTitles] = useState<boolean>(settings?.displayDocumentTitles || false);
+  const [includeToC, setIncludeToC] = useState<boolean>(settings?.includeToC || false);
 
   useEffect(() => {
-    if (projectSettings.pageBreaks && projectSettings.pageBreaks !== pageBreaks) {
-      setPageBreaks(projectSettings.pageBreaks as string);
+    if (settings?.pageBreaks && settings.pageBreaks !== pageBreaks) {
+      setPageBreaks(settings.pageBreaks as string);
     }
 
-    if (projectSettings.pageNumberPosition && projectSettings.pageNumberPosition !== pageNumberPosition) {
-      setPageNumberPosition(projectSettings.pageNumberPosition as string);
+    if (settings?.pageNumberPosition && settings.pageNumberPosition !== pageNumberPosition) {
+      setPageNumberPosition(settings.pageNumberPosition as string);
     }
 
-    if (projectSettings.includeToC && projectSettings.includeToC !== includeToC) {
-      setIncludeToC(projectSettings.includeToC ? 1 : 0);
+    if (settings?.includeToC && settings.includeToC !== includeToC) {
+      setIncludeToC(Boolean(settings.includeToC));
     }
 
-    if (projectSettings.displayDocumentTitles && projectSettings.displayDocumentTitles !== displayDocumentTitles) {
-      setDisplayDocumentTitles(projectSettings.displayDocumentTitles ? 1 : 0);
+    if (settings?.displayDocumentTitles && settings.displayDocumentTitles !== displayDocumentTitles) {
+      setDisplayDocumentTitles(Boolean(settings.displayDocumentTitles));
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [projectSettings]);
+  }, [settings]);
 
   const PageBreaksSelect = () => (
     <FormControl fullWidth variant="outlined" sx={{ mt: 2 }}>
-    <InputLabel htmlFor="page-breaks-select">Insert Page Breaks...</InputLabel>
-    <Select
-      value={pageBreaks}
-      onChange={(e) => setPageBreaks(e.target.value as string)}
-      label="Insert Page Breaks..."
-      inputProps={{ id: 'page-breaks-select' }}
-    >
-      <MenuItem value="Nowhere">Nowhere</MenuItem>
-      <MenuItem value="Between Documents">Between Documents</MenuItem>
-      <MenuItem value="Between Folders">Between Folders</MenuItem>
-      <MenuItem value="Between Folders and Between Documents">Between Folders and Between Documents</MenuItem>
-    </Select>
-  </FormControl>
+      <InputLabel htmlFor="page-breaks-select">Insert Page Breaks...</InputLabel>
+      <Select
+        value={pageBreaks}
+        onChange={(e) => setPageBreaks(e.target.value as string)}
+        label="Insert Page Breaks..."
+        inputProps={{ id: 'page-breaks-select' }}
+      >
+        <MenuItem value="Nowhere">Nowhere</MenuItem>
+        <MenuItem value="Between Documents">Between Documents</MenuItem>
+        <MenuItem value="Between Folders">Between Folders</MenuItem>
+        <MenuItem value="Between Folders and Between Documents">Between Folders and Between Documents</MenuItem>
+      </Select>
+    </FormControl>
   );
   
   const PageNumberPositionSelect = () => (
@@ -67,7 +65,7 @@ export function usePublishingOptions () {
         label="Page Numbers"
         inputProps={{ id: 'page-numbers-select' }}
       >
-        <MenuItem value={0}>Nowhere</MenuItem>
+        <MenuItem value="Nowhere">Nowhere</MenuItem>
         <MenuItem value="Top Left">Top Left</MenuItem>
         <MenuItem value="Top Middle">Top Middle</MenuItem>
         <MenuItem value="Top Right">Top Right</MenuItem>
@@ -82,8 +80,8 @@ export function usePublishingOptions () {
     <FormControl fullWidth variant="outlined" sx={{ mt: 2 }}>
       <InputLabel htmlFor="display-document-titles-select">Display Document Titles as Headers?</InputLabel>
       <Select
-        value={displayDocumentTitles as Binary}
-        onChange={(e) => setDisplayDocumentTitles(e.target.value as Binary)}
+        value={displayDocumentTitles ? 1 : 0}
+        onChange={(e) => setDisplayDocumentTitles(Boolean(e.target.value))}
         label="Display Document Titles as Headers?"
         inputProps={{ id: 'display-document-titles-select' }}
       >
@@ -97,8 +95,8 @@ export function usePublishingOptions () {
     <FormControl fullWidth variant="outlined" sx={{ mt: 2 }}>
       <InputLabel htmlFor="include-toc-select">Include Table of Contents?</InputLabel>
       <Select
-        value={includeToC as Binary}
-        onChange={(e) => setIncludeToC(e.target.value as Binary)}
+        value={includeToC ? 1 : 0}
+        onChange={(e) => setIncludeToC(Boolean(e.target.value))}
         label="Include Table of Contents"
         inputProps={{ id: 'include-toc-select' }}
       >
@@ -124,7 +122,7 @@ export function usePublishingOptions () {
   };
 }
 
-const PublishOptions: React.FC<PublishOptionsProps> = ({ optionsOpen, onClose }) => {
+const PublishOptionsDialog: React.FC<PublishOptionsProps> = ({ optionsOpen, onClose }) => {
   const items = useSelector(selectFiles);
 
   const [publishedItems, setPublishedItems] = useState<ProjectFile[]>(items);
@@ -147,7 +145,7 @@ const PublishOptions: React.FC<PublishOptionsProps> = ({ optionsOpen, onClose })
       pageBreaks,
       displayDocumentTitles,
       includeToC,
-      pageNumbers: pageNumberPosition
+      pageNumberPosition
     };
     publishToPdf(options);
   };
@@ -196,4 +194,4 @@ const PublishOptions: React.FC<PublishOptionsProps> = ({ optionsOpen, onClose })
   );
 };
 
-export default PublishOptions;
+export default PublishOptionsDialog;
