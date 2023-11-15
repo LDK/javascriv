@@ -7,6 +7,8 @@ export type Binary = 0 | 1;
 
 export type PublishingOptions = PublishOptions & {
   items: ProjectFile[];
+  font?: EditorFont;
+  fontSize?: number;
 };
 
 export const compileHtml = (options: PublishingOptions) => {
@@ -90,8 +92,12 @@ export const compileHtml = (options: PublishingOptions) => {
   return compiledContent;
 };
 
-export const extractUsedFonts = (html: string, availableFonts: EditorFont[]): string[] => {
-  const usedFonts: string[] = ['Roboto'];
+export const extractUsedFonts = (html: string, availableFonts: EditorFont[], defaultFont?: EditorFont): string[] => {
+  const usedFonts: string[] = ['Roboto','Lato'];
+
+  if (defaultFont) {
+    usedFonts.push(defaultFont.value);
+  }
 
   // Find all font-family declarations
   const fontFamilyRegex = /font-family: [^;]+;/g;

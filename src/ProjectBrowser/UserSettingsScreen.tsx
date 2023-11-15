@@ -19,8 +19,8 @@ const UserSettingsScreen = ({ open, onClose, user }: UserSettingsScreenProps) =>
   const [newPassword, setNewPassword] = useState<string>('');
   const [newPasswordConfirm, setNewPasswordConfirm] = useState<string>('');
 
-  const [font, setFont] = useState<EditorFont>({ name: 'Roboto', value: 'Roboto' });
-  const [fontSize, setFontSize] = useState<number>(12);
+  const [font, setFont] = useState<EditorFont>(user.fontOptions?.font || { name: 'Roboto', value: 'Roboto' });
+  const [fontSize, setFontSize] = useState<number>(user.fontOptions?.fontSize || 12);
 
   const [formErrors, setFormErrors] = useState<string[]>([]);
 
@@ -30,7 +30,6 @@ const UserSettingsScreen = ({ open, onClose, user }: UserSettingsScreenProps) =>
   const dispatch = useDispatch();
 
   const handleOpen = () => {
-    console.log('opening user settings');
     if (formErrors.length) {
       setFormErrors([]);
     }
@@ -50,7 +49,11 @@ const UserSettingsScreen = ({ open, onClose, user }: UserSettingsScreenProps) =>
       pageNumberPosition: string;
       includeToC: boolean;
       displayDocumentTitles: boolean;
-    }
+    };
+    fontOptions?: {
+      font: EditorFont;
+      fontSize: number;
+    };
   }
 
   const handleSave = () => {
@@ -60,6 +63,10 @@ const UserSettingsScreen = ({ open, onClose, user }: UserSettingsScreenProps) =>
         pageNumberPosition,
         includeToC: Boolean(includeToC),
         displayDocumentTitles: Boolean(displayDocumentTitles)
+      },
+      fontOptions: {
+        font,
+        fontSize
       }
     };
 
@@ -84,13 +91,13 @@ const UserSettingsScreen = ({ open, onClose, user }: UserSettingsScreenProps) =>
   
       axios.patch(patchUrl, payload, { headers: { Authorization: AuthStr } })
         .then(res => {
-          console.log('user settings saved', res.data);
           if (res.data && res.data.username && res.data.token && res.data.id) {
             dispatch(setUser({
               id: res.data.id,
               username: res.data.username,
               email: res.data.email,
               publishingOptions: res.data.publishOptions,
+              fontOptions: res.data.fontOptions,
               token: res.data.token
             }));
           }
@@ -159,8 +166,6 @@ const UserSettingsScreen = ({ open, onClose, user }: UserSettingsScreenProps) =>
   const handleUsername = (e:React.ChangeEvent<HTMLInputElement>) => {
     setUsername(e.target.value);
   };
-
-  console.log('rendarrr');
 
   return (
     <Box width="100%" position="relative" overflow={{ overflowY: 'scroll', overflowX: 'hidden' }} height="calc(100vh - 64px)" p={4} display={ open ? 'block' : 'none' } sx={{ backgroundColor: theme.palette.grey[isDark ? 800 : 100] }}>

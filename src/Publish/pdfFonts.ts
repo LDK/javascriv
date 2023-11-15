@@ -116,7 +116,7 @@ export const generateFontConfig = async (fonts: EditorFont[], pdfFonts:TFontDict
   return { fonts: pdfFonts, vfs };
 };
 
-export const addFontStyles = (docDef: TDocumentDefinitions, fonts: TFontDictionary): TDocumentDefinitions => {
+export const addFontStyles = (docDef: TDocumentDefinitions, fonts: TFontDictionary, font?: EditorFont, fontSize?: number): TDocumentDefinitions => {
   if (fonts) {
     let existingStyles: StyleDictionary = docDef.styles ? { ...docDef.styles } : {};
 
@@ -131,11 +131,12 @@ export const addFontStyles = (docDef: TDocumentDefinitions, fonts: TFontDictiona
 
     docDef.styles = { ...existingStyles, ...fontStyles };
 
-    // Set Lato as the default font
-    if (fonts['Lato']) {
+    // Set Lato as the default font if none is passed in
+    if ((font && fonts[font?.value]) || fonts['Lato']) {
       docDef.defaultStyle = {
         ...docDef.defaultStyle,
-        font: 'Lato',
+        font: font?.value || 'Lato',
+        fontSize: fontSize || 24,
       };
     }
   }

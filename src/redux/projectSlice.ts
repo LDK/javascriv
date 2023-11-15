@@ -1,6 +1,6 @@
 // redux/projectSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ProjectFile, ProjectSettings, ProjectState, PublishOptions } from '../Project/ProjectTypes';
+import { FontOptions, ProjectFile, ProjectSettings, ProjectState, PublishOptions } from '../Project/ProjectTypes';
 import { RootState } from './store';
 import introCopy from '../editorIntro';
 
@@ -228,11 +228,18 @@ const projectSlice = createSlice({
       state.settings.pageNumberPosition = action.payload.pageNumberPosition;
       state.settings.includeToC = action.payload.includeToC;
       state.settings.displayDocumentTitles = action.payload.displayDocumentTitles;
-    }
+    },
+    setFontOptions: (state, action: PayloadAction<FontOptions>) => {
+      state.settings.font = action.payload.font;
+      state.settings.fontSize = action.payload.fontSize;
+    },
   },
 });
 
-export const { setProjectId, setProjectCreator, setContent, setChanged, setOpenFilePath, deleteItem, addItem, saveItem, reorderItem, setName, setFiles, saveSetting, setProjectTitle, setProjectSettings, resetProject, setPublishOptions } = projectSlice.actions;
+export const { setProjectId, setProjectCreator, setContent, setChanged, 
+    setOpenFilePath, deleteItem, addItem, saveItem, reorderItem, setName,
+    setFiles, saveSetting, setProjectTitle, setProjectSettings, resetProject,
+    setPublishOptions, setFontOptions } = projectSlice.actions;
 
 export const selectFiles = (state: RootState) => state.project.files;
 export const selectOpenFilePath = (state: RootState) => state.project.openFilePath;

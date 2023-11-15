@@ -7,38 +7,39 @@ import PublishTree from './PublishTree';
 import publishToPdf from './pdfCompiler';
 import { Binary, PublishingOptions } from './compiling';
 import { FileTreeItem } from '../FileTree/FileTree';
-import { ProjectFile, PublishOptions } from '../Project/ProjectTypes';
+import { FontOptions, ProjectFile, PublishOptions } from '../Project/ProjectTypes';
 
 export interface PublishOptionsProps {
   optionsOpen: boolean;
   onClose: () => void;
-  settings?: PublishOptions;
+  passedPublishOptions?: PublishOptions;
+  passedFontOptions?: FontOptions;
 }
 
-export function usePublishingOptions (settings?:PublishOptions) {
-  const [pageBreaks, setPageBreaks] = useState<string>(settings?.pageBreaks as string || 'Nowhere');
-  const [pageNumberPosition, setPageNumberPosition] = useState<string>(settings?.pageNumberPosition as string || 'Nowhere');
-  const [displayDocumentTitles, setDisplayDocumentTitles] = useState<boolean>(settings?.displayDocumentTitles || false);
-  const [includeToC, setIncludeToC] = useState<boolean>(settings?.includeToC || false);
+export function usePublishingOptions (pubOpts?:PublishOptions, fontOpts?:FontOptions) {
+  const [pageBreaks, setPageBreaks] = useState<string>(pubOpts?.pageBreaks as string || 'Nowhere');
+  const [pageNumberPosition, setPageNumberPosition] = useState<string>(pubOpts?.pageNumberPosition as string || 'Nowhere');
+  const [displayDocumentTitles, setDisplayDocumentTitles] = useState<boolean>(pubOpts?.displayDocumentTitles || false);
+  const [includeToC, setIncludeToC] = useState<boolean>(pubOpts?.includeToC || false);
 
   useEffect(() => {
-    if (settings?.pageBreaks && settings.pageBreaks !== pageBreaks) {
-      setPageBreaks(settings.pageBreaks as string);
+    if (pubOpts?.pageBreaks && pubOpts.pageBreaks !== pageBreaks) {
+      setPageBreaks(pubOpts.pageBreaks as string);
     }
 
-    if (settings?.pageNumberPosition && settings.pageNumberPosition !== pageNumberPosition) {
-      setPageNumberPosition(settings.pageNumberPosition as string);
+    if (pubOpts?.pageNumberPosition && pubOpts.pageNumberPosition !== pageNumberPosition) {
+      setPageNumberPosition(pubOpts.pageNumberPosition as string);
     }
 
-    if (Boolean(settings?.includeToC) !== includeToC) {
-      setIncludeToC(Boolean(settings?.includeToC));
+    if (Boolean(pubOpts?.includeToC) !== includeToC) {
+      setIncludeToC(Boolean(pubOpts?.includeToC));
     }
 
-    if (settings?.displayDocumentTitles && settings.displayDocumentTitles !== displayDocumentTitles) {
-      setDisplayDocumentTitles(Boolean(settings.displayDocumentTitles));
+    if (pubOpts?.displayDocumentTitles && pubOpts.displayDocumentTitles !== displayDocumentTitles) {
+      setDisplayDocumentTitles(Boolean(pubOpts.displayDocumentTitles));
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [settings]);
+  }, [pubOpts]);
 
   const PageBreaksSelect = () => (
     <FormControl fullWidth variant="outlined" sx={{ mt: 2 }}>
@@ -123,7 +124,7 @@ export function usePublishingOptions (settings?:PublishOptions) {
   };
 }
 
-const PublishOptionsDialog: React.FC<PublishOptionsProps> = ({ optionsOpen, onClose, settings }) => {
+const PublishOptionsDialog: React.FC<PublishOptionsProps> = ({ optionsOpen, onClose, passedPublishOptions: pubOpts, passedFontOptions: fontOpts }) => {
   const items = useSelector(selectFiles);
 
   const [publishedItems, setPublishedItems] = useState<ProjectFile[]>(items);
@@ -131,7 +132,7 @@ const PublishOptionsDialog: React.FC<PublishOptionsProps> = ({ optionsOpen, onCl
   const { 
     PageBreaksSelect, PageNumberPositionSelect, DisplayDocumentTitlesSelect, IncludeToCSelect,
     pageBreaks, pageNumberPosition, displayDocumentTitles, includeToC
-  } = usePublishingOptions(settings);
+  } = usePublishingOptions(pubOpts, fontOpts);
 
   const theme = useTheme();
   const dark = theme.palette.mode === 'dark';
@@ -141,13 +142,18 @@ const PublishOptionsDialog: React.FC<PublishOptionsProps> = ({ optionsOpen, onCl
   };
 
   const handleReady = () => {
-    const options: PublishingOptions = {
+    let options: PublishingOptions = {
       items: publishedItems,
       pageBreaks,
       displayDocumentTitles,
       includeToC,
       pageNumberPosition
     };
+    
+    if (fontOpts) {
+      options = { ...options, ...fontOpts };
+    }
+
     publishToPdf(options);
   };
 

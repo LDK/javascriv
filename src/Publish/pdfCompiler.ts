@@ -125,7 +125,7 @@ const convertHtmlToPdf = async (contentArray: any[], options: PublishingOptions)
     documentDefinition = addToC(documentDefinition);
   }
 
-  documentDefinition = addFontStyles(documentDefinition, pdfMake.fonts);
+  documentDefinition = addFontStyles(documentDefinition, pdfMake.fonts, options.font, options.fontSize);
 
   if (options.pageNumberPosition && options.pageNumberPosition !== 'Nowhere') {
     documentDefinition = addPageNumbers(documentDefinition, options.pageNumberPosition);
@@ -138,7 +138,7 @@ const publishToPdf = async (options: PublishingOptions) => {
   const compiledHtml = compileHtml(options);
   const joinedHtml = compiledHtml.join('');
 
-  const usedFonts = extractUsedFonts(joinedHtml, editorFonts);
+  const usedFonts = extractUsedFonts(joinedHtml, editorFonts, options.font);
   const filteredFonts = editorFonts.filter((font) => usedFonts.includes(font.value));
   const { vfs, fonts } = await generateFontConfig(filteredFonts, pdfMake.fonts || {}, pdfFonts.pdfMake.vfs);
 

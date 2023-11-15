@@ -21,6 +21,7 @@ import useFileInputRef from './useFileInputRef';
 import ProjectSettingsScreen from './ProjectSettingsScreen';
 import ManageProjectsScreen from './ManageProjectsScreen';
 import UserSettingsScreen from './ProjectBrowser/UserSettingsScreen';
+import { EditorFont } from './Editor/EditorFonts';
 
 const App: React.FC = () => {  
   const [editorContent, setEditorContent] = useState<string | null | false>(null);
@@ -59,7 +60,8 @@ const App: React.FC = () => {
   } = useProject({ handleEditorChange, saveCallback: () => { getProjectListings(true) } });
 
   const { PublishButton, PublishOptionsDialog } = usePublishing(
-    currentProject ? currentProject.settings as PublishOptions : user?.publishingOptions
+    currentProject ? currentProject.settings as PublishOptions : user?.publishingOptions,
+    (currentProject && currentProject.settings) ? { font: currentProject.settings.font as EditorFont, fontSize: currentProject.settings.fontSize as number } : user?.fontOptions
   );
 
   const { fileInputRef, setFileInputRef } = useFileInputRef();
@@ -144,6 +146,9 @@ const App: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userSettingsOpen]);
 
+  const defaultFont = (currentProject?.settings?.font || user?.fontOptions?.font || { name: 'Roboto', value: 'Roboto' }) as EditorFont;
+  const defaultFontSize = (currentProject?.settings?.fontSize || user?.fontOptions?.fontSize || 12) as number;
+
   const handleSave = async () => {
     if (!editor) return;
 
@@ -202,7 +207,7 @@ const App: React.FC = () => {
             <Grid item xs={12} {...editorAreaBps}>
               <Box px={0}>
                 <Box p={0} m={0} display={ (projectSettingsOpen || manageProjectsOpen || userSettingsOpen) ? 'none' : 'block' }>
-                  <TinyEditor {...{ setEditor, handleEditorChange }} lastRevert={lastRevertTs} content={editorContent || ''} />
+                  <TinyEditor {...{ setEditor, handleEditorChange, defaultFont, defaultFontSize }} lastRevert={lastRevertTs} content={editorContent || ''} />
                 </Box>
 
                 <ProjectSettingsScreen open={projectSettingsOpen} onClose={() => setProjectSettingsOpen(false)} />

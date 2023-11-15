@@ -50,3 +50,8 @@ export type PublishOptions = {
   includeToC: boolean;
   displayDocumentTitles: boolean;
 };
+
+export type FontOptions = {
+  font: EditorFont;
+  fontSize: number;
+};

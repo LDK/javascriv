@@ -3,18 +3,20 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import { Editor as MyEditor, EditorEvent } from 'tinymce';
 import { Box, useTheme } from '@mui/material';
-import { familyFonts, getFontsCSS } from './EditorFonts';
+import { EditorFont, familyFonts, getFontsCSS } from './EditorFonts';
 
 interface TinyEditorProps {
   content: string | null;
   setEditor: (editor: MyEditor) => void;
   handleEditorChange: (content: string) => void;
   lastRevert: number;
+  defaultFont?: EditorFont;
+  defaultFontSize?: number;
 }
 
 const apiKey = process.env.REACT_APP_TINYMCE_API_KEY;
 
-const TinyEditor: React.FC<TinyEditorProps> = ({ content, setEditor, handleEditorChange, lastRevert }) => {
+const TinyEditor: React.FC<TinyEditorProps> = ({ content, setEditor, handleEditorChange, lastRevert, defaultFont, defaultFontSize }) => {
   const editorRef = useRef<MyEditor | null>(null);
   const [fullScreen, setFullScreen] = useState(false);
   const height="calc(100vh - 64px)";
@@ -87,7 +89,13 @@ const TinyEditor: React.FC<TinyEditorProps> = ({ content, setEditor, handleEdito
           ],
           skin: theme.palette.mode === 'dark' ? 'oxide-dark' : undefined,
           font_family_formats: familyFonts,
-          content_style: `@import url('${getFontsCSS()}');`,
+          content_style: `
+            @import url('${getFontsCSS()}');
+            body {
+              font-family: ${defaultFont?.value || 'Roboto'}, sans-serif;
+              font-size: ${defaultFontSize || 14}pt;
+            }
+          `,
           onchange: "myCustomOnChangeHandler",
           external_plugins: {
             'writermode': '/tinymce/plugins/writermodePlugin.js',

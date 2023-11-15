@@ -1,6 +1,6 @@
 // src/userSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ProjectListing, PublishOptions } from '../Project/ProjectTypes';
+import { ProjectListing, PublishOptions, FontOptions } from '../Project/ProjectTypes';
 import { RootState } from './store';
 
 export type ProjectCategory = 'Created' | 'Collaborator';
@@ -14,6 +14,7 @@ export type AppUser = {
   username: string | null;
   email: string | null;
   publishingOptions?: PublishOptions;
+  fontOptions?: FontOptions;
 };
 
 export type UserState = AppUser & {
@@ -50,6 +51,11 @@ const userSlice = createSlice({
         state.publishingOptions = action.payload.publishingOptions;
       } else {
         state.publishingOptions = undefined;
+      }
+      if (action.payload.fontOptions) {
+        state.fontOptions = action.payload.fontOptions;
+      } else {
+        state.fontOptions = undefined;
       }
     },
     clearUser: (state) => {
