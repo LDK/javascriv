@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { CancelButton, ConfirmButton } from "../Components/DialogButtons";
 import { ProjectFile } from "../Project/ProjectTypes";
-import { setFiles, setOpenFilePath, setProjectId, setProjectSettings, setProjectTitle } from "../redux/projectSlice";
+import { setFiles, setOpenFilePath, setProjectId, setProjectSettings, setProjectTitle, setPublishOptions } from "../redux/projectSlice";
+import useUser from "../User/useUser";
 
 type NewProjectDialogProps = {
   open: boolean;
@@ -15,6 +16,8 @@ const NewProjectDialog = ({ open, onClose, setEditorContent }: NewProjectDialogP
   const [newProjectName, setNewProjectName] = useState('');
   const [disabledReason, setDisabledReason] = useState<string>('');
   const submitDisabled = !newProjectName;
+
+  const { user } = useUser();
 
   const dispatch = useDispatch();
   
@@ -39,6 +42,9 @@ const NewProjectDialog = ({ open, onClose, setEditorContent }: NewProjectDialogP
     dispatch(setProjectTitle(newProjectName));
     dispatch(setProjectId(undefined));
     dispatch(setProjectSettings({}));
+    if (user.publishingOptions) {
+      dispatch(setPublishOptions(user.publishingOptions));
+    }
     setEditorContent('');
     handleClose();
   };

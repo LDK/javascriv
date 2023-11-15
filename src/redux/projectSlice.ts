@@ -1,6 +1,6 @@
 // redux/projectSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ProjectFile, ProjectSettings, ProjectState } from '../Project/ProjectTypes';
+import { ProjectFile, ProjectSettings, ProjectState, PublishOptions } from '../Project/ProjectTypes';
 import { RootState } from './store';
 import introCopy from '../editorIntro';
 
@@ -223,10 +223,16 @@ const projectSlice = createSlice({
       state.title = 'New Project';
       state.id = undefined;
     },
+    setPublishOptions: (state, action: PayloadAction<PublishOptions>) => {
+      state.settings.pageBreaks = action.payload.pageBreaks;
+      state.settings.pageNumberPosition = action.payload.pageNumberPosition;
+      state.settings.includeToC = action.payload.includeToC;
+      state.settings.displayDocumentTitles = action.payload.displayDocumentTitles;
+    }
   },
 });
 
-export const { setProjectId, setProjectCreator, setContent, setChanged, setOpenFilePath, deleteItem, addItem, saveItem, reorderItem, setName, setFiles, saveSetting, setProjectTitle, setProjectSettings, resetProject } = projectSlice.actions;
+export const { setProjectId, setProjectCreator, setContent, setChanged, setOpenFilePath, deleteItem, addItem, saveItem, reorderItem, setName, setFiles, saveSetting, setProjectTitle, setProjectSettings, resetProject, setPublishOptions } = projectSlice.actions;
 
 export const selectFiles = (state: RootState) => state.project.files;
 export const selectOpenFilePath = (state: RootState) => state.project.openFilePath;

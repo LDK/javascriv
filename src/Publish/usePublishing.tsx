@@ -1,8 +1,9 @@
 import { Button } from "@mui/material";
 import { useState } from "react";
 import PublishOptionsDialog from "./PublishOptions";
+import { PublishOptions } from "../Project/ProjectTypes";
 
-const usePublishing = () => {
+const usePublishing = (settings?:PublishOptions) => {
   const [publishOptionsOpen, setPublishOptionsOpen] = useState(false);
 
   const PublishButton = ({ variant }: { variant?: 'text' | 'outlined' | 'contained' }) => (
@@ -12,10 +13,10 @@ const usePublishing = () => {
   );
 
   const OptionsDialog = () => (
-    <PublishOptionsDialog optionsOpen={publishOptionsOpen} onClose={() => { setPublishOptionsOpen(false) }} />
+    <PublishOptionsDialog {...{ settings }} optionsOpen={publishOptionsOpen} onClose={() => { setPublishOptionsOpen(false) }} />
   );
 
-  return { PublishButton, PublishOptions: OptionsDialog };
+  return { PublishButton, PublishOptionsDialog: OptionsDialog };
 };
 
 export default usePublishing;

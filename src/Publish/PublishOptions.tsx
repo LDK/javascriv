@@ -12,6 +12,7 @@ import { ProjectFile, PublishOptions } from '../Project/ProjectTypes';
 export interface PublishOptionsProps {
   optionsOpen: boolean;
   onClose: () => void;
+  settings?: PublishOptions;
 }
 
 export function usePublishingOptions (settings?:PublishOptions) {
@@ -29,8 +30,8 @@ export function usePublishingOptions (settings?:PublishOptions) {
       setPageNumberPosition(settings.pageNumberPosition as string);
     }
 
-    if (settings?.includeToC && settings.includeToC !== includeToC) {
-      setIncludeToC(Boolean(settings.includeToC));
+    if (Boolean(settings?.includeToC) !== includeToC) {
+      setIncludeToC(Boolean(settings?.includeToC));
     }
 
     if (settings?.displayDocumentTitles && settings.displayDocumentTitles !== displayDocumentTitles) {
@@ -122,7 +123,7 @@ export function usePublishingOptions (settings?:PublishOptions) {
   };
 }
 
-const PublishOptionsDialog: React.FC<PublishOptionsProps> = ({ optionsOpen, onClose }) => {
+const PublishOptionsDialog: React.FC<PublishOptionsProps> = ({ optionsOpen, onClose, settings }) => {
   const items = useSelector(selectFiles);
 
   const [publishedItems, setPublishedItems] = useState<ProjectFile[]>(items);
@@ -130,7 +131,7 @@ const PublishOptionsDialog: React.FC<PublishOptionsProps> = ({ optionsOpen, onCl
   const { 
     PageBreaksSelect, PageNumberPositionSelect, DisplayDocumentTitlesSelect, IncludeToCSelect,
     pageBreaks, pageNumberPosition, displayDocumentTitles, includeToC
-  } = usePublishingOptions();
+  } = usePublishingOptions(settings);
 
   const theme = useTheme();
   const dark = theme.palette.mode === 'dark';
@@ -173,6 +174,7 @@ const PublishOptionsDialog: React.FC<PublishOptionsProps> = ({ optionsOpen, onCl
   return (
     <Dialog open={optionsOpen} onClose={handleClose} fullWidth maxWidth="sm">
       <DialogTitle>Publish Options</DialogTitle>
+
       <DialogContent>
         <PublishTree items={items} onCheck={handleCheck} />
 

@@ -13,7 +13,7 @@ import useFileBrowser from './ProjectBrowser/useFileBrowser';
 import usePublishing from './Publish/usePublishing';
 import { Editor } from 'tinymce';
 import NewProjectDialog from './ProjectBrowser/NewProjectDialog';
-import { ProjectFile } from './Project/ProjectTypes';
+import { ProjectFile, PublishOptions } from './Project/ProjectTypes';
 import OpenProjectDialog from './ProjectBrowser/OpenProjectDialog';
 import useUser from './User/useUser';
 import AddCollaboratorDialog from './Project/AddCollaboratorDialog';
@@ -47,7 +47,6 @@ const App: React.FC = () => {
   }
 
   const { saveFile, documentClick, setHasContentChanged, hasContentChanged, openFilePath, items } = useFileBrowser({ contentCallback: handleDocumentClick });
-  const { PublishButton, PublishOptions } = usePublishing();
 
   const handleEditorChange = (content: string) => {
     setHasContentChanged(content !== initial);
@@ -58,6 +57,10 @@ const App: React.FC = () => {
     handleUpload, setNewProjectOpen, newProjectOpen, loadProject, saveProject, currentProject,
     NewProjectButton, saving, setSaving, ProjectSelector
   } = useProject({ handleEditorChange, saveCallback: () => { getProjectListings(true) } });
+
+  const { PublishButton, PublishOptionsDialog } = usePublishing(
+    currentProject ? currentProject.settings as PublishOptions : user?.publishingOptions
+  );
 
   const { fileInputRef, setFileInputRef } = useFileInputRef();
 
@@ -218,7 +221,7 @@ const App: React.FC = () => {
                   <ExportOptions />
 
                   <ImportOptions />
-                  <PublishOptions />
+                  <PublishOptionsDialog />
                 </Box>
 
               </Box>

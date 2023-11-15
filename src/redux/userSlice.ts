@@ -48,6 +48,8 @@ const userSlice = createSlice({
       }
       if (action.payload.publishingOptions) {
         state.publishingOptions = action.payload.publishingOptions;
+      } else {
+        state.publishingOptions = undefined;
       }
     },
     clearUser: (state) => {
