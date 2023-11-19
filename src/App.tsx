@@ -4,7 +4,7 @@ import { Box, Button, Container, CssBaseline, Grid, ThemeProvider } from '@mui/m
 import Header from './Header/Header';
 import ProjectBrowser from './ProjectBrowser/ProjectBrowser';
 import { useDispatch, useSelector } from 'react-redux';
-import { findItemByPath, setChanged, setContent, setOpenFilePath } from './redux/projectSlice';
+import { findAllChangedFiles, findItemByPath, setChanged, setContent, setOpenFilePath } from './redux/projectSlice';
 import TinyEditor from './Editor/Editor';
 import { darkTheme, lightTheme } from './theme/theme';
 import { RootState } from './redux/store';
@@ -22,6 +22,8 @@ import ProjectSettingsScreen from './ProjectSettingsScreen';
 import ManageProjectsScreen from './ManageProjectsScreen';
 import UserSettingsScreen from './ProjectBrowser/UserSettingsScreen';
 import { EditorFont } from './Editor/EditorFonts';
+import axios, { AxiosResponse } from 'axios';
+import { set } from 'immer/dist/internal';
 
 const App: React.FC = () => {  
   const [editorContent, setEditorContent] = useState<string | null | false>(null);
@@ -33,6 +35,8 @@ const App: React.FC = () => {
   const [userSettingsOpen, setUserSettingsOpen] = useState(false);
   const { user, getProjectListings } = useUser();
   const [manageProjectsOpen, setManageProjectsOpen] = useState(false);
+
+  const [changedFiles, setChangedFiles] = useState<(number | undefined)[]>([]);
 
   const editorAreaBps = manageProjectsOpen ? { sm: 12, hd: 9 } : { md: 8, lg: 9 };
   const browserBps = manageProjectsOpen ? { xs: 0, hd: 3 } : { xs: 12, md: 4, lg: 3 };
@@ -50,7 +54,7 @@ const App: React.FC = () => {
   const { saveFile, documentClick, setHasContentChanged, hasContentChanged, openFilePath, items } = useFileBrowser({ contentCallback: handleDocumentClick });
 
   const handleEditorChange = (content: string) => {
-    setHasContentChanged(content !== initial);
+    setHasContentChanged(Boolean((content && initial) && content !== initial));
   };
 
   const { 
@@ -58,6 +62,56 @@ const App: React.FC = () => {
     handleUpload, setNewProjectOpen, newProjectOpen, loadProject, saveProject, currentProject,
     NewProjectButton, saving, setSaving, ProjectSelector
   } = useProject({ handleEditorChange, saveCallback: () => { getProjectListings(true) } });
+
+  const [isCollab, setIsCollab] = useState(Boolean(currentProject?.collaborators?.length) || false);
+  const [amCreator, setAmCreator] = useState(currentProject?.creator === user?.id || false);
+  const [checkTimer, setCheckTimer] = useState<NodeJS.Timeout | null>(null);
+  const [lockedFilePaths, setLockedFilePaths] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (isCollab && currentProject?.id && user?.id) {
+      setAmCreator(currentProject.creator === user?.id);
+      setCheckTimer(setInterval(() => {
+        const AuthStr = 'Bearer ' + user.token;
+        axios.get(`${process.env.REACT_APP_API_URL}/project/${currentProject.id}/locked-files`, { headers: { Authorization: AuthStr } })
+        .then((response:AxiosResponse<string[]>) => {
+          setLockedFilePaths(response.data);
+        })
+        .catch((error) => {
+          setLockedFilePaths([]);
+          console.log(error);
+        });
+      }, 30000));
+    } else {
+      if (checkTimer) {
+        clearInterval(checkTimer);
+        setCheckTimer(null);
+      }
+      setLockedFilePaths([]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isCollab, currentProject.id, user.id]);
+
+  useEffect(() => {
+
+  }, [lockedFilePaths]);
+
+  useEffect(() => {
+    if (isCollab) {
+      const AuthStr = 'Bearer ' + user.token;
+      const postUrl = `${process.env.REACT_APP_API_URL}/user/editing`;
+      const payload = { fileIds: changedFiles, projectId: currentProject?.id };
+      const headers = { headers: { Authorization: AuthStr } };
+
+      axios.post(postUrl, payload, headers)
+        .then((response) => {
+          // console.log('editing response', response);
+        })
+        .catch((error) => {
+          console.log('editing error', error);
+        });
+    }
+  }, [changedFiles]);
 
   const { PublishButton, PublishOptionsDialog } = usePublishing(
     currentProject ? currentProject.settings as PublishOptions : user?.publishingOptions,
@@ -69,7 +123,20 @@ const App: React.FC = () => {
   const activeTheme = useSelector((state:RootState) => state.theme.active);
 
   useEffect(() => {
-    dispatch(setChanged({path: openFilePath || '', changed: hasContentChanged}));
+    const changed = {path: openFilePath || '', changed: hasContentChanged};
+
+    dispatch(setChanged(changed));
+    if (isCollab && openFilePath) {
+      const openFile = findItemByPath(items, openFilePath.split('/'));
+
+      if (openFile?.id && hasContentChanged) {
+        const changedIds:(number | undefined)[] = [openFile, ...(findAllChangedFiles(items).filter(item => item.id && (item.id !== openFile?.id)))].map((item) => item?.id);
+        setChangedFiles(changedIds);
+      } else if (openFile?.id) {
+        const changedIds:(number | undefined)[] = findAllChangedFiles(items).map((item) => item?.id);
+        setChangedFiles(changedIds);
+      }
+    }
   }, [hasContentChanged, openFilePath, dispatch]);
 
   useEffect(() => {
@@ -78,7 +145,7 @@ const App: React.FC = () => {
       if (existing && existing.path) {
         // setEditorContent(existing.content);
         setEditorContent(existing.content as string);
-        setInitial(existing.initialContent as string);
+        setInitial(existing.initialContent || existing.content as string);
       } else {
         if (editorContent === null) {
           setEditorContent(false);
@@ -109,11 +176,14 @@ const App: React.FC = () => {
   }, [saving, saveProject, loadProject, currentProject, user, setSaving]);
 
   useEffect(() => {
-    if (currentProject.id) {
+    if (currentProject?.id) {
       setManageProjectsOpen(false);
       setProjectSettingsOpen(false);
       setAddCollabOpen(false);
+      setAmCreator(currentProject.creator === user?.id);
+      setIsCollab(Boolean(currentProject.collaborators?.length));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentProject.id]);
 
   useEffect(() => {
@@ -207,7 +277,7 @@ const App: React.FC = () => {
             <Grid item xs={12} {...editorAreaBps}>
               <Box px={0}>
                 <Box p={0} m={0} display={ (projectSettingsOpen || manageProjectsOpen || userSettingsOpen) ? 'none' : 'block' }>
-                  <TinyEditor {...{ setEditor, handleEditorChange, defaultFont, defaultFontSize }} lastRevert={lastRevertTs} content={editorContent || ''} />
+                  <TinyEditor {...{ openFilePath, setEditor, handleEditorChange, defaultFont, defaultFontSize, lockedFilePaths }} lastRevert={lastRevertTs} content={editorContent || ''} />
                 </Box>
 
                 <ProjectSettingsScreen open={projectSettingsOpen} onClose={() => setProjectSettingsOpen(false)} />

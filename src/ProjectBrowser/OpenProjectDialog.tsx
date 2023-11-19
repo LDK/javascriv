@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { CancelButton, ConfirmButton } from "../Components/DialogButtons";
 import { ProjectState } from "../Project/ProjectTypes";
 import useProject from "../Project/useProject";
-import { selectProjectTitle, setFiles, setOpenFilePath, setProjectId, setProjectSettings, setProjectTitle } from "../redux/projectSlice";
+import { selectProjectTitle, setCollaborators, setFiles, setOpenFilePath, setProjectId, setProjectSettings, setProjectTitle } from "../redux/projectSlice";
 import useUser from "../User/useUser";
 
 type OpenProjectDialogProps = {
@@ -28,6 +28,7 @@ const OpenProjectDialog = ({ onClose, project }: OpenProjectDialogProps) => {
     dispatch(setProjectTitle(project.title || 'Untitled'));
     dispatch(setProjectSettings(project.settings || {}));
     dispatch(setProjectId(project.id));
+    dispatch(setCollaborators(project.collaborators || []));
     onClose();
   };
 

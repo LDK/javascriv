@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { FontOptions, ProjectFile, ProjectSettings, ProjectState, PublishOptions } from '../Project/ProjectTypes';
 import { RootState } from './store';
 import introCopy from '../editorIntro';
+import { AppUser } from './userSlice';
 
 const defaultSettings:ProjectSettings = {
   pageBreaks: 'Nowhere',
@@ -59,6 +60,20 @@ export const findFolderByPath = (items: ProjectFile[], path: string[]): ProjectF
   } else {
     return findFolderByPath(item.children || [], tail);
   }
+}
+
+export const findAllChangedFiles = (items: ProjectFile[]): ProjectFile[] => {
+  let changedFiles: ProjectFile[] = [];
+
+  items.forEach((item) => {
+    if (item.type === 'file' && item.changed) {
+      changedFiles.push(item);
+    } else if (item.type === 'folder' && item.children) {
+      changedFiles = changedFiles.concat(findAllChangedFiles(item.children));
+    }
+  });
+
+  return changedFiles;
 }
 
 const projectSlice = createSlice({
@@ -119,6 +134,9 @@ const projectSlice = createSlice({
     setProjectId: (state, action: PayloadAction<number | undefined>) => {
       state.id = action.payload;
     },
+    setCollaborators: (state, action: PayloadAction<AppUser[]>) => {
+      state.collaborators = action.payload;
+    },
     setName: (state, action: PayloadAction<{ path: string; newName: string }>) => {
       const { path, newName } = action.payload;
       const item = findItemByPath(state.files, path.split('/'));
@@ -152,7 +170,13 @@ const projectSlice = createSlice({
       state.openFilePath = action.payload;
     },
     setFiles: (state, action: PayloadAction<ProjectFile[]>) => {
-      state.files = action.payload;
+      const files = action.payload;
+
+      files.forEach((file) => {
+        file.initialContent = file.content;
+      });
+
+      state.files = files;
     },
     reorderItem: (state, action: PayloadAction<{ path: string, oldIndex: number, newIndex: number }>) => {
       const { path, newIndex, oldIndex } = action.payload;
@@ -239,7 +263,7 @@ const projectSlice = createSlice({
 export const { setProjectId, setProjectCreator, setContent, setChanged, 
     setOpenFilePath, deleteItem, addItem, saveItem, reorderItem, setName,
     setFiles, saveSetting, setProjectTitle, setProjectSettings, resetProject,
-    setPublishOptions, setFontOptions } = projectSlice.actions;
+    setPublishOptions, setFontOptions, setCollaborators } = projectSlice.actions;
 
 export const selectFiles = (state: RootState) => state.project.files;
 export const selectOpenFilePath = (state: RootState) => state.project.openFilePath;

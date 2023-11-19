@@ -12,11 +12,13 @@ interface TinyEditorProps {
   lastRevert: number;
   defaultFont?: EditorFont;
   defaultFontSize?: number;
+  openFilePath: string | null;
+  lockedFilePaths?: string[];
 }
 
 const apiKey = process.env.REACT_APP_TINYMCE_API_KEY;
 
-const TinyEditor: React.FC<TinyEditorProps> = ({ content, setEditor, handleEditorChange, lastRevert, defaultFont, defaultFontSize }) => {
+const TinyEditor: React.FC<TinyEditorProps> = ({ lockedFilePaths, openFilePath, content, setEditor, handleEditorChange, lastRevert, defaultFont, defaultFontSize }) => {
   const editorRef = useRef<MyEditor | null>(null);
   const [fullScreen, setFullScreen] = useState(false);
   const height="calc(100vh - 64px)";
@@ -73,6 +75,7 @@ const TinyEditor: React.FC<TinyEditorProps> = ({ content, setEditor, handleEdito
         apiKey={apiKey}
         initialValue={content || ''}
         onInit={handleInit}
+        disabled={Boolean(openFilePath && lockedFilePaths?.includes(openFilePath))}
         init={{
           height: height,
           menubar: false,
