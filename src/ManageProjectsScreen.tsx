@@ -45,7 +45,7 @@ const CustomTabPanel = (props: TabPanelProps) => {
     >
       {value === activeValue && (
         <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
+          {children}
         </Box>
       )}
     </div>
