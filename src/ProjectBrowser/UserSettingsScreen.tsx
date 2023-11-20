@@ -1,4 +1,4 @@
-import { TextField, DialogActions, Tooltip, Box, useTheme, Typography, Divider, Grid, FormControl, InputLabel, Select, MenuItem, Autocomplete } from "@mui/material";
+import { TextField, DialogActions, Tooltip, Box, useTheme, Typography, Divider, Grid, Autocomplete } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { CancelButton, ConfirmButton } from "../Components/DialogButtons";
 import { UserState, setUser } from "../redux/userSlice";
@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import { usePublishingOptions } from "../Publish/PublishOptions";
 import { EditorFont, editorFonts } from "../Editor/EditorFonts";
 
-type UserSettingsScreenProps = {
+export type UserSettingsScreenProps = {
   open: boolean;
   onClose: () => void;
   user: UserState;
@@ -28,12 +28,6 @@ const UserSettingsScreen = ({ open, onClose, user }: UserSettingsScreenProps) =>
   const isDark = (theme.palette.mode === 'dark');
 
   const dispatch = useDispatch();
-
-  const handleOpen = () => {
-    if (formErrors.length) {
-      setFormErrors([]);
-    }
-  }
 
   const handleClose = () => {
     onClose();
@@ -113,16 +107,9 @@ const UserSettingsScreen = ({ open, onClose, user }: UserSettingsScreenProps) =>
 
   const {
     PageBreaksSelect, PageNumberPositionSelect, DisplayDocumentTitlesSelect, IncludeToCSelect,
-    pageBreaks, pageNumberPosition, includeToC, displayDocumentTitles,
-    setPageBreaks, setPageNumberPosition, setIncludeToC, setDisplayDocumentTitles
+    pageBreaks, pageNumberPosition, includeToC, displayDocumentTitles
   } = usePublishingOptions(user?.publishingOptions || undefined);
 
-  // useEffect(() => {
-  //   if (open) {
-  //     handleOpen();
-  //   }
-  // }, [open]);
-  
   useEffect(() => {
     const usernameLengthError = 'Username must be at least 3 characters long.';
 

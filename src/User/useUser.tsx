@@ -3,7 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { clearUser, getActiveUser, setUserProjects } from "../redux/userSlice";
-import { resetProject, setFiles, setProjectId } from "../redux/projectSlice";
+import { resetProject } from "../redux/projectSlice";
 import { isFunction } from "@mui/x-data-grid/internals";
 
 export default function useUser () {

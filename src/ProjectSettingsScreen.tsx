@@ -8,7 +8,7 @@ import { usePublishingOptions } from "./Publish/PublishOptions";
 import { ProjectSettings, PublishOptions } from "./Project/ProjectTypes";
 import SettingBox from "./Components/SettingBox";
 
-type ProjectSettingsDialogProps = {
+export type ProjectSettingsDialogProps = {
   open: boolean;
   onClose: () => void;
 };

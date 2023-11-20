@@ -5,7 +5,7 @@ import { Editor as MyEditor, EditorEvent } from 'tinymce';
 import { Box, useTheme } from '@mui/material';
 import { EditorFont, familyFonts, getFontsCSS } from './EditorFonts';
 
-interface TinyEditorProps {
+export interface TinyEditorProps {
   content: string | null;
   setEditor: (editor: MyEditor) => void;
   handleEditorChange: (content: string) => void;

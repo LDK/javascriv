@@ -16,7 +16,7 @@ import { ConfirmButton } from "./Components/DialogButtons";
 import { useDispatch } from "react-redux";
 import { setProjectId } from "./redux/projectSlice";
 
-type ManageProjectsDialogProps = {
+export type ManageProjectsDialogProps = {
   open: boolean;
   onClose: () => void;
   user: UserState;
