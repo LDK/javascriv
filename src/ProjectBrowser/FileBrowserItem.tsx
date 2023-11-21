@@ -55,10 +55,18 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, count
     return null;
   };
   
-  const handleItemClick = () => {
+  const handleToggleClick = () => {
     if (isFolder) {
       setOpen(!open);
-      onFolderClick(item);
+    }
+  }
+
+  const handleItemClick = () => {
+    if (isFolder && fullPath !== openFilePath) {
+      onDocumentClick(item);
+      setOpen(true);
+    } else if (isFolder && fullPath == openFilePath) {
+      setOpen(true);
     } else if (item.subType === 'document') {
       if (fullPath !== openFilePath) {
         if (onDocumentClick) {
@@ -136,6 +144,8 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, count
 
   const isOpenPath = fullPath === openFilePath;
 
+  // TODO: Look into using ListItemButton instead of ListItem
+
   return (
     <>
       <ListItem
@@ -169,7 +179,12 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, count
               ) : (
                 <>
                   {item.name}
-                  {getOpenCloseIcon()}
+                  <Box component="span" sx={{ cursor: 'pointer' }} p={0} m={0} onClick={(e) => {
+                    e.stopPropagation();
+                    handleToggleClick();
+                  }}>
+                    {getOpenCloseIcon()}
+                  </Box>
                 </>
               )
             }

@@ -4,6 +4,8 @@ import { Editor } from '@tinymce/tinymce-react';
 import { Editor as MyEditor, EditorEvent } from 'tinymce';
 import { Box, useTheme } from '@mui/material';
 import { EditorFont, familyFonts, getFontsCSS } from './EditorFonts';
+import { findItemByPath } from '../redux/projectSlice';
+import { ProjectFile } from '../Project/ProjectTypes';
 
 export interface TinyEditorProps {
   content: string | null;
@@ -12,13 +14,14 @@ export interface TinyEditorProps {
   lastRevert: number;
   defaultFont?: EditorFont;
   defaultFontSize?: number;
-  openFilePath: string | null;
   lockedFilePaths?: string[];
+  openFilePath: string | null;
+  items: ProjectFile[];
 }
 
 const apiKey = process.env.REACT_APP_TINYMCE_API_KEY;
 
-const TinyEditor: React.FC<TinyEditorProps> = ({ lockedFilePaths, openFilePath, content, setEditor, handleEditorChange, lastRevert, defaultFont, defaultFontSize }) => {
+const TinyEditor: React.FC<TinyEditorProps> = ({ lockedFilePaths, items, openFilePath, content, setEditor, handleEditorChange, lastRevert, defaultFont, defaultFontSize }) => {
   const editorRef = useRef<MyEditor | null>(null);
   const [fullScreen, setFullScreen] = useState(false);
   const height="calc(100vh - 64px)";

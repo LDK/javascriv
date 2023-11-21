@@ -67,6 +67,8 @@ const ProjectBrowser: React.FC<ProjectBrowserProps> = ({ onDocumentClick, setPro
 
   const handleFolderClick = (folder: ProjectFile) => {
     setOpenFolder(folder.path);
+    dispatch(setOpenFilePath(folder.path));
+    console.log('boom?');
   }
 
   const renderItem = (item: ProjectFile, path: string[] = [], idx:number) => {

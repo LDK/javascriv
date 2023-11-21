@@ -36,6 +36,7 @@ const App: React.FC = () => {
   
   const [editorContent, setEditorContent] = useState<string | null | false>(null);
   const [editor, setEditor] = useState<Editor | null>(null);
+  const [isCorkboard, setIsCorkboard] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -150,7 +151,7 @@ const App: React.FC = () => {
   const userSettingsParams:UserSettingsScreenProps = { user, open: userSettingsOpen, onClose: () => setUserSettingsOpen(false) };
 
   const editorParams:TinyEditorProps = {
-    ...{ openFilePath, setEditor, handleEditorChange, defaultFont, defaultFontSize, lockedFilePaths },
+    ...{ openFilePath, items, setEditor, handleEditorChange, defaultFont, defaultFontSize, lockedFilePaths },
     lastRevert: lastRevertTs,
     content: editorContent || null
   };
@@ -196,7 +197,7 @@ const App: React.FC = () => {
             </Grid>
 
             <Grid item xs={12} {...editorAreaBps}>
-              <ContentArea {...{ projectSettingsOpen, manageProjectsOpen, userSettingsOpen, user, editorParams, projectSettingsParams, manageProjectsParams, userSettingsParams }}/>
+              <ContentArea {...{ items, openFilePath, projectSettingsOpen, manageProjectsOpen, userSettingsOpen, user, editorParams, projectSettingsParams, manageProjectsParams, userSettingsParams }}/>
             </Grid>
           </Grid>
         </Container>

@@ -167,6 +167,7 @@ const projectSlice = createSlice({
       }
     },
     setOpenFilePath: (state, action: PayloadAction<string>) => {
+      console.log('set open', action.payload);
       state.openFilePath = action.payload;
     },
     setFiles: (state, action: PayloadAction<ProjectFile[]>) => {
