@@ -68,7 +68,6 @@ const ProjectBrowser: React.FC<ProjectBrowserProps> = ({ onDocumentClick, setPro
   const handleFolderClick = (folder: ProjectFile) => {
     setOpenFolder(folder.path);
     dispatch(setOpenFilePath(folder.path));
-    console.log('boom?');
   }
 
   const renderItem = (item: ProjectFile, path: string[] = [], idx:number) => {
@@ -119,9 +118,10 @@ const ProjectBrowser: React.FC<ProjectBrowserProps> = ({ onDocumentClick, setPro
 
   return (
     <Box
+      id="project-browser"
       width="100%"
       sx={{
-        backgroundColor: theme.palette.secondary[theme.palette.mode],
+        backgroundColor: theme.palette.browserTray.main,
         minHeight: "calc(100vh - 40px)",
         maxHeight: "calc(100% - 40px)",
         overflowY: "hidden",

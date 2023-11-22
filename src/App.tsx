@@ -44,6 +44,7 @@ const App: React.FC = () => {
     if (openFilePath && editor) {
       dispatch(setContent({path: openFilePath, content: editor.getContent()}));
     }
+    
     setInitial(item.initialContent as string);
     dispatch(setOpenFilePath(item.path));
   }
@@ -197,7 +198,7 @@ const App: React.FC = () => {
             </Grid>
 
             <Grid item xs={12} {...editorAreaBps}>
-              <ContentArea {...{ items, openFilePath, projectSettingsOpen, manageProjectsOpen, userSettingsOpen, user, editorParams, projectSettingsParams, manageProjectsParams, userSettingsParams }}/>
+              <ContentArea {...{ items, openFilePath, projectSettingsOpen, manageProjectsOpen, userSettingsOpen, user, editorParams, projectSettingsParams, manageProjectsParams, userSettingsParams, handleDocumentClick }}/>
             </Grid>
           </Grid>
         </Container>

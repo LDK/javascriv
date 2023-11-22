@@ -2,8 +2,8 @@
 import { Dispatch, KeyboardEventHandler, SetStateAction, useCallback, useEffect, useRef } from "react";
 import { SxProps, Box, PaletteMode, ListItem, ListItemIcon, ListItemText, Collapse, List, useTheme } from "@mui/material";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { reorderItem, setName, setOpenFilePath, selectOpenFilePath } from "../redux/projectSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { reorderItem, setName, setOpenFilePath, selectOpenFilePath, selectOpenFolders, setOpenFolders } from "../redux/projectSlice";
 import { ExtendedPalette } from "../theme/theme";
 
 import { Folder, Description as DocIcon, Image as ImageIcon, ExpandMore, ExpandLess, InsertDriveFile } from '@mui/icons-material';
@@ -30,7 +30,9 @@ type FileBrowserItemProps = {
 const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, count, index, path = [], onDocumentClick, onFolderClick, openFilePath, setOpenFolder, setMoving, openFolder, setDuplicating, setDeleting }) => {
   const isFolder = item.type === 'folder';
   const fullPath = [...path, item.name].join('/');
-  const [open, setOpen] = useState<boolean>(Boolean(isFolder && openFilePath && openFilePath.startsWith(fullPath)));
+
+  const openFolders = useSelector(selectOpenFolders) || [];
+  const open = openFolders.includes(fullPath);
 
   const isActive = openFilePath && openFilePath.startsWith(fullPath);
 
@@ -41,6 +43,10 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, count
 
   const theme = useTheme();
   const palette = theme.palette as ExtendedPalette;
+
+  useEffect(() => {
+    console.log('openFolders changed', openFolders.includes(fullPath), fullPath);
+  }, [openFolders]);
 
   const getOpenCloseIcon = () => {
     if (isFolder) {
@@ -55,18 +61,46 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, count
     return null;
   };
   
+  const addOpenFolder = (folder: string) => {
+
+    // folder minus any leading slash
+    const path = folder.replace(/^\//, '');
+
+    if (!openFolders.includes(path)) {
+      const toAdd = [path];
+
+      // Segment folder path and add each segment to openFolders
+      const segments = path.split('/');
+
+      for (let i = 1; i < segments.length; i++) {
+        const addPath = segments.slice(0, i + 1).join('/');
+        if (!openFolders.includes(addPath) && !toAdd.includes(addPath)) {
+          toAdd.push(addPath);
+        }
+      }
+
+      dispatch(setOpenFolders([...openFolders, ...toAdd]));
+    }
+  }
+
   const handleToggleClick = () => {
     if (isFolder) {
-      setOpen(!open);
+      if (open) {
+        // remove from openFolders
+        dispatch(setOpenFolders(openFolders.filter(f => f !== fullPath)));
+      } else {
+        // add to openFolders
+        addOpenFolder(fullPath);
+      }
     }
   }
 
   const handleItemClick = () => {
     if (isFolder && fullPath !== openFilePath) {
       onDocumentClick(item);
-      setOpen(true);
-    } else if (isFolder && fullPath == openFilePath) {
-      setOpen(true);
+      addOpenFolder(fullPath);
+    } else if (isFolder && fullPath === openFilePath) {
+      addOpenFolder(fullPath);
     } else if (item.subType === 'document') {
       if (fullPath !== openFilePath) {
         if (onDocumentClick) {

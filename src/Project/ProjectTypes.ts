@@ -29,6 +29,7 @@ export type ProjectState = {
   id?: number;
   creator?: number;
   collaborators?: AppUser[];
+  openFolders: string[];
 };
 
 export type ProjectListing = {

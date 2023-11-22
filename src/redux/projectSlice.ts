@@ -30,6 +30,7 @@ const initialState:ProjectState = {
   settings: defaultSettings,
   title: 'New Project',
   collaborators: [],
+  openFolders: []
 };
 
 export const findItemByPath = (items: ProjectFile[], path: string[]): ProjectFile | undefined => {
@@ -258,19 +259,25 @@ const projectSlice = createSlice({
       state.settings.font = action.payload.font;
       state.settings.fontSize = action.payload.fontSize;
     },
+    setOpenFolders: (state, action: PayloadAction<string[]>) => {
+      state.openFolders = action.payload;
+      console.log('set open folders', action.payload);
+    }
   },
 });
 
 export const { setProjectId, setProjectCreator, setContent, setChanged, 
     setOpenFilePath, deleteItem, addItem, saveItem, reorderItem, setName,
     setFiles, saveSetting, setProjectTitle, setProjectSettings, resetProject,
-    setPublishOptions, setFontOptions, setCollaborators } = projectSlice.actions;
+    setPublishOptions, setFontOptions, setCollaborators, setOpenFolders } 
+      = projectSlice.actions;
 
 export const selectFiles = (state: RootState) => state.project.files;
 export const selectOpenFilePath = (state: RootState) => state.project.openFilePath;
 export const selectProjectTitle = (state: RootState) => state.project.title || 'Untitled Project';
 export const getProjectSettings = (state: RootState) => state.project.settings;
 export const getCurrentProject = (state: RootState) => state.project;
+export const selectOpenFolders = (state: RootState) => state.project.openFolders;
 
 // getContent selector function
 export const getContent = (state: RootState, path: string) => {

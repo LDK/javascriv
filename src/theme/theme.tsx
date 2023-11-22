@@ -2,14 +2,18 @@
 import { createTheme, Palette, PaletteColor, ThemeOptions } from '@mui/material/styles';
 import { PaletteOptions, PaletteColorOptions } from '@mui/material';
 
-interface ExtendedPaletteOptions extends PaletteOptions {
-  tray?: PaletteColorOptions;
-} 
-
 interface ExtendedThemeOptions extends ThemeOptions {
-  palette?: ExtendedPaletteOptions;
+  palette?: PaletteOptions;
 }
 
+declare module '@mui/material/styles' {
+  interface Palette {
+    browserTray: Palette['primary'];
+  }
+  interface PaletteOptions {
+    browserTray: PaletteOptions['primary'];
+  }
+}
 export type ThemeName = 'light' | 'dark';
 
 declare module '@mui/material/styles' {
@@ -29,6 +33,10 @@ const darkThemeOptions:ExtendedThemeOptions = {
     primary: {
       // Calm blue color, chosen for a professional appearance and readability.
       main: '#4f5fd5',
+    },
+    browserTray: {
+      // A dark neutral blue, in line with our other blues
+      main: '#2c3b7d',
     },
     secondary: {
       // Calm blue color, chosen for a professional appearance and readability.
@@ -76,8 +84,9 @@ const lightThemeOptions:ExtendedThemeOptions = {
       // Bright blue color, chosen for a striking contrast to the primary color, used for accents and highlights.
       main: '#fcc9b5',
     },
-    tray: {
-      main: '#d9e4ff'
+    // A neutral but light "sandy" color
+    browserTray: {
+      main: '#e6daa8',
     },
     background: {
       // Light gray color, chosen for a neutral and gentle background that's easy on the eyes.
@@ -140,5 +149,6 @@ const baseThemeOptions:ExtendedThemeOptions = {
 
 export const lightTheme = createTheme({ ...baseThemeOptions, ...lightThemeOptions });
 export const darkTheme = createTheme({ ...baseThemeOptions, ...darkThemeOptions });
-export type ExtendedPalette = Palette & { tray: PaletteColor };
 
+
+export type ExtendedPalette = Palette & { tray: PaletteColor };
