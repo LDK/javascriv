@@ -25,8 +25,16 @@ import { EditorFont } from './Editor/EditorFonts';
 import ContentArea from './ContentArea';
 import useSettingsDialogs from './useSettingsDialogs';
 import useCollab from './useCollab';
+import { useParams } from 'react-router-dom';
+import NewPasswordDialog from './Components/NewPasswordDialog';
 
-const App: React.FC = () => {  
+type AppProps = {
+  resetPassword?: boolean;
+};
+
+const App: React.FC<AppProps> = ({ resetPassword }) => {
+  const { token } = useParams<{token: string}>();
+  
   const [initial, setInitial] = useState<string | null>(null);
   const [lastRevertTs, setLastRevertTs] = useState<number>(0);
   const [addCollabOpen, setAddCollabOpen] = useState(false);
@@ -36,7 +44,6 @@ const App: React.FC = () => {
   
   const [editorContent, setEditorContent] = useState<string | null | false>(null);
   const [editor, setEditor] = useState<Editor | null>(null);
-  const [isCorkboard, setIsCorkboard] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -208,6 +215,7 @@ const App: React.FC = () => {
       <ExportOptions />
       <ImportOptions />
       <PublishOptionsDialog />
+      <NewPasswordDialog {...{token, open: resetPassword || false, onClose: () => {}}} />
       <NewProjectDialog setEditorContent={setEditorContent} open={newProjectOpen} onClose={() => setNewProjectOpen(false)} />
       <OpenProjectDialog onClose={handleOpenProjectClose} project={opening} />
       <AddCollaboratorDialog {...{user, currentProject}} open={addCollabOpen} onClose={() => setAddCollabOpen(false)} />

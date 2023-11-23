@@ -1,8 +1,11 @@
-import { Box, SxProps, TextField, TextFieldVariants } from '@mui/material';
+import { Box, SxProps, TextField, TextFieldVariants, Typography } from '@mui/material';
 import * as yup from 'yup';
 import { FormProvider, useForm, Controller } from 'react-hook-form';
 import { yupResolver } from "@hookform/resolvers/yup";
 import useDialogUI from '../theme/useDialogUI';
+import { useState } from 'react';
+import ResetPassword from './ResetPasswordForm';
+import { UserState } from '../redux/userSlice';
 
 type LoginFormOptions = {
   inputVariant?: TextFieldVariants;
@@ -17,6 +20,8 @@ const LoginForm = (options: LoginFormOptions) => {
   const inputVariant:TextFieldVariants = options.inputVariant || "outlined";
   const { DialogActionButtons } = useDialogUI();
 
+  const [resetting, setResetting] = useState(false);
+
   const schema = yup.object().shape({
     username: options.username ? yup.string().required() : yup.string(),
     email: options.email ? yup.string().email().required() : yup.string(),
@@ -26,6 +31,12 @@ const LoginForm = (options: LoginFormOptions) => {
   const methods = useForm({
     resolver: yupResolver(schema)
   });
+
+  if (resetting) {
+    return (
+      <ResetPassword onCancel={() => setResetting(false)} loading={false} />
+    );
+  }
 
   return (
     <FormProvider {...methods}>
@@ -55,6 +66,8 @@ const LoginForm = (options: LoginFormOptions) => {
             defaultValue=""
             render={({ field }) => <TextField disabled={options.loading} fullWidth autoComplete="password" {...field} label="Password" variant={inputVariant} type="password" sx={{ marginBottom: "1rem" }} />}
           />
+
+          <Typography fontWeight={600} sx={{ cursor: "pointer" }} variant="body2" color="primary" onClick={() => setResetting(true)}>Forgot Password?</Typography>
 
           <DialogActionButtons
             internal

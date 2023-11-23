@@ -7,6 +7,12 @@ import { store, persistor } from './redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
 import './App.scss';
 
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+} from "react-router-dom";
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
@@ -14,7 +20,12 @@ const root = ReactDOM.createRoot(
 root.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
-      <App />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<App />} />
+          <Route path="/reset-password/:token" element={<App resetPassword={true} />} />
+        </Routes>
+      </BrowserRouter>  
     </PersistGate>
   </Provider>
 );
