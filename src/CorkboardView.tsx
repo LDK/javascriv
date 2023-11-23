@@ -8,14 +8,16 @@ import { selectOpenFolders, setOpenFolders } from "./redux/projectSlice";
 type CorkboardCardProps = {
   item: ProjectFile;
   index: number;
-  cardBgColor: string;
   handleDocumentClick: (item: ProjectFile) => void;
 };
 
-const CorkboardCard = ({ item, index, cardBgColor, handleDocumentClick }:CorkboardCardProps) => {
+const CorkboardCard = ({ item, index, handleDocumentClick }:CorkboardCardProps) => {
   const [hovered, setHovered] = useState(false);
   const openFolders = useSelector(selectOpenFolders) || [];
   const dispatch = useDispatch();
+  const theme = useTheme();
+
+  const cardBgColor = theme.palette[`${item.type === 'file' ? 'document' : 'folder'}Card`].main;
 
   const addOpenFolder = (folder: string) => {
     // folder minus any leading slash
@@ -38,8 +40,6 @@ const CorkboardCard = ({ item, index, cardBgColor, handleDocumentClick }:Corkboa
     }
   };
 
-  const theme = useTheme();
-
   return (
     <Grid item xs={12} sm={6} md={4} key={index}>
       <Box position="relative" bgcolor={cardBgColor} p={0} boxShadow={2} borderRadius=".5rem" overflow="hidden" 
@@ -56,7 +56,7 @@ const CorkboardCard = ({ item, index, cardBgColor, handleDocumentClick }:Corkboa
           }
         }}
       >
-        <Box p={1} bgcolor={theme.palette.primary.main} color={theme.palette.primary.contrastText}>
+        <Box p={1} bgcolor={theme.palette[`${item.type === 'file' ? 'document' : 'folder'}CardHeader`].main} color={theme.palette.primary.contrastText}>
           <Typography variant="body2" fontWeight={700} component="h3" gutterBottom>
             {item.name}
           </Typography>
@@ -70,7 +70,7 @@ const CorkboardCard = ({ item, index, cardBgColor, handleDocumentClick }:Corkboa
         </Box>
 
         {hovered && 
-          <Box position="absolute" bottom={0} left={0} width="100%" pt={1} pb={0} pr={1} textAlign={'right'} bgcolor={theme.palette.secondary.dark} color={theme.palette.primary.contrastText} onClick={(e) => {
+          <Box position="absolute" bottom={0} left={0} width="100%" pt={1} pb={0} pr={1} textAlign={'right'} bgcolor={theme.palette[`itemBar${item.type === 'file' ? 'Document' : 'Folder'}`].main} color={theme.palette.primary.contrastText} onClick={(e) => {
             e.stopPropagation();
           }}>
             <GoIcon />
@@ -86,10 +86,6 @@ type CorkboardViewProps = {
 };
 
 const CorkboardView = ({ folder, handleDocumentClick }:CorkboardViewProps) => {
-  const theme = useTheme();
-
-  const cardBgColor = theme.palette.mode === 'dark' ? theme.palette.browserTray.main : 'white';
-
   return (
     <Box p={4} sx={{ overflowY: 'scroll' }} height="calc(100vh - 60px)" display="block" position="relative">
       <Grid container spacing={2}>
@@ -109,7 +105,7 @@ const CorkboardView = ({ folder, handleDocumentClick }:CorkboardViewProps) => {
       </Grid>
 
       <Grid container spacing={2}>
-        {folder?.children?.map((item, index) => <CorkboardCard {...{ item, index, cardBgColor, handleDocumentClick }} />)}
+        {folder?.children?.map((item, index) => <CorkboardCard {...{ item, index, handleDocumentClick }} />)}
       </Grid>
     </Box>
   );

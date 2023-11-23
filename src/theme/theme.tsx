@@ -9,9 +9,21 @@ interface ExtendedThemeOptions extends ThemeOptions {
 declare module '@mui/material/styles' {
   interface Palette {
     browserTray: Palette['primary'];
+    documentCard: Palette['primary'];
+    folderCard: Palette['primary'];
+    itemBarDocument: Palette['primary'];
+    itemBarFolder: Palette['primary'];
+    folderCardHeader: Palette['primary'];
+    documentCardHeader: Palette['primary'];
   }
   interface PaletteOptions {
     browserTray: PaletteOptions['primary'];
+    documentCard: PaletteOptions['primary'];
+    folderCard: PaletteOptions['primary'];
+    itemBarDocument: PaletteOptions['primary'];
+    itemBarFolder: PaletteOptions['primary'];
+    folderCardHeader: PaletteOptions['primary'];
+    documentCardHeader: PaletteOptions['primary'];
   }
 }
 export type ThemeName = 'light' | 'dark';
@@ -37,6 +49,28 @@ const darkThemeOptions:ExtendedThemeOptions = {
     browserTray: {
       // A dark neutral blue, in line with our other blues
       main: '#2c3b7d',
+    },
+    documentCard: {
+      // A dark neutral blue, in line with our other blues
+      main: '#2c3b7d',
+    },
+    folderCard: {
+      // A dark neutral green, in line with our other blues
+      main: '#2c7d3b',
+    },
+    documentCardHeader: {
+      // A dark neutral blue, in line with our other blues
+      main: '#4f5fd5',
+    },
+    folderCardHeader: {
+      // A dark neutral green, in line with our other blues
+      main: '#1fa54f',
+    },
+    itemBarDocument: {
+      main: '#374295',
+    },
+    itemBarFolder: {
+      main: '#379542',
     },
     secondary: {
       // Calm blue color, chosen for a professional appearance and readability.
@@ -87,6 +121,29 @@ const lightThemeOptions:ExtendedThemeOptions = {
     // A neutral but light "sandy" color
     browserTray: {
       main: '#e6daa8',
+    },
+    // A neutral but light "sandy" color
+    documentCard: {
+      main: '#e6daa8',
+    },
+    // A neutral but light "sandy" color
+    folderCard: {
+      main: '#e6daa8',
+    },
+    // A neutral but light "sandy" color
+    documentCardHeader: {
+      main: '#e6daa8',
+    },
+    // A neutral but light "sandy" color
+    folderCardHeader: {
+      main: '#e6daa8',
+    },
+    // A neutral but light "sandy" color
+    itemBarDocument: {
+      main: '#374295',
+    },
+    itemBarFolder: {
+      main: '#379542',
     },
     background: {
       // Light gray color, chosen for a neutral and gentle background that's easy on the eyes.
