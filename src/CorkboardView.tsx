@@ -2,6 +2,7 @@ import { Box, Grid, Typography, useTheme } from "@mui/material";
 import { useState } from "react";
 import { ProjectFile } from "./Project/ProjectTypes";
 import { KeyboardDoubleArrowRightTwoTone as GoIcon } from "@mui/icons-material";
+import { FolderCopyTwoTone as FolderIcon, DescriptionTwoTone as DocIcon } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { selectOpenFolders, setOpenFolders } from "./redux/projectSlice";
 
@@ -57,9 +58,16 @@ const CorkboardCard = ({ item, index, handleDocumentClick }:CorkboardCardProps) 
         }}
       >
         <Box p={1} bgcolor={theme.palette[`${item.type === 'file' ? 'document' : 'folder'}CardHeader`].main} color={theme.palette.primary.contrastText}>
-          <Typography variant="body2" fontWeight={700} component="h3" gutterBottom>
-            {item.name}
-          </Typography>
+          <Grid container spacing={0}>
+            <Grid item xs={11}>
+              <Typography variant="body2" fontWeight={700} component="h3" gutterBottom>
+                {item.name}
+              </Typography>
+            </Grid>
+            <Grid item xs={1} p={0}>
+              {item.type === 'folder' ? <FolderIcon sx={{ width: '100%' }} /> : <DocIcon />}
+            </Grid>
+          </Grid>
         </Box>
 
         <Box p={2} height={150} overflow={'hidden'} position="relative">

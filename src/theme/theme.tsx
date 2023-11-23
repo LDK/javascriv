@@ -124,26 +124,26 @@ const lightThemeOptions:ExtendedThemeOptions = {
     },
     // A neutral but light "sandy" color
     documentCard: {
-      main: '#e6daa8',
+      main: '#ffffff',
     },
     // A neutral but light "sandy" color
     folderCard: {
-      main: '#e6daa8',
+      main: '#ffffff',
     },
     // A neutral but light "sandy" color
     documentCardHeader: {
-      main: '#e6daa8',
+      main: '#8babf1',
     },
     // A neutral but light "sandy" color
     folderCardHeader: {
-      main: '#e6daa8',
+      main: '#86c4b8',
     },
     // A neutral but light "sandy" color
     itemBarDocument: {
-      main: '#374295',
+      main: '#7a9ae0',
     },
     itemBarFolder: {
-      main: '#379542',
+      main: '#75b3a7',
     },
     background: {
       // Light gray color, chosen for a neutral and gentle background that's easy on the eyes.
