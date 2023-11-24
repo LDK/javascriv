@@ -78,8 +78,8 @@ const App: React.FC<AppProps> = ({ resetPassword }) => {
     setManageProjectsOpen, setProjectSettingsOpen, setUserSettingsOpen,
    } = useSettingsDialogs();
 
-  const editorAreaBps = manageProjectsOpen ? { sm: 12, hd: 9 } : { md: 8, lg: 9 };
-  const browserBps = manageProjectsOpen ? { xs: 0, hd: 3 } : { xs: 12, md: 4, lg: 3 };
+  const editorAreaBps = manageProjectsOpen ? { sm: 12, hd: 9 } : { xs: 12, md: 8, lg: 9 };
+  const browserBps = manageProjectsOpen ? { xs: 0, hd: 3 } : { xs: 0, md: 4, lg: 3 };
 
   const { PublishButton, PublishOptionsDialog } = usePublishing(
     currentProject ? currentProject.settings as PublishOptions : user?.publishingOptions,
@@ -127,7 +127,6 @@ const App: React.FC<AppProps> = ({ resetPassword }) => {
   const { lockedFilePaths, setIsCollab } = useCollab({ currentProject, hasContentChanged, items, openFilePath  });
 
   useEffect(() => {
-    console.log('!!!!!currentProject', currentProject);
     if (currentProject?.id) {
       setManageProjectsOpen(false);
       setProjectSettingsOpen(false);
@@ -198,7 +197,7 @@ const App: React.FC<AppProps> = ({ resetPassword }) => {
       <Box pt={8} flexGrow={1} display="flex">
         <Container maxWidth="xl" sx={{ px: "0 !important" }}>
           <Grid container spacing={0}>
-            <Grid item {...browserBps} px={0} mx={0} display={{ xs: manageProjectsOpen ? 'none' : 'flex', hd: 'flex'}}>
+            <Grid item {...browserBps} px={0} mx={0} display={{ xs: 'none', md: manageProjectsOpen ? 'none' : 'flex', hd: 'flex'}}>
               {editor && <ProjectBrowser
                 {...{ editor, setProjectSettingsOpen, setEditorContent }}
                 onDocumentClick={documentClick}
