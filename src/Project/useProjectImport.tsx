@@ -2,7 +2,7 @@ import { Button } from "@mui/material";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { getFullTree } from "../Convert/scrivener/scrivener";
-import { findItemByPath, setFiles, setOpenFilePath, setProjectTitle, setProjectSettings, setProjectId } from "../redux/projectSlice";
+import { findItemByPath, setFiles, setOpenFilePath, setProjectTitle, setProjectSettings, setProjectId, setCollaborators } from "../redux/projectSlice";
 import ImportOptions, { ImportingOptions } from "./ImportOptions";
 import { ProjectFile, ProjectSettings, ProjectState } from "./ProjectTypes";
 import { parseZipFile, renameTwins } from "./projectUtils";
@@ -192,6 +192,8 @@ const useProjectImport = ({ handleEditorChange }: UseProjectImportProps) => {
       } else {
         dispatch(setProjectId(undefined));
       }
+
+      dispatch(setCollaborators([]));
     }
 
     handleImportClose();

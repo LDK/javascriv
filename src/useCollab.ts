@@ -75,7 +75,7 @@ export default function useCollab({ currentProject, hasContentChanged, openFileP
     } else {
       if (checkTimer) {
         clearInterval(checkTimer);
-        setCheckTimer(null);
+        // setCheckTimer(null);
       }
       setLockedFilePaths([]);
     }

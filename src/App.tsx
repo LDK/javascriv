@@ -124,7 +124,10 @@ const App: React.FC<AppProps> = ({ resetPassword }) => {
     setSaving(false);
   }, [saving, saveProject, loadProject, currentProject, user, setSaving]);
 
+  const { lockedFilePaths, setIsCollab } = useCollab({ currentProject, hasContentChanged, items, openFilePath  });
+
   useEffect(() => {
+    console.log('!!!!!currentProject', currentProject);
     if (currentProject?.id) {
       setManageProjectsOpen(false);
       setProjectSettingsOpen(false);
@@ -132,8 +135,6 @@ const App: React.FC<AppProps> = ({ resetPassword }) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentProject.id]);
-
-  const { lockedFilePaths } = useCollab({ currentProject, hasContentChanged, items, openFilePath: openFilePath  });
 
   const handleSave = async () => {
     if (!editor) return;
