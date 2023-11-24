@@ -46,7 +46,7 @@ export default function useBrowserDialog(sourceFilePath: string, setOpen: SetOpe
   const dispatch = useDispatch();
 
   const handleCreateNewFile = (parentFolder: string | null, itemName: string, content?: string, children?: ProjectFile[], id?: number) => {
-    const newPath = `${parentFolder}/${itemName}`.replace('<root>/','');
+    const newPath = `${parentFolder}/${itemName}`.replace('<root>/','').replace('<root>', '')
 
     const newItem:ProjectFile = {
       name: itemName,
@@ -68,8 +68,8 @@ export default function useBrowserDialog(sourceFilePath: string, setOpen: SetOpe
 
     if (openFilePath) {
       // Both of these should remove any preceding slash
-      let checkOpenPath = openFilePath.replace('<root>','');
-      let checkDeletedPath = path.replace('<root>','');
+      let checkOpenPath = openFilePath.replace('<root>/','').replace('<root>', '')
+      let checkDeletedPath = path.replace('<root>/','').replace('<root>', '')
 
       // remove preceding slash from both paths
       if (checkOpenPath[0] === '/') {

@@ -29,7 +29,6 @@ const ResetPasswordForm = ({ onCancel, ...options }: ResetPasswordOptions) => {
 
   const onSubmit = (data: any) => {
     axios.post(`${process.env.REACT_APP_API_URL}/user/forgot-password`, data).then(res => {
-      console.log('res', res);
       if (isFunction(onCancel)) { onCancel(); }
     })
     .catch(err => {

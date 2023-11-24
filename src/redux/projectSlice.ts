@@ -21,6 +21,7 @@ const defaultFiles:ProjectFile[] = [
     'name': 'Document 1',
     'path': 'Document 1',
     'content': introCopy,
+    'initialContent': introCopy,
   }
 ];
 
@@ -128,6 +129,7 @@ const projectSlice = createSlice({
     setChanged: (state, action: PayloadAction<{ path: string; changed: boolean }>) => {
       const { path, changed } = action.payload;
       const item = findItemByPath(state.files, path.split('/'));
+
       if (item) {
         item.changed = changed;
       }
@@ -168,7 +170,6 @@ const projectSlice = createSlice({
       }
     },
     setOpenFilePath: (state, action: PayloadAction<string>) => {
-      console.log('set open', action.payload);
       state.openFilePath = action.payload;
     },
     setFiles: (state, action: PayloadAction<ProjectFile[]>) => {
@@ -261,8 +262,7 @@ const projectSlice = createSlice({
     },
     setOpenFolders: (state, action: PayloadAction<string[]>) => {
       state.openFolders = action.payload;
-      console.log('set open folders', action.payload);
-    }
+    },
   },
 });
 

@@ -4,7 +4,6 @@ import { Editor } from '@tinymce/tinymce-react';
 import { Editor as MyEditor, EditorEvent } from 'tinymce';
 import { Box, useTheme } from '@mui/material';
 import { EditorFont, familyFonts, getFontsCSS } from './EditorFonts';
-import { findItemByPath } from '../redux/projectSlice';
 import { ProjectFile } from '../Project/ProjectTypes';
 
 export interface TinyEditorProps {

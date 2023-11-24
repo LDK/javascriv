@@ -44,10 +44,6 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, count
   const theme = useTheme();
   const palette = theme.palette as ExtendedPalette;
 
-  useEffect(() => {
-    console.log('openFolders changed', openFolders.includes(fullPath), fullPath);
-  }, [openFolders]);
-
   const getOpenCloseIcon = () => {
     if (isFolder) {
       const elProps:({ width: string; sx: SxProps; }) = { width: "100%", sx: { maxWidth: '100%'} };

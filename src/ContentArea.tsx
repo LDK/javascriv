@@ -25,7 +25,6 @@ type ContentAreaProps = {
 const ContentArea = ({ handleDocumentClick, projectSettingsOpen, manageProjectsOpen, userSettingsOpen, user, manageProjectsParams, editorParams, userSettingsParams, projectSettingsParams, openFilePath, items }: ContentAreaProps) => {
   const openItem = openFilePath ? findItemByPath(items, openFilePath.split('/')) : null;
   const isFolder = openItem?.type === 'folder';
-  console.log('ContentArea', { openFilePath, openItem, isFolder });
 
   return (
     <Box px={0}>

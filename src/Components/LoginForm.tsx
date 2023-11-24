@@ -5,7 +5,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import useDialogUI from '../theme/useDialogUI';
 import { useState } from 'react';
 import ResetPassword from './ResetPasswordForm';
-import { UserState } from '../redux/userSlice';
 
 type LoginFormOptions = {
   inputVariant?: TextFieldVariants;

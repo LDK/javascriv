@@ -40,7 +40,6 @@ const LoginRegisterDialog: React.FC<LoginRegisterDialogProps> = ({ open, onClose
       setLoading(false);
 
       if (res.status === 200 && res.data && res.data.id) {
-        console.log('logged in', res.data);
         dispatch(setUser({
           id: res.data.id,
           username: res.data.username,

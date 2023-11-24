@@ -23,7 +23,23 @@ const OpenProjectDialog = ({ onClose, project }: OpenProjectDialogProps) => {
   }
 
   const handleOpenProject = () => {
-    dispatch(setFiles(project.files));
+    let files = project.files;
+
+    // go through files array and set initialContent to content
+    // Also iterate through folders and set initialContent to content on children
+    const setInitialContent = (files: ProjectState['files']) => {
+      files.forEach(file => {
+        if (file.type === 'folder' && file.children) {
+          setInitialContent(file.children);
+        } else if (file.type === 'file') {
+          file.initialContent = file.content;
+        }
+      });
+    };
+    
+    setInitialContent(files);
+
+    dispatch(setFiles(files));
     dispatch(setOpenFilePath(project.openFilePath || '/'));
     dispatch(setProjectTitle(project.title || 'Untitled'));
     dispatch(setProjectSettings(project.settings || {}));

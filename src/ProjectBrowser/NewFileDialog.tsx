@@ -36,7 +36,7 @@ const NewFileDialog = ({
   const dispatch = useDispatch();
   
   const handleCreateNewFile = () => {
-    const newPath = `${parentFolder}/${newItemName}`.replace('<root>','');
+    const newPath = `${parentFolder}/${newItemName}`.replace('<root>/','').replace('<root>', '')
     
     const newItem:ProjectFile = {
       name: newItemName,
