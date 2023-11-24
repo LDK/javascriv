@@ -141,7 +141,21 @@ const useProjectImport = ({ handleEditorChange }: UseProjectImportProps) => {
 
   const handleImportReady = (options:ImportingOptions) => {
     if (options.items) {
-      dispatch(setFiles(options.items));
+      const files = options.items;
+
+      const setInitialContent = (files: ProjectState['files']) => {
+        files.forEach(file => {
+          if (file.type === 'folder' && file.children) {
+            setInitialContent(file.children);
+          } else if (file.type === 'file') {
+            file.initialContent = file.content;
+          }
+        });
+      };
+      
+      setInitialContent(files);
+  
+      dispatch(setFiles(files));
 
       if (importingPath) {
         const openItem = findItemByPath(options.items, importingPath);

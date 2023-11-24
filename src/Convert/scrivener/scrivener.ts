@@ -51,6 +51,11 @@ export function scrivenerBinderToBrowserItems(binder: ScrivenerBinder, basePath:
         let itemName = defaultItemName;
         let newPath = currentPath + '/' + itemName;
 
+        // remove leading slash
+        if (newPath[0] === '/') {
+          newPath = newPath.slice(1);
+        }
+
         if (!processedPaths.includes(newPath)) {
           processedPaths.push(newPath);
         } else {
@@ -72,17 +77,47 @@ export function scrivenerBinderToBrowserItems(binder: ScrivenerBinder, basePath:
           path: newPath,
         };
 
+        const condenseSpaces = (text:string) => {
+          return text.replace(/\s{2,}/g, ' ');
+        };
+
+        // Mapping of special characters to HTML entities
+        const charEntityMap = {
+          '’': '&rsquo;',
+          '“': '&ldquo;',
+          '”': '&rdquo;',
+          '‘': '&lsquo;',
+          '—': '&mdash;',
+          '–': '&ndash;',
+          '…': '&hellip;',
+          '"': '&quot;',
+          "'": '&apos;',
+          // Add more mappings as needed
+        };
+
+        // Function to process text by replacing special characters with their HTML entities
+        const processText = (text:string) => {
+          return Object.entries(charEntityMap).reduce((acc, [char, entity]) => {
+            return acc.replace(new RegExp(char, 'g'), entity);
+          }, text);
+        };
+
         if (textTypes.includes(item.Type)) {
           newBrowserItem.subType = 'document';
-          newBrowserItem.content = Boolean(item.Content) ? nl2br(item.Content as string) : '';
-          newBrowserItem.initialContent = newBrowserItem.content;
+          newBrowserItem.content = Boolean(item.Content) ? `<p>${nl2br(condenseSpaces(item.Content as string))}</p>` : '';
         }
 
         if (item.Children) {
           if (item.Content) {
-            newBrowserItem.content = nl2br(item.Content as string);
+            newBrowserItem.content = `<p>${nl2br(condenseSpaces(item.Content as string))}</p>`;
+            newBrowserItem.initialContent = newBrowserItem.content;
           }
           newBrowserItem.children = traverseAndConvert(item.Children, newPath);
+        }
+
+        if (newBrowserItem.content) {
+          newBrowserItem.content = processText(newBrowserItem.content);
+          newBrowserItem.initialContent = newBrowserItem.content;
         }
 
         return newBrowserItem;
