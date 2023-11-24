@@ -29,7 +29,7 @@ const IconButton: React.FC<IconButtonProps> = ({ clickAction, icon, title }) => 
 
 const ThemeToggleSwitch: React.FC<{ isDarkMode: boolean; toggleTheme: (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => void }> = ({ isDarkMode, toggleTheme }) => {
   return (
-    <Box display="flex" alignItems="center" mr={4}>
+    <Box display={{ xs: 'none', md: 'flex' }} alignItems="center" mr={4}>
       <IconButton title="Dark Mode" clickAction={() => toggleTheme({} as React.ChangeEvent<HTMLInputElement>, false)} icon={<MoonIcon />} />
       <Switch
         checked={!isDarkMode}
@@ -73,8 +73,8 @@ const Header: React.FC<any> = ({ loadProject, settingsCallback, appMenuButtons, 
 
   return (
     <Sticky innerZ={2}>
-      <AppBar sx={{ backgroundColor: theme.palette.primary.main, textAlign: 'right', alignItems: 'flex-end' }}>
-        <Typography pl={3} pt={1} component="h1" variant="h4" position="absolute" top={0} left={0} color={theme.palette.text.primary}>javaScriv</Typography>
+      <AppBar elevation={0} sx={{ backgroundColor: theme.palette.primary.main, textAlign: 'right', alignItems: 'flex-end' }}>
+        <Typography pl={3} pt={{ xs: 1, md: 1}} component="h1" fontSize={{ xs: '1.5rem', md: '2.125rem' }} position="absolute" top={0} left={0} color={theme.palette.text.primary}>javaScriv</Typography>
 
         <Toolbar>
           {!user ? null : <ProjectSelector {...{ user, importCallback, newCallback, manageCallback }} callback={loadProject} />}

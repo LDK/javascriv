@@ -194,7 +194,7 @@ const App: React.FC<AppProps> = ({ resetPassword }) => {
 
       <input type="file" accept=".zip, .json" ref={setFileInputRef} onChange={handleUpload} style={{ display: 'none' }} />
 
-      <Box pt={8} flexGrow={1} display="flex">
+      <Box pt={{ xs: 7, md: 8 }} flexGrow={1} display="flex">
         <Container maxWidth="xl" sx={{ px: "0 !important" }}>
           <Grid container spacing={0}>
             <Grid item {...browserBps} px={0} mx={0} display={{ xs: 'none', md: manageProjectsOpen ? 'none' : 'flex', hd: 'flex'}}>
