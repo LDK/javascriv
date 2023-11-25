@@ -7,11 +7,13 @@ import { UserState } from "./redux/userSlice";
 import { ProjectFile } from "./Project/ProjectTypes";
 import { findItemByPath } from "./redux/projectSlice";
 import CorkboardView from "./CorkboardView";
+import MainMenuScreen from "./ProjectBrowser/MainMenuScreen";
 
 type ContentAreaProps = {
   projectSettingsOpen: boolean;
   manageProjectsOpen: boolean;
   userSettingsOpen: boolean;
+  mobileMenuOpen: boolean;
   editorParams: TinyEditorProps;
   projectSettingsParams: ProjectSettingsDialogProps;
   manageProjectsParams: ManageProjectsDialogProps;
@@ -22,13 +24,15 @@ type ContentAreaProps = {
   handleDocumentClick: (item: ProjectFile) => void;
 };
 
-const ContentArea = ({ handleDocumentClick, projectSettingsOpen, manageProjectsOpen, userSettingsOpen, user, manageProjectsParams, editorParams, userSettingsParams, projectSettingsParams, openFilePath, items }: ContentAreaProps) => {
+const ContentArea = ({ handleDocumentClick, mobileMenuOpen, projectSettingsOpen, manageProjectsOpen, userSettingsOpen, user, manageProjectsParams, editorParams, userSettingsParams, projectSettingsParams, openFilePath, items }: ContentAreaProps) => {
   const openItem = openFilePath ? findItemByPath(items, openFilePath.split('/')) : null;
   const isFolder = openItem?.type === 'folder';
 
+  const hideEditor = (mobileMenuOpen || projectSettingsOpen || manageProjectsOpen || userSettingsOpen);
+
   return (
     <Box px={0}>
-      <Box p={0} m={0} display={ (projectSettingsOpen || manageProjectsOpen || userSettingsOpen || isFolder) ? 'none' : 'block' }>
+      <Box p={0} m={0} display={hideEditor ? 'none' : 'block' }>
         <TinyEditor {...editorParams} />
       </Box>
 
@@ -37,6 +41,8 @@ const ContentArea = ({ handleDocumentClick, projectSettingsOpen, manageProjectsO
       <ProjectSettingsScreen {...projectSettingsParams} />
 
       <ManageProjectsScreen {...manageProjectsParams} />
+
+      <MainMenuScreen open={mobileMenuOpen} onClose={() => {}} user={user} />
 
       { (!user || !user.id || !userSettingsOpen) ? null :
         <UserSettingsScreen {...userSettingsParams} />

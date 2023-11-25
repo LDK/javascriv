@@ -9,6 +9,7 @@ import SunIcon from '@mui/icons-material/Brightness7';
 import LoginIcon from '@mui/icons-material/AccountCircleOutlined';
 import ProfileIcon from '@mui/icons-material/AccountCircle';
 import MenuRounded from '@mui/icons-material/MenuRounded';
+import CloseIcon from '@mui/icons-material/Close';
 
 import LoginRegisterDialog from './LoginRegisterDialog';
 import useUser from '../User/useUser';
@@ -51,9 +52,11 @@ type HeaderProps = {
   newCallback: () => void;
   ProjectSelector: React.FC<any>;
   settingsCallback?: () => void;
+  mobileMenuOpen: boolean;
+  setMobileMenuOpen: (open: boolean) => void;
 };
 
-const Header: React.FC<any> = ({ loadProject, settingsCallback, appMenuButtons, importCallback, manageCallback, newCallback, handleEditorChange, ProjectSelector }:HeaderProps) => {
+const Header: React.FC<any> = ({ loadProject, mobileMenuOpen, setMobileMenuOpen, settingsCallback, appMenuButtons, importCallback, manageCallback, newCallback, handleEditorChange, ProjectSelector }:HeaderProps) => {
   const theme = useTheme();
   const dispatch = useDispatch();
 
@@ -81,9 +84,13 @@ const Header: React.FC<any> = ({ loadProject, settingsCallback, appMenuButtons, 
 
           <ThemeToggleSwitch {...{ isDarkMode, toggleTheme }} />
 
-          <Box p={0} m={0} alignItems="center" display="flex" mr={1}>
+          <Box p={0} m={0} alignItems="center" display={{ xs: "none", md: "flex" }} mr={1}>
             <IconButton title={`Main Menu`} icon={<MenuRounded />} clickAction={handleOpenAppMenu} />
             <AppMenu buttons={appMenuButtons} />
+          </Box>
+
+          <Box p={0} m={0} alignItems="center" display={{ xs: "flex", md: "none" }} mr={1}>
+            <IconButton title={`Mobile Menu`} icon={mobileMenuOpen ? <CloseIcon /> : <MenuRounded />} clickAction={() => { setMobileMenuOpen(!mobileMenuOpen) }} />
           </Box>
 
           {!user.id && <IconButton icon={<LoginIcon />} clickAction={() => setLoginOpen(true)} />}

@@ -38,6 +38,7 @@ const App: React.FC<AppProps> = ({ resetPassword }) => {
   const [initial, setInitial] = useState<string | null>(null);
   const [lastRevertTs, setLastRevertTs] = useState<number>(0);
   const [addCollabOpen, setAddCollabOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { user, getProjectListings } = useUser();
     
   const { fileInputRef, setFileInputRef } = useFileInputRef();
@@ -190,7 +191,7 @@ const App: React.FC<AppProps> = ({ resetPassword }) => {
     <ThemeProvider theme={activeTheme === 'light' ? lightTheme : darkTheme}>
       <CssBaseline />
 
-      <Header {...{ loadProject, settingsCallback: () => { setUserSettingsOpen(true); }, ProjectSelector, appMenuButtons, handleEditorChange, fileInputRef, importCallback, manageCallback, newCallback: () => { setNewProjectOpen(true); } }} />
+      <Header {...{ loadProject, settingsCallback: () => { setUserSettingsOpen(true); }, ProjectSelector, appMenuButtons, handleEditorChange, fileInputRef, importCallback, manageCallback, mobileMenuOpen, setMobileMenuOpen, newCallback: () => { setNewProjectOpen(true); } }} />
 
       <input type="file" accept=".zip, .json" ref={setFileInputRef} onChange={handleUpload} style={{ display: 'none' }} />
 
@@ -205,7 +206,7 @@ const App: React.FC<AppProps> = ({ resetPassword }) => {
             </Grid>
 
             <Grid item xs={12} {...editorAreaBps}>
-              <ContentArea {...{ items, openFilePath, projectSettingsOpen, manageProjectsOpen, userSettingsOpen, user, editorParams, projectSettingsParams, manageProjectsParams, userSettingsParams, handleDocumentClick }}/>
+              <ContentArea {...{ items, openFilePath, mobileMenuOpen, projectSettingsOpen, manageProjectsOpen, userSettingsOpen, user, editorParams, projectSettingsParams, manageProjectsParams, userSettingsParams, handleDocumentClick }}/>
             </Grid>
           </Grid>
         </Container>
