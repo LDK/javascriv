@@ -24,7 +24,7 @@ function TransitionComponent(props: TransitionProps) {
   );
 }
 
-const StyledTreeItem = styled((props: TreeItemProps) => (
+export const StyledTreeItem = styled((props: TreeItemProps) => (
   <TreeItem {...props} TransitionComponent={TransitionComponent} />
 ))(({ theme }) => ({
   [`& .${treeItemClasses.iconContainer}`]: {

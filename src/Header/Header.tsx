@@ -10,6 +10,7 @@ import LoginIcon from '@mui/icons-material/AccountCircleOutlined';
 import ProfileIcon from '@mui/icons-material/AccountCircle';
 import MenuRounded from '@mui/icons-material/MenuRounded';
 import CloseIcon from '@mui/icons-material/Close';
+import AccountTreeIcon from '@mui/icons-material/AccountTreeTwoTone';
 
 import LoginRegisterDialog from './LoginRegisterDialog';
 import useUser from '../User/useUser';
@@ -66,9 +67,11 @@ type HeaderProps = {
   settingsCallback?: () => void;
   mobileMenuOpen: boolean;
   setMobileMenuOpen: (open: boolean) => void;
+  browserOpen: boolean;
+  setBrowserOpen: (open: boolean) => void;
 };
 
-const Header: React.FC<any> = ({ loadProject, mobileMenuOpen, setMobileMenuOpen, settingsCallback, appMenuButtons, importCallback, manageCallback, newCallback, handleEditorChange, ProjectSelector }:HeaderProps) => {
+const Header: React.FC<any> = ({ browserOpen, setBrowserOpen, loadProject, mobileMenuOpen, setMobileMenuOpen, settingsCallback, appMenuButtons, importCallback, manageCallback, newCallback, handleEditorChange, ProjectSelector }:HeaderProps) => {
   const theme = useTheme();
   const dispatch = useDispatch();
 
@@ -102,11 +105,14 @@ const Header: React.FC<any> = ({ loadProject, mobileMenuOpen, setMobileMenuOpen,
           </Box>
 
           <Box p={0} m={0} alignItems="center" display={{ xs: "flex", md: "none" }} mr={1}>
+            <IconButton title={`Files in Project`} icon={<AccountTreeIcon color={browserOpen ? 'warning' : 'action'} sx={{ mr: 1 }} />} clickAction={() => { setBrowserOpen(!browserOpen) }} />
+
             <IconButton title={`Mobile Menu`} icon={mobileMenuOpen ? <CloseIcon /> : <MenuRounded />} clickAction={() => { setMobileMenuOpen(!mobileMenuOpen) }} />
           </Box>
 
           {!user.id && <IconButton icon={<LoginIcon />} clickAction={() => setLoginOpen(true)} />}
           {user.id && <IconButton title={`Logged in as ${user.username}`} icon={<ProfileIcon />} clickAction={handleOpenUserMenu} />}
+
           <UserMenu {...{settingsCallback}} />
         </Toolbar>
         {!user.id && <LoginRegisterDialog open={loginOpen} onClose={() => setLoginOpen(false)} />}

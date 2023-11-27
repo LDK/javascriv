@@ -1,5 +1,4 @@
 import { Box, useTheme, Typography, Divider, Grid, Button } from "@mui/material";
-import { ReactNode } from "react";
 import { ThemeToggleSwitch } from "../Header/Header";
 import { useDispatch } from "react-redux";
 import { setTheme } from "../redux/themeSlice";
@@ -46,12 +45,12 @@ const MainMenuScreen = ({ open, onClose, appMenuButtons }: MainMenuScreenProps) 
           </Grid>
         ))}
 
-        <Grid item xs={12}>
+        <Grid item xs={12} mt={2}>
+          <Typography mb={1}>Theme</Typography>
           <Divider sx={{ mb: 2 }} />
         </Grid>
 
         <Grid item xs={6} sm={4} px={0} mx={0}>
-          <Typography variant="subtitle2" mb={2} fontSize={14} fontWeight={600}>Theme</Typography>
           <ThemeToggleSwitch {...{ isDarkMode: isDark, toggleTheme, display: { xs: "flex", md: "none" } }} />
         </Grid>
       </Grid>

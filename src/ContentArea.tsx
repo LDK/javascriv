@@ -8,12 +8,14 @@ import { ProjectFile } from "./Project/ProjectTypes";
 import { findItemByPath } from "./redux/projectSlice";
 import CorkboardView from "./CorkboardView";
 import MainMenuScreen from "./ProjectBrowser/MainMenuScreen";
+import MobileProjectBrowser from "./Project/MobileProjectBrowser";
 
 type ContentAreaProps = {
   projectSettingsOpen: boolean;
   manageProjectsOpen: boolean;
   userSettingsOpen: boolean;
   mobileMenuOpen: boolean;
+  setMobileMenuOpen: (open: boolean) => void;
   editorParams: TinyEditorProps;
   projectSettingsParams: ProjectSettingsDialogProps;
   manageProjectsParams: ManageProjectsDialogProps;
@@ -23,13 +25,18 @@ type ContentAreaProps = {
   items: ProjectFile[];
   handleDocumentClick: (item: ProjectFile) => void;
   appMenuButtons: JSX.Element[];
+  mobileBrowser: JSX.Element;
+  browserOpen: boolean;
+  setBrowserOpen: (open: boolean) => void;
 };
 
-const ContentArea = ({ handleDocumentClick, mobileMenuOpen, projectSettingsOpen, manageProjectsOpen, userSettingsOpen, user, manageProjectsParams, editorParams, userSettingsParams, projectSettingsParams, openFilePath, items, appMenuButtons }: ContentAreaProps) => {
+const ContentArea = ({ browserOpen, setBrowserOpen, handleDocumentClick, mobileMenuOpen, mobileBrowser, projectSettingsOpen, manageProjectsOpen, userSettingsOpen, user, manageProjectsParams, editorParams, userSettingsParams, projectSettingsParams, openFilePath, items, appMenuButtons }: ContentAreaProps) => {
   const openItem = openFilePath ? findItemByPath(items, openFilePath.split('/')) : null;
   const isFolder = openItem?.type === 'folder';
 
-  const hideEditor = (mobileMenuOpen || projectSettingsOpen || manageProjectsOpen || userSettingsOpen);
+  console.log('openItem', openItem, openFilePath, isFolder);
+
+  const hideEditor = (mobileMenuOpen || isFolder || projectSettingsOpen || manageProjectsOpen || userSettingsOpen);
 
   return (
     <Box px={0}>
@@ -44,6 +51,7 @@ const ContentArea = ({ handleDocumentClick, mobileMenuOpen, projectSettingsOpen,
       <ManageProjectsScreen {...manageProjectsParams} />
 
       <MainMenuScreen open={mobileMenuOpen} {...{ appMenuButtons }} onClose={() => {}} />
+      <MobileProjectBrowser open={browserOpen} onClose={() => { setBrowserOpen(false); }} files={items} {...{ mobileBrowser }} />
 
       { (!user || !user.id || !userSettingsOpen) ? null :
         <UserSettingsScreen {...userSettingsParams} />

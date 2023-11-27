@@ -46,6 +46,8 @@ const App: React.FC<AppProps> = ({ resetPassword }) => {
   const [editorContent, setEditorContent] = useState<string | null | false>(null);
   const [editor, setEditor] = useState<Editor | null>(null);
 
+  const [browserOpen, setBrowserOpen] = useState(false);
+
   useEffect(() => {
     console.log('addCollabOpen', addCollabOpen);
   }, [addCollabOpen]);
@@ -204,7 +206,9 @@ const App: React.FC<AppProps> = ({ resetPassword }) => {
     <ThemeProvider theme={activeTheme === 'light' ? lightTheme : darkTheme}>
       <CssBaseline />
 
-      <Header {...{ loadProject, settingsCallback: () => { setUserSettingsOpen(true); }, ProjectSelector, appMenuButtons, handleEditorChange, fileInputRef, importCallback, manageCallback, mobileMenuOpen, setMobileMenuOpen, newCallback: () => { setNewProjectOpen(true); } }} />
+      <Header
+        {...{ loadProject, browserOpen, setBrowserOpen, settingsCallback: () => { setUserSettingsOpen(true); }, ProjectSelector, appMenuButtons, handleEditorChange, fileInputRef, importCallback, manageCallback, mobileMenuOpen, setMobileMenuOpen, newCallback: () => { setNewProjectOpen(true); } }}
+      />
 
       <input type="file" accept=".zip, .json" ref={setFileInputRef} onChange={handleUpload} style={{ display: 'none' }} />
 
@@ -219,7 +223,15 @@ const App: React.FC<AppProps> = ({ resetPassword }) => {
             </Grid>
 
             <Grid item xs={12} {...editorAreaBps}>
-              <ContentArea {...{ items, openFilePath, mobileMenuOpen, projectSettingsOpen, manageProjectsOpen, userSettingsOpen, user, editorParams, projectSettingsParams, manageProjectsParams, userSettingsParams, handleDocumentClick, appMenuButtons }}/>
+              <ContentArea 
+                mobileBrowser={
+                  !editor ? <></> : <ProjectBrowser
+                    {...{ editor, setProjectSettingsOpen, setEditorContent }}
+                    onDocumentClick={documentClick}
+                  />
+                }                
+                {...{ items, openFilePath, browserOpen, setBrowserOpen, mobileMenuOpen, setMobileMenuOpen, projectSettingsOpen, manageProjectsOpen, userSettingsOpen, user, editorParams, projectSettingsParams, manageProjectsParams, userSettingsParams, handleDocumentClick, appMenuButtons }}
+              />
             </Grid>
           </Grid>
         </Container>
