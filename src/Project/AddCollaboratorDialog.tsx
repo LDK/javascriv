@@ -1,5 +1,5 @@
 // Project/AddCollaboratorDialog.tsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, CircularProgress, Dialog, DialogContent, DialogTitle, Divider, TextField, Typography } from '@mui/material';
 import useDialogUI from '../theme/useDialogUI';
 import axios from 'axios';
@@ -18,6 +18,11 @@ const AddCollaboratorDialog: React.FC<AddCollaboratorDialogProps> = ({ open, onC
   const [searchText, setSearchText] = useState<string>('');
   const [searching, setSearching] = useState<boolean>(false);
   const [error, setError] = useState<string | false>(false);
+
+  useEffect(() => {
+    console.log('AddCollaboratorDialog open', open);
+  }, [open]);
+
 
   if (!user || !user.token) {
     return null;
@@ -59,7 +64,7 @@ const AddCollaboratorDialog: React.FC<AddCollaboratorDialogProps> = ({ open, onC
   };
 
   return (
-    <Dialog open={open} onClose={handleClose} fullWidth={true} maxWidth={'sm'} PaperProps={{ style: { height: '40vh' }}}>
+    <Dialog id="add-collab-dialog" open={open} onClose={handleClose} fullWidth={true} maxWidth={'sm'} PaperProps={{ style: { height: '40vh' }}}>
       <DialogTitle>Add Collaborator to Project</DialogTitle>
       <Divider />
       <DialogContent>

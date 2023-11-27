@@ -46,6 +46,10 @@ const App: React.FC<AppProps> = ({ resetPassword }) => {
   const [editorContent, setEditorContent] = useState<string | null | false>(null);
   const [editor, setEditor] = useState<Editor | null>(null);
 
+  useEffect(() => {
+    console.log('addCollabOpen', addCollabOpen);
+  }, [addCollabOpen]);
+
   const dispatch = useDispatch();
 
   const handleDocumentClick = (item: ProjectFile) => {
@@ -168,10 +172,19 @@ const App: React.FC<AppProps> = ({ resetPassword }) => {
   const SaveButton = () => <Button variant="text" color="primary" onClick={handleSave}>Save Project</Button>;
   const RevertButton = () => <Button variant="text" color="primary" onClick={handleRevert} disabled={!hasContentChanged}>Revert File</Button>;
 
-  const AddCollaboratorButton = () => <Button onClick={(e) => {
-    e.currentTarget.blur(); // Remove focus from the button
-    setAddCollabOpen(true);
-  }}>Add Collaborator to Project</Button>;
+  const AddCollaboratorButton = () => {
+    if (!user?.id || !currentProject?.id) {
+      return null;
+    }
+
+    return (
+      <Button onClick={(e) => {
+        e.currentTarget.blur(); // Remove focus from the button
+        setAddCollabOpen(true);
+        console.log('addCollabOpen clicked', addCollabOpen);
+      }}>Add Collaborator to Project</Button>
+    );
+  };
 
   const importCallback = () => { fileInputRef?.click(); };
 
@@ -206,7 +219,7 @@ const App: React.FC<AppProps> = ({ resetPassword }) => {
             </Grid>
 
             <Grid item xs={12} {...editorAreaBps}>
-              <ContentArea {...{ items, openFilePath, mobileMenuOpen, projectSettingsOpen, manageProjectsOpen, userSettingsOpen, user, editorParams, projectSettingsParams, manageProjectsParams, userSettingsParams, handleDocumentClick }}/>
+              <ContentArea {...{ items, openFilePath, mobileMenuOpen, projectSettingsOpen, manageProjectsOpen, userSettingsOpen, user, editorParams, projectSettingsParams, manageProjectsParams, userSettingsParams, handleDocumentClick, appMenuButtons }}/>
             </Grid>
           </Grid>
         </Container>

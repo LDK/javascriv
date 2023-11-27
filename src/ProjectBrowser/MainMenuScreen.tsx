@@ -1,13 +1,14 @@
 import { Box, useTheme, Typography, Divider, Grid } from "@mui/material";
 import { UserState } from "../redux/userSlice";
+import { ReactNode } from "react";
 
 export type MainMenuScreenProps = {
   open: boolean;
   onClose: () => void;
-  user: UserState;
+  appMenuButtons: ReactNode[];
 };
 
-const MainMenuScreen = ({ open, onClose, user }: MainMenuScreenProps) => {
+const MainMenuScreen = ({ open, onClose, appMenuButtons }: MainMenuScreenProps) => {
 
   const theme = useTheme();
   const isDark = (theme.palette.mode === 'dark');
@@ -18,24 +19,17 @@ const MainMenuScreen = ({ open, onClose, user }: MainMenuScreenProps) => {
   };
 
   return (
-    <Box width="100%" position="relative" overflow={{ overflowY: 'scroll', overflowX: 'hidden' }} height={heights} p={4} display={ open ? 'block' : 'none' } sx={{ backgroundColor: theme.palette.grey[isDark ? 800 : 100] }}>
-      <Typography mb={1}>User Settings</Typography>
+    <Box width="100%" position="relative" overflow={{ overflowY: 'scroll', overflowX: 'hidden' }} height={heights} p={4} display={{ xs: open ? 'block' : 'none', md: 'none' }} sx={{ backgroundColor: theme.palette.grey[isDark ? 800 : 100] }}>
+      <Typography mb={1}>Main Menu</Typography>
 
       <Divider sx={{ mb: 2 }} />
 
-      <Grid container spacing={2}>
-        <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" mb={2} fontSize={14} fontWeight={600}>User Details</Typography>
-        </Grid>
-
-        <Grid item xs={12} md={4}>
-
-        </Grid>
-
-        <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" mb={2} fontSize={14} fontWeight={600}>Default Publishing Options</Typography>
-
-        </Grid>
+      <Grid container spacing={0}>
+        {appMenuButtons.map((button, index) => (
+          <Grid item xs={6} sm={4} key={index} px={0} mx={0}>
+            {button}
+          </Grid>
+        ))}
       </Grid>
 
     </Box>

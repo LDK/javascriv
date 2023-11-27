@@ -22,9 +22,10 @@ type ContentAreaProps = {
   openFilePath: string | null;
   items: ProjectFile[];
   handleDocumentClick: (item: ProjectFile) => void;
+  appMenuButtons: React.ReactNode[];
 };
 
-const ContentArea = ({ handleDocumentClick, mobileMenuOpen, projectSettingsOpen, manageProjectsOpen, userSettingsOpen, user, manageProjectsParams, editorParams, userSettingsParams, projectSettingsParams, openFilePath, items }: ContentAreaProps) => {
+const ContentArea = ({ handleDocumentClick, mobileMenuOpen, projectSettingsOpen, manageProjectsOpen, userSettingsOpen, user, manageProjectsParams, editorParams, userSettingsParams, projectSettingsParams, openFilePath, items, appMenuButtons }: ContentAreaProps) => {
   const openItem = openFilePath ? findItemByPath(items, openFilePath.split('/')) : null;
   const isFolder = openItem?.type === 'folder';
 
@@ -42,7 +43,7 @@ const ContentArea = ({ handleDocumentClick, mobileMenuOpen, projectSettingsOpen,
 
       <ManageProjectsScreen {...manageProjectsParams} />
 
-      <MainMenuScreen open={mobileMenuOpen} onClose={() => {}} user={user} />
+      <MainMenuScreen open={mobileMenuOpen} {...{ appMenuButtons }} onClose={() => {}} />
 
       { (!user || !user.id || !userSettingsOpen) ? null :
         <UserSettingsScreen {...userSettingsParams} />
