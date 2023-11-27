@@ -22,7 +22,7 @@ type ContentAreaProps = {
   openFilePath: string | null;
   items: ProjectFile[];
   handleDocumentClick: (item: ProjectFile) => void;
-  appMenuButtons: React.ReactNode[];
+  appMenuButtons: JSX.Element[];
 };
 
 const ContentArea = ({ handleDocumentClick, mobileMenuOpen, projectSettingsOpen, manageProjectsOpen, userSettingsOpen, user, manageProjectsParams, editorParams, userSettingsParams, projectSettingsParams, openFilePath, items, appMenuButtons }: ContentAreaProps) => {

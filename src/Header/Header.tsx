@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AppBar, Box, Switch, Toolbar, Typography, useTheme } from '@mui/material';
+import { AppBar, Box, Switch, SxProps, Theme, Toolbar, Typography, useTheme } from '@mui/material';
 import Sticky from 'react-stickynode';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTheme } from '../redux/themeSlice';
@@ -28,9 +28,21 @@ const IconButton: React.FC<IconButtonProps> = ({ clickAction, icon, title }) => 
   </Typography>
 );
 
-const ThemeToggleSwitch: React.FC<{ isDarkMode: boolean; toggleTheme: (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => void }> = ({ isDarkMode, toggleTheme }) => {
+type ThemeToggleProps = {
+  isDarkMode: boolean;
+  toggleTheme: (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => void;
+  display?: {
+    xs?: 'none' | 'flex';
+    sm?: 'none' | 'flex';
+    md?: 'none' | 'flex';
+    lg?: 'none' | 'flex';
+    xl?: 'none' | 'flex';
+  };
+};
+
+export const ThemeToggleSwitch: React.FC<ThemeToggleProps> = ({ isDarkMode, toggleTheme, display }) => {
   return (
-    <Box display={{ xs: 'none', md: 'flex' }} alignItems="center" mr={4}>
+    <Box display={display || { xs: 'none', md: 'flex' }} alignItems="center" mr={4}>
       <IconButton title="Dark Mode" clickAction={() => toggleTheme({} as React.ChangeEvent<HTMLInputElement>, false)} icon={<MoonIcon />} />
       <Switch
         checked={!isDarkMode}

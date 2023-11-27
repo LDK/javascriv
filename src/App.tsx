@@ -178,7 +178,7 @@ const App: React.FC<AppProps> = ({ resetPassword }) => {
     }
 
     return (
-      <Button onClick={(e) => {
+      <Button sx={{ textAlign: 'left' }} onClick={(e) => {
         e.currentTarget.blur(); // Remove focus from the button
         setAddCollabOpen(true);
         console.log('addCollabOpen clicked', addCollabOpen);
