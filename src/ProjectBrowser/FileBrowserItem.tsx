@@ -3,7 +3,7 @@ import { Dispatch, KeyboardEventHandler, SetStateAction, useCallback, useEffect,
 import { SxProps, Box, PaletteMode, ListItem, ListItemIcon, ListItemText, Collapse, List, useTheme } from "@mui/material";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { reorderItem, setName, setOpenFilePath, selectOpenFilePath, selectOpenFolders, setOpenFolders } from "../redux/projectSlice";
+import { reorderItem, setName, setOpenFilePath, selectOpenFolders, setOpenFolders } from "../redux/projectSlice";
 import { ExtendedPalette } from "../theme/theme";
 
 import { Folder, Description as DocIcon, Image as ImageIcon, ExpandMore, ExpandLess, InsertDriveFile } from '@mui/icons-material';
@@ -25,16 +25,17 @@ type FileBrowserItemProps = {
   setDeleting: SetOpenFunction;
   setMoving: SetOpenFunction;
   openFolder: string | null;
+  closeMobileBrowser?: () => void;
 };
 
-const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, count, index, path = [], onDocumentClick, onFolderClick, openFilePath, setOpenFolder, setMoving, openFolder, setDuplicating, setDeleting }) => {
+const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, count, index, path = [], onDocumentClick, onFolderClick, openFilePath, setOpenFolder, setMoving, openFolder, setDuplicating, setDeleting, closeMobileBrowser }) => {
   const isFolder = item.type === 'folder';
   const fullPath = [...path, item.name].join('/');
 
   const openFolders = useSelector(selectOpenFolders) || [];
   const open = openFolders.includes(fullPath);
 
-  const isActive = openFilePath && openFilePath.startsWith(fullPath);
+  // const isActive = openFilePath && openFilePath.startsWith(fullPath);
 
   const [renaming, setRenaming] = useState(false);
   const renameInputRef = useRef<HTMLInputElement>(null);
@@ -108,6 +109,8 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, count
         onDocumentClick(item);
       }
     }
+
+    closeMobileBrowser?.();
   };  
 
   const handleEditClick = useCallback(() => {

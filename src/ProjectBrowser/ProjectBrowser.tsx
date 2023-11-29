@@ -25,6 +25,7 @@ interface ProjectBrowserProps {
   setProjectSettingsOpen: (open: boolean) => void;
   editor: Editor;
   setEditorContent: (content: string) => void;
+  closeMobileBrowser?: () => void;
 };
 
 export const ROOTFOLDER = '<root>';
@@ -45,7 +46,7 @@ export const paletteRGBA = (color: PaletteColor, opacity: number, mode: PaletteM
   return `rgba(${color[mode].replace('rgb(', '').replace(')', '')}, ${opacity})`;
 }
 
-const ProjectBrowser: React.FC<ProjectBrowserProps> = ({ onDocumentClick, setProjectSettingsOpen, editor, setEditorContent }) => {
+const ProjectBrowser: React.FC<ProjectBrowserProps> = ({ onDocumentClick, closeMobileBrowser, setProjectSettingsOpen, editor, setEditorContent }) => {
   const items = useSelector(selectFiles);
 
   const openFilePath = useSelector(selectOpenFilePath);
@@ -80,7 +81,7 @@ const ProjectBrowser: React.FC<ProjectBrowserProps> = ({ onDocumentClick, setPro
         setMoving={setMoving as SetOpenFunction}
         setDeleting={setDeleting as SetOpenFunction}
         setDuplicating={setDuplicating as SetOpenFunction}
-        {...{ setOpenFolder, onDocumentClick, openFolder, item, path, openFilePath } }
+        {...{ setOpenFolder, onDocumentClick, closeMobileBrowser, openFolder, item, path, openFilePath } }
       />
     );
   };

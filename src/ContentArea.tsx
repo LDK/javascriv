@@ -1,4 +1,4 @@
-import { Box, Grid, Typography, useTheme } from "@mui/material";
+import { Box } from "@mui/material";
 import TinyEditor, { TinyEditorProps } from "./Editor/Editor";
 import ManageProjectsScreen, { ManageProjectsDialogProps } from "./ManageProjectsScreen";
 import UserSettingsScreen, { UserSettingsScreenProps } from "./ProjectBrowser/UserSettingsScreen";
@@ -9,6 +9,7 @@ import { findItemByPath } from "./redux/projectSlice";
 import CorkboardView from "./CorkboardView";
 import MainMenuScreen from "./ProjectBrowser/MainMenuScreen";
 import MobileProjectBrowser from "./Project/MobileProjectBrowser";
+import { useCallback } from "react";
 
 type ContentAreaProps = {
   projectSettingsOpen: boolean;
@@ -38,6 +39,10 @@ const ContentArea = ({ browserOpen, setBrowserOpen, handleDocumentClick, mobileM
 
   const hideEditor = (mobileMenuOpen || isFolder || projectSettingsOpen || manageProjectsOpen || userSettingsOpen);
 
+  const handleMobileBrowserClose = useCallback(() => {
+    setBrowserOpen(false);
+  }, [setBrowserOpen]);
+
   return (
     <Box px={0}>
       <Box p={0} m={0} display={hideEditor ? 'none' : 'block' }>
@@ -51,7 +56,7 @@ const ContentArea = ({ browserOpen, setBrowserOpen, handleDocumentClick, mobileM
       <ManageProjectsScreen {...manageProjectsParams} />
 
       <MainMenuScreen open={mobileMenuOpen} {...{ appMenuButtons }} onClose={() => {}} />
-      <MobileProjectBrowser open={browserOpen} onClose={() => { setBrowserOpen(false); }} files={items} {...{ mobileBrowser }} />
+      <MobileProjectBrowser open={browserOpen} onClose={handleMobileBrowserClose} files={items} {...{ mobileBrowser }} />
 
       { (!user || !user.id || !userSettingsOpen) ? null :
         <UserSettingsScreen {...userSettingsParams} />

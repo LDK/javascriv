@@ -60,6 +60,7 @@ const App: React.FC<AppProps> = ({ resetPassword }) => {
     }
     
     setInitial(item.initialContent as string);
+    console.log('handleDocumentClick', item);
     dispatch(setOpenFilePath(item.path));
   }
 
@@ -131,7 +132,7 @@ const App: React.FC<AppProps> = ({ resetPassword }) => {
     setSaving(false);
   }, [saving, saveProject, loadProject, currentProject, user, setSaving]);
 
-  const { lockedFilePaths, setIsCollab } = useCollab({ currentProject, hasContentChanged, items, openFilePath  });
+  const { lockedFilePaths } = useCollab({ currentProject, hasContentChanged, items, openFilePath  });
 
   useEffect(() => {
     if (currentProject?.id) {
@@ -228,6 +229,7 @@ const App: React.FC<AppProps> = ({ resetPassword }) => {
                   !editor ? <></> : <ProjectBrowser
                     {...{ editor, setProjectSettingsOpen, setEditorContent }}
                     onDocumentClick={documentClick}
+                    closeMobileBrowser={() => setBrowserOpen(false)}
                   />
                 }                
                 {...{ items, openFilePath, browserOpen, setBrowserOpen, mobileMenuOpen, setMobileMenuOpen, projectSettingsOpen, manageProjectsOpen, userSettingsOpen, user, editorParams, projectSettingsParams, manageProjectsParams, userSettingsParams, handleDocumentClick, appMenuButtons }}

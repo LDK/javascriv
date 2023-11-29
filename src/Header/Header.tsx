@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AppBar, Box, Switch, SxProps, Theme, Toolbar, Typography, useTheme } from '@mui/material';
+import { AppBar, Box, Switch, Toolbar, Typography, useTheme } from '@mui/material';
 import Sticky from 'react-stickynode';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTheme } from '../redux/themeSlice';

@@ -1,12 +1,10 @@
-// Import/MobileProjectBrowser.tsx
-import React, { useEffect, useState } from 'react';
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, useTheme, TextField } from '@mui/material';
+// MobileProjectBrowser.tsx
+import React, { useEffect } from 'react';
+import { Dialog } from '@mui/material';
 import { ProjectFile } from "../Project/ProjectTypes";
 
-import useFileTree, { FileTreeItem, FileTreeView } from '../FileTree/FileTree';
-import ImportTree from './ImportTree';
 import { useSelector } from 'react-redux';
-import { selectFiles, selectOpenFilePath } from '../redux/projectSlice';
+import { selectOpenFilePath } from '../redux/projectSlice';
 
 export interface MobileProjectBrowserProps {
   open: boolean;
@@ -21,32 +19,15 @@ export interface ImportingOptions {
 }
 
 const MobileProjectBrowser: React.FC<MobileProjectBrowserProps> = ({ mobileBrowser, open, onClose, files: items }) => {
-  const theme = useTheme();
-  const dark = theme.palette.mode === 'dark';
-
   const openFilePath = useSelector(selectOpenFilePath);
 
-  const handleClose = () => {
-    onClose();
-  };
-
   useEffect(() => {
-    handleClose();
-  },[openFilePath]);
+    onClose();
+  },[openFilePath, onClose]);
 
   return (
-    <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
-      <DialogTitle>Project Files</DialogTitle>
-
-      <DialogContent>
-        {mobileBrowser}
-      </DialogContent>
-
-      <DialogActions sx={{ px: 3, pb: 2, pt:0 }}>
-        <Button onClick={handleClose} color="error" variant={dark ? 'outlined' : 'contained'} sx={{ fontWeight: 700 }}>
-          Cancel
-        </Button>
-      </DialogActions>
+    <Dialog {...{ open, onClose }} fullWidth PaperProps={{ sx: { margin: 0, width: '100%', height: '100%', maxHeight: '100%' } }}>
+      {mobileBrowser}
     </Dialog>
   );
 };

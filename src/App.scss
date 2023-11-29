@@ -70,13 +70,19 @@ html[data-theme="dark"] {
     border-radius: 0;
     width: 100%;
     border: none;
+    height: calc(100vh - 56px) !important;
   }
   @media screen and (max-width: 575px) {
-    height: calc(100vh - 140px) !important;
     margin-top: 0;
   }
 }
 
 header {
   z-index: 2;
+}
+
+.sticky-inner-wrapper {
+  @media screen and (max-width: 767px) {
+    transform: none !important;
+  }
 }

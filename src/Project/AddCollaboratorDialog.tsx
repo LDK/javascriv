@@ -56,7 +56,7 @@ const AddCollaboratorDialog: React.FC<AddCollaboratorDialogProps> = ({ open, onC
           setError(response.data.message);
         }
       })
-      .catch((error) => {
+      .catch(() => {
         setSearching(false);
         setError('An error occurred while adding collaborator.');
       }
