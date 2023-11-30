@@ -183,17 +183,15 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, count
     <>
       <ListItem
         button
+        key={`browser-item-${level}-${index}`}
+        id={`browser-item-${level}-${index}`}
+        className="browser-item"
         onClick={handleItemClick}
         style={{
           color: palette.secondary.contrastText,
           paddingLeft: level * 16,
           backgroundColor: isOpenPath ? palette.secondary[opposite] : 'inherit',
           display: "flex",
-        }}
-        sx={{
-          "&:hover > div > .MuiBox-root": {
-            visibility: "visible",
-          },
         }}
       >
         <ListItemIcon sx={{ color: palette.secondary.contrastText, pl: 3 }}>{getIcon()}</ListItemIcon>

@@ -65,15 +65,41 @@ html[data-theme="dark"] {
   border-radius: 0 !important;
   height: calc(100vh - 64px) !important;
   z-index: 1;
-  @media screen and (max-width: 767px) {
+  @media screen and (max-width: 767.9px) {
     margin-top: 8px;
     border-radius: 0;
     width: 100%;
     border: none;
     height: calc(100vh - 56px) !important;
   }
-  @media screen and (max-width: 575px) {
+  @media screen and (max-width: 575.9px) {
     margin-top: 0;
+  }
+}
+
+.browser-item {
+  @media screen and (min-width: 768px) {
+    &:hover {
+      & > div > .MuiBox-root {
+        visibility: visible;
+      }
+    }
+  }
+}
+
+.corkboard-card {
+  @media screen and (min-width: 768px) {
+    .go-button-wrapper {
+      transition: opacity 0.2s ease-in-out;
+      opacity: 0;
+    }
+
+    &:hover {
+      .go-button-wrapper {
+        transition: opacity 0.2s ease-in-out;
+        opacity: 1;
+      }
+    }
   }
 }
 

@@ -1,5 +1,4 @@
 import { Box, Grid, Typography, useTheme } from "@mui/material";
-import { useState } from "react";
 import { ProjectFile } from "./Project/ProjectTypes";
 import { KeyboardDoubleArrowRightTwoTone as GoIcon } from "@mui/icons-material";
 import { FolderCopyTwoTone as FolderIcon, DescriptionTwoTone as DocIcon } from "@mui/icons-material";
@@ -13,7 +12,6 @@ type CorkboardCardProps = {
 };
 
 const CorkboardCard = ({ item, index, handleDocumentClick }:CorkboardCardProps) => {
-  const [hovered, setHovered] = useState(false);
   const openFolders = useSelector(selectOpenFolders) || [];
   const dispatch = useDispatch();
   const theme = useTheme();
@@ -43,9 +41,7 @@ const CorkboardCard = ({ item, index, handleDocumentClick }:CorkboardCardProps) 
 
   return (
     <Grid item xs={12} sm={6} md={4} key={index}>
-      <Box position="relative" bgcolor={cardBgColor} p={0} boxShadow={2} borderRadius=".5rem" overflow="hidden" 
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
+      <Box className="corkboard-card" position="relative" bgcolor={cardBgColor} p={0} boxShadow={2} borderRadius=".5rem" overflow="hidden" 
         sx={{
           cursor: 'pointer'
         }}
@@ -77,13 +73,11 @@ const CorkboardCard = ({ item, index, handleDocumentClick }:CorkboardCardProps) 
         <Box position="absolute" top={0} left={0} width="100%" height="100%" bgcolor="transparent" sx={{ backgroundImage: `linear-gradient(to bottom, transparent 60%, ${cardBgColor})` }} />
         </Box>
 
-        {hovered && 
-          <Box position="absolute" bottom={0} left={0} width="100%" pt={1} pb={0} pr={1} textAlign={'right'} bgcolor={theme.palette[`itemBar${item.type === 'file' ? 'Document' : 'Folder'}`].main} color={theme.palette.primary.contrastText} onClick={(e) => {
-            e.stopPropagation();
-          }}>
-            <GoIcon />
-          </Box>
-        }
+        <Box className="go-button-wrapper show-mobile" position="absolute" bottom={0} left={0} width="100%" pt={1} pb={0} pr={1} textAlign={'right'} bgcolor={theme.palette[`itemBar${item.type === 'file' ? 'Document' : 'Folder'}`].main} color={theme.palette.primary.contrastText} onClick={(e) => {
+          e.stopPropagation();
+        }}>
+          <GoIcon />
+        </Box>
       </Box>
     </Grid>
   )
