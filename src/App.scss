@@ -79,13 +79,13 @@ html[data-theme="dark"] {
 
 .browser-item {
   @media screen and (min-width: 992px) {
-    & > div > .MuiBox-root {
+    .item-action-bar {
       opacity: 0;
       transition: opacity 0.2s ease-in-out;
     }
 
     &:hover {
-      & > div > .MuiBox-root {
+      .item-action-bar {
         opacity: 1;
         transition: opacity 0.2s ease-in-out;
       }

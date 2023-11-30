@@ -65,53 +65,51 @@ const ItemActionBar = ({ index, count, onEditClick, onDuplicate, onDelete, onMov
   };
 
   return (
-    <>
-      <Box position="absolute" right={0} onClick={handleIconClick} sx={{ marginLeft: "auto", display: "flex", alignItems: "center", visibility: "hidden", backdropFilter: "blur(10px)", backgroundColor: "rgba(255,255,255,.2)" }}>
-        <EditButton action={handleEditClick} />
-        <UpButton action={handleMoveUp} disabled={index < 1} />
-        <DownButton action={handleMoveDown} disabled={index >= count - 1} />
-        <DeleteButton action={handleDeleteClick} />
-        <MoreButton action={handleMoreClick} />
+    <Box className="item-action-bar" position="absolute" right={0} onClick={handleIconClick} sx={{ marginLeft: "auto", display: "flex", alignItems: "center",  backdropFilter: "blur(10px)", backgroundColor: "rgba(255,255,255,.2)" }}>
+      <EditButton action={handleEditClick} />
+      <UpButton action={handleMoveUp} disabled={index < 1} />
+      <DownButton action={handleMoveDown} disabled={index >= count - 1} />
+      <DeleteButton action={handleDeleteClick} />
+      <MoreButton action={handleMoreClick} />
 
-        <Menu
-          anchorEl={anchorEl}
-          open={Boolean(anchorEl)}
-          onClose={handleMenuClose}
-          onClick={handleMenuClose}
-          PaperProps={{
-            elevation: 0,
-            sx: {
-              overflow: 'visible',
-              filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-              mt: 1.5,
-              '& .MuiAvatar-root': {
-                width: 32,
-                height: 32,
-                ml: -0.5,
-                mr: 1,
-              },
-              '&:before': {
-                content: '""',
-                display: 'block',
-                position: 'absolute',
-                top: 0,
-                right: 14,
-                width: 10,
-                height: 10,
-                bgcolor: 'background.paper',
-                zIndex: 0,
-                transform: 'translateY(-50%) rotate(45deg)',
-              },
+      <Menu
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleMenuClose}
+        onClick={handleMenuClose}
+        PaperProps={{
+          elevation: 0,
+          sx: {
+            overflow: 'visible',
+            filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+            mt: 1.5,
+            '& .MuiAvatar-root': {
+              width: 32,
+              height: 32,
+              ml: -0.5,
+              mr: 1,
             },
-          }}
-          transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-          anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-        >
-          <MenuItem onClick={handleDuplicate}>Duplicate</MenuItem>
-          <MenuItem onClick={handleMoveTo}>Move to...</MenuItem>
-        </Menu>
-      </Box>
-    </>
+            '&:before': {
+              content: '""',
+              display: 'block',
+              position: 'absolute',
+              top: 0,
+              right: 14,
+              width: 10,
+              height: 10,
+              bgcolor: 'background.paper',
+              zIndex: 0,
+              transform: 'translateY(-50%) rotate(45deg)',
+            },
+          },
+        }}
+        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+      >
+        <MenuItem onClick={handleDuplicate}>Duplicate</MenuItem>
+        <MenuItem onClick={handleMoveTo}>Move to...</MenuItem>
+      </Menu>
+    </Box>
   );
 };
 
