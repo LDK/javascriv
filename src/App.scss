@@ -78,17 +78,23 @@ html[data-theme="dark"] {
 }
 
 .browser-item {
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: 992px) {
+    & > div > .MuiBox-root {
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out;
+    }
+
     &:hover {
       & > div > .MuiBox-root {
-        visibility: visible;
+        opacity: 1;
+        transition: opacity 0.2s ease-in-out;
       }
     }
   }
 }
 
 .corkboard-card {
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: 992px) {
     .go-button-wrapper {
       transition: opacity 0.2s ease-in-out;
       opacity: 0;
