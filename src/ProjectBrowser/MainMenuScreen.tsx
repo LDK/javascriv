@@ -14,7 +14,7 @@ const MainMenuScreen = ({ open, onClose, appMenuButtons }: MainMenuScreenProps) 
   const isDark = (theme.palette.mode === 'dark');
 
   const heights = {
-    xs: 'calc(100vh - 56px)',
+    xs: 'calc(100vh - 112px)',
     sm: 'calc(100vh - 64px)',
   };
 
