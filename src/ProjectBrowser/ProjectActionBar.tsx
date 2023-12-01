@@ -1,16 +1,17 @@
 // Browser/ProjectActionBar.tsx
 import { Box } from "@mui/material";
 import React from "react";
-import { EditButton, RefreshButton } from "./ItemActionButtons";
+import { CloseButton, EditButton, RefreshButton } from "./ItemActionButtons";
 import { ProjectState } from "../Project/ProjectTypes";
 
 type ProjectActionBarProps = {
   onEditClick: () => void;
   onRefreshClick: () => void;
   currentProject: ProjectState;
+  onClose?: () => void;
 };
 
-const ProjectActionBar = ({ onEditClick, onRefreshClick, currentProject }: ProjectActionBarProps) => {
+const ProjectActionBar = ({ onEditClick, onRefreshClick, currentProject, onClose }: ProjectActionBarProps) => {
   const handleIconClick = (event: React.MouseEvent) => {
     event.stopPropagation();
     // Handle the click event for each icon, e.g., delete, edit, move up, move down, and more
@@ -27,6 +28,11 @@ const ProjectActionBar = ({ onEditClick, onRefreshClick, currentProject }: Proje
     onRefreshClick();
   };
 
+  const handleClose = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    onClose && onClose();
+  }
+
   return (
     <Box 
       onClick={handleIconClick}
@@ -35,13 +41,14 @@ const ProjectActionBar = ({ onEditClick, onRefreshClick, currentProject }: Proje
       alignItems="center"
       position="absolute"
       textAlign="right"
-      width="3rem"
-      right="1rem"
-      top="0"
+      width={{ xs: 'auto', md: "3rem" }}
+      right={{ xs: '.25rem', md: ".5rem"}}
+      top={{ xs: '.5rem', md: '.5rem' }}
+      className="project-action-bar"
     >
       <EditButton action={handleEditClick} />
       {(currentProject && currentProject.id) && <RefreshButton action={handleRefreshClick} />}
-
+      {onClose && <CloseButton action={handleClose} />}
     </Box>
   );
 };

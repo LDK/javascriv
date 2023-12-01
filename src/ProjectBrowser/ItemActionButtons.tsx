@@ -1,7 +1,16 @@
 // Browser/ItemActionButtons.tsx
 
 import { IconButton, SvgIconTypeMap, Tooltip } from "@mui/material";
-import { LogoutTwoTone as Leave, LaunchTwoTone as Launch, FolderSharedTwoTone as Collab, DeleteTwoTone as Delete, DriveFileRenameOutlineTwoTone as Edit, ContentCopyTwoTone as Duplicate, ArrowUpward, ArrowDownward, MoreVert, Refresh } from "@mui/icons-material";
+import { 
+  LogoutTwoTone as Leave,
+  LaunchTwoTone as Launch,
+  FolderSharedTwoTone as Collab,
+  DeleteTwoTone as Delete,
+  DriveFileRenameOutlineTwoTone as Edit,
+  ContentCopyTwoTone as Duplicate,
+  CloseTwoTone as Close,
+  ArrowUpward, ArrowDownward, MoreVert, Refresh 
+} from "@mui/icons-material";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
 
 type ActionButtonProps = {
@@ -38,6 +47,10 @@ export const LaunchButton = ({ action, disabled }: ActionButtonProps) => (
 
 export const EditButton = ({ action, disabled }: ActionButtonProps) => (
   <ActionButton title="Rename"  {...{ action, disabled }} Component={Edit} />
+);
+
+export const CloseButton = ({ action, disabled }: ActionButtonProps) => (
+  <ActionButton title="Close Project Browser"  {...{ action, disabled }} Component={Close} />
 );
 
 export const DuplicateButton = ({ action, disabled }: ActionButtonProps) => (

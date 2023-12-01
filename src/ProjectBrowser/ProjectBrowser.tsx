@@ -146,7 +146,8 @@ const ProjectBrowser: React.FC<ProjectBrowserProps> = ({ onDocumentClick, closeM
             </>
           )}
 
-          <ProjectActionBar 
+          <ProjectActionBar
+            onClose={closeMobileBrowser} 
             onEditClick={handleEditClick}
             onRefreshClick={handleRefreshClick}
             currentProject={currentProject}
