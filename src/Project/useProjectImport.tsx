@@ -52,29 +52,6 @@ const useProjectImport = ({ handleEditorChange }: UseProjectImportProps) => {
     }
   };
 
-  const ManageProjectsButton = ({ callback, variant, label, text }: ImportButtonProps) => {
-    const handleClick = () => {
-      callback();
-      setImportOptionsOpen(true);
-    };
-
-    // if text, use MenuItem
-    if (text) {
-      return (
-        <MenuItem onClick={handleClick}>
-          {label || 'Manage Projects'}
-        </MenuItem>
-      )
-    }
-    else {
-      return (
-        <Button onClick={handleClick} color="primary" variant={variant || 'text'}>
-          {label || 'Manage Projects'}
-        </Button>
-      )
-    }
-  };
-
   const importProjectFromJson = (file:File) => {
     const reader = new FileReader();
 
@@ -228,7 +205,7 @@ const useProjectImport = ({ handleEditorChange }: UseProjectImportProps) => {
   }
 
   return {
-    importProjectFromJson, handleImportClose, handleImportReady, ImportDialog, setImportOptionsOpen, ImportButton, ManageProjectsButton, importProjectFromScrivenerZip, importingPath
+    importProjectFromJson, handleImportClose, handleImportReady, ImportDialog, setImportOptionsOpen, ImportButton, importProjectFromScrivenerZip, importingPath
   };
 
 }

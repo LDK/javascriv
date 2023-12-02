@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { clearUser, getActiveUser, setUserProjects } from "../redux/userSlice";
 import { resetProject } from "../redux/projectSlice";
-import { isFunction } from "@mui/x-data-grid/internals";
+import { setScreen } from "../redux/appSlice";
 
 export default function useUser () {
   const user = useSelector(getActiveUser);
@@ -58,45 +58,42 @@ export default function useUser () {
     handleCloseUserMenu();
   }
 
-  const UserMenu:React.FC<any> = ({settingsCallback}:{settingsCallback?: () => void}) => {
+  const UserMenu:React.FC<any> = () => {
     
     const handleSettings = () => {
       handleCloseUserMenu();
-      console.log('handle settings', settingsCallback);
-      if (settingsCallback && isFunction(settingsCallback)) {
-        settingsCallback();
-      }
+      dispatch(setScreen('userSettings'));
     }
   
-      return (
-    <Menu
-    id="menu-appbar"
-    anchorEl={anchorElUser}
-    anchorOrigin={{
-      vertical: 'bottom',
-      horizontal: 'left',
-    }}
-    keepMounted
-    transformOrigin={{
-      vertical: 'top',
-      horizontal: 'left',
-    }}
-    open={Boolean(anchorElUser)}
-    onClose={handleCloseUserMenu}
-    sx={{
-      display: { xs: 'block' },
-      py: 0
-    }}
-  >
-    <Typography variant="body2" sx={{ px: 2, py: 1, color: theme.palette.text.primary }}>Hello {user.username}!</Typography>
+    return (
+      <Menu
+        id="menu-appbar"
+        anchorEl={anchorElUser}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        keepMounted
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'left',
+        }}
+        open={Boolean(anchorElUser)}
+        onClose={handleCloseUserMenu}
+        sx={{
+          display: { xs: 'block' },
+          py: 0
+        }}
+      >
+        <Typography variant="body2" sx={{ px: 2, py: 1, color: theme.palette.text.primary }}>Hello {user.username}!</Typography>
 
-    <Divider sx={{ my: 1 }} />
+        <Divider sx={{ my: 1 }} />
 
-    <MenuItem onClick={handleLogout}>Sign out</MenuItem>
-    <MenuItem onClick={handleSettings}>User Settings</MenuItem>
-  </Menu>
-
-  )};
+        <MenuItem onClick={handleLogout}>Sign out</MenuItem>
+        <MenuItem onClick={handleSettings}>User Settings</MenuItem>
+      </Menu>
+    )
+  };
 
   return { user, getProjectListings, UserMenu, handleOpenUserMenu, handleCloseUserMenu, handleLogout };
 }

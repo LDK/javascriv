@@ -107,7 +107,7 @@ const CorkboardView = ({ folder, handleDocumentClick }:CorkboardViewProps) => {
       </Grid>
 
       <Grid container spacing={2}>
-        {folder?.children?.map((item, index) => <CorkboardCard {...{ item, index, handleDocumentClick }} />)}
+        {folder?.children?.map((item, index) => <CorkboardCard {...{ item, index, key: `folder-card-${index}`, handleDocumentClick }} />)}
       </Grid>
     </Box>
   );

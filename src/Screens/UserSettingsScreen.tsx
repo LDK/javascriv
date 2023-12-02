@@ -1,20 +1,18 @@
-import { TextField, DialogActions, Tooltip, Box, useTheme, Typography, Divider, Grid, Autocomplete } from "@mui/material";
+import { TextField, DialogActions, Tooltip, Box, Typography, Divider, Grid, Autocomplete } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { CancelButton, ConfirmButton } from "../Components/DialogButtons";
-import { UserState, setUser } from "../redux/userSlice";
+import { setUser } from "../redux/userSlice";
 import SettingBox from "../Components/SettingBox";
 import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { usePublishingOptions } from "../Publish/PublishOptions";
 import { EditorFont, editorFonts } from "../Editor/EditorFonts";
+import AppScreen, { ScreenProps } from "../Components/Screen";
+import { getActiveScreen, setScreen } from "../redux/appSlice";
+import useUser from "../User/useUser";
 
-export type UserSettingsScreenProps = {
-  open: boolean;
-  onClose: () => void;
-  user: UserState;
-};
-
-const UserSettingsScreen = ({ open, onClose, user }: UserSettingsScreenProps) => {
+const UserSettingsScreen = () => {
+  const { user } = useUser();
   const [username, setUsername] = useState<string>(user.username || '');
   const [newPassword, setNewPassword] = useState<string>('');
   const [newPasswordConfirm, setNewPasswordConfirm] = useState<string>('');
@@ -24,14 +22,13 @@ const UserSettingsScreen = ({ open, onClose, user }: UserSettingsScreenProps) =>
 
   const [formErrors, setFormErrors] = useState<string[]>([]);
 
-  const theme = useTheme();
-  const isDark = (theme.palette.mode === 'dark');
-
   const dispatch = useDispatch();
+  const activeScreen = useSelector(getActiveScreen);
 
   const handleClose = () => {
-    onClose();
-    setFormErrors([]);
+    if (activeScreen === 'userSettings') {
+      dispatch(setScreen(null));
+    }
   }
 
   type UserPatchPayload = {
@@ -154,19 +151,15 @@ const UserSettingsScreen = ({ open, onClose, user }: UserSettingsScreenProps) =>
     setUsername(e.target.value);
   };
 
+  const screenProps:ScreenProps = {
+    onClose: handleClose,
+    title: 'User Settings',
+    name: 'userSettings',
+    id: 'user-settings',
+  }
+
   return (
-    <Box width="100%" height="calc(100vh - 64px)" p={4} 
-      position={{ xs: "absolute", lg: "relative"}}
-      top={{ xs: '56px', sm: 0 }} left={0}
-      overflow={{ overflowY: 'scroll', overflowX: 'hidden' }} 
-      display={ open ? 'block' : 'none' } 
-      zIndex={5}
-      sx={{ backgroundColor: theme.palette.grey[isDark ? 800 : 100] }}
-    >
-      <Typography mb={1}>User Settings</Typography>
-
-      <Divider sx={{ mb: 2 }} />
-
+    <AppScreen {...screenProps}>
       <Grid container spacing={2}>
         <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" mb={2} fontSize={14} fontWeight={600}>User Details</Typography>
@@ -289,7 +282,7 @@ const UserSettingsScreen = ({ open, onClose, user }: UserSettingsScreenProps) =>
         </Tooltip>
       </DialogActions>
 
-    </Box>
+    </AppScreen>
   );
 }
 

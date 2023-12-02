@@ -1,24 +1,24 @@
-import { Box, Divider, Tab, Tabs, Typography, useTheme } from "@mui/material";
+import { Box, Tab, Tabs, Typography, useTheme } from "@mui/material";
 import { useState } from "react";
-import { UserState } from "./redux/userSlice";
+import { UserState } from "../redux/userSlice";
 import { GridColDef, GridRenderCellParams, GridSortDirection } from "@mui/x-data-grid";
-import { ProjectListing, ProjectState } from "./Project/ProjectTypes";
-import { CollabButton, DeleteButton, DuplicateButton, EditButton, LaunchButton, LeaveButton } from "./ProjectBrowser/ItemActionButtons";
-import DuplicateProjectDialog from "./Project/DuplicateProjectDialog";
-import { SetOpenFunction } from "./ProjectBrowser/useBrowserDialog";
-import RenameProjectDialog from "./Project/RenameProjectDialog";
-import DeleteProjectDialog from "./Project/DeleteProjectDialog";
-import ProjectCollabsDialog from "./Project/ProjectCollabsDialog";
-import ProjectsTable from "./Project/ProjectsTable";
+import { ProjectListing, ProjectState } from "../Project/ProjectTypes";
+import { CollabButton, DeleteButton, DuplicateButton, EditButton, LaunchButton, LeaveButton } from "../ProjectBrowser/ItemActionButtons";
+import DuplicateProjectDialog from "../Project/DuplicateProjectDialog";
+import { SetOpenFunction } from "../ProjectBrowser/useBrowserDialog";
+import RenameProjectDialog from "../Project/RenameProjectDialog";
+import DeleteProjectDialog from "../Project/DeleteProjectDialog";
+import ProjectCollabsDialog from "../Project/ProjectCollabsDialog";
+import ProjectsTable from "../Project/ProjectsTable";
 import { isFunction } from "@mui/x-data-grid/internals";
-import LeaveProjectDialog from "./Project/LeaveProjectDialog";
-import { ConfirmButton } from "./Components/DialogButtons";
-import { useDispatch } from "react-redux";
-import { setProjectId } from "./redux/projectSlice";
+import LeaveProjectDialog from "../Project/LeaveProjectDialog";
+import { ConfirmButton } from "../Components/DialogButtons";
+import { useDispatch, useSelector } from "react-redux";
+import { setProjectId } from "../redux/projectSlice";
+import AppScreen, { ScreenProps } from "../Components/Screen";
+import { getActiveScreen, setScreen } from "../redux/appSlice";
 
 export type ManageProjectsDialogProps = {
-  open: boolean;
-  onClose: () => void;
   user: UserState;
   loadProject: (arg:ProjectListing, token: string) => void;
   getProjectListings: (arg: boolean) => void;
@@ -84,7 +84,7 @@ const actionField = (params:ActionFieldsProps) => {
 
 }
 
-const ManageProjectsScreen = ({ open, onClose, user, loadProject, getProjectListings, currentProject }:ManageProjectsDialogProps) => {
+const ManageProjectsScreen = ({ user, loadProject, getProjectListings, currentProject }:ManageProjectsDialogProps) => {
   const { projects, token } = user;
 
   const [duplicateOpen, setDuplicateOpen] = useState<ProjectListing | false>(false);
@@ -97,7 +97,13 @@ const ManageProjectsScreen = ({ open, onClose, user, loadProject, getProjectList
   const theme = useTheme();
   const dispatch = useDispatch();
 
-  const isDark = theme.palette.mode === 'dark';
+  const activeScreen = useSelector(getActiveScreen);
+
+  const onClose = () => {
+    if (activeScreen === 'projectManagement') {
+      dispatch(setScreen(null));
+    }
+  }
 
   const handleRename = (id: number) => {
     const project = findProjectListing(id);
@@ -159,7 +165,7 @@ const ManageProjectsScreen = ({ open, onClose, user, loadProject, getProjectList
     actionField({ actions: ['launch', 'rename', 'delete', 'duplicate', 'collab'], handleLaunch, handleRename, handleDelete, handleDuplicate, handleCollab })
   ];
 
-  if (!projects || !token || !open) {
+  if (!projects || !token) {
     return null;
   }
 
@@ -185,19 +191,16 @@ const ManageProjectsScreen = ({ open, onClose, user, loadProject, getProjectList
   const collabColumns = creatorColumns.slice(0, creatorColumns.length - 1);
   collabColumns.push(actionField({ actions: ['launch', 'leave'], handleLaunch, handleLeave }))
 
+  const screenProps:ScreenProps = {
+    name: 'projectManagement',
+    id: 'manage-projects',
+    onClose,
+    title: 'Manage Projects',
+    buttons: false
+  };
+
   return (
-    <Box width="100%"  height="calc(100vh - 64px)" p={4} 
-      zIndex={5}
-      position={{ xs: "absolute", lg: "relative"}}
-      top={{ xs: '56px', sm: 0 }} left={0}
-      overflow={{ overflowY: 'scroll', overflowX: 'hidden' }}
-      display={ open ? 'block' : 'none' }
-      sx={{ backgroundColor: theme.palette.grey[isDark ? 800 : 100] }}
-    >
-      <Typography mb={2} fontWeight={700}>Manage Projects</Typography>
-
-      <Divider sx={{ mb: 2 }} />
-
+    <AppScreen {...screenProps}>
       <Tabs value={activeTab} onChange={(e, newValue) => setActiveTab(newValue)} aria-label="Projects">
         <Tab label="Created Projects" value="created" />
 
@@ -273,7 +276,7 @@ const ManageProjectsScreen = ({ open, onClose, user, loadProject, getProjectList
           <ConfirmButton onClick={onClose} {...{ mode: theme.palette.mode }} label="Done" />
         </Box>
 
-    </Box>
+    </AppScreen>
   );
 }
 

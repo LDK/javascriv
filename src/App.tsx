@@ -18,15 +18,13 @@ import OpenProjectDialog from './ProjectBrowser/OpenProjectDialog';
 import useUser from './User/useUser';
 import AddCollaboratorDialog from './Project/AddCollaboratorDialog';
 import useFileInputRef from './useFileInputRef';
-import { ProjectSettingsDialogProps } from './ProjectSettingsScreen';
-import { ManageProjectsDialogProps } from './ManageProjectsScreen';
-import { UserSettingsScreenProps } from './ProjectBrowser/UserSettingsScreen';
+import { ManageProjectsDialogProps } from './Screens/ManageProjectsScreen';
 import { EditorFont } from './Editor/EditorFonts';
 import ContentArea from './ContentArea';
-import useSettingsDialogs from './useSettingsDialogs';
 import useCollab from './useCollab';
 import { useParams } from 'react-router-dom';
 import NewPasswordDialog from './Components/NewPasswordDialog';
+import { getActiveScreen, setScreen } from './redux/appSlice';
 
 type AppProps = {
   resetPassword?: boolean;
@@ -81,10 +79,8 @@ const App: React.FC<AppProps> = ({ resetPassword }) => {
   const defaultFont = (currentProject?.settings?.font || user?.fontOptions?.font || { name: 'Roboto', value: 'Roboto' }) as EditorFont;
   const defaultFontSize = (currentProject?.settings?.fontSize || user?.fontOptions?.fontSize || 12) as number;
 
-  const { 
-    manageProjectsOpen, projectSettingsOpen, userSettingsOpen,
-    setManageProjectsOpen, setProjectSettingsOpen, setUserSettingsOpen,
-   } = useSettingsDialogs();
+  const activeScreen = useSelector(getActiveScreen);
+  const manageProjectsOpen = (activeScreen === 'projectManagement');
 
   const editorAreaBps = manageProjectsOpen ? { sm: 12, hd: 9 } : { xs: 12, md: 8, lg: 9 };
   const browserBps = manageProjectsOpen ? { xs: 0, hd: 3 } : { xs: 0, md: 4, lg: 3 };
@@ -136,32 +132,10 @@ const App: React.FC<AppProps> = ({ resetPassword }) => {
 
   useEffect(() => {
     if (currentProject?.id) {
-      setManageProjectsOpen(false);
-      setProjectSettingsOpen(false);
-      setAddCollabOpen(false);
+      dispatch(setScreen(null));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentProject.id]);
-
-  useEffect(() => {
-    if (mobileMenuOpen) {
-      setUserSettingsOpen(false);
-    }
-  }, [mobileMenuOpen, setUserSettingsOpen]);
-
-  useEffect(() => {
-    if (userSettingsOpen) {
-      setMobileMenuOpen(false);
-      setManageProjectsOpen(false);
-    }
-  }, [userSettingsOpen, setMobileMenuOpen, setManageProjectsOpen]);
-
-  useEffect(() => {
-    if (manageProjectsOpen) {
-      setMobileMenuOpen(false);
-      setUserSettingsOpen(false);
-    }
-  }, [manageProjectsOpen, setMobileMenuOpen, setUserSettingsOpen]);
 
   const handleSave = async () => {
     if (!editor) return;
@@ -182,9 +156,7 @@ const App: React.FC<AppProps> = ({ resetPassword }) => {
     setReloading(undefined);
   };
 
-  const projectSettingsParams:ProjectSettingsDialogProps = { open: projectSettingsOpen, onClose: () => setProjectSettingsOpen(false) };
-  const manageProjectsParams:ManageProjectsDialogProps = { user, currentProject, loadProject, getProjectListings, open: manageProjectsOpen, onClose: () => setManageProjectsOpen(false) };
-  const userSettingsParams:UserSettingsScreenProps = { user, open: userSettingsOpen, onClose: () => setUserSettingsOpen(false) };
+  const manageProjectsParams:ManageProjectsDialogProps = { user, currentProject, loadProject, getProjectListings };
 
   const editorParams:TinyEditorProps = {
     ...{ openFilePath, items, setEditor, handleEditorChange, defaultFont, defaultFontSize, lockedFilePaths },
@@ -211,8 +183,6 @@ const App: React.FC<AppProps> = ({ resetPassword }) => {
 
   const importCallback = () => { fileInputRef?.click(); };
 
-  const manageCallback = () => { setManageProjectsOpen(true); };
-
   const appMenuButtons = [
     <SaveButton />,
     <RevertButton />,
@@ -228,7 +198,7 @@ const App: React.FC<AppProps> = ({ resetPassword }) => {
       <CssBaseline />
 
       <Header
-        {...{ loadProject, browserOpen, setBrowserOpen, settingsCallback: () => { setUserSettingsOpen(true); }, ProjectSelector, appMenuButtons, handleEditorChange, fileInputRef, importCallback, manageCallback, mobileMenuOpen, setMobileMenuOpen, newCallback: () => { setNewProjectOpen(true); } }}
+        {...{ loadProject, browserOpen, setBrowserOpen, ProjectSelector, appMenuButtons, handleEditorChange, fileInputRef, importCallback, mobileMenuOpen, setMobileMenuOpen, newCallback: () => { setNewProjectOpen(true); } }}
       />
 
       <input type="file" accept=".zip, .json" ref={setFileInputRef} onChange={handleUpload} style={{ display: 'none' }} />
@@ -238,7 +208,7 @@ const App: React.FC<AppProps> = ({ resetPassword }) => {
           <Grid container spacing={0}>
             <Grid item {...browserBps} px={0} mx={0} display={{ xs: 'none', md: manageProjectsOpen ? 'none' : 'flex', hd: 'flex'}}>
               {editor && <ProjectBrowser
-                {...{ editor, setProjectSettingsOpen, setEditorContent }}
+                {...{ editor, setEditorContent }}
                 onDocumentClick={documentClick}
               />}
             </Grid>
@@ -247,12 +217,12 @@ const App: React.FC<AppProps> = ({ resetPassword }) => {
               <ContentArea 
                 mobileBrowser={
                   !editor ? <></> : <ProjectBrowser
-                    {...{ editor, setProjectSettingsOpen, setEditorContent }}
+                    {...{ editor, setEditorContent }}
                     onDocumentClick={documentClick}
                     closeMobileBrowser={() => setBrowserOpen(false)}
                   />
                 }                
-                {...{ items, openFilePath, browserOpen, setBrowserOpen, mobileMenuOpen, setMobileMenuOpen, projectSettingsOpen, manageProjectsOpen, userSettingsOpen, user, editorParams, projectSettingsParams, manageProjectsParams, userSettingsParams, handleDocumentClick, appMenuButtons }}
+                {...{ items, openFilePath, browserOpen, setBrowserOpen, user, editorParams, manageProjectsParams, handleDocumentClick, appMenuButtons }}
               />
             </Grid>
           </Grid>

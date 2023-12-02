@@ -19,10 +19,10 @@ import useProjectRename from './useProjectRename';
 import { Editor } from 'tinymce';
 import useProject from '../Project/useProject';
 import useUser from '../User/useUser';
+import { setScreen } from '../redux/appSlice';
 
 interface ProjectBrowserProps {
   onDocumentClick: (item: ProjectFile) => void;
-  setProjectSettingsOpen: (open: boolean) => void;
   editor: Editor;
   setEditorContent: (content: string) => void;
   closeMobileBrowser?: () => void;
@@ -46,7 +46,7 @@ export const paletteRGBA = (color: PaletteColor, opacity: number, mode: PaletteM
   return `rgba(${color[mode].replace('rgb(', '').replace(')', '')}, ${opacity})`;
 }
 
-const ProjectBrowser: React.FC<ProjectBrowserProps> = ({ onDocumentClick, closeMobileBrowser, setProjectSettingsOpen, editor, setEditorContent }) => {
+const ProjectBrowser: React.FC<ProjectBrowserProps> = ({ onDocumentClick, closeMobileBrowser, editor, setEditorContent }) => {
   const items = useSelector(selectFiles);
 
   const openFilePath = useSelector(selectOpenFilePath);
@@ -185,7 +185,7 @@ const ProjectBrowser: React.FC<ProjectBrowserProps> = ({ onDocumentClick, closeM
               }}
               onClick={() => {
                 closeMobileBrowser && closeMobileBrowser();
-                setProjectSettingsOpen(true)
+                dispatch(setScreen('projectSettings'));
               }}
             >
               <SettingsIcon />

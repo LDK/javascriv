@@ -1,26 +1,21 @@
 import { Box } from "@mui/material";
 import TinyEditor, { TinyEditorProps } from "./Editor/Editor";
-import ManageProjectsScreen, { ManageProjectsDialogProps } from "./ManageProjectsScreen";
-import UserSettingsScreen, { UserSettingsScreenProps } from "./ProjectBrowser/UserSettingsScreen";
-import ProjectSettingsScreen, { ProjectSettingsDialogProps } from "./ProjectSettingsScreen";
+import ManageProjectsScreen, { ManageProjectsDialogProps } from "./Screens/ManageProjectsScreen";
+import UserSettingsScreen from "./Screens/UserSettingsScreen";
+import ProjectSettingsScreen from "./Screens/ProjectSettingsScreen";
 import { UserState } from "./redux/userSlice";
 import { ProjectFile } from "./Project/ProjectTypes";
 import { findItemByPath } from "./redux/projectSlice";
 import CorkboardView from "./CorkboardView";
-import MainMenuScreen from "./ProjectBrowser/MainMenuScreen";
+import MainMenuScreen from "./Screens/MainMenuScreen";
 import MobileProjectBrowser from "./Project/MobileProjectBrowser";
 import { useCallback } from "react";
+import { useSelector } from "react-redux";
+import { getActiveScreen } from "./redux/appSlice";
 
 type ContentAreaProps = {
-  projectSettingsOpen: boolean;
-  manageProjectsOpen: boolean;
-  userSettingsOpen: boolean;
-  mobileMenuOpen: boolean;
-  setMobileMenuOpen: (open: boolean) => void;
   editorParams: TinyEditorProps;
-  projectSettingsParams: ProjectSettingsDialogProps;
   manageProjectsParams: ManageProjectsDialogProps;
-  userSettingsParams: UserSettingsScreenProps;
   user: UserState;
   openFilePath: string | null;
   items: ProjectFile[];
@@ -31,11 +26,12 @@ type ContentAreaProps = {
   setBrowserOpen: (open: boolean) => void;
 };
 
-const ContentArea = ({ browserOpen, setBrowserOpen, handleDocumentClick, mobileMenuOpen, mobileBrowser, projectSettingsOpen, manageProjectsOpen, userSettingsOpen, user, manageProjectsParams, editorParams, userSettingsParams, projectSettingsParams, openFilePath, items, appMenuButtons }: ContentAreaProps) => {
+const ContentArea = ({ browserOpen, setBrowserOpen, handleDocumentClick, mobileBrowser, user, manageProjectsParams, editorParams, openFilePath, items, appMenuButtons }: ContentAreaProps) => {
   const openItem = openFilePath ? findItemByPath(items, openFilePath.split('/')) : null;
   const isFolder = openItem?.type === 'folder';
 
-  const hideEditor = (mobileMenuOpen || isFolder || projectSettingsOpen || manageProjectsOpen || userSettingsOpen);
+  const activeScreen = useSelector(getActiveScreen);
+  const hideEditor = (isFolder || Boolean(activeScreen));
 
   const handleMobileBrowserClose = useCallback(() => {
     setBrowserOpen(false);
@@ -47,19 +43,15 @@ const ContentArea = ({ browserOpen, setBrowserOpen, handleDocumentClick, mobileM
         <TinyEditor {...editorParams} />
       </Box>
 
-      { isFolder && <CorkboardView {...{handleDocumentClick}} folder={openItem} /> }
+      { (isFolder && !Boolean(activeScreen)) && <CorkboardView {...{handleDocumentClick}} folder={openItem} /> }
 
-      <ProjectSettingsScreen {...projectSettingsParams} />
-
+      <ProjectSettingsScreen />
       <ManageProjectsScreen {...manageProjectsParams} />
+      <MainMenuScreen {...{ appMenuButtons }} />
+      <UserSettingsScreen />
 
-      <MainMenuScreen open={mobileMenuOpen} {...{ appMenuButtons }} onClose={() => {}} />
       <MobileProjectBrowser open={browserOpen} onClose={handleMobileBrowserClose} files={items} {...{ mobileBrowser }} />
-
-      { (!user || !user.id || !userSettingsOpen) ? null :
-        <UserSettingsScreen {...userSettingsParams} />
-      }
-    </Box>
+</Box>
   );
 };
 

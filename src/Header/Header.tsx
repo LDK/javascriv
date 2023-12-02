@@ -16,6 +16,7 @@ import LoginRegisterDialog from './LoginRegisterDialog';
 import useUser from '../User/useUser';
 import { ProjectState } from '../Project/ProjectTypes';
 import useAppMenu from '../useAppMenu';
+import { getActiveScreen, setScreen } from '../redux/appSlice';
 
 type IconButtonProps = {
   clickAction: (e:React.MouseEvent) => void;
@@ -61,17 +62,14 @@ type HeaderProps = {
   appMenuButtons: JSX.Element[];
   handleEditorChange: (content: string) => void;
   importCallback: () => void;
-  manageCallback: () => void;
   newCallback: () => void;
   ProjectSelector: React.FC<any>;
   settingsCallback?: () => void;
-  mobileMenuOpen: boolean;
-  setMobileMenuOpen: (open: boolean) => void;
   browserOpen: boolean;
   setBrowserOpen: (open: boolean) => void;
 };
 
-const Header: React.FC<any> = ({ browserOpen, setBrowserOpen, loadProject, mobileMenuOpen, setMobileMenuOpen, settingsCallback, appMenuButtons, importCallback, manageCallback, newCallback, handleEditorChange, ProjectSelector }:HeaderProps) => {
+const Header: React.FC<any> = ({ browserOpen, setBrowserOpen, loadProject, settingsCallback, appMenuButtons, importCallback, newCallback, handleEditorChange, ProjectSelector }:HeaderProps) => {
   const theme = useTheme();
   const dispatch = useDispatch();
 
@@ -89,13 +87,26 @@ const Header: React.FC<any> = ({ browserOpen, setBrowserOpen, loadProject, mobil
   const { user, UserMenu, handleOpenUserMenu, handleCloseUserMenu } = useUser();
   const { AppMenu, handleOpenAppMenu } = useAppMenu({ buttons: appMenuButtons });
 
+  const activeScreen = useSelector(getActiveScreen);
+  const mobileMenuOpen = (activeScreen === 'mainMenuMobile');
+  
+  const setMobileMenuOpen = (open:boolean) => {
+    if (open !== mobileMenuOpen) {
+      if (open) {
+        dispatch(setScreen('mainMenuMobile'));
+      } else if (mobileMenuOpen) {
+        dispatch(setScreen(null));
+      }
+    }
+  }
+
   return (
     <Sticky innerZ={2}>
       <AppBar elevation={0} sx={{ backgroundColor: theme.palette.primary.main, textAlign: 'right', alignItems: 'flex-end' }}>
         <Typography pl={3} pt={{ xs: 1, md: 1}} component="h1" fontSize={{ xs: '1.5rem', md: '2.125rem' }} position="absolute" top={0} left={0} color={theme.palette.text.primary}>javaScriv</Typography>
 
         <Toolbar>
-          {!user ? null : <ProjectSelector {...{ user, importCallback, newCallback, manageCallback }} callback={loadProject} />}
+          {!user ? null : <ProjectSelector {...{ user, importCallback, newCallback }} callback={loadProject} />}
 
           <ThemeToggleSwitch {...{ isDarkMode, toggleTheme }} />
 
