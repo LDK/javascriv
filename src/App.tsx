@@ -143,6 +143,26 @@ const App: React.FC<AppProps> = ({ resetPassword }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentProject.id]);
 
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      setUserSettingsOpen(false);
+    }
+  }, [mobileMenuOpen, setUserSettingsOpen]);
+
+  useEffect(() => {
+    if (userSettingsOpen) {
+      setMobileMenuOpen(false);
+      setManageProjectsOpen(false);
+    }
+  }, [userSettingsOpen, setMobileMenuOpen, setManageProjectsOpen]);
+
+  useEffect(() => {
+    if (manageProjectsOpen) {
+      setMobileMenuOpen(false);
+      setUserSettingsOpen(false);
+    }
+  }, [manageProjectsOpen, setMobileMenuOpen, setUserSettingsOpen]);
+
   const handleSave = async () => {
     if (!editor) return;
 

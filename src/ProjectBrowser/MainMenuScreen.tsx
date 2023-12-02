@@ -1,4 +1,4 @@
-import { Box, useTheme, Typography, Divider, Grid, Button } from "@mui/material";
+import { Box, useTheme, Typography, Divider, Grid } from "@mui/material";
 import { ThemeToggleSwitch } from "../Header/Header";
 import { useDispatch } from "react-redux";
 import { setTheme } from "../redux/themeSlice";
@@ -33,7 +33,7 @@ const MainMenuScreen = ({ open, onClose, appMenuButtons }: MainMenuScreenProps) 
   }
 
   return (
-    <Box width="100%" position="relative" overflow={{ overflowY: 'scroll', overflowX: 'hidden' }} height={heights} p={4} display={ open ? 'block' : 'none' } sx={{ backgroundColor: theme.palette.grey[isDark ? 800 : 100] }}>
+    <Box id="mobile-menu-screen" zIndex={6} width="100%" top={{ xs: '56px' }} position={{ xs: 'absolute' }} overflow={{ overflowY: 'scroll', overflowX: 'hidden' }} height={heights} p={4} display={ open ? 'block' : 'none' } sx={{ backgroundColor: theme.palette.grey[isDark ? 800 : 100] }}>
       <Typography mb={1}>Main Menu</Typography>
 
       <Divider sx={{ mb: 2 }} />

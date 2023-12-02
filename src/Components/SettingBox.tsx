@@ -6,6 +6,7 @@ const SettingBox = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <Box
+      className="setting-box"
       mb={2}
       p={2}
       borderRadius={'.25rem'} borderColor="primary.contrastText" sx={{

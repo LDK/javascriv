@@ -74,7 +74,7 @@ html[data-theme="dark"] {
   }
   @media screen and (max-width: 575.9px) {
     margin-top: 0;
-    height: calc(100vh - 160px) !important;
+    height: calc(100vh - 168px) !important;
   }
 }
 
@@ -90,6 +90,14 @@ html[data-theme="dark"] {
         opacity: 1;
         transition: opacity 0.2s ease-in-out;
       }
+    }
+  }
+}
+
+.browser-item, .setting-box, .MuiDialogContent-root {
+  @media screen and (max-width: 991.9px) {
+    .MuiTypography-body1 {
+      font-size: .75rem;
     }
   }
 }

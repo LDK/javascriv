@@ -89,7 +89,7 @@ type CorkboardViewProps = {
 
 const CorkboardView = ({ folder, handleDocumentClick }:CorkboardViewProps) => {
   return (
-    <Box p={4} sx={{ overflowY: 'scroll' }} height="calc(100vh - 60px)" display="block" position="relative">
+    <Box id="corkboard-view" zIndex={4} p={4} sx={{ overflowY: 'scroll' }} height="calc(100vh - 60px)" display="block" position="relative">
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
           <Typography variant="h5" fontWeight={700} component="h2" mb={0}>

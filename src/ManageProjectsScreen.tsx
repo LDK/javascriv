@@ -186,7 +186,14 @@ const ManageProjectsScreen = ({ open, onClose, user, loadProject, getProjectList
   collabColumns.push(actionField({ actions: ['launch', 'leave'], handleLaunch, handleLeave }))
 
   return (
-    <Box width="100%" position="relative" overflow={{ overflowY: 'scroll', overflowX: 'hidden' }} height="calc(100vh - 64px)" p={4} display={ open ? 'block' : 'none' } sx={{ backgroundColor: theme.palette.grey[isDark ? 800 : 100] }}>
+    <Box width="100%"  height="calc(100vh - 64px)" p={4} 
+      zIndex={5}
+      position={{ xs: "absolute", lg: "relative"}}
+      top={{ xs: '56px', sm: 0 }} left={0}
+      overflow={{ overflowY: 'scroll', overflowX: 'hidden' }}
+      display={ open ? 'block' : 'none' }
+      sx={{ backgroundColor: theme.palette.grey[isDark ? 800 : 100] }}
+    >
       <Typography mb={2} fontWeight={700}>Manage Projects</Typography>
 
       <Divider sx={{ mb: 2 }} />

@@ -86,7 +86,7 @@ const Header: React.FC<any> = ({ browserOpen, setBrowserOpen, loadProject, mobil
     document.querySelector('html')?.setAttribute('data-theme', mode);
   }
 
-  const { user, UserMenu, handleOpenUserMenu } = useUser();
+  const { user, UserMenu, handleOpenUserMenu, handleCloseUserMenu } = useUser();
   const { AppMenu, handleOpenAppMenu } = useAppMenu({ buttons: appMenuButtons });
 
   return (
@@ -107,7 +107,12 @@ const Header: React.FC<any> = ({ browserOpen, setBrowserOpen, loadProject, mobil
           <Box p={0} m={0} alignItems="center" display={{ xs: "flex", md: "none" }} mr={1}>
             <IconButton title={`Files in Project`} icon={<AccountTreeIcon color={browserOpen ? 'warning' : 'action'} sx={{ mr: 1 }} />} clickAction={() => { setBrowserOpen(!browserOpen) }} />
 
-            <IconButton title={`Mobile Menu`} icon={mobileMenuOpen ? <CloseIcon /> : <MenuRounded />} clickAction={() => { setMobileMenuOpen(!mobileMenuOpen) }} />
+            <IconButton title={`Mobile Menu`} icon={mobileMenuOpen ? <CloseIcon /> : <MenuRounded />} clickAction={() => { 
+              if (!mobileMenuOpen) {
+                handleCloseUserMenu();
+              }
+              setMobileMenuOpen(!mobileMenuOpen);
+            }} />
           </Box>
 
           {!user.id && <IconButton icon={<LoginIcon />} clickAction={() => setLoginOpen(true)} />}

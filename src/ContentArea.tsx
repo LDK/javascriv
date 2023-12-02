@@ -35,8 +35,6 @@ const ContentArea = ({ browserOpen, setBrowserOpen, handleDocumentClick, mobileM
   const openItem = openFilePath ? findItemByPath(items, openFilePath.split('/')) : null;
   const isFolder = openItem?.type === 'folder';
 
-  console.log('openItem', openItem, openFilePath, isFolder);
-
   const hideEditor = (mobileMenuOpen || isFolder || projectSettingsOpen || manageProjectsOpen || userSettingsOpen);
 
   const handleMobileBrowserClose = useCallback(() => {

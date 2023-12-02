@@ -75,7 +75,13 @@ const ProjectSettingsScreen = ({ open, onClose }:ProjectSettingsDialogProps) => 
   };
 
   return (
-    <Box width="100%" position="relative" overflow={{ overflowY: 'scroll', overflowX: 'hidden' }} height="calc(100vh - 64px)" p={4} display={ open ? 'block' : 'none' } sx={{ backgroundColor: theme.palette.grey[isDark ? 800 : 100] }}>
+    <Box zIndex={5} width="100%"  height="calc(100vh - 64px)" p={4}
+      position={{ xs: "absolute", lg: "relative"}}
+      top={{ xs: '56px', sm: 0 }} left={0}
+      overflow={{ overflowY: 'scroll', overflowX: 'hidden' }}
+      display={ open ? 'block' : 'none' }
+      sx={{ backgroundColor: theme.palette.grey[isDark ? 800 : 100] }}
+    >
         <Typography mb={1}>Project Settings</Typography>
 
         <Divider sx={{ mb: 2 }} />

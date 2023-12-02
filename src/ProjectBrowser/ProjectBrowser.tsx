@@ -183,7 +183,10 @@ const ProjectBrowser: React.FC<ProjectBrowserProps> = ({ onDocumentClick, closeM
                 position: 'absolute',
                 left: '.5rem'
               }}
-              onClick={() => setProjectSettingsOpen(true)}
+              onClick={() => {
+                closeMobileBrowser && closeMobileBrowser();
+                setProjectSettingsOpen(true)
+              }}
             >
               <SettingsIcon />
             </IconButton>
