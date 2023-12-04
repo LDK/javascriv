@@ -1,7 +1,7 @@
 // Browser/ProjectBrowser.tsx
 import React, { useEffect, useState } from 'react';
 import { Box, IconButton, useTheme, PaletteColor, PaletteMode, Typography } from '@mui/material';
-import { findItemByPath, selectFiles, selectOpenFilePath, setFiles, setOpenFilePath, setProjectId, setProjectSettings, setProjectTitle } from '../redux/projectSlice';
+import { findItemByPath, getAdding, getOpenFolder, selectFiles, selectOpenFilePath, setAdding, setFiles, setOpenFilePath, setOpenFolder, setProjectId, setProjectSettings, setProjectTitle } from '../redux/projectSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import Sticky from 'react-stickynode';
 import FileBrowserItem from './FileBrowserItem';
@@ -9,7 +9,7 @@ import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder';
 import NoteAddIcon from '@mui/icons-material/NoteAdd';
 import SettingsIcon from '@mui/icons-material/Settings';
 import NewFileDialog from './NewFileDialog';
-import { NewBrowserItem, SetOpenFunction } from './useBrowserDialog';
+import { SetOpenFunction } from './useBrowserDialog';
 import DuplicateDialog from './DuplicateDialog';
 import DeleteDialog from './DeleteDialog';
 import MoveFileDialog from './MoveFileDialog';
@@ -59,16 +59,17 @@ const ProjectBrowser: React.FC<ProjectBrowserProps> = ({ onDocumentClick, closeM
     initialFolder = findParentFolder(openItem.path.split('/'));
   }
 
-  const [openFolder, setOpenFolder] = useState<string | null>(initialFolder);
+  const openFolder = useSelector(getOpenFolder) || initialFolder;
   const [duplicating, setDuplicating] = useState<ProjectFile | false>(false);
   const [deleting, setDeleting] = useState<ProjectFile | false>(false);
   const [moving, setMoving] = useState<ProjectFile | false>(false);
 
-  const [adding, setAdding] = useState<NewBrowserItem | false>(false);
+  const adding = useSelector(getAdding) || false;
 
   const handleFolderClick = (folder: ProjectFile) => {
-    setOpenFolder(folder.path);
-    dispatch(setOpenFilePath(folder.path));
+    console.log('folder clicked', folder.path);
+    dispatch(setOpenFolder(folder.path));
+    onDocumentClick(folder);
   }
 
   const renderItem = (item: ProjectFile, path: string[] = [], idx:number) => {
@@ -81,7 +82,7 @@ const ProjectBrowser: React.FC<ProjectBrowserProps> = ({ onDocumentClick, closeM
         setMoving={setMoving as SetOpenFunction}
         setDeleting={setDeleting as SetOpenFunction}
         setDuplicating={setDuplicating as SetOpenFunction}
-        {...{ setOpenFolder, onDocumentClick, closeMobileBrowser, openFolder, item, path, openFilePath } }
+        {...{ onDocumentClick, closeMobileBrowser, openFolder, item, path, openFilePath } }
       />
     );
   };
@@ -194,7 +195,7 @@ const ProjectBrowser: React.FC<ProjectBrowserProps> = ({ onDocumentClick, closeM
             <IconButton
               aria-label="Add a New File"
               component="label"
-              onClick={() => setAdding({ type: 'file', subType: 'document' })}
+              onClick={() => dispatch(setAdding({ type: 'file', subType: 'document' }))}
             >
               <NoteAddIcon />
             </IconButton>
@@ -202,7 +203,7 @@ const ProjectBrowser: React.FC<ProjectBrowserProps> = ({ onDocumentClick, closeM
             <IconButton
               aria-label="Add a New Folder"
               component="label"
-              onClick={() => setAdding({ type: 'folder', subType: null })}
+              onClick={() => dispatch(setAdding({ type: 'folder', subType: null }))}
             >
               <CreateNewFolderIcon />
             </IconButton>
@@ -211,15 +212,17 @@ const ProjectBrowser: React.FC<ProjectBrowserProps> = ({ onDocumentClick, closeM
         </Box>
       </Sticky>
 
-      <NewFileDialog {...{
-        editor,
-        open: Boolean(adding), 
-        fileType: adding ? adding.type : null,
-        subType: adding ? adding.subType as SubType : null,
-        openFilePath: openFilePath as string,
-        onClose: () => setAdding(false),
-        setOpenFolder, openFolder }}
-      />
+      {Boolean(adding) &&
+        <NewFileDialog {...{
+          editor,
+          open: Boolean(adding), 
+          fileType: adding ? adding.type : null,
+          subType: adding ? adding.subType as SubType : null,
+          openFilePath: openFilePath as string,
+          onClose: () => dispatch(setAdding(false)),
+          setOpenFolder, openFolder }}
+        />
+      }
 
       {Boolean(duplicating) &&
         <DuplicateDialog {...{ 
@@ -229,7 +232,7 @@ const ProjectBrowser: React.FC<ProjectBrowserProps> = ({ onDocumentClick, closeM
           sourceFilePath: duplicating ? duplicating.path : '',
           fileType: duplicating ? duplicating.type : 'file',
           subType: duplicating ? (duplicating.subType || null) : null,
-          setOpenFolder, openFolder }}
+          }}
         />
       }
 
@@ -239,7 +242,7 @@ const ProjectBrowser: React.FC<ProjectBrowserProps> = ({ onDocumentClick, closeM
           setOpen: setDeleting as SetOpenFunction, 
           onClose: () => setDeleting(false),
           sourceFilePath: deleting ? deleting.path : '',
-          setOpenFolder, openFolder }}
+          }}
         />
       }
 
@@ -250,7 +253,7 @@ const ProjectBrowser: React.FC<ProjectBrowserProps> = ({ onDocumentClick, closeM
           onClose: () => setMoving(false),
           sourceFilePath: moving ? moving.path : '',
           openFilePath: openFilePath as string,
-          setOpenFolder, openFolder, editor }}
+          editor }}
         />
       }
 

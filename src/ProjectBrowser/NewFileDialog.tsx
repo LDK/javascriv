@@ -1,28 +1,29 @@
 import { Dialog, DialogContent, DialogContentText, TextField, FormControl, InputLabel, Select, MenuItem, DialogActions, Tooltip } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CancelButton, ConfirmButton } from "../Components/DialogButtons";
 import { ProjectFile } from "../Project/ProjectTypes";
-import { addItem, findItemByPath, selectFiles, setContent, setOpenFilePath } from "../redux/projectSlice";
+import { addItem, findItemByPath, getOpenFolder, selectFiles, setContent, setOpenFilePath, setOpenFolder } from "../redux/projectSlice";
 import { FileType, findParentFolder, ROOTFOLDER, SubType } from "./ProjectBrowser";
-import { getFolders, SetOpenFunction } from "./useBrowserDialog";
+import { getFolders } from "./useBrowserDialog";
 import { Editor } from "tinymce";
-import { set } from "react-hook-form";
 
 type NewFileDialogProps = {
   open: boolean;
   onClose: () => void;
   openFilePath: string;
-  openFolder: string | null;
   fileType: FileType;
   subType: SubType;
   editor: Editor;
-  setOpenFolder: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 const NewFileDialog = ({ 
-    open, onClose, fileType, subType, openFilePath, openFolder, setOpenFolder, editor 
+    open, onClose, fileType, subType, openFilePath, editor 
   }: NewFileDialogProps) => {
+
+  const openFolder = useSelector(getOpenFolder) || null;
+
+  console.log('open folder', openFolder);
 
   const items = useSelector(selectFiles);
   const itemName = fileType === 'file' ? subType as string : 'folder';
@@ -55,19 +56,19 @@ const NewFileDialog = ({
     onClose();
   }
 
-  const handleOpen = () => {
+  const handleOpen = useCallback(() => {
     setNewItemName('');
     setDisabledReason('');
     setParentFolder(openFolder);
     setHasTwin(false);
     setSiblings([]);
-  }
+  }, [openFolder]);
 
   useEffect(() => {
     if (open) {
       handleOpen();
     }
-  }, [open]);
+  }, [open, handleOpen]);
 
   useEffect(() => {
     if (submitDisabled) {
@@ -82,19 +83,21 @@ const NewFileDialog = ({
   }, [hasTwin, itemName, newItemName, submitDisabled]);
 
   useEffect(() => {
-    let newFolder = findParentFolder(openFilePath?.split('/') || []);
+    const openItem = openFilePath ? findItemByPath(items, openFilePath.split('/')) : null;
+    let newFolder = openItem?.type === 'folder' ? openItem.path : findParentFolder(openFilePath?.split('/') || []);
 
     if (newFolder.startsWith('/')) {
       newFolder = newFolder.slice(1);
     }
 
     if (newFolder !== openFolder) {
-      setOpenFolder(newFolder);
+      console.log('setting open folder', newFolder, 'from', openFolder);
+      dispatch(setOpenFolder(newFolder));
       if (!open) {
         setParentFolder(newFolder);
       }
     }
-  }, [openFilePath, open, openFolder, setOpenFolder]);
+  }, [openFilePath, open, openFolder, dispatch, items]);
 
   useEffect(() => {
     if (!open) {
@@ -110,7 +113,7 @@ const NewFileDialog = ({
         dispatch(setContent({path: openFilePath, content: editor.getContent()}));
       }
     }
-  }, [open, editor]);
+  }, [open, editor, dispatch, items, openFilePath]);
 
   useEffect(() => {
     const parentItem = findItemByPath(items, parentFolder?.split('/') || []);

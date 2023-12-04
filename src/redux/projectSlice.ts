@@ -4,6 +4,7 @@ import { FontOptions, ProjectFile, ProjectSettings, ProjectState, PublishOptions
 import { RootState } from './store';
 import introCopy from '../editorIntro';
 import { AppUser } from './userSlice';
+import { NewBrowserItem } from '../ProjectBrowser/useBrowserDialog';
 
 const defaultSettings:ProjectSettings = {
   pageBreaks: 'Nowhere',
@@ -31,7 +32,9 @@ const initialState:ProjectState = {
   settings: defaultSettings,
   title: 'New Project',
   collaborators: [],
-  openFolders: []
+  openFolder: null,
+  openFolders: [],
+  adding: false,
 };
 
 export const findItemByPath = (items: ProjectFile[], path: string[]): ProjectFile | undefined => {
@@ -263,13 +266,20 @@ const projectSlice = createSlice({
     setOpenFolders: (state, action: PayloadAction<string[]>) => {
       state.openFolders = action.payload;
     },
+    setAdding: (state, action: PayloadAction<NewBrowserItem | false>) => {
+      state.adding = action.payload;
+    },
+    setOpenFolder: (state, action: PayloadAction<string | null>) => {
+      state.openFolder = action.payload;
+    }
   },
 });
 
 export const { setProjectId, setProjectCreator, setContent, setChanged, 
     setOpenFilePath, deleteItem, addItem, saveItem, reorderItem, setName,
     setFiles, saveSetting, setProjectTitle, setProjectSettings, resetProject,
-    setPublishOptions, setFontOptions, setCollaborators, setOpenFolders } 
+    setPublishOptions, setFontOptions, setCollaborators, setOpenFolders,
+    setAdding, setOpenFolder } 
       = projectSlice.actions;
 
 export const selectFiles = (state: RootState) => state.project.files;
@@ -278,6 +288,8 @@ export const selectProjectTitle = (state: RootState) => state.project.title || '
 export const getProjectSettings = (state: RootState) => state.project.settings;
 export const getCurrentProject = (state: RootState) => state.project;
 export const selectOpenFolders = (state: RootState) => state.project.openFolders;
+export const getAdding = (state: RootState) => state.project.adding;
+export const getOpenFolder = (state: RootState) => state.project.openFolder;
 
 // getContent selector function
 export const getContent = (state: RootState, path: string) => {

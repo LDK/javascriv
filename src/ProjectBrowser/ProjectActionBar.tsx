@@ -42,7 +42,7 @@ const ProjectActionBar = ({ onEditClick, onRefreshClick, currentProject, onClose
       position="absolute"
       textAlign="right"
       width={{ xs: 'auto', md: "3rem" }}
-      right={{ xs: '.25rem', md: ".5rem"}}
+      right={{ xs: '1rem', md: ".5rem"}}
       top={{ xs: '.5rem', md: '.5rem' }}
       className="project-action-bar"
     >

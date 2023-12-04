@@ -1,9 +1,9 @@
-import { Box, Grid, Typography, useTheme } from "@mui/material";
+import { Box, Divider, Grid, Typography, useTheme } from "@mui/material";
 import { ProjectFile } from "./Project/ProjectTypes";
 import { KeyboardDoubleArrowRightTwoTone as GoIcon } from "@mui/icons-material";
 import { FolderCopyTwoTone as FolderIcon, DescriptionTwoTone as DocIcon } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
-import { selectOpenFolders, setOpenFolders } from "./redux/projectSlice";
+import { selectOpenFolders, setAdding, setOpenFolders } from "./redux/projectSlice";
 
 type CorkboardCardProps = {
   item: ProjectFile;
@@ -73,7 +73,7 @@ const CorkboardCard = ({ item, index, handleDocumentClick }:CorkboardCardProps) 
         <Box position="absolute" top={0} left={0} width="100%" height="100%" bgcolor="transparent" sx={{ backgroundImage: `linear-gradient(to bottom, transparent 60%, ${cardBgColor})` }} />
         </Box>
 
-        <Box className="go-button-wrapper show-mobile" position="absolute" bottom={0} left={0} width="100%" pt={1} pb={0} pr={1} textAlign={'right'} bgcolor={theme.palette[`itemBar${item.type === 'file' ? 'Document' : 'Folder'}`].main} color={theme.palette.primary.contrastText} onClick={(e) => {
+        <Box sx={{ pointerEvents: 'none' }} className="go-button-wrapper show-mobile" position="absolute" bottom={0} left={0} width="100%" pt={1} pb={0} pr={1} textAlign={'right'} bgcolor={theme.palette[`itemBar${item.type === 'file' ? 'Document' : 'Folder'}`].main} color={theme.palette.primary.contrastText} onClick={(e) => {
           e.stopPropagation();
         }}>
           <GoIcon />
@@ -88,12 +88,39 @@ type CorkboardViewProps = {
 };
 
 const CorkboardView = ({ folder, handleDocumentClick }:CorkboardViewProps) => {
+  const dispatch = useDispatch();
+  const theme = useTheme();
+
   return (
     <Box id="corkboard-view" zIndex={4} p={4} sx={{ overflowY: 'scroll' }} height="calc(100vh - 60px)" display="block" position="relative">
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12}>
           <Typography variant="h5" fontWeight={700} component="h2" mb={0}>
-            Folder contents: {folder.name}
+            Folder: {folder.name}
+          </Typography>
+        </Grid>
+
+        <Grid item xs={12} sm={6} lg={4}>
+          <Typography sx={{ cursor: 'pointer' }} m={0} p={0} onClick={() => {
+            dispatch(setAdding({ type: 'file', subType: 'document' }));
+          }}>
+            <DocIcon /> Add a new document
+          </Typography>
+        </Grid>
+
+        <Grid item xs={12} sm={6} lg={4}>
+          <Typography sx={{ cursor: 'pointer' }} m={0} p={0} onClick={() => {
+            dispatch(setAdding({ type: 'folder' }));
+          }}>
+            <FolderIcon /> Add a new folder
+          </Typography>
+        </Grid>
+
+        <Grid item xs={12}>
+          <Divider sx={{ width: '100%', my: 2 }} />
+
+          <Typography variant="body1" component="p" mb={0}>
+            Folder contents
           </Typography>
 
           <Typography variant="body1" component="p" mb={2}>
@@ -106,9 +133,17 @@ const CorkboardView = ({ folder, handleDocumentClick }:CorkboardViewProps) => {
         </Grid>
       </Grid>
 
-      <Grid container spacing={2}>
-        {folder?.children?.map((item, index) => <CorkboardCard {...{ item, index, key: `folder-card-${index}`, handleDocumentClick }} />)}
-      </Grid>
+      <Box p={0} m={0}>
+        <Grid container spacing={2} className="folder-contents" maxHeight={{xs: '280px', md: '500px', lg: 'unset' }} sx={{ overflowY: {
+          xs: 'scroll',
+          lg: 'unset'},
+          position: 'relative',
+          pb: 2
+        }}>
+          {folder?.children?.map((item, index) => <CorkboardCard {...{ item, index, key: `folder-card-${index}`, handleDocumentClick }} />)}
+        </Grid>
+        <Box zIndex={2} position="absolute" display={{ md: 'none' }} className="overlay" bottom="0" left="0" width="100%" height="100%" bgcolor="transparent" sx={{ backgroundImage: `linear-gradient(to bottom, transparent 70%, ${theme.palette.background.default})`, pointerEvents: 'none' }} />
+      </Box>
     </Box>
   );
 };

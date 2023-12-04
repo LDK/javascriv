@@ -2,7 +2,7 @@
 import { Box } from "@mui/material";
 import { Menu, MenuItem } from '@mui/material';
 import React, { useState } from "react";
-import { EditButton, UpButton, DownButton, DeleteButton, MoreButton } from "./ItemActionButtons";
+import { EditButton, UpButton, DownButton, MoreButton } from "./ItemActionButtons";
 
 type ItemActionBarProps = {
   index: number;
@@ -65,11 +65,10 @@ const ItemActionBar = ({ index, count, onEditClick, onDuplicate, onDelete, onMov
   };
 
   return (
-    <Box className="item-action-bar" position="absolute" right={0} onClick={handleIconClick} sx={{ marginLeft: "auto", display: "flex", alignItems: "center",  backdropFilter: "blur(10px)", backgroundColor: "rgba(255,255,255,.2)" }}>
+    <Box className="item-action-bar" position="absolute" right=".5rem" onClick={handleIconClick} sx={{ marginLeft: "auto", display: "flex", alignItems: "center" }}>
       <EditButton action={handleEditClick} />
       <UpButton action={handleMoveUp} disabled={index < 1} />
       <DownButton action={handleMoveDown} disabled={index >= count - 1} />
-      <DeleteButton action={handleDeleteClick} />
       <MoreButton action={handleMoreClick} />
 
       <Menu
@@ -106,6 +105,7 @@ const ItemActionBar = ({ index, count, onEditClick, onDuplicate, onDelete, onMov
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
+        <MenuItem onClick={handleDeleteClick}>Delete</MenuItem>
         <MenuItem onClick={handleDuplicate}>Duplicate</MenuItem>
         <MenuItem onClick={handleMoveTo}>Move to...</MenuItem>
       </Menu>

@@ -1,5 +1,5 @@
 // Browser/FileBrowserItem.tsx
-import { Dispatch, KeyboardEventHandler, SetStateAction, useCallback, useEffect, useRef } from "react";
+import { KeyboardEventHandler, useCallback, useEffect, useRef } from "react";
 import { SxProps, Box, PaletteMode, ListItem, ListItemIcon, ListItemText, Collapse, List, useTheme } from "@mui/material";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,15 +20,13 @@ type FileBrowserItemProps = {
   openFilePath: string | null;
   onDocumentClick: (item: ProjectFile) => void;
   onFolderClick: (folder: ProjectFile) => void;
-  setOpenFolder: Dispatch<SetStateAction<string | null>>;
   setDuplicating: SetOpenFunction;
   setDeleting: SetOpenFunction;
   setMoving: SetOpenFunction;
-  openFolder: string | null;
   closeMobileBrowser?: () => void;
 };
 
-const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, count, index, path = [], onDocumentClick, onFolderClick, openFilePath, setOpenFolder, setMoving, openFolder, setDuplicating, setDeleting, closeMobileBrowser }) => {
+const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, count, index, path = [], onDocumentClick, onFolderClick, openFilePath, setMoving, setDuplicating, setDeleting, closeMobileBrowser }) => {
   const isFolder = item.type === 'folder';
   const fullPath = [...path, item.name].join('/');
 
@@ -94,7 +92,7 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, count
 
   const handleItemClick = () => {
     if (isFolder && fullPath !== openFilePath) {
-      onDocumentClick(item);
+      onFolderClick(item);
       addOpenFolder(fullPath);
     } else if (isFolder && fullPath === openFilePath) {
       addOpenFolder(fullPath);
@@ -198,6 +196,7 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, count
 
         <Box sx={{ flexGrow: 1, display: "flex", alignItems: "center" }}>
           <ListItemText
+            className="browser-item-title"
             primary={
               renaming ? (
                 <input
@@ -241,7 +240,7 @@ const FileBrowserItem: React.FC<FileBrowserItemProps> = ({item, level = 0, count
         <Collapse in={open} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             {item.children?.map((child: ProjectFile, index: number) => (
-              <FileBrowserItem {...{ openFolder, setDuplicating, setDeleting, setMoving, setOpenFolder, openFilePath, onDocumentClick, onFolderClick, index }} key={index} item={child} level={level + 1} path={[...path, item.name]} count={item.children?.length || 0} />
+              <FileBrowserItem {...{ setDuplicating, setDeleting, setMoving, openFilePath, onDocumentClick, onFolderClick, index }} key={index} item={child} level={level + 1} path={[...path, item.name]} count={item.children?.length || 0} />
             ))}
           </List>
         </Collapse>

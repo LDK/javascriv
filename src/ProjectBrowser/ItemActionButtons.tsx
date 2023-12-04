@@ -26,7 +26,7 @@ type ActionButtonWrapperProps = ActionButtonProps & {
 const ActionButton = ({ action, title, Component, disabled }: ActionButtonWrapperProps) => (
   <Tooltip title={title}>
     <span>
-      <IconButton size="small" edge="end" onClick={action} disabled={disabled}>
+      <IconButton size="small" edge="end" onClick={action} disabled={disabled} sx={{ py:0, px: '3px' }}>
         <Component fontSize="small" />
       </IconButton>
     </span>

@@ -1,11 +1,11 @@
 import { Dialog, DialogContent, DialogContentText, TextField, DialogActions, FormControl, InputLabel, MenuItem, Select, useTheme } from "@mui/material";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { CancelButton, ConfirmButton } from "../Components/DialogButtons";
 import { renameChildrenPaths } from "../Project/projectUtils";
-import { findItemByPath } from "../redux/projectSlice";
+import { findItemByPath, getOpenFolder } from "../redux/projectSlice";
 import { FileType, findParentFolder, ROOTFOLDER, SubType } from "./ProjectBrowser";
 import useBrowserDialog, { getFolders, SetOpenFunction } from "./useBrowserDialog";
-import { set } from "react-hook-form";
+import { useSelector } from "react-redux";
 
 type DuplicateDialogProps = {
   open: boolean;
@@ -14,14 +14,14 @@ type DuplicateDialogProps = {
   sourceFilePath: string;
   fileType: FileType;
   subType: SubType;
-  openFolder: string | null;
-  setOpenFolder: Dispatch<SetStateAction<string | null>>;
 }
   
-const DuplicateDialog = ({ open, setOpen, onClose, sourceFilePath, openFolder }: DuplicateDialogProps) => {
+const DuplicateDialog = ({ open, setOpen, onClose, sourceFilePath }: DuplicateDialogProps) => {
   const { items, itemType, handleCreateNewFile } = useBrowserDialog(sourceFilePath, setOpen);
  
   const theme = useTheme();
+
+  const openFolder = useSelector(getOpenFolder) || null;  
 
   const suggestedFilename = (srcPath:string) => {
     const srcName = srcPath.split('/').pop();

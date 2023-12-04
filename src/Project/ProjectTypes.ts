@@ -1,4 +1,5 @@
 import { EditorFont } from "../Editor/EditorFonts";
+import { NewBrowserItem } from "../ProjectBrowser/useBrowserDialog";
 import { AppUser } from "../redux/userSlice";
 
 export type ProjectFile = {
@@ -30,6 +31,8 @@ export type ProjectState = {
   creator?: number;
   collaborators?: AppUser[];
   openFolders: string[];
+  adding?: NewBrowserItem | false;
+  openFolder?: string | null;
 };
 
 export type ProjectListing = {

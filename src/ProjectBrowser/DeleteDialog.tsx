@@ -1,25 +1,26 @@
 import { Dialog, DialogContent, DialogContentText, DialogActions, Button, DialogTitle } from "@mui/material";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { findItemByPath } from "../redux/projectSlice";
+import { useEffect, useState } from "react";
+import { findItemByPath, getOpenFolder } from "../redux/projectSlice";
 import { findParentFolder } from "./ProjectBrowser";
 import useBrowserDialog, { SetOpenFunction } from "./useBrowserDialog";
+import { useSelector } from "react-redux";
 
 type DeleteDialogProps = {
   open: boolean;
   setOpen : SetOpenFunction;
   onClose: () => void;
   sourceFilePath: string;
-  openFolder: string | null;
-  setOpenFolder: Dispatch<SetStateAction<string | null>>;
 }
   
-const DeleteDialog = ({ open, setOpen, onClose, sourceFilePath, openFolder }: DeleteDialogProps) => {
+const DeleteDialog = ({ open, setOpen, onClose, sourceFilePath }: DeleteDialogProps) => {
   const { items, handleDeleteFile } = useBrowserDialog(sourceFilePath, setOpen);
  
   const item = findItemByPath(items, sourceFilePath.split('/'));
   
   const initialParent:string = findParentFolder(sourceFilePath.split('/'));
   const [parentFolder, setParentFolder] = useState<string | null>(initialParent);
+
+  const openFolder = useSelector(getOpenFolder) || null;
 
   useEffect(() => {
     if (open) {

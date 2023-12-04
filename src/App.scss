@@ -79,17 +79,16 @@ html[data-theme="dark"] {
 }
 
 .browser-item {
-  @media screen and (min-width: 992px) {
-    .item-action-bar {
-      opacity: 0;
-      transition: opacity 0.2s ease-in-out;
+  .browser-item-title {
+    max-width: calc(100% - 5rem);
+    @media screen and (max-width: 767.9px) {
+      max-width: calc(100% - 6.5rem);
     }
-
-    &:hover {
-      .item-action-bar {
-        opacity: 1;
-        transition: opacity 0.2s ease-in-out;
-      }
+  }
+  @media screen and (max-width: 991.9px) {
+    .item-action-bar {
+      opacity: 1;
+      right: 1rem;
     }
   }
 }
