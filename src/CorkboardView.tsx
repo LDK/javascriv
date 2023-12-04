@@ -40,7 +40,7 @@ const CorkboardCard = ({ item, index, handleDocumentClick }:CorkboardCardProps) 
   };
 
   return (
-    <Grid item xs={12} sm={6} md={4} key={index}>
+    <Grid item xs={12} sm={6} lg={4} key={index}>
       <Box className="corkboard-card" position="relative" bgcolor={cardBgColor} p={0} boxShadow={2} borderRadius=".5rem" overflow="hidden" 
         sx={{
           cursor: 'pointer'

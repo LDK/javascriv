@@ -1,15 +1,14 @@
 import axios, { AxiosResponse } from "axios";
 import { useState, useEffect, useReducer } from "react";
-import { ProjectFile, ProjectState } from "./Project/ProjectTypes";
+import { ProjectState } from "./Project/ProjectTypes";
 import useUser from "./User/useUser";
-import { useDispatch } from "react-redux";
-import { findAllChangedFiles, findItemByPath, setChanged } from "./redux/projectSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { findAllChangedFiles, findItemByPath, selectFiles, setChanged } from "./redux/projectSlice";
 
 type UseCollabProps = {
   currentProject?: ProjectState;
   hasContentChanged: boolean;
   openFilePath: string | null;
-  items: ProjectFile[];
 };
 
 // Check for collab changes every 30 seconds
@@ -34,7 +33,8 @@ const collabTime = 30000;
   *  isCollab: boolean;
   * }
 */
-export default function useCollab({ currentProject, hasContentChanged, openFilePath, items }: UseCollabProps) {
+export default function useCollab({ currentProject, hasContentChanged, openFilePath }: UseCollabProps) {
+  const items = useSelector(selectFiles);
   const { user } = useUser();
   const dispatch = useDispatch();
 

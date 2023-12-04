@@ -13,7 +13,7 @@ const useFileBrowser = ({ contentCallback }:FileBrowserProps) => {
   const dispatch = useDispatch();
 
   const browserItems = useSelector(selectFiles);
-
+  
   const getUniqueNewDocumentName = (items: ProjectFile[]) => {
     let index = 0;
     let newName = 'New Document';

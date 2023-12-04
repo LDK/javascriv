@@ -4,7 +4,7 @@ import { Box, Button, Container, CssBaseline, Grid, ThemeProvider } from '@mui/m
 import Header from './Header/Header';
 import ProjectBrowser from './ProjectBrowser/ProjectBrowser';
 import { useDispatch, useSelector } from 'react-redux';
-import { findItemByPath, setContent, setOpenFilePath } from './redux/projectSlice';
+import { findItemByPath, selectFiles, setContent, setOpenFilePath } from './redux/projectSlice';
 import { TinyEditorProps } from './Editor/Editor';
 import { darkTheme, lightTheme } from './theme/theme';
 import { RootState } from './redux/store';
@@ -63,7 +63,9 @@ const App: React.FC<AppProps> = ({ resetPassword }) => {
   }
 
   const { saveFile, documentClick, setHasContentChanged, hasContentChanged, 
-    openFilePath, items } = useFileBrowser({ contentCallback: handleDocumentClick });
+    openFilePath } = useFileBrowser({ contentCallback: handleDocumentClick });
+
+  const items = useSelector(selectFiles);
 
   const handleEditorChange = (content: string) => {
     setHasContentChanged(Boolean((content && initial) && content !== initial));
@@ -128,7 +130,7 @@ const App: React.FC<AppProps> = ({ resetPassword }) => {
     setSaving(false);
   }, [saving, saveProject, loadProject, currentProject, user, setSaving]);
 
-  const { lockedFilePaths } = useCollab({ currentProject, hasContentChanged, items, openFilePath  });
+  const { lockedFilePaths } = useCollab({ currentProject, hasContentChanged, openFilePath  });
 
   useEffect(() => {
     if (currentProject?.id) {
@@ -159,7 +161,7 @@ const App: React.FC<AppProps> = ({ resetPassword }) => {
   const manageProjectsParams:ManageProjectsDialogProps = { user, currentProject, loadProject, getProjectListings };
 
   const editorParams:TinyEditorProps = {
-    ...{ openFilePath, items, setEditor, handleEditorChange, defaultFont, defaultFontSize, lockedFilePaths },
+    ...{ openFilePath, setEditor, handleEditorChange, defaultFont, defaultFontSize, lockedFilePaths },
     lastRevert: lastRevertTs,
     content: editorContent || null
   };
@@ -222,7 +224,7 @@ const App: React.FC<AppProps> = ({ resetPassword }) => {
                     closeMobileBrowser={() => setBrowserOpen(false)}
                   />
                 }                
-                {...{ items, openFilePath, browserOpen, setBrowserOpen, user, editorParams, manageProjectsParams, handleDocumentClick, appMenuButtons }}
+                {...{ openFilePath, browserOpen, setBrowserOpen, editorParams, manageProjectsParams, handleDocumentClick, appMenuButtons }}
               />
             </Grid>
           </Grid>

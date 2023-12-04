@@ -2,10 +2,10 @@
 import React, { useEffect, useState } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Select, MenuItem, FormControl, InputLabel, useTheme } from '@mui/material';
 import { useSelector } from 'react-redux';
-import { getProjectSettings, selectFiles } from '../redux/projectSlice';
+import { selectFiles } from '../redux/projectSlice';
 import PublishTree from './PublishTree';
 import publishToPdf from './pdfCompiler';
-import { Binary, PublishingOptions } from './compiling';
+import { PublishingOptions } from './compiling';
 import { FileTreeItem } from '../FileTree/FileTree';
 import { FontOptions, ProjectFile, PublishOptions } from '../Project/ProjectTypes';
 
@@ -48,7 +48,7 @@ export function usePublishingOptions (pubOpts?:PublishOptions, fontOpts?:FontOpt
         value={pageBreaks}
         onChange={(e) => setPageBreaks(e.target.value as string)}
         label="Insert Page Breaks..."
-        inputProps={{ id: 'page-breaks-select' }}
+        inputProps={{ name: 'page-breaks-select' }}
       >
         <MenuItem value="Nowhere">Nowhere</MenuItem>
         <MenuItem value="Between Documents">Between Documents</MenuItem>
@@ -65,7 +65,7 @@ export function usePublishingOptions (pubOpts?:PublishOptions, fontOpts?:FontOpt
         value={pageNumberPosition}
         onChange={(e) => setPageNumberPosition(e.target.value as string)}
         label="Page Numbers"
-        inputProps={{ id: 'page-numbers-select' }}
+        inputProps={{ name: 'page-numbers-select' }}
       >
         <MenuItem value="Nowhere">Nowhere</MenuItem>
         <MenuItem value="Top Left">Top Left</MenuItem>
@@ -85,7 +85,7 @@ export function usePublishingOptions (pubOpts?:PublishOptions, fontOpts?:FontOpt
         value={displayDocumentTitles ? 1 : 0}
         onChange={(e) => setDisplayDocumentTitles(Boolean(e.target.value))}
         label="Display Document Titles as Headers?"
-        inputProps={{ id: 'display-document-titles-select' }}
+        inputProps={{ name: 'display-document-titles-select' }}
       >
         <MenuItem value={1}>Yes</MenuItem>
         <MenuItem value={0}>No</MenuItem>
@@ -100,7 +100,7 @@ export function usePublishingOptions (pubOpts?:PublishOptions, fontOpts?:FontOpt
         value={includeToC ? 1 : 0}
         onChange={(e) => setIncludeToC(Boolean(e.target.value))}
         label="Include Table of Contents"
-        inputProps={{ id: 'include-toc-select' }}
+        inputProps={{ name: 'include-toc-select' }}
       >
         <MenuItem value={1}>Yes</MenuItem>
         <MenuItem value={0}>No</MenuItem>

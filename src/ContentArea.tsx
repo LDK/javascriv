@@ -3,9 +3,8 @@ import TinyEditor, { TinyEditorProps } from "./Editor/Editor";
 import ManageProjectsScreen, { ManageProjectsDialogProps } from "./Screens/ManageProjectsScreen";
 import UserSettingsScreen from "./Screens/UserSettingsScreen";
 import ProjectSettingsScreen from "./Screens/ProjectSettingsScreen";
-import { UserState } from "./redux/userSlice";
 import { ProjectFile } from "./Project/ProjectTypes";
-import { findItemByPath } from "./redux/projectSlice";
+import { findItemByPath, selectFiles } from "./redux/projectSlice";
 import CorkboardView from "./CorkboardView";
 import MainMenuScreen from "./Screens/MainMenuScreen";
 import MobileProjectBrowser from "./Project/MobileProjectBrowser";
@@ -16,9 +15,7 @@ import { getActiveScreen } from "./redux/appSlice";
 type ContentAreaProps = {
   editorParams: TinyEditorProps;
   manageProjectsParams: ManageProjectsDialogProps;
-  user: UserState;
   openFilePath: string | null;
-  items: ProjectFile[];
   handleDocumentClick: (item: ProjectFile) => void;
   appMenuButtons: JSX.Element[];
   mobileBrowser: JSX.Element;
@@ -26,12 +23,15 @@ type ContentAreaProps = {
   setBrowserOpen: (open: boolean) => void;
 };
 
-const ContentArea = ({ browserOpen, setBrowserOpen, handleDocumentClick, mobileBrowser, user, manageProjectsParams, editorParams, openFilePath, items, appMenuButtons }: ContentAreaProps) => {
+const ContentArea = ({ browserOpen, setBrowserOpen, handleDocumentClick, mobileBrowser, manageProjectsParams, editorParams, openFilePath, appMenuButtons }: ContentAreaProps) => {
+  const items = useSelector(selectFiles);
   const openItem = openFilePath ? findItemByPath(items, openFilePath.split('/')) : null;
   const isFolder = openItem?.type === 'folder';
 
   const activeScreen = useSelector(getActiveScreen);
   const hideEditor = (isFolder || Boolean(activeScreen));
+
+  console.log('render content area', {hideEditor, isFolder, activeScreen});
 
   const handleMobileBrowserClose = useCallback(() => {
     setBrowserOpen(false);
@@ -50,7 +50,7 @@ const ContentArea = ({ browserOpen, setBrowserOpen, handleDocumentClick, mobileB
       <MainMenuScreen {...{ appMenuButtons }} />
       <UserSettingsScreen />
 
-      <MobileProjectBrowser open={browserOpen} onClose={handleMobileBrowserClose} files={items} {...{ mobileBrowser }} />
+      <MobileProjectBrowser open={browserOpen} onClose={handleMobileBrowserClose} {...{ mobileBrowser }} />
 </Box>
   );
 };

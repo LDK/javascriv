@@ -9,7 +9,6 @@ import { selectOpenFilePath } from '../redux/projectSlice';
 export interface MobileProjectBrowserProps {
   open: boolean;
   onClose: () => void;
-  files: ProjectFile[];
   mobileBrowser: JSX.Element;
 }
 
@@ -18,9 +17,9 @@ export interface ImportingOptions {
   title: string;
 }
 
-const MobileProjectBrowser: React.FC<MobileProjectBrowserProps> = ({ mobileBrowser, open, onClose, files: items }) => {
+const MobileProjectBrowser: React.FC<MobileProjectBrowserProps> = ({ mobileBrowser, open, onClose }) => {
   const openFilePath = useSelector(selectOpenFilePath);
-
+  
   useEffect(() => {
     onClose();
   },[openFilePath, onClose]);
