@@ -53,7 +53,9 @@ const MoveFileDialog = ({ open, setOpen, onClose, sourceFilePath, editor, openFi
       setItemName(item?.name || '');
       // Update the content in the file tree of the open path
       const existing = findItemByPath(items, openFilePath.split('/'));
-      if (existing) {
+      const content = editor.getContent();
+
+      if (existing && content && content !== existing.content) {
         dispatch(setContent({path: openFilePath, content: editor.getContent()}));
       }
     }
