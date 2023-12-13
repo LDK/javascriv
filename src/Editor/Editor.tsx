@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import { Editor as MyEditor, EditorEvent } from 'tinymce';
-import { Box, useTheme } from '@mui/material';
+import { Box, Typography, useTheme } from '@mui/material';
 import { EditorFont, familyFonts, getFontsCSS } from './EditorFonts';
 
 export interface TinyEditorProps {
@@ -67,14 +67,23 @@ const TinyEditor: React.FC<TinyEditorProps> = ({ lockedFilePaths, openFilePath, 
 
   const themeMode = theme.palette.mode;
 
+  const isLocked = Boolean(openFilePath && lockedFilePaths?.includes(openFilePath));
+
   return (
-    <Box width="100%" sx={{ backgroundColor: themeMode === 'light' ? theme.palette.info.light : theme.palette.info.dark, minHeight: 'calc(100vh - 40px)' }} mt={0}>
+    <Box width="100%" position="relative" sx={{ backgroundColor: themeMode === 'light' ? theme.palette.info.light : theme.palette.info.dark, minHeight: 'calc(100vh - 40px)' }} mt={0}>
+      {isLocked && 
+        <Box justifyContent={"center"} sx={{ position: 'absolute', boxShadow: 10, top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 1000 }}>
+          <Typography variant="h4" sx={{ textAlign: 'center', color: 'white', mt: 24 }}>
+            This file is in use by another user.
+          </Typography>
+        </Box>
+      }
       <Editor
         key={`editor-${themeMode}-${fullScreen ? 'full' : 'normal'}`}
         apiKey={apiKey}
         initialValue={content || ''}
         onInit={handleInit}
-        disabled={Boolean(openFilePath && lockedFilePaths?.includes(openFilePath))}
+        disabled={isLocked}
         init={{
           menubar: false,
           resize: false,
