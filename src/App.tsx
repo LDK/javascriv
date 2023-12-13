@@ -46,10 +46,6 @@ const App: React.FC<AppProps> = ({ resetPassword }) => {
 
   const [browserOpen, setBrowserOpen] = useState(false);
 
-  useEffect(() => {
-    console.log('addCollabOpen', addCollabOpen);
-  }, [addCollabOpen]);
-
   const dispatch = useDispatch();
 
   const handleDocumentClick = (item: ProjectFile) => {

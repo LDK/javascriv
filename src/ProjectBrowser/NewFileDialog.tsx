@@ -23,8 +23,6 @@ const NewFileDialog = ({
 
   const openFolder = useSelector(getOpenFolder) || null;
 
-  console.log('open folder', openFolder);
-
   const items = useSelector(selectFiles);
   const itemName = fileType === 'file' ? subType as string : 'folder';
   const [newItemName, setNewItemName] = useState('');
@@ -109,7 +107,9 @@ const NewFileDialog = ({
     if (open) {
       // Update the content in the file tree of the open path
       const existing = findItemByPath(items, openFilePath.split('/'));
-      if (existing) {
+      const content = editor.getContent();
+
+      if (existing && content && content !== existing.content) {
         dispatch(setContent({path: openFilePath, content: editor.getContent()}));
       }
     }
